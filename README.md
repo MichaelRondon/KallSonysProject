@@ -11,10 +11,10 @@ Desarrolladores:
 
 Estructura:
 
-  MichaelRondon/KallSonysProject/servicios/ProductService
-  MichaelRondon/KallSonysProject/servicios/ClientService
-  MichaelRondon/KallSonysProject/servicios/ImagesService
-  MichaelRondon/KallSonysProject/servicios/LogonService
-  MichaelRondon/KallSonysProject/OMS
-  MichaelRondon/KallSonysProject/B2C
-  MichaelRondon/KallSonysProject/SOA
+	  MichaelRondon/KallSonysProject/servicios/ProductService
+	  MichaelRondon/KallSonysProject/servicios/ClientService
+	  MichaelRondon/KallSonysProject/servicios/ImagesService
+	  MichaelRondon/KallSonysProject/servicios/LogonService
+	  MichaelRondon/KallSonysProject/OMS
+	  MichaelRondon/KallSonysProject/B2C
+	  MichaelRondon/KallSonysProject/SOA
