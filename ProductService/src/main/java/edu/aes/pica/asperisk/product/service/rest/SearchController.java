@@ -3,6 +3,8 @@ package edu.aes.pica.asperisk.product.service.rest;
 import edu.aes.pica.asperisk.product.service.model.ProductsResponse;
 import edu.aes.pica.asperisk.product.service.model.SearchParams;
 import edu.aes.pica.asperisk.product.service.service.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -18,24 +20,29 @@ import java.math.BigDecimal;
 @RequestMapping("/api/producto")
 public class SearchController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(SearchController.class);
+
     @Autowired
     @Qualifier("dummy")
     private ProductService productService;
 
     @RequestMapping(value = "/historico", method = RequestMethod.GET)
-    public ResponseEntity<ProductsResponse> historico(@RequestParam(value="ip", defaultValue="", required = false) String ip,
-                                                     @RequestParam(value="cliente-id", defaultValue="-1") Long clienteId) {
+    public ResponseEntity<ProductsResponse> historico(@RequestParam(value = "ip", defaultValue = "", required = false) String ip,
+                                                      @RequestParam(value = "cliente-id", defaultValue = "-1") Long clienteId) {
+        LOGGER.info("Busca en histórico ip:{} cliente-id:{}", ip, clienteId);
         ProductsResponse productsResponse = productService.consultarHistorico(ip, clienteId);
         return new ResponseEntity(productsResponse, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/buscar", method = RequestMethod.GET)
-    public ResponseEntity<ProductsResponse> buscar(@RequestParam(value="comodin", defaultValue="", required = false) String comodin,
-                                                   @RequestParam(value="categoria", defaultValue="", required = false) String categoria,
-                                                   @RequestParam(value="marca", defaultValue="", required = false) String marca,
-                                                   @RequestParam(value="precio-min", defaultValue="-1", required = false) BigDecimal precioMin,
-                                                   @RequestParam(value="precio-max", defaultValue="-1", required = false) BigDecimal precioMax,
-                                                   @RequestParam(value="proveedor", defaultValue="-1", required = false) Long proveedor) {
+    public ResponseEntity<ProductsResponse> buscar(@RequestParam(value = "comodin", defaultValue = "", required = false) String comodin,
+                                                   @RequestParam(value = "categoria", defaultValue = "", required = false) String categoria,
+                                                   @RequestParam(value = "marca", defaultValue = "", required = false) String marca,
+                                                   @RequestParam(value = "precio-min", defaultValue = "-1", required = false) BigDecimal precioMin,
+                                                   @RequestParam(value = "precio-max", defaultValue = "-1", required = false) BigDecimal precioMax,
+                                                   @RequestParam(value = "proveedor", defaultValue = "-1", required = false) Long proveedor) {
+        LOGGER.info("Busca comodin: {} categoria: {} marca: {} precioMax: {} precioMin: {} proveedor: {}",
+                comodin, categoria, marca, precioMax, precioMin, proveedor);
         SearchParams searchParams = new SearchParams();
         searchParams.setCategoria(categoria);
         searchParams.setComodin(comodin);
