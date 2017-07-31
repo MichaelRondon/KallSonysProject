@@ -3,11 +3,11 @@ Proyecto KallSony's para la materia de Proyecto de Implementación de la Especia
 
 Desarrolladores: 
   
-	David Camacho
-	Diego Sánchez
+	David Camacho	davidcinho89
+	Diego Sánchez	dmsanchezr79
 	Felipe Grisales
-	Marcela Vaquiro
-	Michael Rondón
+	Marcela Vaquiro	marcevaquiro
+	Michael Rondón	MichaelRondon
 
 Estructura:
 
