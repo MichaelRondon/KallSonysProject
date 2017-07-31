@@ -1,0 +1,11 @@
+version: '3'
+services:
+  prestamo_service:
+    build: "ProductService/."
+    ports:
+      - "7076:8080"
+    networks:
+      - "service-compose-net"
+networks:
+  service-compose-net:
+    driver: bridge
