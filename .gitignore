@@ -1,0 +1,14 @@
+
+\.idea/
+
+*.iml
+
+*.class
+
+servicios/ProductService/target/classes/
+
+servicios/ProductService/target/maven-archiver/
+
+servicios/ProductService/target/maven-status/maven-compiler-plugin/compile/default-compile/
+
+servicios/ProductService/target/
