@@ -1,8 +1,11 @@
 package edu.aes.pica.asperisk.product.service.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -11,11 +14,13 @@ public class Product {
     private Long id;
     private String producto;
     private String descripcion;
-    private Long precio;
-    private Estado estado;
+    private BigDecimal precio;
+    private State estado;
     private String categoria;
-    private Set<String> keyWords;
+    @JsonProperty("key-words")
+    private List<String> keyWords;
     private Set<Long> proveedores;
     private Integer disponibilidad;
-    private LocalDate fechaRevDisponibilidad;
+    @JsonProperty("fecha-rev-disponibilidad")
+    private Date fechaRevDisponibilidad;
 }
