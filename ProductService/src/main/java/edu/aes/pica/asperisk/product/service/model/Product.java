@@ -1,5 +1,6 @@
 package edu.aes.pica.asperisk.product.service.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -22,5 +23,6 @@ public class Product {
     private Set<Long> proveedores;
     private Integer disponibilidad;
     @JsonProperty("fecha-rev-disponibilidad")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date fechaRevDisponibilidad;
 }
