@@ -11,10 +11,24 @@ Desarrolladores:
 
 Estructura:
 
-	  MichaelRondon/KallSonysProject/servicios/ProductService
-	  MichaelRondon/KallSonysProject/servicios/ClientService
-	  MichaelRondon/KallSonysProject/servicios/ImagesService
-	  MichaelRondon/KallSonysProject/servicios/LogonService
-	  MichaelRondon/KallSonysProject/OMS
-	  MichaelRondon/KallSonysProject/B2C
-	  MichaelRondon/KallSonysProject/SOA
+	  KallSonysProject/servicios/ProductService
+	  KallSonysProject/servicios/ClientService
+	  KallSonysProject/servicios/ImagesService
+	  KallSonysProject/servicios/LogonService
+	  KallSonysProject/OMS
+	  KallSonysProject/B2C
+	  KallSonysProject/SOA
+
+Ejecutar servicio de productos:
+
+	1. Una vez instalado maven y docker ejecutar:
+	
+		sh KallSonysProject/servicios/start.sh
+		
+	2. Verificar que el servicio se este ejecutando con el comando 
+	
+		docker ps
+		
+	3. Ingresar mediante un navegador a la dirección:
+	
+		DOCKER_HOST:7076/swagger-ui.html
