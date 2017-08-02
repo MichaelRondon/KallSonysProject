@@ -28,9 +28,11 @@ public class SearchController {
 
     @RequestMapping(value = "/historico", method = RequestMethod.GET)
     public ResponseEntity<ProductsResponse> historico(@RequestParam(value = "ip", defaultValue = "", required = false) String ip,
-                                                      @RequestParam(value = "cliente-id", defaultValue = "-1") Long clienteId) {
-        LOGGER.info("Busca en histórico ip:{} cliente-id:{}", ip, clienteId);
-        ProductsResponse productsResponse = productService.consultarHistorico(ip, clienteId);
+                                                      @RequestParam(value = "cliente-id", defaultValue = "-1") Long clienteId,
+                                                      @RequestParam(value = "cantidad-filas", defaultValue = "10") Integer cantidadFilas) {
+
+        LOGGER.info("Busca en histórico ip:{} cliente-id:{} cantidad-filas:{}", ip, clienteId, cantidadFilas);
+        ProductsResponse productsResponse = productService.consultarHistorico(ip, clienteId, cantidadFilas);
         return new ResponseEntity(productsResponse, HttpStatus.OK);
     }
 
@@ -40,9 +42,14 @@ public class SearchController {
                                                    @RequestParam(value = "marca", defaultValue = "", required = false) String marca,
                                                    @RequestParam(value = "precio-min", defaultValue = "-1", required = false) BigDecimal precioMin,
                                                    @RequestParam(value = "precio-max", defaultValue = "-1", required = false) BigDecimal precioMax,
-                                                   @RequestParam(value = "proveedor", defaultValue = "-1", required = false) Long proveedor) {
-        LOGGER.info("Busca comodin: {} categoria: {} marca: {} precioMax: {} precioMin: {} proveedor: {}",
-                comodin, categoria, marca, precioMax, precioMin, proveedor);
+                                                   @RequestParam(value = "proveedor", defaultValue = "-1", required = false) Long proveedor,
+
+                                                   @RequestParam(value = "ip", defaultValue = "", required = false) String ip,
+                                                   @RequestParam(value = "cliente-id", defaultValue = "-1") Long clienteId,
+                                                   @RequestParam(value = "cantidad-filas", defaultValue = "10") Integer cantidadFilas) {
+
+        LOGGER.info("Busca comodin: {} categoria: {} marca: {} precioMax: {} precioMin: {} proveedor: {} ip: {} cliente-id: {} cantidad-filas:{}",
+                comodin, categoria, marca, precioMax, precioMin, proveedor, ip, clienteId, cantidadFilas);
         SearchParams searchParams = new SearchParams();
         searchParams.setCategoria(categoria);
         searchParams.setComodin(comodin);
@@ -50,7 +57,8 @@ public class SearchController {
         searchParams.setPrecioMax(precioMax);
         searchParams.setPrecioMin(precioMin);
         searchParams.setProveedor(proveedor);
-        ProductsResponse productsResponse = productService.buscar(searchParams);
+        searchParams.setCantidadFilas(cantidadFilas);
+        ProductsResponse productsResponse = productService.buscar(searchParams, ip, clienteId);
         return new ResponseEntity(productsResponse, HttpStatus.OK);
     }
 

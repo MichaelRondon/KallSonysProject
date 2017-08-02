@@ -18,19 +18,19 @@ import java.util.*;
 @Qualifier("dummy")
 public class ProductServiceDummy implements ProductService {
     @Override
-    public ProductsResponse consultarHistorico(String ip, Long clienteId) {
-        return getDummyProductsResponse();
+    public ProductsResponse consultarHistorico(String ip, Long clienteId, Integer cantidadFilas) {
+        return getDummyProductsResponse(cantidadFilas);
     }
 
     @Override
-    public ProductsResponse buscar(SearchParams searchParams) {
-        return getDummyProductsResponse();
+    public ProductsResponse buscar(SearchParams searchParams, String ip, Long clienteId) {
+        return getDummyProductsResponse(searchParams.getCantidadFilas());
     }
 
-    private ProductsResponse getDummyProductsResponse() {
+    private ProductsResponse getDummyProductsResponse(Integer cantidadFilas) {
         List<Product> productList = new ArrayList<>();
         Product product;
-        for (int i = 1; i < 11; i++) {
+        for (int i = 1; i < cantidadFilas + 1; i++) {
             product = new Product();
             product.setId((long) i);
             product.setDescripcion(String.format("%s%d", "descripción", i));

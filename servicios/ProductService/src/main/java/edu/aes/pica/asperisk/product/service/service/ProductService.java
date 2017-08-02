@@ -8,7 +8,7 @@ import edu.aes.pica.asperisk.product.service.model.SearchParams;
  */
 public interface ProductService {
 
-    ProductsResponse consultarHistorico(String ip, Long clienteId);
-    ProductsResponse buscar(SearchParams searchParams);
+    ProductsResponse consultarHistorico(String ip, Long clienteId, Integer cantidadFilas);
+    ProductsResponse buscar(SearchParams searchParams, String ip, Long clienteId);
 
 }

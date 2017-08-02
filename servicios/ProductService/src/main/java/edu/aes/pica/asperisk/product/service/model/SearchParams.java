@@ -16,4 +16,5 @@ public class SearchParams {
     private BigDecimal precioMin;
     private BigDecimal precioMax;
     private Long proveedor;
+    private Integer cantidadFilas;
 }
