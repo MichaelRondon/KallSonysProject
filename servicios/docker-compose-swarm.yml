@@ -1,20 +1,18 @@
 version: '3'
 services:
   product_service:
-#    build: "ProductService/."
-    image: mfrondon/asperisk-product:0.0.1
+    image: mfrondon/asperisk-product:0.0.2
     deploy:
-      replicas: 5
+      replicas: 3
       resources:
         limits:
-          cpus: "0.1"
-          memory: 50M
-      restart_policy:
-        condition: on-failure
+          cpus: "0.5"
+          memory: 300M
+#      restart_policy:
+#        condition: on-failure
     ports:
       - "7076:8080"
     networks:
-      - "asperisk-overlay-compose-webnet"
+      - webnet2
 networks:
-  asperisk-overlay-compose-webnet:
-#    driver: overlay
+  webnet2:
