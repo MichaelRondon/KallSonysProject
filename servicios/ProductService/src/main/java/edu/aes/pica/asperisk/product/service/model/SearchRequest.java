@@ -7,6 +7,8 @@ import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
 import lombok.Data;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 /**
  * Created by mfrondon on 03/08/2017.
  */
@@ -14,8 +16,8 @@ import lombok.ToString;
 @ToString
 public class SearchRequest {
 
-    private Long precioMin;
-    private Long precioMax;
+    private BigDecimal precioMin;
+    private BigDecimal precioMax;
     private Product product;
     private BasicClient basicClient;
     private BasicSearchParams basicSearchParams;

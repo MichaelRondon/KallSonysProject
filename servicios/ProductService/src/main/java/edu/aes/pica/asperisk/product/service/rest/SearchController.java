@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @RestController
@@ -76,8 +77,8 @@ public class SearchController {
                                                    @RequestParam(value = "descripcion", defaultValue = "", required = false) String descripcion,
                                                    @RequestParam(value = "categoria", defaultValue = "", required = false) String categoria,
                                                    @RequestParam(value = "marca", defaultValue = "", required = false) String marca,
-                                                   @RequestParam(value = "precio-min", required = false) Long precioMin,
-                                                   @RequestParam(value = "precio-max", required = false) Long precioMax,
+                                                   @RequestParam(value = "precio-min", required = false) BigDecimal precioMin,
+                                                   @RequestParam(value = "precio-max", required = false) BigDecimal precioMax,
                                                    @RequestParam(value = "proveedor", required = false) Long proveedor,
 
                                                    @RequestParam(value = "ip", defaultValue = "", required = false) String ip,
