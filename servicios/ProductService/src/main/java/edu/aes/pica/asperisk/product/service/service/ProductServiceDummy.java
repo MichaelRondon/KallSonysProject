@@ -1,9 +1,9 @@
 package edu.aes.pica.asperisk.product.service.service;
 
-import edu.aes.pica.asperisk.product.service.model.Product;
+import edu.aes.pica.asperisk.product.service.model.HistoricoRequest;
 import edu.aes.pica.asperisk.product.service.model.ProductsResponse;
-import edu.aes.pica.asperisk.product.service.model.SearchParams;
-import edu.aes.pica.asperisk.product.service.model.State;
+import edu.aes.pica.asperisk.product.service.model.SearchRequest;
+import edu.puj.aes.pica.asperisk.oms.utilities.model.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +17,16 @@ import java.util.*;
 @Service
 @Qualifier("dummy")
 public class ProductServiceDummy implements ProductService {
+
     @Override
-    public ProductsResponse consultarHistorico(String ip, Long clienteId, Integer cantidadFilas) {
+    public ProductsResponse consultarHistorico(HistoricoRequest historicoRequest) {
+        Integer cantidadFilas = historicoRequest.getTamanio() == null ? 15 : historicoRequest.getTamanio();
         return getDummyProductsResponse(cantidadFilas);
     }
 
     @Override
-    public ProductsResponse buscar(SearchParams searchParams, String ip, Long clienteId) {
-        return getDummyProductsResponse(searchParams.getCantidadFilas());
+    public ProductsResponse buscar(SearchRequest searchRequest) {
+        return getDummyProductsResponse(10);
     }
 
     private ProductsResponse getDummyProductsResponse(Integer cantidadFilas) {
@@ -38,16 +40,22 @@ public class ProductServiceDummy implements ProductService {
             product.setEstado(State.ACTIVO);
             product.setCategoria(String.format("%s%d", "categoria", i));
             product.setKeyWords(Arrays.asList(new String[]{"keyWord1", "keyWord2", "keyWord3"}));
-            product.setProveedores(new HashSet<>(Arrays.asList(new Long[]{0l, 1l, 2l, 3l})));
+
+            product.setProveedores(new HashSet<>());
+            BasicProveedor basicProveedor;
+            for (long j = 1; j < 4; j++) {
+                basicProveedor = new BasicProveedor();
+                basicProveedor.setId(j);
+                basicProveedor.setIdProducto(j + i * 10);
+                product.getProveedores().add(basicProveedor);
+            }
             product.setDisponibilidad(i);
             product.setFechaRevDisponibilidad(new Date());
             productList.add(product);
         }
         ProductsResponse productsResponse = new ProductsResponse();
         productsResponse.setProductos(productList);
-        productsResponse.setMensaje("");
-        productsResponse.setStatus("200");
-        productsResponse.setSuccess(true);
+        productsResponse.setSize(cantidadFilas);
         return productsResponse;
     }
 }

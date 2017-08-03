@@ -1,0 +1,23 @@
+package edu.aes.pica.asperisk.product.service.model;
+
+import edu.puj.aes.pica.asperisk.oms.utilities.model.BasicClient;
+import edu.puj.aes.pica.asperisk.oms.utilities.model.BasicRequest;
+import edu.puj.aes.pica.asperisk.oms.utilities.model.BasicSearchParams;
+import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
+import lombok.Data;
+import lombok.ToString;
+
+/**
+ * Created by mfrondon on 03/08/2017.
+ */
+@Data
+@ToString
+public class SearchRequest {
+
+    private Long precioMin;
+    private Long precioMax;
+    private Product product;
+    private BasicClient basicClient;
+    private BasicSearchParams basicSearchParams;
+    private BasicRequest basicRequest;
+}

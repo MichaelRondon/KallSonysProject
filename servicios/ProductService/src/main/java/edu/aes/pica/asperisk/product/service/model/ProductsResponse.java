@@ -1,5 +1,7 @@
 package edu.aes.pica.asperisk.product.service.model;
 
+import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
+import edu.puj.aes.pica.asperisk.oms.utilities.model.Response;
 import lombok.Data;
 
 import java.util.List;

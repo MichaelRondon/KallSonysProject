@@ -4,20 +4,31 @@
 
     <groupId>edu.puj.aes.pica.asperisk</groupId>
     <artifactId>product-service</artifactId>
-    <version>1.0</version>
+    <version>0.0.4</version>
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.3.RELEASE</version>
+        <groupId>edu.puj.aes.pica.asperisk</groupId>
+        <artifactId>oms-services</artifactId>
+        <version>1.0</version>
+        <relativePath>../OMSServices/pom.xml</relativePath>
     </parent>
 
     <properties>
+        <maven-resources-plugin.version>3.0.0</maven-resources-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <logstash-logback-encoder.version>4.6</logstash-logback-encoder.version>
         <java.version>1.8</java.version>
+        <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
+        <timestamp>${maven.build.timestamp}</timestamp>
+
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>edu.puj.aes.pica.asperisk</groupId>
+            <artifactId>oms-utilities</artifactId>
+            <version>1.0</version>
+        </dependency>
+		
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -80,10 +91,54 @@
     </dependencies>
 
     <build>
+        <defaultGoal>spring-boot:run</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>default-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>target/classes</outputDirectory>
+                            <useDefaultDelimiters>false</useDefaultDelimiters>
+                            <delimiters>
+                                <delimiter>#</delimiter>
+                                <delimiter>@</delimiter>
+                            </delimiters>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources/</directory>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>**/*.properties</include>
+                                        <include>**/*.xml</include>
+                                        <include>**/*.yml</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>src/main/resources/</directory>
+                                    <filtering>false</filtering>
+                                    <excludes>
+                                        <exclude>**/*.properties</exclude>
+                                        <exclude>**/*.xml</exclude>
+                                        <exclude>**/*.yml</exclude>
+                                    </excludes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

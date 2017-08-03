@@ -1,4 +1,4 @@
-package edu.aes.pica.asperisk.product.service.model;
+package edu.puj.aes.pica.asperisk.oms.utilities.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,14 +13,15 @@ import java.util.Set;
 public class Product {
 
     private Long id;
-    private String producto;
+    private String nombre;
     private String descripcion;
+    private String categoria;
+    private String marca;
     private BigDecimal precio;
     private State estado;
-    private String categoria;
     @JsonProperty("key-words")
     private List<String> keyWords;
-    private Set<Long> proveedores;
+    private Set<BasicProveedor> proveedores;
     private Integer disponibilidad;
     @JsonProperty("fecha-rev-disponibilidad")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
