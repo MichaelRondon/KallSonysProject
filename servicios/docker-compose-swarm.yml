@@ -11,7 +11,7 @@ services:
 #      restart_policy:
 #        condition: on-failure
     ports:
-      - "7076:8080"
+      - "7076:7076"
     networks:
       - webnet2
 networks:

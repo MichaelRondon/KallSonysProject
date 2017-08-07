@@ -3,7 +3,7 @@ services:
   product_service:
     build: "ProductService/."
     ports:
-      - "7076:8080"
+      - "7076:7076"
     networks:
       - "service-compose-net"
 networks:
