@@ -22,3 +22,23 @@ servicios/OMSUtilities/target/maven-status/maven-compiler-plugin/compile/default
 servicios/OMSUtilities/target/
 
 servicios/ProductService/log/
+
+Sony/target/classes/
+
+Sony/target/endorsed/
+
+Sony/target/generated-sources/jaxws-wsimport/co/com/sony/
+
+Sony/target/maven-archiver/
+
+Sony/target/sony/WEB-INF/wsdl/
+
+Sony/target/sony/WEB-INF/lib/
+
+Sony/target/sony/WEB-INF/classes/wsdl/
+
+Sony/target/sony/WEB-INF/
+
+Sony/target/sony/
+
+Sony/target/

@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<definitions xmlns:tns="http://sony.com.co/" xmlns:xsd1="http://sony.com.co/SonyQuoteService" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" name="SonyQuoteService" targetNamespace="http://sony.com.co/">
+	<types>
+		<schema targetNamespace="http://sony.com.co/SonyQuoteService" xmlns="http://www.w3.org/2001/XMLSchema">
+			<complexType name="Item">
+				<sequence>
+					<element name="itemId" type="string" nillable="true"/>
+					<element name="quantity" type="long"/>
+				</sequence>
+			</complexType>
+			<complexType name="Quote">
+				<sequence>
+					<element name="supplierPrice" type="string" nillable="true"/>
+				</sequence>
+			</complexType>
+			<element name="SonyQuoteServiceProcessRequest">
+				<complexType>
+					<sequence>
+						<element name="orderId" type="string" nillable="true"/>
+						<element name="items" type="xsd1:Item" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="SonyQuoteServiceProcessResponse">
+				<complexType>
+					<sequence>
+						<element name="result" type="xsd1:Quote" nillable="true"/>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="orderQuouteElement">
+				<complexType>
+					<sequence>
+						<element name="orderId" type="string" nillable="true"/>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="orderQuouteResponseElement">
+				<complexType>
+					<sequence>
+						<element name="result" type="boolean"/>
+					</sequence>
+				</complexType>
+			</element>
+		</schema>
+	</types>
+	<message name="SonyQuoteServiceRequestMessage">
+		<part name="payload" element="xsd1:SonyQuoteServiceProcessRequest"/>
+	</message>
+	<message name="SonyQuoteServiceResponseMessage">
+		<part name="payload" element="xsd1:SonyQuoteServiceProcessResponse"/>
+	</message>
+	<message name="SonyOrderService_orderQuoute">
+		<part name="parameters" element="xsd1:orderQuouteElement"/>
+	</message>
+	<message name="SonyOrderService_orderQuouteResponse">
+		<part name="parameters" element="xsd1:orderQuouteResponseElement"/>
+	</message>
+	<portType name="SonyQuoteService">
+		<operation name="orderQuoute">
+			<input message="tns:SonyQuoteServiceRequestMessage"/>
+			<output message="tns:SonyQuoteServiceResponseMessage"/>
+		</operation>
+		<operation name="validateOrderQuoute">
+			<input message="tns:SonyOrderService_orderQuoute"/>
+			<output message="tns:SonyOrderService_orderQuouteResponse"/>
+		</operation>
+	</portType>
+	<binding name="SonyQuoteServiceBinding" type="tns:SonyQuoteService">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="orderQuoute">
+			<soap:operation soapAction="urn:#orderQuoute"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="validateOrderQuoute">
+			<soap:operation soapAction="http://example.com/validateOrderQuoute"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="SonyQuoteService">
+		<documentation>Sony service</documentation>
+		<port name="SonyQuoteServicePort" binding="tns:SonyQuoteServiceBinding">
+			<soap:address location="http://localhost:8080/SonyApp/SonyQuoteService"/>
+		</port>
+	</service>
+</definitions>

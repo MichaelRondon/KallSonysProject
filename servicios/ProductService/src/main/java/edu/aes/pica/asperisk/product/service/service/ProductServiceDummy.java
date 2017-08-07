@@ -1,8 +1,6 @@
 package edu.aes.pica.asperisk.product.service.service;
 
-import edu.aes.pica.asperisk.product.service.model.HistoricoRequest;
-import edu.aes.pica.asperisk.product.service.model.ProductsResponse;
-import edu.aes.pica.asperisk.product.service.model.SearchRequest;
+import edu.aes.pica.asperisk.product.service.model.*;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -27,6 +25,36 @@ public class ProductServiceDummy implements ProductService {
     @Override
     public ProductsResponse buscar(SearchRequest searchRequest) {
         return getDummyProductsResponse(10);
+    }
+
+    @Override
+    public CampaignResponse campanias(CampaignRequest campaniasRequest) {
+        CampaignResponse campaignResponse = new CampaignResponse();
+        campaignResponse.setCampanias(new LinkedList<>());
+
+        Campanign campanign = new Campanign();
+        ProductsResponse dummyProductsResponse = getDummyProductsResponse(10);
+        campanign.setProductos(dummyProductsResponse.getProductos());
+        campanign.setDescripcion("Esta es una descripción");
+        campanign.setEstado(campaniasRequest.getState());
+        campanign.setFechaFin(new Date());
+        campanign.setFechaInicio(new Date());
+        campanign.setId(10001L);
+        campanign.setNombre("Campaña 1");
+        campaignResponse.getCampanias().add(campanign);
+
+        campanign = new Campanign();
+        campanign.setProductos(dummyProductsResponse.getProductos());
+        campanign.setDescripcion("Esta es otra descripción");
+        campanign.setEstado(campaniasRequest.getState());
+        campanign.setFechaFin(new Date());
+        campanign.setFechaInicio(new Date());
+        campanign.setId(10002L);
+        campanign.setNombre("Campaña 2");
+        campaignResponse.getCampanias().add(campanign);
+        campaignResponse.setSize(campaignResponse.getCampanias().size());
+
+        return campaignResponse;
     }
 
     private ProductsResponse getDummyProductsResponse(Integer cantidadFilas) {

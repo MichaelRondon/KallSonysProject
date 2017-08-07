@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<definitions name="DHLServiceShipment" xmlns:xsd1="http://dhlservice.com.co/DHLServiceShipment" targetNamespace="http://dhlservice.com.co/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://dhlservice.com.co/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<types>
+		<schema targetNamespace="http://dhlservice.com.co/DHLServiceShipment" xmlns="http://www.w3.org/2001/XMLSchema">
+                    <complexType name="Item">
+                        <sequence>
+                            <element name="itemId" type="string" minOccurs="1"/>
+                            <element name="prodId" type="string" minOccurs="1"/>
+                            <element name="productName" type="string" minOccurs="1"/>
+                            <element name="partNumber" type="string" minOccurs="1"/>
+                            <element name="price" type="int" minOccurs="1"/>
+                            <element name="quantity" type="int" minOccurs="1"/>                                                       
+                        </sequence>
+                    </complexType>                       
+                    <complexType name="Collection">
+                        <sequence>
+                            <element name="item" type="xsd1:Item" nillable="true" minOccurs="1" maxOccurs="unbounded"/>
+                        </sequence>
+                    </complexType>        
+
+                    <complexType name="Shipment">
+                        <sequence>
+                            <element name="partner" type="string" minOccurs="1"/>
+                            <element name="supplier" type="string" minOccurs="1"/>
+                            <element name="orderId" type="string" minOccurs="1"/> 
+                            <element name="addressName" type="string" minOccurs="1"/>
+                            <element name="addressLastName" type="string" minOccurs="1"/>
+                            <element name="country" type="string" minOccurs="1"/> 
+                            <element name="city" type="string" minOccurs="1"/>
+                            <element name="street" type="string" minOccurs="1"/>
+                            <element name="state" type="string" minOccurs="1"/> 
+                            <element name="zipcode" type="string" minOccurs="1"/>
+                            <element name="items" type="xsd1:Collection" minOccurs="1"/>
+                        </sequence>
+                    </complexType>  
+
+                    <element name="fullFillShipment">
+                        <complexType>
+                            <sequence>
+                                <element name="shipment" type="xsd1:Shipment" minOccurs="1"/>
+                            </sequence>
+                        </complexType>                        
+                    </element>
+                    <element name="fullFillShipmentResponse">
+                        <complexType>
+                            <sequence>
+                                <element name="fullFillShipmentResult" type="boolean"/>
+                            </sequence>
+                        </complexType>
+                    </element>
+                    <element name="checkShipmentStatus">
+                        <complexType>
+                            <sequence>
+                                <element name="orderId" type="string"/>
+                            </sequence>
+                        </complexType>                        
+                    </element>
+                    <element name="checkShipmentStatusReponse">
+                        <complexType>
+                            <sequence>
+                                <element name="checkShipmentStatusResult" type="string"/>
+                            </sequence>
+                        </complexType>                        
+                    </element>
+                </schema> 
+        </types>   
+        <message name="fullFillShipmentSoapIn">
+            <part name="parameters" element="xsd1:fullFillShipment"/>
+        </message>
+        <message name="fullFillShipmentSoapOut">
+            <part name="parameters" element="xsd1:fullFillShipmentResponse"/>
+        </message>
+        <message name="checkShipmentStatusIn">
+            <part name="parameters" element="xsd1:checkShipmentStatus"/>
+        </message>
+        <message name="checkShipmentStatusOut">
+            <part name="parameters" element="xsd1:checkShipmentStatusReponse"/>
+        </message>
+        <portType name="DHLShipmentTestSoap">
+            <operation name="fullFillShipment">
+                <input message="tns:fullFillShipmentSoapIn"/>
+                <output message="tns:fullFillShipmentSoapOut"/>
+            </operation>
+            <operation name="checkShipmentStatus">
+                <input message="tns:checkShipmentStatusIn"/>
+                <output message="tns:checkShipmentStatusOut"/>
+            </operation>            
+        </portType>
+</definitions>

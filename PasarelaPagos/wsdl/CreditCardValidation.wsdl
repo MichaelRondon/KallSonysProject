@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<definitions xmlns:tns="http://card.com.co/" xmlns:xsd1="http://card.com.co/CreditCardValidation" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" name="CreditCardValidation" targetNamespace="http://card.com.co/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<types>
+		<schema targetNamespace="http://card.com.co/CreditCardValidation" xmlns="http://www.w3.org/2001/XMLSchema">
+			<complexType name="CreditCard">
+				<sequence>
+					<element name="ccType" type="string" nillable="true"/>
+					<element name="ccNum" type="string"/>
+				</sequence>
+			</complexType>
+                        <element name="CreditCard" type="xsd1:CreditCard"></element>
+                        <element name="valid" type="boolean"></element>
+                        <element name="error" type="string"></element>
+		</schema>
+	</types>
+	<message name="CreditCardValidationRequestMessage">
+		<part name="CreditCard" element="xsd1:CreditCard"/>
+	</message>
+	<message name="CreditCardValidationResponseMessage">
+		<part name="valid" element="xsd1:valid"/>
+	</message>
+	<message name="CreditCardValidationFaultMessage">
+		<part name="error" element="xsd1:error"/>
+	</message>
+	<portType name="ValidateCreditCard">
+		<operation name="VerifyCC">
+			<input name="CreditCardInfo" message="tns:CreditCardValidationRequestMessage"/>
+			<output message="tns:CreditCardValidationResponseMessage"/>
+                        <fault name="NegativeCreditBalance" message="tns:CreditCardValidationFaultMessage"/>
+		</operation>
+	</portType>
+    <binding name="ValidateCreditCardBinding" type="tns:ValidateCreditCard">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="VerifyCC">
+            <soap:operation/>
+            <input name="CreditCardInfo">
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="NegativeCreditBalance">
+                <soap:fault name="NegativeCreditBalance" use="literal"/>
+            </fault>
+        </operation>
+    </binding>
+</definitions>

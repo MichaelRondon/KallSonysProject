@@ -1,8 +1,6 @@
 package edu.aes.pica.asperisk.product.service.rest;
 
-import edu.aes.pica.asperisk.product.service.model.HistoricoRequest;
-import edu.aes.pica.asperisk.product.service.model.ProductsResponse;
-import edu.aes.pica.asperisk.product.service.model.SearchRequest;
+import edu.aes.pica.asperisk.product.service.model.*;
 import edu.aes.pica.asperisk.product.service.service.ProductService;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.*;
 import org.slf4j.Logger;
@@ -128,4 +126,34 @@ public class SearchController {
         return new ResponseEntity(productsResponse, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/campanias", method = RequestMethod.GET)
+    public ResponseEntity<CampaignResponse> campanias(@RequestParam(value = "estado", defaultValue = "ACTIVO", required = false) State estado,
+
+                                               @RequestParam(value = "page", required = false) Integer page,
+                                               @RequestParam(value = "items-per-page", defaultValue = "-1", required = false) Integer itemsPerPage,
+                                               @RequestParam(value = "sort", defaultValue = "", required = false) String sort,
+                                               @RequestParam(value = "sort-type", defaultValue = "", required = false) SortType sortType,
+
+                                               @RequestParam(value = "custom", defaultValue = "", required = false) String custom) {
+
+        CampaignRequest campaniasRequest = new CampaignRequest();
+        campaniasRequest.setState(estado);
+
+        BasicRequest basicRequest = new BasicRequest();
+        basicRequest.setCustom(custom);
+
+        BasicSearchParams basicSearchParams = new BasicSearchParams();
+        basicSearchParams.setItemsPerPage(itemsPerPage);
+        basicSearchParams.setPage(page);
+        basicSearchParams.setSort(sort);
+        basicSearchParams.setSortType(sortType);
+
+        campaniasRequest.setBasicRequest(basicRequest);
+        campaniasRequest.setBasicSearchParams(basicSearchParams);
+
+        LOGGER.info("Busca campanias: {}", campaniasRequest);
+        CampaignResponse campaignResponse = productService.campanias(campaniasRequest);
+        LOGGER.info("Encuentra campanias: {}", campaignResponse);
+        return new ResponseEntity(campaignResponse, HttpStatus.OK);
+    }
 }

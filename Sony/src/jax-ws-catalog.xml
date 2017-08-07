@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/Users/acost/Documents/Arquitectura/KallSony/KallSonysProject/Sony/src/main/resources/wsdl/Sony.wsdl" uri="wsdl/Sony.wsdl"/>
+</catalog>
