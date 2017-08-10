@@ -1,0 +1,1 @@
+docker run -d -p 8761:8761 jhipster/jhipster-registry

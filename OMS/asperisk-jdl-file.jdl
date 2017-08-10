@@ -1,0 +1,91 @@
+enum Estado {
+	ACTIVO, INACTIVO
+}
+
+
+entity Producto {
+  id Long,
+  nombre String required,
+  descripcion String,
+  precio BigDecimal,
+  estado Estado,
+  disponibilidad Integer,
+  fechaRevDisponibilidad Instant,
+  marca String
+}
+
+entity Campania{
+	id Long,
+	nombre String,
+	descripcion String,
+  estado Estado,
+  fechaInicio LocalDate,
+  fechaFin LocalDate 
+}
+
+enum TipoDatoContacto{
+	TELEFONO, DIRECCION, WEB_PAGE, EMAIL
+}
+
+entity DatoContacto{
+	tipoDatoContacto TipoDatoContacto,
+	valor String
+}
+
+entity Proveedor {
+  id Long,
+  nombre String
+  urlCotizacion String,
+  urlContratacion String,
+  nit String,
+  numeroCuenta String,
+  estado Estado
+}
+
+entity ProveedorProducto {
+  idProductoEnProveedor Long
+}
+
+entity Categoria {
+  categoria String
+}
+
+entity KeyWord {
+	keyWord String
+}
+
+relationship OneToMany{
+	Proveedor{datosContacto} to DatoContacto
+}
+
+relationship OneToMany{
+	Campania{productos} to Producto
+}
+
+relationship ManyToOne {
+  ProveedorProducto{proveedor} to Proveedor{Producto}
+}
+
+relationship OneToMany {
+  Producto{proveedores} to ProveedorProducto{Producto}
+}
+
+relationship OneToOne {
+  Producto{categoria(categoria)} to Categoria
+}
+
+relationship OneToMany {
+  Producto{keyWords(keyWord)} to  KeyWord
+}
+
+paginate Producto, KeyWord with infinite-scroll
+paginate Proveedor, Categoria, Campania with pagination
+
+dto * with mapstruct
+
+service Campania with serviceClass
+service Producto with serviceClass
+service KeyWord with serviceClass
+service Proveedor with serviceClass
+service Categoria with serviceClass
+service ProveedorProducto with serviceClass
