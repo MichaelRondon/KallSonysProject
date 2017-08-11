@@ -1,0 +1,47 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myDatoContactoLabel" data-translate="omsApp.datoContacto.home.createOrEditLabel">Create or edit a Dato Contacto</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.datoContacto.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.datoContacto.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="omsApp.datoContacto.tipoDatoContacto" for="field_tipoDatoContacto">Tipo Dato Contacto</label>
+            <select class="form-control" name="tipoDatoContacto" ng-model="vm.datoContacto.tipoDatoContacto" id="field_tipoDatoContacto">
+                <option value="TELEFONO" data-translate="omsApp.TipoDatoContacto.TELEFONO">TELEFONO</option>
+                <option value="DIRECCION" data-translate="omsApp.TipoDatoContacto.DIRECCION">DIRECCION</option>
+                <option value="WEB_PAGE" data-translate="omsApp.TipoDatoContacto.WEB_PAGE">WEB_PAGE</option>
+                <option value="EMAIL" data-translate="omsApp.TipoDatoContacto.EMAIL">EMAIL</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="omsApp.datoContacto.valor" for="field_valor">Valor</label>
+            <input type="text" class="form-control" name="valor" id="field_valor"
+                    ng-model="vm.datoContacto.valor"
+                    />
+        </div>
+
+        <div class="form-group">
+            <label data-translate="omsApp.datoContacto.proveedor" for="field_proveedor">Proveedor</label>
+            <select class="form-control" id="field_proveedor" name="proveedor" ng-model="vm.datoContacto.proveedorId" ng-options="proveedor.id as proveedor.id for proveedor in vm.proveedors"            >
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

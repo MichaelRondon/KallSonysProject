@@ -21,14 +21,12 @@
     "serviceDiscoveryType": "eureka",
     "buildTool": "maven",
     "enableSocialSignIn": false,
-    "jwtSecretKey": "1f39612e761b2e2658811dc6195f79e253f5dc0c",
-    "clientFramework": "angularX",
+    "jwtSecretKey": "ddc2df8b3c6f9235b314934aa722f29629f74589",
+    "clientFramework": "angular1",
     "useSass": true,
     "clientPackageManager": "yarn",
     "applicationType": "monolith",
-    "testFrameworks": [
-      "protractor"
-    ],
+    "testFrameworks": [],
     "jhiPrefix": "jhi",
     "enableTranslation": true,
     "nativeLanguage": "en",

@@ -1,0 +1,26 @@
+{
+    "omsApp": {
+        "campania" : {
+            "home": {
+                "title": "Campanias",
+                "createLabel": "Create a new Campania",
+                "createOrEditLabel": "Create or edit a Campania"
+            },
+            "created": "A new Campania is created with identifier {{ param }}",
+            "updated": "A Campania is updated with identifier {{ param }}",
+            "deleted": "A Campania is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Campania {{ id }}?"
+            },
+            "detail": {
+                "title": "Campania"
+            },
+            "nombre": "Nombre",
+            "descripcion": "Descripcion",
+            "estado": "Estado",
+            "fechaInicio": "Fecha Inicio",
+            "fechaFin": "Fecha Fin",
+            "productos": "Productos"
+        }
+    }
+}

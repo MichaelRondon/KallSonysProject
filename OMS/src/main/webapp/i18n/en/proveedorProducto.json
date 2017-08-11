@@ -1,0 +1,23 @@
+{
+    "omsApp": {
+        "proveedorProducto" : {
+            "home": {
+                "title": "Proveedor Productos",
+                "createLabel": "Create a new Proveedor Producto",
+                "createOrEditLabel": "Create or edit a Proveedor Producto"
+            },
+            "created": "A new Proveedor Producto is created with identifier {{ param }}",
+            "updated": "A Proveedor Producto is updated with identifier {{ param }}",
+            "deleted": "A Proveedor Producto is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Proveedor Producto {{ id }}?"
+            },
+            "detail": {
+                "title": "Proveedor Producto"
+            },
+            "idProductoEnProveedor": "Id Producto En Proveedor",
+            "proveedor": "Proveedor",
+            "producto": "Producto"
+        }
+    }
+}

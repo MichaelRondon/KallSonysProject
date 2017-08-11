@@ -1,0 +1,45 @@
+
+<div>
+    <h2><span data-translate="omsApp.campania.detail.title">Campania</span> {{vm.campania.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="omsApp.campania.nombre">Nombre</span></dt>
+        <dd>
+            <span>{{vm.campania.nombre}}</span>
+        </dd>
+        <dt><span data-translate="omsApp.campania.descripcion">Descripcion</span></dt>
+        <dd>
+            <span>{{vm.campania.descripcion}}</span>
+        </dd>
+        <dt><span data-translate="omsApp.campania.estado">Estado</span></dt>
+        <dd>
+            <span data-translate="{{'omsApp.Estado.' + vm.campania.estado}}">{{vm.campania.estado}}</span>
+        </dd>
+        <dt><span data-translate="omsApp.campania.fechaInicio">Fecha Inicio</span></dt>
+        <dd>
+            <span>{{vm.campania.fechaInicio | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span data-translate="omsApp.campania.fechaFin">Fecha Fin</span></dt>
+        <dd>
+            <span>{{vm.campania.fechaFin | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span data-translate="omsApp.campania.productos">Productos</span></dt>
+        <dd>
+            <span ng-repeat="productos in vm.campania.productos">
+                <a ui-sref="producto-detail({id: productos.id})">{{productos.id}}</a>{{$last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="campania-detail.edit({id:vm.campania.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,27 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "proveedor",
+            "otherEntityName": "proveedor",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "tipoDatoContacto",
+            "fieldType": "TipoDatoContacto",
+            "fieldValues": "TELEFONO,DIRECCION,WEB_PAGE,EMAIL"
+        },
+        {
+            "fieldName": "valor",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170811053455",
+    "entityTableName": "dato_contacto",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "no"
+}

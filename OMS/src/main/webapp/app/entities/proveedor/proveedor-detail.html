@@ -1,0 +1,43 @@
+
+<div>
+    <h2><span data-translate="omsApp.proveedor.detail.title">Proveedor</span> {{vm.proveedor.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="omsApp.proveedor.nombre">Nombre</span></dt>
+        <dd>
+            <span>{{vm.proveedor.nombre}}</span>
+        </dd>
+        <dt><span data-translate="omsApp.proveedor.urlCotizacion">Url Cotizacion</span></dt>
+        <dd>
+            <span>{{vm.proveedor.urlCotizacion}}</span>
+        </dd>
+        <dt><span data-translate="omsApp.proveedor.urlContratacion">Url Contratacion</span></dt>
+        <dd>
+            <span>{{vm.proveedor.urlContratacion}}</span>
+        </dd>
+        <dt><span data-translate="omsApp.proveedor.nit">Nit</span></dt>
+        <dd>
+            <span>{{vm.proveedor.nit}}</span>
+        </dd>
+        <dt><span data-translate="omsApp.proveedor.numeroCuenta">Numero Cuenta</span></dt>
+        <dd>
+            <span>{{vm.proveedor.numeroCuenta}}</span>
+        </dd>
+        <dt><span data-translate="omsApp.proveedor.estado">Estado</span></dt>
+        <dd>
+            <span data-translate="{{'omsApp.Estado.' + vm.proveedor.estado}}">{{vm.proveedor.estado}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="proveedor-detail.edit({id:vm.proveedor.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

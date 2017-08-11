@@ -1,0 +1,49 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "datosContacto",
+            "otherEntityName": "datoContacto",
+            "otherEntityRelationshipName": "proveedor"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "producto",
+            "otherEntityName": "proveedorProducto",
+            "otherEntityRelationshipName": "proveedor"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "nombre",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "urlCotizacion",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "urlContratacion",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "nit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "numeroCuenta",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "estado",
+            "fieldType": "Estado",
+            "fieldValues": "ACTIVO,INACTIVO"
+        }
+    ],
+    "changelogDate": "20170811053456",
+    "entityTableName": "proveedor",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass"
+}

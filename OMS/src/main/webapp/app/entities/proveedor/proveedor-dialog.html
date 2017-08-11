@@ -1,0 +1,63 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myProveedorLabel" data-translate="omsApp.proveedor.home.createOrEditLabel">Create or edit a Proveedor</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.proveedor.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.proveedor.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="omsApp.proveedor.nombre" for="field_nombre">Nombre</label>
+            <input type="text" class="form-control" name="nombre" id="field_nombre"
+                    ng-model="vm.proveedor.nombre"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="omsApp.proveedor.urlCotizacion" for="field_urlCotizacion">Url Cotizacion</label>
+            <input type="text" class="form-control" name="urlCotizacion" id="field_urlCotizacion"
+                    ng-model="vm.proveedor.urlCotizacion"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="omsApp.proveedor.urlContratacion" for="field_urlContratacion">Url Contratacion</label>
+            <input type="text" class="form-control" name="urlContratacion" id="field_urlContratacion"
+                    ng-model="vm.proveedor.urlContratacion"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="omsApp.proveedor.nit" for="field_nit">Nit</label>
+            <input type="text" class="form-control" name="nit" id="field_nit"
+                    ng-model="vm.proveedor.nit"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="omsApp.proveedor.numeroCuenta" for="field_numeroCuenta">Numero Cuenta</label>
+            <input type="text" class="form-control" name="numeroCuenta" id="field_numeroCuenta"
+                    ng-model="vm.proveedor.numeroCuenta"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="omsApp.proveedor.estado" for="field_estado">Estado</label>
+            <select class="form-control" name="estado" ng-model="vm.proveedor.estado" id="field_estado">
+                <option value="ACTIVO" data-translate="omsApp.Estado.ACTIVO">ACTIVO</option>
+                <option value="INACTIVO" data-translate="omsApp.Estado.INACTIVO">INACTIVO</option>
+            </select>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

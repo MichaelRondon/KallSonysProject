@@ -1,5 +1,5 @@
-var dataCacheName = 'Oms-v1';
-var cacheName = 'Oms-1';
+var dataCacheName = '"omsApp-v1';
+var cacheName = '"omsApp-1';
 var filesToCache = [
     '/',
     '/index.html'
