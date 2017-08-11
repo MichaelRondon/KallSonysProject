@@ -32,9 +32,23 @@
         }
 
         function save() {
+            vm.producto.keyWords = [];
             if (vm.tags) {
                 vm.tags.forEach(saveTagTextOnKeyWord);
             }
+            var indexProv = 0;
+            vm.producto.proveedores = [];
+            var proveedorIndex;
+            for (proveedorIndex in vm.proveedores) {
+                var provId_=vm.proveedores[proveedorIndex].id
+                if (vm.proveedoresChecked[provId_]) {
+                    vm.producto.proveedores[indexProv] = {"id":-1,"idProducto":"-1"};
+                    vm.producto.proveedores[indexProv].id=provId_;
+                    vm.producto.proveedores[indexProv].idProducto = vm.idProductEnProv[provId_];
+                    indexProv++;
+                }
+            }
+            alert(angular.toJson(vm.producto));
             vm.isSaving = true;
             if (vm.producto.id !== null) {
                 Producto.update(vm.producto, onSaveSuccess, onSaveError);
@@ -44,12 +58,10 @@
         }
 
         function saveTagTextOnKeyWord(item, index) {
-            vm.producto.keyWords = [];
             vm.producto.keyWords[index] = item.text;
         }
 
         vm.stateChanged = function stateChanged(proveedorId) {
-            alert(proveedorId);
         }
 
         function onSaveSuccess(result) {

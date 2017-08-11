@@ -87,10 +87,14 @@
 
         <div class="form-group">
             <label data-translate="omsApp.producto.categoria" for="field_categoria">Categoria</label>
-            <select class="form-control" id="field_categoria" name="categoria" ng-model="vm.producto.categoriaId"
-                    ng-options="categoria.id as categoria.categoria for categoria in vm.categorias">
+            <select class="form-control" id="field_categoria" name="categoria" ng-model="vm.producto.categoria"
+                    ng-options="categoria.categoria as categoria.categoria for categoria in vm.categorias">
                 <option value=""></option>
             </select>
+            <!--<select class="form-control" id="field_categoria" name="categoria" ng-model="vm.producto.categoriaId"-->
+                    <!--ng-options="categoria.id as categoria.categoria for categoria in vm.categorias">-->
+                <!--<option value=""></option>-->
+            <!--</select>-->
         </div>
 
         <label for="field_rel_proveedores">Proveedor</label>
@@ -101,8 +105,7 @@
             </input>
             <div ng-show="vm.proveedoresChecked[proveedor.id]" class="form-group">
                 <label for="field_id_producto_proveedor">Id. del producto para el proveedor</label>
-                <input type="text" id="field_id_producto_proveedor" ng-model="vm.idProductEnProv[proveedor.id]"
-                />
+                <input type="number" id="field_id_producto_proveedor" ng-model="vm.idProductEnProv[proveedor.id]"/>
             </div>
         </div>
 

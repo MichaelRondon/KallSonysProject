@@ -9,6 +9,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.puj.aes.pica.asperisk.domain.enumeration.Estado;
 import lombok.Data;
 
@@ -30,15 +33,22 @@ public class ProductoDTO implements Serializable {
 
     private Integer disponibilidad;
 
+    @JsonProperty("fecha-rev-disponibilidad")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Instant fechaRevDisponibilidad;
 
     private String marca;
 
+    @JsonProperty("key-words")
     private List<String> keyWords;
 
-    private Long categoriaId;
+    private List<ProveedorInfoDTO> proveedores;
 
-    private String categoriaCategoria;
+    private String categoria;
+
+//    private Long categoriaId;
+//
+//    private String categoriaCategoria;
 
     @Override
     public boolean equals(Object o) {
@@ -76,20 +86,12 @@ public class ProductoDTO implements Serializable {
             "}";
     }
 
-    public String getCategoriaCategoria() {
-        return categoriaCategoria;
+    public String getCategoria() {
+        return categoria;
     }
 
-    public void setCategoriaCategoria(String categoriaCategoria) {
-        this.categoriaCategoria = categoriaCategoria;
-    }
-
-    public Long getCategoriaId() {
-        return categoriaId;
-    }
-
-    public void setCategoriaId(Long categoriaId) {
-        this.categoriaId = categoriaId;
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public List<String> getKeyWords() {
@@ -160,7 +162,21 @@ public class ProductoDTO implements Serializable {
         return marca;
     }
 
+    public List<ProveedorInfoDTO> getProveedores() {
+        return proveedores;
+    }
+
+    public void setProveedores(List<ProveedorInfoDTO> proveedores) {
+        this.proveedores = proveedores;
+    }
+
     public void setMarca(String marca) {
         this.marca = marca;
+    }
+
+    @Data
+    public class ProveedorInfoDTO{
+        private Long id;
+        private String idProducto;
     }
 }
