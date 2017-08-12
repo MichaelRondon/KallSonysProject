@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<organization:Organization xmlns:organization="http://documentation.bonitasoft.com/organization-xml-schema/1.1">
+  <customUserInfoDefinitions/>
+  <users>
+    <user userName="diego">
+      <firstName>Diego</firstName>
+      <lastName>Sanchez</lastName>
+      <manager></manager>
+      <personalData/>
+      <professionalData/>
+      <password encrypted="false">bpm</password>
+      <customUserInfoValues/>
+    </user>
+    <user userName="felipe">
+      <firstName>Felipe</firstName>
+      <lastName>Grisales</lastName>
+      <manager></manager>
+      <personalData/>
+      <professionalData/>
+      <password encrypted="false">bpm</password>
+      <customUserInfoValues/>
+    </user>
+    <user userName="david">
+      <firstName>David</firstName>
+      <lastName>Camacho</lastName>
+      <manager></manager>
+      <personalData/>
+      <professionalData/>
+      <password encrypted="false">bpm</password>
+      <customUserInfoValues/>
+    </user>
+    <user userName="michael">
+      <firstName>Michael</firstName>
+      <lastName>Rondon</lastName>
+      <manager></manager>
+      <personalData/>
+      <professionalData/>
+      <password encrypted="false">bpm</password>
+      <customUserInfoValues/>
+    </user>
+    <user userName="juan">
+      <firstName>Juan</firstName>
+      <lastName>Jimenez</lastName>
+      <manager></manager>
+      <personalData/>
+      <professionalData/>
+      <password encrypted="false">bpm</password>
+      <customUserInfoValues/>
+    </user>
+  </users>
+  <roles>
+    <role name="member">
+      <displayName>member</displayName>
+    </role>
+  </roles>
+  <groups>
+    <group name="medicoIPSGroup">
+      <displayName>medicoIPSGroup</displayName>
+    </group>
+    <group name="enfermeroBOGroup">
+      <displayName>enfermeroBOGroup</displayName>
+    </group>
+    <group name="medicoBOGroup">
+      <displayName>medicoBOGroup</displayName>
+    </group>
+    <group name="areaJuridicaGroup">
+      <displayName>areaJuridicaGroup</displayName>
+    </group>
+    <group name="analistaBOGroup">
+      <displayName>analistaBOGroup</displayName>
+    </group>
+  </groups>
+  <memberships>
+    <membership>
+      <userName>diego</userName>
+      <roleName>member</roleName>
+      <groupName>medicoIPSGroup</groupName>
+    </membership>
+    <membership>
+      <userName>felipe</userName>
+      <roleName>member</roleName>
+      <groupName>enfermeroBOGroup</groupName>
+    </membership>
+    <membership>
+      <userName>david</userName>
+      <roleName>member</roleName>
+      <groupName>medicoBOGroup</groupName>
+    </membership>
+    <membership>
+      <userName>michael</userName>
+      <roleName>member</roleName>
+      <groupName>areaJuridicaGroup</groupName>
+    </membership>
+    <membership>
+      <userName>juan</userName>
+      <roleName>member</roleName>
+      <groupName>analistaBOGroup</groupName>
+    </membership>
+  </memberships>
+</organization:Organization>
