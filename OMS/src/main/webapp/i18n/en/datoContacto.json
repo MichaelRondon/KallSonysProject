@@ -1,0 +1,23 @@
+{
+    "omsApp": {
+        "datoContacto" : {
+            "home": {
+                "title": "Dato Contactos",
+                "createLabel": "Create a new Dato Contacto",
+                "createOrEditLabel": "Create or edit a Dato Contacto"
+            },
+            "created": "A new Dato Contacto is created with identifier {{ param }}",
+            "updated": "A Dato Contacto is updated with identifier {{ param }}",
+            "deleted": "A Dato Contacto is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Dato Contacto {{ id }}?"
+            },
+            "detail": {
+                "title": "Dato Contacto"
+            },
+            "tipoDatoContacto": "Tipo Dato Contacto",
+            "valor": "Valor",
+            "proveedor": "Proveedor"
+        }
+    }
+}

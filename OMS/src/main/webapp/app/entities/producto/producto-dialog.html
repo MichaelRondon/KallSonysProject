@@ -1,0 +1,122 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;
+        </button>
+        <h4 class="modal-title" id="myProductoLabel" data-translate="omsApp.producto.home.createOrEditLabel">Create or
+            edit a Producto</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.producto.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   ng-model="vm.producto.id" readonly/>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="omsApp.producto.nombre" for="field_nombre">Nombre</label>
+            <input type="text" class="form-control" name="nombre" id="field_nombre"
+                   ng-model="vm.producto.nombre"
+                   required/>
+            <div ng-show="editForm.nombre.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.nombre.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="omsApp.producto.descripcion" for="field_descripcion">Descripcion</label>
+            <input type="text" class="form-control" name="descripcion" id="field_descripcion"
+                   ng-model="vm.producto.descripcion"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="omsApp.producto.precio" for="field_precio">Precio</label>
+            <input type="number" class="form-control" name="precio" id="field_precio"
+                   ng-model="vm.producto.precio"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="omsApp.producto.estado" for="field_estado">Estado</label>
+            <select class="form-control" name="estado" ng-model="vm.producto.estado" id="field_estado">
+                <option value="ACTIVO" data-translate="omsApp.Estado.ACTIVO">ACTIVO</option>
+                <option value="INACTIVO" data-translate="omsApp.Estado.INACTIVO">INACTIVO</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="omsApp.producto.disponibilidad" for="field_disponibilidad">Disponibilidad</label>
+            <input type="number" class="form-control" name="disponibilidad" id="field_disponibilidad"
+                   ng-model="vm.producto.disponibilidad"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="omsApp.producto.fechaRevDisponibilidad"
+                   for="field_fechaRevDisponibilidad">Fecha Rev Disponibilidad</label>
+            <div class="input-group">
+                <input id="field_fechaRevDisponibilidad" type="text" class="form-control" name="fechaRevDisponibilidad"
+                       datetime-picker="{{dateformat}}" ng-model="vm.producto.fechaRevDisponibilidad"
+                       is-open="vm.datePickerOpenStatus.fechaRevDisponibilidad"
+                />
+                <span class="input-group-btn">
+                        <button type="button" class="btn btn-default"
+                                ng-click="vm.openCalendar('fechaRevDisponibilidad')"><i
+                            class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="omsApp.producto.marca" for="field_marca">Marca</label>
+            <input type="text" class="form-control" name="marca" id="field_marca"
+                   ng-model="vm.producto.marca"
+            />
+        </div>
+        <!--<div class="form-group">-->
+        <!--<label class="control-label" data-translate="omsApp.producto.keyWords" for="field_keyWords">Key Words</label>-->
+        <!--<input type="text" class="form-control" name="keyWords" id="field_keyWords"-->
+        <!--ng-model="vm.producto.keyWords"-->
+        <!--/>-->
+        <!--</div>-->
+
+        <div class="form-group">
+            <label class="control-label" for="field_keyWords2">Key Words (Presione Enter por cada etiqueta)</label>
+            <tags-input id="field_keyWords2" ng-model="vm.tags"></tags-input>
+            <!--<p>Model: {{vm.tags}}</p>-->
+        </div>
+
+        <div class="form-group">
+            <label data-translate="omsApp.producto.categoria" for="field_categoria">Categoria</label>
+            <select class="form-control" id="field_categoria" name="categoria" ng-model="vm.producto.categoria"
+                    ng-options="categoria.categoria as categoria.categoria for categoria in vm.categorias">
+                <option value=""></option>
+            </select>
+            <!--<select class="form-control" id="field_categoria" name="categoria" ng-model="vm.producto.categoriaId"-->
+                    <!--ng-options="categoria.id as categoria.categoria for categoria in vm.categorias">-->
+                <!--<option value=""></option>-->
+            <!--</select>-->
+        </div>
+
+        <label for="field_rel_proveedores">Proveedor</label>
+        <div ng-repeat="proveedor in vm.proveedores" id="field_rel_proveedores">
+            <input type="checkbox" value="{{proveedor.id}}" ng-change="vm.stateChanged(proveedor.id)"
+                   ng-model="vm.proveedoresChecked[proveedor.id]">
+            {{proveedor.nombre}}
+            </input>
+            <div ng-show="vm.proveedoresChecked[proveedor.id]" class="form-group">
+                <label for="field_id_producto_proveedor">Id. del producto para el proveedor</label>
+                <input type="number" id="field_id_producto_proveedor" ng-model="vm.idProductEnProv[proveedor.id]"/>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+            data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

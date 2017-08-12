@@ -1,0 +1,11 @@
+{
+    "omsApp": {
+        "TipoDatoContacto" : {
+            "null": "",
+            "TELEFONO": "TELEFONO",
+            "DIRECCION": "DIRECCION",
+            "WEB_PAGE": "WEB_PAGE",
+            "EMAIL": "EMAIL"
+        }
+    }
+}

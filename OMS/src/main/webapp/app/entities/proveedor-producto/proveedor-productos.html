@@ -1,0 +1,64 @@
+<div>
+    <h2 data-translate="omsApp.proveedorProducto.home.title">Proveedor Productos</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="proveedor-producto.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="omsApp.proveedorProducto.home.createLabel">
+                        Create new Proveedor Producto
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span data-translate="global.field.id">ID</span></th>
+                    <th><span data-translate="omsApp.proveedorProducto.idProductoEnProveedor">Id Producto En Proveedor</span></th>
+                    <th><span data-translate="omsApp.proveedorProducto.proveedor">Proveedor</span></th>
+                    <th><span data-translate="omsApp.proveedorProducto.producto">Producto</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="proveedorProducto in vm.proveedorProductos track by proveedorProducto.id">
+                    <td><a ui-sref="proveedor-producto-detail({id:proveedorProducto.id})">{{proveedorProducto.id}}</a></td>
+                    <td>{{proveedorProducto.idProductoEnProveedor}}</td>
+                    <td>
+                        <a ui-sref="proveedor-detail({id:proveedorProducto.proveedorId})">{{proveedorProducto.proveedorId}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="producto-detail({id:proveedorProducto.productoId})">{{proveedorProducto.productoId}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="proveedor-producto-detail({id:proveedorProducto.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="proveedor-producto.edit({id:proveedorProducto.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="proveedor-producto.delete({id:proveedorProducto.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

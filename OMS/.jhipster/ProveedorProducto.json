@@ -1,0 +1,28 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "proveedor",
+            "otherEntityName": "proveedor",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "producto",
+            "otherEntityName": "producto",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "idProductoEnProveedor",
+            "fieldType": "Long"
+        }
+    ],
+    "changelogDate": "20170811053457",
+    "entityTableName": "proveedor_producto",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass"
+}

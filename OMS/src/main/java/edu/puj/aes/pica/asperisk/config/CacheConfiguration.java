@@ -43,6 +43,16 @@ public class CacheConfiguration {
             cm.createCache(edu.puj.aes.pica.asperisk.domain.User.class.getName(), jcacheConfiguration);
             cm.createCache(edu.puj.aes.pica.asperisk.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(edu.puj.aes.pica.asperisk.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            cm.createCache(edu.puj.aes.pica.asperisk.domain.Producto.class.getName(), jcacheConfiguration);
+            cm.createCache(edu.puj.aes.pica.asperisk.domain.Producto.class.getName() + ".proveedores", jcacheConfiguration);
+            cm.createCache(edu.puj.aes.pica.asperisk.domain.Campania.class.getName(), jcacheConfiguration);
+            cm.createCache(edu.puj.aes.pica.asperisk.domain.Campania.class.getName() + ".productos", jcacheConfiguration);
+            cm.createCache(edu.puj.aes.pica.asperisk.domain.DatoContacto.class.getName(), jcacheConfiguration);
+            cm.createCache(edu.puj.aes.pica.asperisk.domain.Proveedor.class.getName(), jcacheConfiguration);
+            cm.createCache(edu.puj.aes.pica.asperisk.domain.Proveedor.class.getName() + ".datosContactos", jcacheConfiguration);
+            cm.createCache(edu.puj.aes.pica.asperisk.domain.Proveedor.class.getName() + ".productos", jcacheConfiguration);
+            cm.createCache(edu.puj.aes.pica.asperisk.domain.ProveedorProducto.class.getName(), jcacheConfiguration);
+            cm.createCache(edu.puj.aes.pica.asperisk.domain.Categoria.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }
