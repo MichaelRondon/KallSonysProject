@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://card.com.co/" xmlns:xsd1="http://card.com.co/CreditCardValidation" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" name="CreditCardValidation" targetNamespace="http://card.com.co/">
+<wsdl:import xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" namespace="http://card.com.co/" location="CreditCardValidation.wsdl"/>
+<wsdl:binding xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="ValidateCreditCardBinding" type="tns:ValidateCreditCard">
+<soap:binding xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<wsdl:operation name="VerifyCC">
+<soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="VerifyCC_action"/>
+<wsdl:input name="CreditCardInfo">
+<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+</wsdl:output>
+<wsdl:fault name="NegativeCreditBalance">
+<soap:fault xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="NegativeCreditBalance" use="literal"/>
+</wsdl:fault>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="ValidateCreditCardService">
+<wsdl:port name="ValidateCreditCardPort" binding="tns:ValidateCreditCardBinding">
+<soap:address xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" location="REPLACE_WITH_ACTUAL_URL"/>
+</wsdl:port>
+</wsdl:service>
+</definitions>

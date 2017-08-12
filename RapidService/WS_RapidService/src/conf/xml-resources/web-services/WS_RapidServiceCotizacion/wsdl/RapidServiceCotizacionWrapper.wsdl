@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd1="http://rapidservice.com.co/RapidServiceCotizacion" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://rapidservice.com.co/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="RapidServiceCotizacion" targetNamespace="http://rapidservice.com.co/">
+<wsdl:import xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" namespace="http://rapidservice.com.co/" location="RapidServiceCotizacion.wsdl"/>
+<wsdl:binding xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="RapidServiceBinding" type="tns:RapidService">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<wsdl:operation name="orderQuoute">
+<soap:operation soapAction="orderQuoute_action"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="processQuoute">
+<soap:operation soapAction="processQuoute_action"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="RapidServiceService">
+<wsdl:port name="RapidServicePort" binding="tns:RapidServiceBinding">
+<soap:address location="REPLACE_WITH_ACTUAL_URL"/>
+</wsdl:port>
+</wsdl:service>
+</definitions>

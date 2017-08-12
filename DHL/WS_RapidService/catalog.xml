@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/E:/Usuario-pc/Documents/Contratos/src/java/WSDL/RapidServiceCotizacion.wsdl" uri="src/conf/xml-resources/web-services/WS_RapidServiceCotizacion/wsdl/RapidServiceCotizacion.wsdl"/>
+</catalog>

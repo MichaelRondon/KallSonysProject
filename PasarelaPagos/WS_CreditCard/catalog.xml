@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/E:/Usuario-pc/Desktop/WSDL/CreditCardValidation.wsdl" uri="src/conf/xml-resources/web-services/CreditCardValidation/wsdl/CreditCardValidation.wsdl"/>
+    <system systemId="file:/E:/Usuario-pc/Documents/Contratos/src/java/WSDL/CreditCardValidation.wsdl" uri="src/conf/xml-resources/web-services/WS_CreditCardValidation/wsdl/CreditCardValidation.wsdl"/>
+</catalog>

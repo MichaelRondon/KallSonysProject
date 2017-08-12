@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions 
+    xmlns:tns="http://creditcard.com.co"
+    xmlns:xsd1="http://creditcard/CreditCardValidation"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+    name="CreditCardValidation"
+    targetNamespace="http://creditcard.com.co/">
+    <types>
+    <schema>
+            <complexType name="CreditCard">
+                <sequence>
+                    <element name="ccType" type="string"/>
+                    <element name="ccNum" type="string"/>
+                </sequence>
+            </complexType>            
+            <element name="CreditCard" type="types:CreditCard"/>
+            <element name="valid" type="boolean"/>
+            <element name="error" type="string"/>
+    </schema>
+    </types>
+    <message name="CreditCardValidationRequestMessage">
+        <part name="CreditCard" type="types:CreditCard"/>
+    </message>
+    <message name="CreditCardValidationResponseMessage">
+        <part name="valid" type="types:valid"/>
+    </message>
+    <message name="CreditCardValidationFaultMessage">
+        <part name="error" type="types:error"/>
+    </message>
+    <portType name="ValidateCreditCard">
+        <operation name="VerifyCC">
+            <input name="CreditCardInfo" message="tns:CreditCardValidationRequestMessage"/>
+            <output message="tns:CreditCardValidationResponseMessage"/>
+            <fault name="NegativeCreditBalance" message="tns:CreditCardValidationFaultMessage"/>
+        </operation>
+    </portType>
+</definitions>

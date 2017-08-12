@@ -46,3 +46,5 @@ Sony/target/
 log/
 
 Sony/nb-configuration\.xml
+/Sony/WS_SonyService/build/
+/Sony/WS_SonyService/nbproject/private/
