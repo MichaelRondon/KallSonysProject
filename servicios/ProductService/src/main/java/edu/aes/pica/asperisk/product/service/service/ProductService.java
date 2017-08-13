@@ -11,5 +11,6 @@ public interface ProductService {
     ProductsResponse consultarHistorico(HistoricoRequest historicoRequest);
     ProductsResponse buscar(SearchRequest searchRequest);
     CampaignResponse campanias(CampaignRequest campaniasRequest);
+    TestResponse test();
 
 }

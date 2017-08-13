@@ -86,5 +86,15 @@ public class ProductServiceDummy implements ProductService {
         productsResponse.setSize(cantidadFilas);
         return productsResponse;
     }
+
+    @Override
+    public TestResponse test() {
+        TestResponse testResponse = new TestResponse();
+        testResponse.setNombre("Pepito Perez");
+        testResponse.setParametro2("Primer parámetro de prueba");
+        testResponse.setParametro3("Segundo parámetro de prueba");
+        testResponse.setParametro4("Tercer parámetro de prueba");
+        return testResponse;
+    }
 }
 

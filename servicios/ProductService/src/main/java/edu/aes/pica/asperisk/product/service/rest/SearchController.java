@@ -10,14 +10,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
+@CrossOrigin(maxAge = 1728000)
 @RestController
 @RequestMapping("/api/producto")
 public class SearchController {
@@ -156,4 +154,11 @@ public class SearchController {
         LOGGER.info("Encuentra campanias: {}", campaignResponse);
         return new ResponseEntity(campaignResponse, HttpStatus.OK);
     }
-}
+
+
+    @RequestMapping(value = "/test-connection", method = RequestMethod.GET)
+    public ResponseEntity<TestResponse> campanias() {
+        TestResponse test = productService.test();
+        LOGGER.info("Encuentra testResponse: {}", test);
+        return new ResponseEntity(test, HttpStatus.OK);
+}}
