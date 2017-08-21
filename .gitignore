@@ -48,3 +48,6 @@ log/
 Sony/nb-configuration\.xml
 /Sony/WS_SonyService/build/
 /Sony/WS_SonyService/nbproject/private/
+/DHL/WS_RapidService/nbproject/private/
+/RapidService/WS_RapidService/nbproject/private/
+/PasarelaPagos/WS_CreditCard/nbproject/private/

@@ -1,7 +1,6 @@
 package edu.aes.pica.asperisk.product.service.persistence.elasticsearch;
 
 
-import lombok.Getter;
 import lombok.ToString;
 
 @ToString

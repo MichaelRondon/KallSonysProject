@@ -1,5 +1,6 @@
 package edu.aes.pica.asperisk.product.service.service;
 
+import edu.aes.pica.asperisk.product.service.exceptions.ProductTransactionException;
 import edu.aes.pica.asperisk.product.service.model.*;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.*;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -95,6 +96,11 @@ public class ProductServiceDummy implements ProductService {
         testResponse.setParametro3("Segundo parámetro de prueba");
         testResponse.setParametro4("Tercer parámetro de prueba");
         return testResponse;
+    }
+
+    @Override
+    public Product create(Product product) throws ProductTransactionException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
 

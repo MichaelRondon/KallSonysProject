@@ -1,5 +1,6 @@
 package edu.aes.pica.asperisk.product.service.rest;
 
+import edu.aes.pica.asperisk.product.service.exceptions.ProductTransactionException;
 import edu.aes.pica.asperisk.product.service.model.*;
 import edu.aes.pica.asperisk.product.service.service.ProductService;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.*;
@@ -13,7 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.net.URI;
 import java.util.Date;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @CrossOrigin(maxAge = 1728000)
 @RestController
@@ -26,21 +29,31 @@ public class SearchController {
     @Qualifier("dummy")
     private ProductService productService;
 
+    @Autowired
+    @Qualifier("elastic")
+    private ProductService elasticSearchService;
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Product> create(@RequestBody Product product) throws ProductTransactionException {
+        LOGGER.info("Ingresando a create");
+        product = elasticSearchService.create(product);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(product.getId()).toUri();
+        return ResponseEntity.created(location).build();
+    }
+
     @RequestMapping(value = "/historico/vendidos", method = RequestMethod.GET)
     public ResponseEntity<ProductsResponse> historico(@RequestParam(value = "categoria", defaultValue = "", required = false) String categoria,
-                                                      @RequestParam(value = "tamanio", required = false) Integer tamanio,
-
-                                                      @RequestParam(value = "fecha-min")
-                                                      @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaMin,
-                                                      @RequestParam(value = "fecha-max")
-                                                      @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaMax,
-
-                                                      @RequestParam(value = "page", required = false) Integer page,
-                                                      @RequestParam(value = "items-per-page", required = false) Integer itemsPerPage,
-                                                      @RequestParam(value = "sort", defaultValue = "", required = false) String sort,
-                                                      @RequestParam(value = "sort-type", required = false) SortType sortType,
-
-                                                      @RequestParam(value = "custom", defaultValue = "", required = false) String custom) {
+            @RequestParam(value = "tamanio", required = false) Integer tamanio,
+            @RequestParam(value = "fecha-min")
+            @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaMin,
+            @RequestParam(value = "fecha-max")
+            @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaMax,
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "items-per-page", required = false) Integer itemsPerPage,
+            @RequestParam(value = "sort", defaultValue = "", required = false) String sort,
+            @RequestParam(value = "sort-type", required = false) SortType sortType,
+            @RequestParam(value = "custom", defaultValue = "", required = false) String custom) {
 
         BasicRequest basicRequest = new BasicRequest();
         basicRequest.setCustom(custom);
@@ -69,23 +82,20 @@ public class SearchController {
 
     @RequestMapping(value = "/buscar", method = RequestMethod.GET)
     public ResponseEntity<ProductsResponse> buscar(@RequestParam(value = "id", required = false) Long id,
-                                                   @RequestParam(value = "nombre", defaultValue = "", required = false) String nombre,
-                                                   @RequestParam(value = "descripcion", defaultValue = "", required = false) String descripcion,
-                                                   @RequestParam(value = "categoria", defaultValue = "", required = false) String categoria,
-                                                   @RequestParam(value = "marca", defaultValue = "", required = false) String marca,
-                                                   @RequestParam(value = "precio-min", required = false) BigDecimal precioMin,
-                                                   @RequestParam(value = "precio-max", required = false) BigDecimal precioMax,
-                                                   @RequestParam(value = "proveedor", required = false) Long proveedor,
-
-                                                   @RequestParam(value = "ip", defaultValue = "", required = false) String ip,
-                                                   @RequestParam(value = "cliente-id", required = false) Long clienteId,
-
-                                                   @RequestParam(value = "page", required = false) Integer page,
-                                                   @RequestParam(value = "items-per-page", defaultValue = "-1", required = false) Integer itemsPerPage,
-                                                   @RequestParam(value = "sort", defaultValue = "", required = false) String sort,
-                                                   @RequestParam(value = "sort-type", defaultValue = "", required = false) SortType sortType,
-
-                                                   @RequestParam(value = "custom", defaultValue = "", required = false) String custom) {
+            @RequestParam(value = "nombre", defaultValue = "", required = false) String nombre,
+            @RequestParam(value = "descripcion", defaultValue = "", required = false) String descripcion,
+            @RequestParam(value = "categoria", defaultValue = "", required = false) String categoria,
+            @RequestParam(value = "marca", defaultValue = "", required = false) String marca,
+            @RequestParam(value = "precio-min", required = false) BigDecimal precioMin,
+            @RequestParam(value = "precio-max", required = false) BigDecimal precioMax,
+            @RequestParam(value = "proveedor", required = false) Long proveedor,
+            @RequestParam(value = "ip", defaultValue = "", required = false) String ip,
+            @RequestParam(value = "cliente-id", required = false) Long clienteId,
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "items-per-page", defaultValue = "-1", required = false) Integer itemsPerPage,
+            @RequestParam(value = "sort", defaultValue = "", required = false) String sort,
+            @RequestParam(value = "sort-type", defaultValue = "", required = false) SortType sortType,
+            @RequestParam(value = "custom", defaultValue = "", required = false) String custom) {
 
         BasicProveedor basicProveedor = new BasicProveedor();
         basicProveedor.setId(proveedor);
@@ -117,7 +127,6 @@ public class SearchController {
         searchRequest.setPrecioMax(precioMax);
         searchRequest.setPrecioMin(precioMin);
 
-
         LOGGER.info("Busca searchRequest: {}", searchRequest);
         ProductsResponse productsResponse = productService.buscar(searchRequest);
         LOGGER.info("Encuentra productsResponse: {}", productsResponse);
@@ -126,13 +135,11 @@ public class SearchController {
 
     @RequestMapping(value = "/campanias", method = RequestMethod.GET)
     public ResponseEntity<CampaignResponse> campanias(@RequestParam(value = "estado", defaultValue = "ACTIVO", required = false) State estado,
-
-                                               @RequestParam(value = "page", required = false) Integer page,
-                                               @RequestParam(value = "items-per-page", defaultValue = "-1", required = false) Integer itemsPerPage,
-                                               @RequestParam(value = "sort", defaultValue = "", required = false) String sort,
-                                               @RequestParam(value = "sort-type", defaultValue = "", required = false) SortType sortType,
-
-                                               @RequestParam(value = "custom", defaultValue = "", required = false) String custom) {
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "items-per-page", defaultValue = "-1", required = false) Integer itemsPerPage,
+            @RequestParam(value = "sort", defaultValue = "", required = false) String sort,
+            @RequestParam(value = "sort-type", defaultValue = "", required = false) SortType sortType,
+            @RequestParam(value = "custom", defaultValue = "", required = false) String custom) {
 
         CampaignRequest campaniasRequest = new CampaignRequest();
         campaniasRequest.setState(estado);
@@ -155,10 +162,10 @@ public class SearchController {
         return new ResponseEntity(campaignResponse, HttpStatus.OK);
     }
 
-
     @RequestMapping(value = "/test-connection", method = RequestMethod.GET)
     public ResponseEntity<TestResponse> campanias() {
         TestResponse test = productService.test();
         LOGGER.info("Encuentra testResponse: {}", test);
         return new ResponseEntity(test, HttpStatus.OK);
-}}
+    }
+}

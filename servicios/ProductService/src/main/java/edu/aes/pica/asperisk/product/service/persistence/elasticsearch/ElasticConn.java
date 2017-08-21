@@ -21,24 +21,17 @@ public class ElasticConn {
 
     protected final <R> R executeTransaction(Transaction<R> transaction, ElasticSearchInput input) throws ProductTransactionException {
 
-        TransportClient transportClient = null;
-        try {
-            transportClient = new PreBuiltTransportClient(Settings.EMPTY).addTransportAddress(
-                    new InetSocketTransportAddress(InetAddress.getByName(ELASTIC_SEARCH_HOST),
-                            ELASTIC_SEARCH_CLIENT_PORT)).addTransportAddress(
-                    new InetSocketTransportAddress(InetAddress.getByName(ELASTIC_SEARCH_DOCKER_HOST),
-                            ELASTIC_SEARCH_CLIENT_PORT));
-
-
+        try (TransportClient transportClient = new PreBuiltTransportClient(Settings.EMPTY)) {
+            transportClient.addTransportAddress(
+//                new InetSocketTransportAddress(InetAddress.getByName(ELASTIC_SEARCH_HOST),
+//                        ELASTIC_SEARCH_CLIENT_PORT)).addTransportAddress(
+                                new InetSocketTransportAddress(InetAddress.getByName(ELASTIC_SEARCH_DOCKER_HOST),
+                                        ELASTIC_SEARCH_CLIENT_PORT));
             return transaction.executeTransaction(input, transportClient);
         } catch (UnknownHostException e) {
             String errorMessage = String.format("\"Error conectandose al cliente de Elasticsearch con el host: {} y el puerto: {}");
             LOGGER.error(errorMessage);
             throw new ElasticsearchException(errorMessage);
-        } finally {
-            if (transportClient != null) {
-                transportClient.close();
-            }
         }
     }
 
