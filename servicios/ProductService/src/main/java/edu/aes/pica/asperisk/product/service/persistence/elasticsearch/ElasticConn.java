@@ -15,18 +15,23 @@ import java.net.UnknownHostException;
 public class ElasticConn {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ElasticConn.class);
-    public static final String ELASTIC_SEARCH_HOST = "192.168.99.1";
+    public static final String ELASTIC_SEARCH_HOST = "localhost";
+//    public static final String ELASTIC_SEARCH_HOST = "192.168.99.1";
     public static final String ELASTIC_SEARCH_DOCKER_HOST = "192.168.99.100";
     public static final Integer ELASTIC_SEARCH_CLIENT_PORT = 9300;
 
     protected final <R> R executeTransaction(Transaction<R> transaction, ElasticSearchInput input) throws ProductTransactionException {
+        Settings settings = Settings.builder()
+        .put("cluster.name", "elasticsearch").build();
 
-        try (TransportClient transportClient = new PreBuiltTransportClient(Settings.EMPTY)) {
+        try (TransportClient transportClient = new PreBuiltTransportClient(settings)) {
             transportClient.addTransportAddress(
-//                new InetSocketTransportAddress(InetAddress.getByName(ELASTIC_SEARCH_HOST),
-//                        ELASTIC_SEARCH_CLIENT_PORT)).addTransportAddress(
-                                new InetSocketTransportAddress(InetAddress.getByName(ELASTIC_SEARCH_DOCKER_HOST),
-                                        ELASTIC_SEARCH_CLIENT_PORT));
+                new InetSocketTransportAddress(InetAddress.getByName(ELASTIC_SEARCH_HOST),
+                        ELASTIC_SEARCH_CLIENT_PORT))
+//                    .addTransportAddress(
+//                                new InetSocketTransportAddress(InetAddress.getByName(ELASTIC_SEARCH_DOCKER_HOST),
+//                                        ELASTIC_SEARCH_CLIENT_PORT))
+            ;
             return transaction.executeTransaction(input, transportClient);
         } catch (UnknownHostException e) {
             String errorMessage = String.format("\"Error conectandose al cliente de Elasticsearch con el host: {} y el puerto: {}");

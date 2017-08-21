@@ -16,9 +16,11 @@ import edu.aes.pica.asperisk.product.service.model.SearchRequest;
 import edu.aes.pica.asperisk.product.service.model.TestResponse;
 import edu.aes.pica.asperisk.product.service.persistence.elasticsearch.ElasticConn;
 import edu.aes.pica.asperisk.product.service.persistence.elasticsearch.ElasticSearchInput;
+import edu.aes.pica.asperisk.product.service.persistence.elasticsearch.GetProductoById;
 import edu.aes.pica.asperisk.product.service.persistence.elasticsearch.SetSourceAndGet;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
 import java.io.IOException;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -61,20 +63,32 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             String productJson = mapper.writeValueAsString(product);
             ElasticSearchInput elasticSearchInput = new ElasticSearchInput();
             elasticSearchInput.setJson(productJson);
+            elasticSearchInput.setTipo("producto");
             IndexResponse indexResponse = executeTransaction(new SetSourceAndGet(), elasticSearchInput);
-            String index = indexResponse.getIndex();
-            return mapper.readValue(index, Product.class);
+            return findOne(indexResponse.getId());
         } catch (JsonProcessingException ex) {
             String errorMessage = String.format("Error convirtiendo el objeto Product en json. Objeto: %s, mensaje: %s",
-                    product, ex.getMessage());
-            LOGGER.error(errorMessage, ex);
-            throw new ProductTransactionException(errorMessage, ex);
-        } catch (IOException ex) {
-            String errorMessage = String.format("Error convirtiendo respuesta en Product. Objeto: %s, mensaje: %s",
                     product, ex.getMessage());
             LOGGER.error(errorMessage, ex);
             throw new ProductTransactionException(errorMessage, ex);
         }
     }
 
+    @Override
+    public Product findOne(String id) throws ProductTransactionException {
+        try {
+            ElasticSearchInput elasticSearchInput = new ElasticSearchInput();
+            elasticSearchInput.setTipo("producto");
+            elasticSearchInput.setId(id);
+            GetResponse getResponse = executeTransaction(new GetProductoById(), elasticSearchInput);
+            LOGGER.info("source: {}",getResponse.getSourceAsString());
+            return mapper.readValue(getResponse.getSourceAsString(), Product.class);
+        } catch (IOException ex) {
+            String errorMessage = String.format("Error convirtiendo respuesta en Product. id: %s, mensaje: %s",
+                    id, ex.getMessage());
+            LOGGER.error(errorMessage, ex);
+            throw new ProductTransactionException(errorMessage, ex);
+        }
+    }
+    
 }

@@ -14,5 +14,6 @@ public interface ProductService {
     CampaignResponse campanias(CampaignRequest campaniasRequest);
     TestResponse test();
     Product create(Product product)throws ProductTransactionException;
+    Product findOne(String id)throws ProductTransactionException;
 
 }
