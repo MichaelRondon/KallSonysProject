@@ -39,7 +39,21 @@ public class SearchController {
         product = elasticSearchService.create(product);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(product.getId()).toUri();
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(product);
+    }
+    
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    public ResponseEntity<Product> findOne(@PathVariable String id) throws ProductTransactionException {
+        LOGGER.info("Ingresando a create");
+        Product product = elasticSearchService.findOne(id);
+        return ResponseEntity.ok(product);
+    }
+    
+    @RequestMapping(value = "/scroll/{scrollId}",method = RequestMethod.GET)
+    public ResponseEntity<ProductScrollResponse> scrollAll(@PathVariable String scrollId) throws ProductTransactionException {
+        LOGGER.info("Ingresando a create");
+        ProductScrollResponse productScrollResponse = elasticSearchService.findAll(scrollId);
+        return ResponseEntity.ok(productScrollResponse);
     }
 
     @RequestMapping(value = "/historico/vendidos", method = RequestMethod.GET)

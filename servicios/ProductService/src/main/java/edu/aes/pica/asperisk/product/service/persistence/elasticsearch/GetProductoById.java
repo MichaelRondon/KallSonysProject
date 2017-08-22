@@ -1,7 +1,6 @@
 package edu.aes.pica.asperisk.product.service.persistence.elasticsearch;
 
 import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
