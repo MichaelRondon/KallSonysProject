@@ -6,8 +6,6 @@ import org.elasticsearch.client.transport.TransportClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
-
 public class UpdateAndGet extends Transaction<UpdateResponse> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SetSourceAndGet.class);
