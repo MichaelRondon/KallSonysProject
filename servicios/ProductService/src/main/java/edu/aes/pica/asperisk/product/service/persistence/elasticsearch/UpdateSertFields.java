@@ -32,13 +32,13 @@ public class UpdateSertFields extends Transaction<UpdateResponse> {
             throws ElasticsearchException {
         try {
             LOGGER.info("Ejecutar UpdateSertFields input:{}", input);
-            IndexRequest indexRequest = new IndexRequest(Transaction.INDEX, input.getTipo(), input.getId())
+            IndexRequest indexRequest = new IndexRequest(input.getIndex(), input.getTipo(), input.getId())
                     .source(fields);
-            UpdateRequest updateRequest = new UpdateRequest(Transaction.INDEX, input.getTipo(), input.getId())
+            UpdateRequest updateRequest = new UpdateRequest(input.getIndex(), input.getTipo(), input.getId())
                     .doc(fields)
                     .upsert(indexRequest);
             UpdateResponse response = transportClient.update(updateRequest).get();
-            LOGGER.info("Response. Index: {}, Type: {}, ID: {}, response: {}",
+            LOGGER.info("Response UpdateSertFields. Index: {}, Type: {}, ID: {}, response: {}",
                     response.getIndex(), response.getType(), response.getId(),
                     response);
             return response;

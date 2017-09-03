@@ -12,7 +12,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(SetSourceAndGet.cla
 @Override
 public GetResponse executeTransaction(ElasticSearchInput input, TransportClient transportClient) {
         LOGGER.info("Ejecutar getProductoById input:{}",input);
-        GetResponse response = transportClient.prepareGet(Transaction.INDEX, input.getTipo(), input.getId()).get();
+        GetResponse response = transportClient.prepareGet(input.getIndex(), input.getTipo(), input.getId()).get();
         LOGGER.info("Response. Index: {}, Type: {}, Id: {}, source: {}", response.getIndex(), response.getType(),
         response.getId(), response.getSource());
         return response;

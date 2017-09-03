@@ -30,7 +30,7 @@ public class SearchScroll extends Transaction<SearchResponse> {
 //        QueryBuilder queryBuilder = QueryBuilders.matchQuery("name", "kimchy elasticsearch");
         SearchResponse scrollResp;
         if (input.getId().equals(EMPTY_SCROLL_ID)) {
-            scrollResp = transportClient.prepareSearch(Transaction.INDEX, input.getTipo())
+            scrollResp = transportClient.prepareSearch(input.getIndex(), input.getTipo())
                     //        .addSort(FieldSortBuilder.DOC_FIELD_NAME, SortOrder.ASC)
                     .setScroll(new TimeValue(1000))
 //                    .setQuery(queryBuilder)

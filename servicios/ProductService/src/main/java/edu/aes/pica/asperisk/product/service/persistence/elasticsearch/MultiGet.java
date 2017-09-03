@@ -23,7 +23,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(MultiGet.class);
         LOGGER.info("Ejecutar MultiGet input:{}",input);
         MultiGetResponse multiGetItemResponses = transportClient
                 .prepareMultiGet()
-                .add(Transaction.INDEX, input.getTipo()).get();
+                .add(input.getIndex(), input.getTipo()).get();
         LOGGER.info("ResponseS. length: {}", multiGetItemResponses.getResponses().length);
         return multiGetItemResponses;
     }

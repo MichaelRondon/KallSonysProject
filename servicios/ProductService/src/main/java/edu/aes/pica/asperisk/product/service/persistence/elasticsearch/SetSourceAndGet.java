@@ -15,11 +15,11 @@ public class SetSourceAndGet extends Transaction<IndexResponse> {
         LOGGER.info("Ejecutar setSourceAndGet input:{}", input);
 
         IndexRequestBuilder prepareIndex = input.getId() == null
-                ? transportClient.prepareIndex(Transaction.INDEX, input.getTipo())
-                : transportClient.prepareIndex(Transaction.INDEX, input.getTipo(), input.getId());
+                ? transportClient.prepareIndex(input.getIndex(), input.getTipo())
+                : transportClient.prepareIndex(input.getIndex(), input.getTipo(), input.getId());
 
-        IndexResponse response = prepareIndex.setSource(input.getObject())
-                //                .setSource(input.getJson())
+        IndexResponse response = prepareIndex.setSource(input.getJson())
+                //.setSource(input.getObject())
                 .get();
         LOGGER.info("Response. Index: {}, Type: {}, ID: {}, response: {}", response.getIndex(), response.getType(),
                 response.getId(), response);

@@ -50,6 +50,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
 
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(ElasticSearchService.class);
     private final ObjectMapper mapper = new ObjectMapper();
+    private ElasticSearchInput elasticSearchInput;
 
     @Override
     public ProductsResponse consultarHistorico(HistoricoRequest historicoRequest) {
@@ -73,30 +74,28 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
 
     @Override
     public Product create(Product product) throws ProductTransactionException {
-//        try {
-//            String productJson = mapper.writeValueAsString(product);
-        Long nextIdProduct = this.nextIdProduct();
-        product.setId(nextIdProduct);
-        ElasticSearchInput elasticSearchInput = new ElasticSearchInput();
-//            elasticSearchInput.setJson(productJson);
-        elasticSearchInput.setTipo("producto");
-        elasticSearchInput.setObject(product);
-        elasticSearchInput.setId(nextIdProduct.toString());
-        IndexResponse indexResponse = executeTransaction(new SetSourceAndGet(), elasticSearchInput);
-        return findOne(indexResponse.getId());
-//        } catch (JsonProcessingException ex) {
-//            String errorMessage = String.format("Error convirtiendo el objeto Product en json. Objeto: %s, mensaje: %s",
-//                    product, ex.getMessage());
-//            LOGGER.error(errorMessage, ex);
-//            throw new ProductTransactionException(errorMessage, ex);
-//        }
+        try {
+            Long nextIdProduct = this.nextIdProduct();
+            product.setId(nextIdProduct);
+            String productJson = mapper.writeValueAsString(product);
+            
+            elasticSearchInput = new ElasticSearchInput();
+            elasticSearchInput.setJson(productJson);
+            elasticSearchInput.setId(nextIdProduct.toString());
+            IndexResponse indexResponse = executeTransaction(new SetSourceAndGet(), elasticSearchInput);
+            return findOne(indexResponse.getId());
+        } catch (JsonProcessingException ex) {
+            String errorMessage = String.format("Error convirtiendo el objeto Product en json. Objeto: %s, mensaje: %s",
+                    product, ex.getMessage());
+            LOGGER.error(errorMessage, ex);
+            throw new ProductTransactionException(errorMessage, ex);
+        }
     }
 
     @Override
     public Product findOne(String id) throws ProductTransactionException {
         try {
-            ElasticSearchInput elasticSearchInput = new ElasticSearchInput();
-            elasticSearchInput.setTipo("producto");
+            elasticSearchInput = new ElasticSearchInput();
             elasticSearchInput.setId(id);
             GetResponse getResponse = executeTransaction(new GetProductoById(), elasticSearchInput);
             LOGGER.info("source: {}", getResponse.getSourceAsString());
@@ -117,23 +116,23 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
     @Override
     public ProductScrollResponse findAll(String scrollId) throws ProductTransactionException {
         try {
-            ElasticSearchInput elasticSearchInput = new ElasticSearchInput();
-            elasticSearchInput.setTipo("producto");
+            elasticSearchInput = new ElasticSearchInput();
             elasticSearchInput.setId(scrollId);
             SearchResponse searchResponse = executeTransaction(new SearchScroll(), elasticSearchInput);
-            ProductScrollResponse productScrollResponse = new ProductScrollResponse();
             List<Product> collect = Arrays.stream(searchResponse.getHits()
                     .getHits()).parallel()
                     .map(hit -> mapToProduct(hit.getSourceAsString()))
                     .collect(Collectors.toList());
+            ProductScrollResponse productScrollResponse = new ProductScrollResponse();
             productScrollResponse.setProductos(collect);
             productScrollResponse.setScrollId(
                     productScrollResponse.getProductos().isEmpty()
-                            ? SearchScroll.EMPTY_SCROLL_ID
-                            : searchResponse.getScrollId());
+                    ? SearchScroll.EMPTY_SCROLL_ID
+                    : searchResponse.getScrollId());
+            productScrollResponse.setTotalElements(collect.size());
             LOGGER.info("ProductScrollResponse: {}", productScrollResponse);
             return productScrollResponse;
-        } catch (RuntimeException ex) {
+        } catch (org.elasticsearch.index.IndexNotFoundException ex) {
             String errorMessage = String.format("Error convirtiendo respuesta en Product. scrollId: %s, mensaje: %s",
                     scrollId, ex.getMessage());
             LOGGER.error(errorMessage, ex);
@@ -145,24 +144,29 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         try {
             LOGGER.info("Consulta el siguiente valor de la secuencia para los productos");
             Long longValue = 0L;
-            ElasticSearchInput elasticSearchInput = new ElasticSearchInput();
-//            elasticSearchInput.setJson(productJson);
+            elasticSearchInput = new ElasticSearchInput();
+            elasticSearchInput.setIndex("seq-producto");
             elasticSearchInput.setTipo("seq-producto");
             elasticSearchInput.setId("1");
             try {
                 GetResponse getResponse = executeTransaction(new GetProductoById(), elasticSearchInput);
-                longValue = (Long) getResponse.getField("next").getValue();
+                longValue = Long.parseLong((String) getResponse.getSource().get("next"));
                 longValue++;
-            } catch (Exception ex) {
+            } catch (org.elasticsearch.index.IndexNotFoundException ex) {
                 String errorMessage = String.format("No es posible obtener el siguiente valor en la secuencia del producto: %s",
+                        ex.getMessage());
+                LOGGER.error(errorMessage, ex);
+            } catch (NumberFormatException ex) {
+                String errorMessage = String.format("Número invalido en el siguiente valor de la secuencia. Mensaje: %s",
                         ex.getMessage());
                 LOGGER.error(errorMessage, ex);
             }
 
             Map<String, Object> map = new HashMap<>();
             map.put("next", longValue.toString());
-            UpdateResponse updateResponse = executeTransaction(new UpdateSertFields(map), elasticSearchInput);
-            return (Long) updateResponse.getGetResult().field("next").getValue();
+            executeTransaction(new UpdateSertFields(map), elasticSearchInput);
+            LOGGER.info("Fin executeTransaction nextIdProduct: {}", longValue);
+            return longValue;
 
         } catch (ProductTransactionException ex) {
             String errorMessage = String.format("Error consultando el siguiente valor de la secuencia para los producto, mensaje: %s",

@@ -49,8 +49,10 @@ public class SearchController {
         return ResponseEntity.ok(product);
     }
     
-    @RequestMapping(value = "/scroll/{scrollId}",method = RequestMethod.GET)
-    public ResponseEntity<ProductScrollResponse> scrollAll(@PathVariable String scrollId) throws ProductTransactionException {
+    @RequestMapping(value = "/scroll",method = RequestMethod.GET)
+    public ResponseEntity<ProductScrollResponse> scrollAll(
+            @RequestParam(value = "scrollId", defaultValue = "-999", required = false) String scrollId) 
+            throws ProductTransactionException {
         LOGGER.info("Ingresando a create");
         ProductScrollResponse productScrollResponse = elasticSearchService.findAll(scrollId);
         return ResponseEntity.ok(productScrollResponse);

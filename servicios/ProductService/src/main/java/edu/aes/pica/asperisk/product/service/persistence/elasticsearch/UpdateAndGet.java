@@ -13,7 +13,7 @@ public class UpdateAndGet extends Transaction<UpdateResponse> {
     @Override
     public UpdateResponse executeTransaction(ElasticSearchInput input, TransportClient transportClient) {
         LOGGER.info("Ejecutar UpdateAndGet input:{}",input);
-        UpdateResponse response = transportClient.prepareUpdate(Transaction.INDEX, input.getTipo(), input.getId())
+        UpdateResponse response = transportClient.prepareUpdate(input.getIndex(), input.getTipo(), input.getId())
                 .setDoc(input.getJson())
                 .get();
         LOGGER.info("Response. Index: {}, Type: {}, ID: {}, response: {}", response.getIndex(), response.getType(),

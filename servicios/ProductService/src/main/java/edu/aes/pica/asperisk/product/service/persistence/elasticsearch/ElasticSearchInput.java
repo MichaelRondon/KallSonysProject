@@ -11,5 +11,6 @@ public class ElasticSearchInput {
     private String id;
     private String json;
     private Object object;
-    private String tipo;
+    private String tipo = Transaction.INDEX;
+    private String index = Transaction.INDEX;
 }
