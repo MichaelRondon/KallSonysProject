@@ -53,7 +53,7 @@ public class ProductServiceDummy implements ProductService {
         campanign.setId(10002L);
         campanign.setNombre("Campaña 2");
         campaignResponse.getCampanias().add(campanign);
-        campaignResponse.setSize(campaignResponse.getCampanias().size());
+        campaignResponse.setTotalElements(campaignResponse.getCampanias().size());
 
         return campaignResponse;
     }
@@ -84,7 +84,7 @@ public class ProductServiceDummy implements ProductService {
         }
         ProductsResponse productsResponse = new ProductsResponse();
         productsResponse.setProductos(productList);
-        productsResponse.setSize(cantidadFilas);
+        productsResponse.setTotalElements(cantidadFilas);
         return productsResponse;
     }
 
@@ -114,7 +114,7 @@ public class ProductServiceDummy implements ProductService {
     }
 
     @Override
-    public ProductScrollResponse findAll(String scrollId) throws ProductTransactionException {
+    public ProductScrollResponse findAll(ScrollSearchRequest scrollSearchRequest) throws ProductTransactionException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

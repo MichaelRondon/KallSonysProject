@@ -13,6 +13,7 @@ import edu.aes.pica.asperisk.product.service.model.CampaignResponse;
 import edu.aes.pica.asperisk.product.service.model.HistoricoRequest;
 import edu.aes.pica.asperisk.product.service.model.ProductScrollResponse;
 import edu.aes.pica.asperisk.product.service.model.ProductsResponse;
+import edu.aes.pica.asperisk.product.service.model.ScrollSearchRequest;
 import edu.aes.pica.asperisk.product.service.model.SearchRequest;
 import edu.aes.pica.asperisk.product.service.model.TestResponse;
 import edu.aes.pica.asperisk.product.service.persistence.elasticsearch.ElasticConn;
@@ -21,24 +22,28 @@ import edu.aes.pica.asperisk.product.service.persistence.elasticsearch.GetProduc
 import edu.aes.pica.asperisk.product.service.persistence.elasticsearch.SearchScroll;
 import edu.aes.pica.asperisk.product.service.persistence.elasticsearch.SetSourceAndGet;
 import edu.aes.pica.asperisk.product.service.persistence.elasticsearch.UpdateSertFields;
+import edu.puj.aes.pica.asperisk.oms.utilities.model.BasicSearchParams;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
+import edu.puj.aes.pica.asperisk.oms.utilities.model.Response;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+import javax.annotation.Resource;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.action.update.UpdateResponse;
-import org.elasticsearch.index.get.GetField;
-import org.elasticsearch.search.SearchHits;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.Cache;
 import org.springframework.stereotype.Service;
+
+import org.springframework.cache.CacheManager;
 
 /**
  *
@@ -51,6 +56,9 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(ElasticSearchService.class);
     private final ObjectMapper mapper = new ObjectMapper();
     private ElasticSearchInput elasticSearchInput;
+
+    @Autowired
+    private CacheManager cacheManager;
 
     @Override
     public ProductsResponse consultarHistorico(HistoricoRequest historicoRequest) {
@@ -78,7 +86,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             Long nextIdProduct = this.nextIdProduct();
             product.setId(nextIdProduct);
             String productJson = mapper.writeValueAsString(product);
-            
+
             elasticSearchInput = new ElasticSearchInput();
             elasticSearchInput.setJson(productJson);
             elasticSearchInput.setId(nextIdProduct.toString());
@@ -114,27 +122,27 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
     }
 
     @Override
-    public ProductScrollResponse findAll(String scrollId) throws ProductTransactionException {
+    public ProductScrollResponse findAll(ScrollSearchRequest scrollSearchRequest) throws ProductTransactionException {
+        ProductScrollResponse productScrollResponse = new ProductScrollResponse();
+        productScrollResponse.setScrollId(scrollSearchRequest.getScrollId());
+        List totalList = getProductFromCache(scrollSearchRequest.getScrollId());
         try {
-            elasticSearchInput = new ElasticSearchInput();
-            elasticSearchInput.setId(scrollId);
-            SearchResponse searchResponse = executeTransaction(new SearchScroll(), elasticSearchInput);
-            List<Product> collect = Arrays.stream(searchResponse.getHits()
-                    .getHits()).parallel()
-                    .map(hit -> mapToProduct(hit.getSourceAsString()))
-                    .collect(Collectors.toList());
-            ProductScrollResponse productScrollResponse = new ProductScrollResponse();
-            productScrollResponse.setProductos(collect);
-            productScrollResponse.setScrollId(
-                    productScrollResponse.getProductos().isEmpty()
-                    ? SearchScroll.EMPTY_SCROLL_ID
-                    : searchResponse.getScrollId());
-            productScrollResponse.setTotalElements(collect.size());
+            if (scrollSearchRequest.getScrollId().equals(SearchScroll.EMPTY_SCROLL_ID)
+                    || this.needScrollSearch(scrollSearchRequest.getBasicSearchParams(), totalList)) {
+                SearchResponse scrollSearchFromElasticSearch = scrollSearchFromElasticSearch(scrollSearchRequest);
+                totalList = Arrays.stream(scrollSearchFromElasticSearch.getHits()
+                        .getHits()).parallel()
+                        .map(hit -> mapToProduct(hit.getSourceAsString()))
+                        .collect(Collectors.toList());
+            }
+            productScrollResponse.setProductos(totalList);
+            setResponseFromOrderedList(scrollSearchRequest.getBasicSearchParams(), totalList, productScrollResponse);
+
             LOGGER.info("ProductScrollResponse: {}", productScrollResponse);
             return productScrollResponse;
         } catch (org.elasticsearch.index.IndexNotFoundException ex) {
             String errorMessage = String.format("Error convirtiendo respuesta en Product. scrollId: %s, mensaje: %s",
-                    scrollId, ex.getMessage());
+                    scrollSearchRequest.getScrollId(), ex.getMessage());
             LOGGER.error(errorMessage, ex);
             throw new ProductTransactionException(errorMessage, ex);
         }
@@ -189,4 +197,59 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         }
     }
 
+    private void putProductsInCache(String scrollId, List<Product> products) {
+*
+    }
+    private List getProductFromCache(String scrollId) {
+
+        Cache cache = cacheManager.getCache("productCache");
+        if (cache == null) {
+            LOGGER.error("Error obteniendo la instancia del cache");
+            return null;
+        }
+        Cache.ValueWrapper valueWrapper = cache.get(scrollId);
+        if(valueWrapper == null){
+            return null;
+        }
+        Object get = valueWrapper.get();
+        if (get != null && get instanceof List) {
+            return (List) get;
+        }
+        return null;
+    }
+
+    private boolean needScrollSearch(BasicSearchParams basicSearchParams, List totalList) {
+        if (totalList == null || totalList.isEmpty()) {
+            return true;
+        }
+        if (basicSearchParams.getPage() * basicSearchParams.getItemsPerPage() > totalList.size()) {
+            return true;
+        }
+        return false;
+    }
+
+    private SearchResponse scrollSearchFromElasticSearch(ScrollSearchRequest scrollSearchRequest) throws ProductTransactionException {
+
+        elasticSearchInput = new ElasticSearchInput();
+        elasticSearchInput.setId(scrollSearchRequest.getScrollId());
+        return executeTransaction(new SearchScroll(), elasticSearchInput);
+    }
+
+    private <R extends Response> void setResponseFromOrderedList(BasicSearchParams basicSearchParams, List list, R response) {
+        response.setNumber(basicSearchParams.getPage());
+        response.setSort(basicSearchParams.getSort());
+        response.setSortType(basicSearchParams.getSortType().name());
+
+        response.setTotalElements(list.size());
+        response.setTotalPages(response.getTotalElements() / basicSearchParams.getItemsPerPage());
+
+        int lastIndex = basicSearchParams.getItemsPerPage() * basicSearchParams.getPage();
+        int firstIndex = (basicSearchParams.getPage() - 1) * basicSearchParams.getItemsPerPage();
+        if (list.size() <= firstIndex || lastIndex <= firstIndex) {
+            response.setObjects(new LinkedList<>());
+            return;
+        }
+        response.setObjects(list.subList(firstIndex, lastIndex));
+
+    }
 }

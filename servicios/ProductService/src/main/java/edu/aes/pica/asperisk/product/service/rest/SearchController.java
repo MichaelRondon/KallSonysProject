@@ -50,11 +50,30 @@ public class SearchController {
     }
     
     @RequestMapping(value = "/scroll",method = RequestMethod.GET)
-    public ResponseEntity<ProductScrollResponse> scrollAll(
-            @RequestParam(value = "scrollId", defaultValue = "-999", required = false) String scrollId) 
+    public ResponseEntity<ProductScrollResponse> scrollSearch(
+            @RequestParam(value = "scrollId", defaultValue = "-999", required = false) String scrollId,
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "items-per-page", defaultValue = "-1", required = false) Integer itemsPerPage,
+            @RequestParam(value = "sort", defaultValue = "", required = false) String sort,
+            @RequestParam(value = "sort-type", defaultValue = "", required = false) SortType sortType,
+            @RequestParam(value = "custom", defaultValue = "", required = false) String custom) 
             throws ProductTransactionException {
-        LOGGER.info("Ingresando a create");
-        ProductScrollResponse productScrollResponse = elasticSearchService.findAll(scrollId);
+        LOGGER.info("Ingresando a scrollsearch");
+
+        BasicRequest basicRequest = new BasicRequest();
+        basicRequest.setCustom(custom);
+
+        BasicSearchParams basicSearchParams = new BasicSearchParams();
+        basicSearchParams.setItemsPerPage(itemsPerPage);
+        basicSearchParams.setPage(page);
+        basicSearchParams.setSort(sort);
+        basicSearchParams.setSortType(sortType);
+        
+        ScrollSearchRequest scrollSearchRequest = new ScrollSearchRequest();
+        scrollSearchRequest.setBasicRequest(basicRequest);
+        scrollSearchRequest.setBasicSearchParams(basicSearchParams);
+        scrollSearchRequest.setScrollId(scrollId);
+        ProductScrollResponse productScrollResponse = elasticSearchService.findAll(scrollSearchRequest);
         return ResponseEntity.ok(productScrollResponse);
     }
 

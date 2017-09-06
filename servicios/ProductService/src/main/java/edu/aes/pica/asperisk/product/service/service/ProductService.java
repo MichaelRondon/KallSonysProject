@@ -17,6 +17,6 @@ public interface ProductService {
     Product create(Product product)throws ProductTransactionException;
     Product findOne(String id)throws ProductTransactionException;
     List<Product> findAll()throws ProductTransactionException;
-    ProductScrollResponse findAll(String scrollId)throws ProductTransactionException;
+    ProductScrollResponse findAll(ScrollSearchRequest scrollSearchRequest)throws ProductTransactionException;
 
 }

@@ -19,7 +19,7 @@
         <java.version>1.8</java.version>
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
         <timestamp>${maven.build.timestamp}</timestamp>
-<elasticsearch.version>5.5.1</elasticsearch.version>
+        <elasticsearch.version>5.5.1</elasticsearch.version>
     </properties>
 
     <dependencies>
@@ -44,6 +44,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <type>jar</type>
+            <version>4.3.9.RELEASE</version>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
@@ -62,12 +68,10 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>4.3.9.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.16</version>
         </dependency>
         <dependency>
             <groupId>net.logstash.logback</groupId>
@@ -91,9 +95,8 @@
         <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
-            <version>5.5.1</version>
         </dependency>
-                <dependency>
+        <dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>transport</artifactId>
             <version>5.5.1</version>
@@ -106,22 +109,14 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.24</version>
         </dependency>
-        
-        <!--        <dependency>
-            <groupId>org.elasticsearch.module</groupId>
-            <artifactId>reindex</artifactId>
-            <version>2.4.6</version>
-        </dependency>-->
-<!--        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-elasticsearch</artifactId>
-            <version>2.1.6.RELEASE</version>
-        </dependency>-->
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+        </dependency>        
     </dependencies>
     
-<!--    <repositories>
+    <!--    <repositories>
         <repository>
             <id>spring-libs-release</id>
             <name>Spring Releases</name>

@@ -6,7 +6,7 @@ import lombok.Data;
  * Created by mfrondon on 31/07/2017.
  */
 @Data
-public abstract class ScrollResponse extends Response{
+public abstract class ScrollResponse<T> extends Response<T>{
 
     private String scrollId;
 }
