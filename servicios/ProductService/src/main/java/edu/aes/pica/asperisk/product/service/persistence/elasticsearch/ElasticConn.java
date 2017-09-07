@@ -20,7 +20,7 @@ public class ElasticConn {
     public static final String ELASTIC_SEARCH_DOCKER_HOST = "192.168.99.100";
     public static final Integer ELASTIC_SEARCH_CLIENT_PORT = 9300;
 
-    protected final <R> R executeTransaction(Transaction<R> transaction, ElasticSearchInput input) throws ProductTransactionException {
+    protected final <I extends ElasticSearchInput,R> R executeTransaction(Transaction<I, R> transaction, I input) throws ProductTransactionException {
         Settings settings = Settings.builder()
         .put("cluster.name", "elasticsearch").build();
 

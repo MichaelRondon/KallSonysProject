@@ -11,12 +11,22 @@ import java.util.List;
 public interface ProductService {
 
     ProductsResponse consultarHistorico(HistoricoRequest historicoRequest);
+
     ProductsResponse buscar(SearchRequest searchRequest);
+
     CampaignResponse campanias(CampaignRequest campaniasRequest);
+
     TestResponse test();
-    Product create(Product product)throws ProductTransactionException;
-    Product findOne(String id)throws ProductTransactionException;
+
+    Product create(Product product) throws ProductTransactionException;
+
+    Product update(Product product) throws ProductTransactionException;
+
+    Product findOne(String id) throws ProductTransactionException;
+
+    List<Product> findAllByIds(List<String> ids) throws ProductTransactionException;
+
     List<Product> findAll()throws ProductTransactionException;
-    ProductScrollResponse findAll(ScrollSearchRequest scrollSearchRequest)throws ProductTransactionException;
+    ProductScrollResponse findAll(ScrollSearchRequest scrollSearchRequest) throws ProductTransactionException;
 
 }

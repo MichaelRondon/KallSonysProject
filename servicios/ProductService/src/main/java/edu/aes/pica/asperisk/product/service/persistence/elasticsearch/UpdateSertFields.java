@@ -1,16 +1,12 @@
 package edu.aes.pica.asperisk.product.service.persistence.elasticsearch;
 
 import edu.aes.pica.asperisk.product.service.exceptions.ElasticsearchException;
-import edu.aes.pica.asperisk.product.service.exceptions.ProductTransactionException;
-import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.transport.TransportClient;
-import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Michael Felipe Rondón Acosta
  */
-public class UpdateSertFields extends Transaction<UpdateResponse> {
+public class UpdateSertFields extends Transaction<ElasticSearchInput, UpdateResponse> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UpdateSertFields.class);
     private final Map<String, Object> fields;

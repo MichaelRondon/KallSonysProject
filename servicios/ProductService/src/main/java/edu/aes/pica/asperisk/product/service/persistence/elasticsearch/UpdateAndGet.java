@@ -1,12 +1,11 @@
 package edu.aes.pica.asperisk.product.service.persistence.elasticsearch;
 
-import lombok.Getter;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UpdateAndGet extends Transaction<UpdateResponse> {
+public class UpdateAndGet extends Transaction<ElasticSearchInput, UpdateResponse> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SetSourceAndGet.class);
 

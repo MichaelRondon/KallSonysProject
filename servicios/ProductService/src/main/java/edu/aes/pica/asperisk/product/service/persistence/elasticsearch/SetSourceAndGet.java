@@ -6,7 +6,7 @@ import org.elasticsearch.client.transport.TransportClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SetSourceAndGet extends Transaction<IndexResponse> {
+public class SetSourceAndGet extends Transaction<ElasticSearchInput, IndexResponse> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SetSourceAndGet.class);
 

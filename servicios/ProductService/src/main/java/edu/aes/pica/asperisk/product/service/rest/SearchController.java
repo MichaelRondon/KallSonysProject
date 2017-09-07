@@ -41,6 +41,15 @@ public class SearchController {
                 .path("/{id}").buildAndExpand(product.getId()).toUri();
         return ResponseEntity.created(location).body(product);
     }
+
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<Product> update(@RequestBody Product product) throws ProductTransactionException {
+        LOGGER.info("Ingresando a create");
+        product = elasticSearchService.update(product);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(product.getId()).toUri();
+        return ResponseEntity.created(location).body(product);
+    }
     
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     public ResponseEntity<Product> findOne(@PathVariable String id) throws ProductTransactionException {

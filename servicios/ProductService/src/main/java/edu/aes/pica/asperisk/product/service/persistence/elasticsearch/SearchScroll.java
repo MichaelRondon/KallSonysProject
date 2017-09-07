@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author acost
  */
-public class SearchScroll extends Transaction<SearchResponse> {
+public class SearchScroll extends Transaction<ElasticSearchInput, SearchResponse> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchScroll.class);
     public static final String EMPTY_SCROLL_ID = "-999";

@@ -5,7 +5,7 @@ import org.elasticsearch.client.transport.TransportClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class GetProductoById extends Transaction<GetResponse> {
+public class GetProductoById extends Transaction<ElasticSearchInput, GetResponse> {
 
 private static final Logger LOGGER = LoggerFactory.getLogger(SetSourceAndGet.class);
 
