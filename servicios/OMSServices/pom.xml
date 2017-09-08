@@ -23,6 +23,7 @@
     <modules>
         <module>../OMSUtilities</module>
         <module>../ProductService</module>
+        <module>../../OMS</module>
     </modules>
 
 </project>

@@ -47,7 +47,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <type>jar</type>
-            <version>4.3.9.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>

@@ -3,10 +3,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>spring-boot-starter-parent</artifactId>
+        <groupId>edu.puj.aes.pica.asperisk</groupId>
+        <artifactId>oms-services</artifactId>
+        <version>1.0</version>
+        <relativePath>../servicios/OMSServices/pom.xml</relativePath>
+<!--        <artifactId>spring-boot-starter-parent</artifactId>
         <groupId>org.springframework.boot</groupId>
         <version>1.5.4.RELEASE</version>
-        <relativePath/>
+        <relativePath/>-->
     </parent>
 
     <groupId>edu.puj.aes.pica.asperisk</groupId>
@@ -107,6 +111,12 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>edu.puj.aes.pica.asperisk</groupId>
+            <artifactId>oms-utilities</artifactId>
+            <version>1.0</version>
+        </dependency>
+        
         <dependency>
             <groupId>io.github.jhipster</groupId>
             <artifactId>jhipster</artifactId>
