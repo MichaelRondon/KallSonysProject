@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImagenesWS", "ImagenesWS\ImagenesWS.csproj", "{48CD6CE5-978B-4C63-A254-0B27402A9E35}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B2CWS", "ImagenesWS\B2CWS.csproj", "{48CD6CE5-978B-4C63-A254-0B27402A9E35}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

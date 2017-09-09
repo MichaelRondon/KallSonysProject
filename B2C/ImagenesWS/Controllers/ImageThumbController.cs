@@ -5,9 +5,9 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
-using ImagenesWS.Util;
+using B2CWS.Util;
 
-namespace ImagenesWS.Controllers
+namespace B2CWS.Controllers
 {
     public class ImageThumbController : ApiController
     {

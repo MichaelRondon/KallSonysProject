@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace ImagenesWS
+namespace B2CWS
 {
     public class FilterConfig
     {

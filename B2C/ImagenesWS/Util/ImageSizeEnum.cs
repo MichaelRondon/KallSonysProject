@@ -1,4 +1,4 @@
-﻿namespace ImagenesWS.Util
+﻿namespace B2CWS.Util
 {
     public enum ImageSizeEnum : int
     {

@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace ImagenesWS
+namespace B2CWS
 {
     public class BundleConfig
     {

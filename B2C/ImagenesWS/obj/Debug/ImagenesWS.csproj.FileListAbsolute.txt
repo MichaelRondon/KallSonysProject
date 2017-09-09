@@ -140,6 +140,6 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\ImagenesWS\bin\Microsoft.AI.Dep
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ImagenesWS\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ImagenesWS\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ImagenesWS\bin\Microsoft.AI.Web.xml
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\ImagenesWS\obj\Debug\ImagenesWS.csprojResolveAssemblyReference.cache
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ImagenesWS\obj\Debug\ImagenesWS.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ImagenesWS\obj\Debug\ImagenesWS.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ImagenesWS\obj\Debug\ImagenesWS.csprojResolveAssemblyReference.cache

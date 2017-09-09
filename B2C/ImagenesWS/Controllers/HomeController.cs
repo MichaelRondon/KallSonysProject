@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace ImagenesWS.Controllers
+namespace B2CWS.Controllers
 {
     public class HomeController : Controller
     {

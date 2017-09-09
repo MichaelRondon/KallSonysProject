@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using ImagenesWS.Util;
+using B2CWS.Util;
 using System.IO;
 using System.Configuration;
 
-namespace ImagenesWS.Util
+namespace B2CWS.Util
 {
     public class ImageDownloader
     {

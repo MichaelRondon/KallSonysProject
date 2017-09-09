@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.WebHost;
 
-namespace ImagenesWS.Controllers
+namespace B2CWS.Controllers
 {
     public class ValuesController : ApiController
     {

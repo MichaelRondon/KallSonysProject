@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace ImagenesWS
+namespace B2CWS
 {
     public class RouteConfig
     {

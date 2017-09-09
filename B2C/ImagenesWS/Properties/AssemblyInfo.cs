@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ImagenesWS")]
+[assembly: AssemblyTitle("B2CWS")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Neo Reconia Sys - 2011")]
-[assembly: AssemblyProduct("ImagenesWS")]
+[assembly: AssemblyProduct("B2CWS")]
 [assembly: AssemblyCopyright("Copyright © Neo Reconia Sys - 2011 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
