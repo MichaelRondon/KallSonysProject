@@ -7,6 +7,7 @@ package edu.puj.aes.pica.asperisk.product.service.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.puj.aes.pica.asperisk.oms.utilities.model.AsperiskPage;
 import edu.puj.aes.pica.asperisk.product.service.exceptions.ProductTransactionException;
 import edu.puj.aes.pica.asperisk.product.service.model.CampaignRequest;
 import edu.puj.aes.pica.asperisk.product.service.model.CampaignResponse;
@@ -146,12 +147,16 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
 
     @Override
     public ProductScrollResponse findAll(ScrollSearchRequest scrollSearchRequest) throws ProductTransactionException {
+        
+        LOGGER.info("Busqueda por scroll. ScrollId: {}", scrollSearchRequest.getScrollId());
         ProductScrollResponse productScrollResponse = new ProductScrollResponse();
         productScrollResponse.setScrollId(scrollSearchRequest.getScrollId());
         if (!scrollSearchRequest.getScrollId().equals(SearchScroll.EMPTY_SCROLL_ID)) {
             productScrollResponse
                     .setProductos(getProductFromCache(scrollSearchRequest.getScrollId()));
+            LOGGER.info("Busca en caché");
             if (productScrollResponse.getProductos().isEmpty()) {
+                LOGGER.info("No encuentra productos en caché para el scroll id: {}", scrollSearchRequest.getScrollId());
                 scrollSearchRequest.setScrollId(SearchScroll.EMPTY_SCROLL_ID);
             }
         }
@@ -174,6 +179,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             setResponseFromOrderedList(scrollSearchRequest.getBasicSearchParams(),
                     productScrollResponse.getProductos(), productScrollResponse);
 
+            LOGGER.info("productScrollResponse.getProductos().size(): {}", productScrollResponse.getProductos().size());
             LOGGER.info("ProductScrollResponse: {}", productScrollResponse);
             return productScrollResponse;
         } catch (org.elasticsearch.index.IndexNotFoundException ex) {
@@ -285,6 +291,8 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         }
         int page = basicSearchParams.getPage() == null ? 0 : basicSearchParams.getPage();
         int itemsPerPage = basicSearchParams.getItemsPerPage() == null ? totalList.size() : basicSearchParams.getItemsPerPage();
+        LOGGER.info("page: {}, itemsPerPage; {}, totalList.size(): {}", page, itemsPerPage, totalList.size());
+        LOGGER.info("conditional: {}", (page * itemsPerPage > totalList.size()));
         if (page * itemsPerPage > totalList.size()) {
             return true;
         }
@@ -299,12 +307,16 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
     }
 
     private <R extends Response> void setResponseFromOrderedList(BasicSearchParams basicSearchParams, List list, R response) {
-        response.setNumber(basicSearchParams.getPage());
-        response.setSort(basicSearchParams.getSort());
-        response.setSortType(basicSearchParams.getSortType() == null ? null : basicSearchParams.getSortType().name());
 
-        response.setTotalElements(list.size());
-        response.setTotalPages(response.getTotalElements() / basicSearchParams.getItemsPerPage());
+        AsperiskPage asperiskPage = new AsperiskPage();
+        response.setPage(asperiskPage);
+
+        asperiskPage.setNumber(basicSearchParams.getPage());
+        asperiskPage.setSort(basicSearchParams.getSort());
+        asperiskPage.setSortType(basicSearchParams.getSortType() == null ? null : basicSearchParams.getSortType().name());
+
+        asperiskPage.setTotalElements(list.size());
+        asperiskPage.setTotalPages(asperiskPage.getTotalElements() / basicSearchParams.getItemsPerPage());
 
         int lastIndex = 999;
         int firstIndex = 0;
@@ -313,12 +325,13 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             firstIndex = (basicSearchParams.getPage() - 1) * basicSearchParams.getItemsPerPage();
         }
 
+        LOGGER.info("lastIndex: {} firstIndex:{}", lastIndex, firstIndex);
         if (list.size() <= firstIndex || lastIndex <= firstIndex) {
             response.setObjects(new LinkedList<>());
             return;
         }
-        if (lastIndex > list.size() - 1) {
-            lastIndex = list.size() - 1;
+        if (lastIndex > list.size()) {
+            lastIndex = list.size();
         }
         response.setObjects(list.subList(firstIndex, lastIndex));
 

@@ -2,6 +2,7 @@ package edu.puj.aes.pica.asperisk.oms.utilities.model;
 
 import lombok.Data;
 import lombok.ToString;
+import org.springframework.data.domain.Sort;
 
 
 /**
@@ -14,5 +15,5 @@ public class BasicSearchParams {
     private Integer page;
     private Integer itemsPerPage;
     private String sort;
-    private SortType sortType;
+    private Sort.Direction sortType;
 }

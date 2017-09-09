@@ -60,7 +60,12 @@ public class ProductServiceDummy implements ProductService {
         campanign.setId(10002L);
         campanign.setNombre("Campaña 2");
         campaignResponse.getCampanias().add(campanign);
-        campaignResponse.setTotalElements(campaignResponse.getCampanias().size());
+        
+        AsperiskPage asperiskPage = new AsperiskPage();
+        asperiskPage.setTotalElements(campaignResponse.getCampanias().size());
+        asperiskPage.setTotalPages(1);
+        asperiskPage.setNumber(1);
+        campaignResponse.setPage(asperiskPage);
 
         return campaignResponse;
     }
@@ -71,6 +76,8 @@ public class ProductServiceDummy implements ProductService {
         for (int i = 1; i < cantidadFilas + 1; i++) {
             product = new Product();
             product.setId((long) i);
+            product.setNombre(String.format("%s%d", "nombre", i));
+            product.setMarca(String.format("%s%d", "marca", i));
             product.setDescripcion(String.format("%s%d", "descripción", i));
             product.setPrecio(new BigDecimal(i).multiply(new BigDecimal("1000")));
             product.setEstado(State.ACTIVO);
@@ -91,7 +98,13 @@ public class ProductServiceDummy implements ProductService {
         }
         ProductsResponse productsResponse = new ProductsResponse();
         productsResponse.setProductos(productList);
-        productsResponse.setTotalElements(cantidadFilas);
+        
+        AsperiskPage asperiskPage = new AsperiskPage();
+        asperiskPage.setTotalElements(cantidadFilas);
+        asperiskPage.setTotalPages(1);
+        asperiskPage.setNumber(1);
+        productsResponse.setPage(asperiskPage);
+        
         return productsResponse;
     }
 

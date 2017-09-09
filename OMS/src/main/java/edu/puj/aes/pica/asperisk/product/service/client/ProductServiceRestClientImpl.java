@@ -7,7 +7,7 @@ package edu.puj.aes.pica.asperisk.product.service.client;
 
 import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.ProductScrollResponse;
-import edu.puj.aes.pica.asperisk.oms.utilities.model.ProductUtilSingleton;
+import edu.puj.aes.pica.asperisk.oms.utilities.ProductUtilSingleton;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.ScrollSearchRequest;
 import edu.puj.aes.pica.asperisk.service.dto.ProductoDTO;
 import java.util.HashMap;
@@ -54,6 +54,7 @@ public class ProductServiceRestClientImpl implements ProductServiceRestClient {
     public Page<ProductoDTO> findAll(Pageable pageable) {
         
         
+        LOGGER.info("ProductServiceRestClientImpl.getFindAllScrollId(): {}",ProductServiceRestClientImpl.getFindAllScrollId());
         ScrollSearchRequest scrollSearchRequest = new ScrollSearchRequest();
         scrollSearchRequest.setBasicSearchParams(ProductUtilSingleton.getInstance().getBasicSearchParams(pageable));
         scrollSearchRequest.setScrollId(ProductServiceRestClientImpl.getFindAllScrollId());
@@ -62,12 +63,10 @@ public class ProductServiceRestClientImpl implements ProductServiceRestClient {
         ProductScrollResponse productScrollResponse = restTemplate
                 .getForObject(String.format("%s/scroll", PRODUCT_SERVICE_URL),
                         ProductScrollResponse.class);
+        LOGGER.info("productScrollResponse.getScrollId(): {}",productScrollResponse.getScrollId());
         ProductServiceRestClientImpl.setFindAllScrollId(productScrollResponse.getScrollId());
+        LOGGER.info("ProductServiceRestClientImpl.getFindAllScrollId_2(): {}",ProductServiceRestClientImpl.getFindAllScrollId());
         PageImpl pageImpl = new PageImpl(productScrollResponse.getProductos());
-        LOGGER.info("pageImpl.getTotalPages(): {}",pageImpl.getTotalPages());
-        LOGGER.info("pageImpl.getSize(): {}",pageImpl.getSize());
-        LOGGER.info("pageImpl.getNumber(): {}",pageImpl.getNumber());
-        LOGGER.info("pageImpl.getNumberOfElements(): {}",pageImpl.getNumberOfElements());
         return pageImpl;
     }
 

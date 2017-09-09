@@ -11,6 +11,6 @@ import lombok.Data;
 public class BasicProveedor implements Serializable{
 
         private Long id;
-        @JsonProperty("id-producto")
+        @JsonProperty("id_producto")
         private Long idProducto;
 }

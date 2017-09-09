@@ -18,10 +18,10 @@ public class Campanign  implements Serializable{
     private String descripcion;
     private List<Product> productos;
     private State estado;
-    @JsonProperty("fecha-inicio")
+    @JsonProperty("fecha_inicio")
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date fechaInicio;
-    @JsonProperty("fecha-fin")
+    @JsonProperty("fecha_fin")
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date fechaFin;
 

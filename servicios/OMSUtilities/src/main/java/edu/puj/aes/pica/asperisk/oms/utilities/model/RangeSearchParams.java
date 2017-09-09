@@ -14,11 +14,11 @@ import java.util.Date;
 @ToString
 public class RangeSearchParams {
 
-    @JsonProperty("fecha-min")
+    @JsonProperty("fecha_min")
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date fechaMin;
 
-    @JsonProperty("fecha-max")
+    @JsonProperty("fecha_max")
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date fechaMax;
 }
