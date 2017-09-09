@@ -1,6 +1,7 @@
 package edu.puj.aes.pica.asperisk.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
 import edu.puj.aes.pica.asperisk.service.ProductoService;
 import edu.puj.aes.pica.asperisk.web.rest.util.HeaderUtil;
 import edu.puj.aes.pica.asperisk.web.rest.util.PaginationUtil;
@@ -105,9 +106,10 @@ public class ProductoResource {
      */
     @GetMapping("/productos/{id}")
     @Timed
-    public ResponseEntity<ProductoDTO> getProducto(@PathVariable Long id) {
+    public ResponseEntity<Product> getProducto(@PathVariable Long id) {
         log.debug("REST request to get Producto : {}", id);
-        ProductoDTO productoDTO = productoService.findOne(id);
+        Product productoDTO = productoService.findOne(id);
+//        ProductoDTO productoDTO = productoService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(productoDTO));
     }
 

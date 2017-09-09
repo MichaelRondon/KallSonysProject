@@ -1,4 +1,4 @@
-package edu.aes.pica.asperisk.product.service.rest;
+package edu.puj.aes.pica.asperisk.product.service.rest;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;

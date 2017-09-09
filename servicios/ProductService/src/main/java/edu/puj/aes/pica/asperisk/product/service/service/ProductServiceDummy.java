@@ -1,7 +1,15 @@
-package edu.aes.pica.asperisk.product.service.service;
+package edu.puj.aes.pica.asperisk.product.service.service;
 
-import edu.aes.pica.asperisk.product.service.model.*;
+import edu.puj.aes.pica.asperisk.oms.utilities.model.ProductScrollResponse;
+import edu.puj.aes.pica.asperisk.oms.utilities.model.ScrollSearchRequest;
+import edu.puj.aes.pica.asperisk.product.service.model.HistoricoRequest;
+import edu.puj.aes.pica.asperisk.product.service.model.TestResponse;
+import edu.puj.aes.pica.asperisk.product.service.model.CampaignResponse;
+import edu.puj.aes.pica.asperisk.product.service.model.SearchRequest;
+import edu.puj.aes.pica.asperisk.product.service.model.ProductsResponse;
+import edu.puj.aes.pica.asperisk.product.service.exceptions.ProductTransactionException;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.*;
+import edu.puj.aes.pica.asperisk.product.service.model.CampaignRequest;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -52,7 +60,12 @@ public class ProductServiceDummy implements ProductService {
         campanign.setId(10002L);
         campanign.setNombre("Campaña 2");
         campaignResponse.getCampanias().add(campanign);
-        campaignResponse.setSize(campaignResponse.getCampanias().size());
+        
+        AsperiskPage asperiskPage = new AsperiskPage();
+        asperiskPage.setTotalElements(campaignResponse.getCampanias().size());
+        asperiskPage.setTotalPages(1);
+        asperiskPage.setNumber(1);
+        campaignResponse.setPage(asperiskPage);
 
         return campaignResponse;
     }
@@ -63,6 +76,8 @@ public class ProductServiceDummy implements ProductService {
         for (int i = 1; i < cantidadFilas + 1; i++) {
             product = new Product();
             product.setId((long) i);
+            product.setNombre(String.format("%s%d", "nombre", i));
+            product.setMarca(String.format("%s%d", "marca", i));
             product.setDescripcion(String.format("%s%d", "descripción", i));
             product.setPrecio(new BigDecimal(i).multiply(new BigDecimal("1000")));
             product.setEstado(State.ACTIVO);
@@ -83,8 +98,54 @@ public class ProductServiceDummy implements ProductService {
         }
         ProductsResponse productsResponse = new ProductsResponse();
         productsResponse.setProductos(productList);
-        productsResponse.setSize(cantidadFilas);
+        
+        AsperiskPage asperiskPage = new AsperiskPage();
+        asperiskPage.setTotalElements(cantidadFilas);
+        asperiskPage.setTotalPages(1);
+        asperiskPage.setNumber(1);
+        productsResponse.setPage(asperiskPage);
+        
         return productsResponse;
+    }
+
+    @Override
+    public TestResponse test() {
+        TestResponse testResponse = new TestResponse();
+        testResponse.setNombre("Pepito Perez");
+        testResponse.setParametro2("Primer parámetro de prueba");
+        testResponse.setParametro3("Segundo parámetro de prueba");
+        testResponse.setParametro4("Tercer parámetro de prueba");
+        return testResponse;
+    }
+
+    @Override
+    public Product create(Product product) throws ProductTransactionException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Product findOne(String id) throws ProductTransactionException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Product> findAll() throws ProductTransactionException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ProductScrollResponse findAll(ScrollSearchRequest scrollSearchRequest) throws ProductTransactionException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Product update(Product product) throws ProductTransactionException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Product> findAllByIds(List<String> ids) throws ProductTransactionException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
 

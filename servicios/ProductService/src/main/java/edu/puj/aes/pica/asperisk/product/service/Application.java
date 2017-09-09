@@ -1,6 +1,6 @@
-package edu.aes.pica.asperisk.product.service;
+package edu.puj.aes.pica.asperisk.product.service;
 
-import edu.aes.pica.asperisk.product.service.rest.VersionResource;
+import edu.puj.aes.pica.asperisk.product.service.rest.VersionResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
