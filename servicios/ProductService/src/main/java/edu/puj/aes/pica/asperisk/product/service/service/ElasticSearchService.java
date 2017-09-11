@@ -96,6 +96,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             elasticSearchInput.setJson(productJson);
             elasticSearchInput.setId(nextIdProduct.toString());
             IndexResponse indexResponse = executeTransaction(new SetSourceAndGet(), elasticSearchInput);
+            clearProductCache();
             return findOne(indexResponse.getId());
         } catch (JsonProcessingException ex) {
             String errorMessage = String.format("Error convirtiendo el objeto Product en json. Objeto: %s, mensaje: %s",
@@ -115,6 +116,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             elasticSearchInput.setId(product.getId().toString());
             UpdateResponse updateResponse = executeTransaction(new UpdateAndGet(), elasticSearchInput);
             LOGGER.info("updateResponse.getGetResult(): {}", updateResponse.getGetResult());
+            clearProductCache();
             return findOne(updateResponse.getId());
         } catch (JsonProcessingException ex) {
             String errorMessage = String.format("Error convirtiendo el objeto Product en json. Objeto: %s, mensaje: %s",
@@ -147,7 +149,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
 
     @Override
     public ProductScrollResponse findAll(ScrollSearchRequest scrollSearchRequest) throws ProductTransactionException {
-        
+
         LOGGER.info("Busqueda por scroll. ScrollId: {}", scrollSearchRequest.getScrollId());
         ProductScrollResponse productScrollResponse = new ProductScrollResponse();
         productScrollResponse.setScrollId(scrollSearchRequest.getScrollId());
@@ -264,7 +266,20 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
 
     private void putProductsInCache(String scrollId, List<Product> products) {
         Cache cache = cacheManager.getCache("productCache");
+        if (cache == null) {
+            LOGGER.error("Error obteniendo la instancia del cache");
+            return;
+        }
         cache.put(scrollId, products);
+    }
+
+    private void clearProductCache() {
+        Cache cache = cacheManager.getCache("productCache");
+        if (cache == null) {
+            LOGGER.error("Error obteniendo la instancia del cache");
+            return;
+        }
+        cache.clear();
     }
 
     private List getProductFromCache(String scrollId) {
@@ -320,9 +335,11 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
 
         int lastIndex = 999;
         int firstIndex = 0;
+        LOGGER.info("basicSearchParams.getItemsPerPage(): {}", basicSearchParams.getItemsPerPage());
+        LOGGER.info("basicSearchParams.getPage(): {}", basicSearchParams.getPage());
         if (basicSearchParams.getItemsPerPage() != null && basicSearchParams.getPage() != null) {
-            lastIndex = basicSearchParams.getItemsPerPage() * basicSearchParams.getPage();
-            firstIndex = (basicSearchParams.getPage() - 1) * basicSearchParams.getItemsPerPage();
+            lastIndex = basicSearchParams.getItemsPerPage() * (basicSearchParams.getPage() + 1);
+            firstIndex = (basicSearchParams.getPage()) * basicSearchParams.getItemsPerPage();
         }
 
         LOGGER.info("lastIndex: {} firstIndex:{}", lastIndex, firstIndex);

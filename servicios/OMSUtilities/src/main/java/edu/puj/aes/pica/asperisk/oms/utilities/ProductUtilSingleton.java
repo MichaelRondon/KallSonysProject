@@ -6,11 +6,14 @@
 package edu.puj.aes.pica.asperisk.oms.utilities;
 
 import edu.puj.aes.pica.asperisk.oms.utilities.model.BasicSearchParams;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  *
@@ -40,12 +43,53 @@ public class ProductUtilSingleton {
         Iterator<Sort.Order> iterator = pageable.getSort().iterator();
         if (iterator.hasNext()) {
             Sort.Order next = iterator.next();
-        LOGGER.info("next: {}", next);
-        LOGGER.info("next: {}", next);
-        LOGGER.info("next: {}", next);
+            LOGGER.info("next: {}", next);
+            LOGGER.info("next: {}", next.getProperty());
+            LOGGER.info("next: {}", next.getDirection());
             basicSearchParams.setSort(next.getProperty());
             basicSearchParams.setSortType(next.getDirection());
         }
         return basicSearchParams;
+    }
+
+    public Map<String, Object> getBasicSearchParams(Pageable pageable,
+            Map<String, Object> parameters) {
+        if (parameters == null) {
+            parameters = new HashMap<>();
+        }
+
+        parameters.put("page", pageable.getPageNumber());
+        parameters.put("items_per_page", pageable.getPageSize());
+
+        LOGGER.info("Sort: {}", pageable.getSort().toString());
+        Iterator<Sort.Order> iterator = pageable.getSort().iterator();
+        if (iterator.hasNext()) {
+            Sort.Order next = iterator.next();
+            LOGGER.info("next: {}", next);
+            LOGGER.info("next.getProperty(): {}", next.getProperty());
+            LOGGER.info("next.getDirection(): {}", next.getDirection());
+            parameters.put("sort", next.getProperty());
+            parameters.put("sortType", next.getDirection());
+        }
+        return parameters;
+    }
+
+    public UriComponentsBuilder getBasicSearchParams(Pageable pageable,
+            UriComponentsBuilder builder) {
+
+        builder.queryParam("page", pageable.getPageNumber());
+        builder.queryParam("items_per_page", pageable.getPageSize());
+        LOGGER.info("page: {}", pageable.getPageNumber());
+        LOGGER.info("itemsPerPage: {}", pageable.getPageSize());
+
+        Iterator<Sort.Order> iterator = pageable.getSort().iterator();
+        if (iterator.hasNext()) {
+            Sort.Order next = iterator.next();
+            LOGGER.info("next.getProperty(): {}", next.getProperty());
+            LOGGER.info("next.getDirection(): {}", next.getDirection());
+            builder.queryParam("sort", next.getProperty());
+            builder.queryParam("sortType", next.getDirection());
+        }
+        return builder;
     }
 }
