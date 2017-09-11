@@ -58,24 +58,25 @@ public class SearchController {
                 .path("/{id}").buildAndExpand(product.getId()).toUri();
         return ResponseEntity.created(location).body(product);
     }
-    
-    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Product> findOne(@PathVariable String id) throws ProductTransactionException {
         LOGGER.info("Ingresando a create");
         Product product = elasticSearchService.findOne(id);
         return ResponseEntity.ok(product);
     }
-    
-    @RequestMapping(value = "/scroll",method = RequestMethod.GET)
+
+    @RequestMapping(value = "/scroll", method = RequestMethod.GET)
     public ResponseEntity<ProductScrollResponse> scrollSearch(
             @RequestParam(value = "scrollId", defaultValue = "-999", required = false) String scrollId,
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "items_per_page", defaultValue = "-1", required = false) Integer itemsPerPage,
             @RequestParam(value = "sort", defaultValue = "", required = false) String sort,
             @RequestParam(value = "sort_type", defaultValue = "", required = false) Sort.Direction sortType,
-            @RequestParam(value = "custom", defaultValue = "", required = false) String custom) 
+            @RequestParam(value = "custom", defaultValue = "", required = false) String custom)
             throws ProductTransactionException {
         LOGGER.info("Ingresando a scrollsearch");
+        LOGGER.info("scrollId: {}", scrollId);
 
         BasicRequest basicRequest = new BasicRequest();
         basicRequest.setCustom(custom);
@@ -85,7 +86,7 @@ public class SearchController {
         basicSearchParams.setPage(page);
         basicSearchParams.setSort(sort);
         basicSearchParams.setSortType(sortType);
-        
+
         ScrollSearchRequest scrollSearchRequest = new ScrollSearchRequest();
         scrollSearchRequest.setBasicRequest(basicRequest);
         scrollSearchRequest.setBasicSearchParams(basicSearchParams);

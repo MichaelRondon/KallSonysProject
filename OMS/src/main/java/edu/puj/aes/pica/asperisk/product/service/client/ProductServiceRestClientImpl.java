@@ -5,23 +5,27 @@
  */
 package edu.puj.aes.pica.asperisk.product.service.client;
 
+import edu.puj.aes.pica.asperisk.oms.utilities.ProductUtilSingleton;
+import edu.puj.aes.pica.asperisk.oms.utilities.model.BasicSearchParams;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.ProductScrollResponse;
-import edu.puj.aes.pica.asperisk.oms.utilities.ProductUtilSingleton;
-import edu.puj.aes.pica.asperisk.oms.utilities.model.ScrollSearchRequest;
 import edu.puj.aes.pica.asperisk.service.dto.ProductoDTO;
 import java.util.HashMap;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  *
@@ -52,20 +56,32 @@ public class ProductServiceRestClientImpl implements ProductServiceRestClient {
 
     @Override
     public Page<ProductoDTO> findAll(Pageable pageable) {
-        
-        
-        LOGGER.info("ProductServiceRestClientImpl.getFindAllScrollId(): {}",ProductServiceRestClientImpl.getFindAllScrollId());
-        ScrollSearchRequest scrollSearchRequest = new ScrollSearchRequest();
-        scrollSearchRequest.setBasicSearchParams(ProductUtilSingleton.getInstance().getBasicSearchParams(pageable));
-        scrollSearchRequest.setScrollId(ProductServiceRestClientImpl.getFindAllScrollId());
-        
+
+        LOGGER.info("ProductServiceRestClientImpl.getFindAllScrollId(): {}", ProductServiceRestClientImpl.getFindAllScrollId());
+
         RestTemplate restTemplate = new RestTemplate();
-        ProductScrollResponse productScrollResponse = restTemplate
-                .getForObject(String.format("%s/scroll", PRODUCT_SERVICE_URL),
-                        ProductScrollResponse.class);
-        LOGGER.info("productScrollResponse.getScrollId(): {}",productScrollResponse.getScrollId());
+        
+//        Map<String, Object> parameters = new HashMap();
+//        parameters.put("scrollId", ProductServiceRestClientImpl.getFindAllScrollId());
+//        parameters = ProductUtilSingleton.getInstance().getBasicSearchParams(pageable, parameters);
+//        LOGGER.info("parameters: {}", parameters);
+//        
+//        ProductScrollResponse productScrollResponse = restTemplate
+//                .getForObject(String.format("%s/scroll", PRODUCT_SERVICE_URL),
+//                        ProductScrollResponse.class, parameters);
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/scroll", PRODUCT_SERVICE_URL));
+        builder.queryParam("scrollId", ProductServiceRestClientImpl.getFindAllScrollId());
+        builder = ProductUtilSingleton.getInstance().getBasicSearchParams(pageable, builder);
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+        LOGGER.info("builder.toUriString(): {}", builder.toUriString());
+        ResponseEntity<ProductScrollResponse> exchange = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, ProductScrollResponse.class);
+        ProductScrollResponse productScrollResponse = exchange.getBody();
+
+        LOGGER.info("productScrollResponse.getScrollId(): {}", productScrollResponse.getScrollId());
         ProductServiceRestClientImpl.setFindAllScrollId(productScrollResponse.getScrollId());
-        LOGGER.info("ProductServiceRestClientImpl.getFindAllScrollId_2(): {}",ProductServiceRestClientImpl.getFindAllScrollId());
+        LOGGER.info("ProductServiceRestClientImpl.getFindAllScrollId_2(): {}", ProductServiceRestClientImpl.getFindAllScrollId());
         PageImpl pageImpl = new PageImpl(productScrollResponse.getProductos());
         return pageImpl;
     }
@@ -86,5 +102,4 @@ public class ProductServiceRestClientImpl implements ProductServiceRestClient {
         ProductServiceRestClientImpl.findAllScrollId = findAllScrollId;
     }
 
-    
 }
