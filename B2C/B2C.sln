@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B2CWS", "ImagenesWS\B2CWS.csproj", "{48CD6CE5-978B-4C63-A254-0B27402A9E35}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B2CWS", "B2CWS\B2CWS.csproj", "{A6484E99-F342-411F-89F0-0CFFBCD2DD88}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Libraries", "1.Libraries", "{E4382880-42CE-42B2-9503-DC344AA5583E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Services", "2.Services", "{83B685DD-DE47-4FA5-885D-1679C0D530BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,12 +15,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{48CD6CE5-978B-4C63-A254-0B27402A9E35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{48CD6CE5-978B-4C63-A254-0B27402A9E35}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{48CD6CE5-978B-4C63-A254-0B27402A9E35}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{48CD6CE5-978B-4C63-A254-0B27402A9E35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6484E99-F342-411F-89F0-0CFFBCD2DD88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6484E99-F342-411F-89F0-0CFFBCD2DD88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6484E99-F342-411F-89F0-0CFFBCD2DD88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6484E99-F342-411F-89F0-0CFFBCD2DD88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A6484E99-F342-411F-89F0-0CFFBCD2DD88} = {83B685DD-DE47-4FA5-885D-1679C0D530BF}
 	EndGlobalSection
 EndGlobal

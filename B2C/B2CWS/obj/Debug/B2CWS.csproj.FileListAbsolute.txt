@@ -1,0 +1,86 @@
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\obj\Debug\B2CWS.csprojResolveAssemblyReference.cache
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\obj\Debug\B2CWS.StringResources.resources
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\obj\Debug\B2CWS.csproj.GenerateResource.Cache
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\ApplicationInsights.config
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\roslyn\csc.exe
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\roslyn\Microsoft.CodeAnalysis.dll
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\roslyn\Microsoft.CSharp.Core.targets
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\roslyn\Microsoft.VisualBasic.Core.targets
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\roslyn\System.Collections.Immutable.dll
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\roslyn\System.Reflection.Metadata.dll
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\roslyn\vbc.exe
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\roslyn\VBCSCompiler.exe
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\roslyn\VBCSCompiler.exe.config
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\B2CWS.dll.config
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\B2CWS.dll
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\B2CWS.pdb
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\Microsoft.AI.Agent.Intercept.dll
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\Microsoft.AI.DependencyCollector.dll
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\Microsoft.AI.PerfCounterCollector.dll
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\Microsoft.AI.ServerTelemetryChannel.dll
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\Microsoft.AI.Web.dll
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\Microsoft.AI.WindowsServer.dll
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\Microsoft.ApplicationInsights.dll
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\Newtonsoft.Json.dll
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\System.Net.Http.Formatting.dll
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\System.Web.Http.dll
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\System.Web.Http.WebHost.dll
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\Microsoft.AI.DependencyCollector.xml
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\Microsoft.AI.ServerTelemetryChannel.xml
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\Microsoft.AI.Web.xml
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\Microsoft.AI.WindowsServer.xml
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\Microsoft.ApplicationInsights.xml
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\Newtonsoft.Json.xml
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\System.Net.Http.Formatting.xml
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\System.Web.Http.xml
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\bin\System.Web.Http.WebHost.xml
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\obj\Debug\B2CWS.dll
+c:\users\diego\documents\visual studio 2015\Projects\B2C\B2CWS\obj\Debug\B2CWS.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\ApplicationInsights.config
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\roslyn\csc.exe
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\roslyn\vbc.exe
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\roslyn\VBCSCompiler.exe
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\B2CWS.dll.config
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\B2CWS.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\B2CWS.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.AI.Web.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.ApplicationInsights.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Newtonsoft.Json.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Net.Http.Formatting.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.WebHost.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.AI.Web.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.ApplicationInsights.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Newtonsoft.Json.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Net.Http.Formatting.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.WebHost.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Debug\B2CWS.csprojResolveAssemblyReference.cache
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Debug\B2CWS.StringResources.resources
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Debug\B2CWS.csproj.GenerateResource.Cache
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Debug\B2CWS.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Debug\B2CWS.pdb
