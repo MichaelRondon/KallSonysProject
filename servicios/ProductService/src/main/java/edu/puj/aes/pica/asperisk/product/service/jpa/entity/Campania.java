@@ -37,6 +37,10 @@ public class Campania implements Serializable {
     @Column(name = "estado")
     private Estado estado;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "categoria")
+    private edu.puj.aes.pica.asperisk.oms.utilities.model.Categoria categoria;
+
     @Column(name = "fecha_inicio")
     private LocalDate fechaInicio;
 
@@ -144,6 +148,14 @@ public class Campania implements Serializable {
 
     public void setProductos(Set<Producto> productos) {
         this.productos = productos;
+    }
+
+    public edu.puj.aes.pica.asperisk.oms.utilities.model.Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(edu.puj.aes.pica.asperisk.oms.utilities.model.Categoria categoria) {
+        this.categoria = categoria;
     }
 
     @Override

@@ -49,6 +49,7 @@ public class ProductServiceDummy implements ProductService {
         campanign.setFechaInicio(new Date());
         campanign.setId(10001L);
         campanign.setNombre("Campaña 1");
+        campanign.setCategoria(Categoria.PRINCIPAL);
         campaignResponse.getCampanias().add(campanign);
 
         campanign = new Campanign();
@@ -59,6 +60,7 @@ public class ProductServiceDummy implements ProductService {
         campanign.setFechaInicio(new Date());
         campanign.setId(10002L);
         campanign.setNombre("Campaña 2");
+        campanign.setCategoria(Categoria.SECUNDARIA);
         campaignResponse.getCampanias().add(campanign);
         
         AsperiskPage asperiskPage = new AsperiskPage();
