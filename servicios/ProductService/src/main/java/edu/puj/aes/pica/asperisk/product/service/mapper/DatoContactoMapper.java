@@ -1,8 +1,7 @@
-package edu.puj.aes.pica.asperisk.service.mapper;
+package edu.puj.aes.pica.asperisk.product.service.mapper;
 
-import edu.puj.aes.pica.asperisk.domain.*;
 import edu.puj.aes.pica.asperisk.oms.utilities.dto.DatoContactoDTO;
-import edu.puj.aes.pica.asperisk.service.mapper.EntityMapper;
+import edu.puj.aes.pica.asperisk.product.service.jpa.entity.DatoContacto;
 
 import org.mapstruct.*;
 
@@ -13,6 +12,7 @@ import org.mapstruct.*;
 public interface DatoContactoMapper extends EntityMapper <DatoContactoDTO, DatoContacto> {
 
     @Mapping(source = "proveedor.id", target = "proveedorId")
+    @Override
     DatoContactoDTO toDto(DatoContacto datoContacto); 
 
     @Mapping(source = "proveedorId", target = "proveedor")

@@ -1,4 +1,4 @@
-package edu.puj.aes.pica.asperisk.web.rest.util;
+package edu.puj.aes.pica.asperisk.oms.utilities.rest.util;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
@@ -38,6 +38,7 @@ public final class PaginationUtil {
         headers.add(HttpHeaders.LINK, link);
         return headers;
     }
+
 
     private static String generateUri(String baseUrl, int page, int size) {
         return UriComponentsBuilder.fromUriString(baseUrl).queryParam("page", page).queryParam("size", size).toUriString();

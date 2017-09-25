@@ -5,8 +5,7 @@ import edu.puj.aes.pica.asperisk.OmsApp;
 import edu.puj.aes.pica.asperisk.domain.Producto;
 import edu.puj.aes.pica.asperisk.repository.ProductoRepository;
 import edu.puj.aes.pica.asperisk.service.ProductoService;
-import edu.puj.aes.pica.asperisk.service.dto.ProductoDTO;
-import edu.puj.aes.pica.asperisk.service.mapper.ProductoMapper;
+import edu.puj.aes.pica.asperisk.oms.utilities.dto.ProductoDTO;
 import edu.puj.aes.pica.asperisk.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -34,7 +33,8 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import edu.puj.aes.pica.asperisk.domain.enumeration.Estado;
+import edu.puj.aes.pica.asperisk.oms.utilities.enumeration.Estado;
+import edu.puj.aes.pica.asperisk.service.mapper.ProductoMapper;
 /**
  * Test class for the ProductoResource REST controller.
  *

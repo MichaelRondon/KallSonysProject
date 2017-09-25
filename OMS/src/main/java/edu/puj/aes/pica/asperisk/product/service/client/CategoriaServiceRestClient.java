@@ -5,21 +5,19 @@
  */
 package edu.puj.aes.pica.asperisk.product.service.client;
 
-import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
-import edu.puj.aes.pica.asperisk.oms.utilities.dto.ProductoDTO;
+import edu.puj.aes.pica.asperisk.oms.utilities.dto.CategoriaDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
 
 /**
  *
  * @author acost
  */
-public interface ProductServiceRestClient {
-
-    ProductoDTO save(ProductoDTO productoDTO);
-
-    Page<ProductoDTO> findAll(Pageable pageable);
-
-    Product findOne(Long id);
-
+public interface CategoriaServiceRestClient{
+    
+    CategoriaDTO save(CategoriaDTO categoriaDTO);
+    CategoriaDTO update(CategoriaDTO categoriaDTO);
+    Page<CategoriaDTO> findAll(Pageable pageable);
+    CategoriaDTO findOne(Long id);
 }

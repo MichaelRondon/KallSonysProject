@@ -5,7 +5,7 @@ import edu.puj.aes.pica.asperisk.OmsApp;
 import edu.puj.aes.pica.asperisk.domain.ProveedorProducto;
 import edu.puj.aes.pica.asperisk.repository.ProveedorProductoRepository;
 import edu.puj.aes.pica.asperisk.service.ProveedorProductoService;
-import edu.puj.aes.pica.asperisk.service.dto.ProveedorProductoDTO;
+import edu.puj.aes.pica.asperisk.oms.utilities.dto.ProveedorProductoDTO;
 import edu.puj.aes.pica.asperisk.service.mapper.ProveedorProductoMapper;
 import edu.puj.aes.pica.asperisk.web.rest.errors.ExceptionTranslator;
 

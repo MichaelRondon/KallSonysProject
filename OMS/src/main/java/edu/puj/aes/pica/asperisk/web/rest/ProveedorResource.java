@@ -2,9 +2,9 @@ package edu.puj.aes.pica.asperisk.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import edu.puj.aes.pica.asperisk.service.ProveedorService;
-import edu.puj.aes.pica.asperisk.web.rest.util.HeaderUtil;
-import edu.puj.aes.pica.asperisk.web.rest.util.PaginationUtil;
-import edu.puj.aes.pica.asperisk.service.dto.ProveedorDTO;
+import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.HeaderUtil;
+import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.PaginationUtil;
+import edu.puj.aes.pica.asperisk.oms.utilities.dto.ProveedorDTO;
 import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;

@@ -1,14 +1,14 @@
-package edu.puj.aes.pica.asperisk.service.mapper;
+package edu.puj.aes.pica.asperisk.product.service.mapper;
 
-import edu.puj.aes.pica.asperisk.domain.*;
 import edu.puj.aes.pica.asperisk.oms.utilities.dto.CategoriaDTO;
+import edu.puj.aes.pica.asperisk.product.service.jpa.entity.Categoria;
 
-import org.mapstruct.*;
+//import org.mapstruct.*;
 
 /**
  * Mapper for the entity Categoria and its DTO CategoriaDTO.
  */
-@Mapper(componentModel = "spring", uses = {})
+//@Mapper(componentModel = "spring", uses = {})
 public interface CategoriaMapper extends EntityMapper <CategoriaDTO, Categoria> {
     
     

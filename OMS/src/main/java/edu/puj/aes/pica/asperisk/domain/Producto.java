@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
-import edu.puj.aes.pica.asperisk.domain.enumeration.Estado;
+import edu.puj.aes.pica.asperisk.oms.utilities.enumeration.Estado;
 
 /**
  * A Producto.

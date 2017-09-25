@@ -1,12 +1,12 @@
-package edu.puj.aes.pica.asperisk.service.dto;
+package edu.puj.aes.pica.asperisk.oms.utilities.dto;
 
 
+import edu.puj.aes.pica.asperisk.oms.utilities.enumeration.Estado;
 import java.time.LocalDate;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
-import edu.puj.aes.pica.asperisk.domain.enumeration.Estado;
 
 /**
  * A DTO for the Campania entity.

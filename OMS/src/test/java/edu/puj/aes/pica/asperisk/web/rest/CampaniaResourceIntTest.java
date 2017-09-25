@@ -5,8 +5,7 @@ import edu.puj.aes.pica.asperisk.OmsApp;
 import edu.puj.aes.pica.asperisk.domain.Campania;
 import edu.puj.aes.pica.asperisk.repository.CampaniaRepository;
 import edu.puj.aes.pica.asperisk.service.CampaniaService;
-import edu.puj.aes.pica.asperisk.service.dto.CampaniaDTO;
-import edu.puj.aes.pica.asperisk.service.mapper.CampaniaMapper;
+import edu.puj.aes.pica.asperisk.oms.utilities.dto.CampaniaDTO;
 import edu.puj.aes.pica.asperisk.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -33,7 +32,8 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import edu.puj.aes.pica.asperisk.domain.enumeration.Estado;
+import edu.puj.aes.pica.asperisk.oms.utilities.enumeration.Estado;
+import edu.puj.aes.pica.asperisk.service.mapper.CampaniaMapper;
 /**
  * Test class for the CampaniaResource REST controller.
  *

@@ -2,8 +2,8 @@ package edu.puj.aes.pica.asperisk.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import edu.puj.aes.pica.asperisk.service.ProveedorProductoService;
-import edu.puj.aes.pica.asperisk.web.rest.util.HeaderUtil;
-import edu.puj.aes.pica.asperisk.service.dto.ProveedorProductoDTO;
+import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.HeaderUtil;
+import edu.puj.aes.pica.asperisk.oms.utilities.dto.ProveedorProductoDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

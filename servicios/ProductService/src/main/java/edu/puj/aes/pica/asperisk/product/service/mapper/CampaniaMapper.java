@@ -1,10 +1,10 @@
-package edu.puj.aes.pica.asperisk.service.mapper;
+package edu.puj.aes.pica.asperisk.product.service.mapper;
 
 
-import edu.puj.aes.pica.asperisk.domain.*;
 import edu.puj.aes.pica.asperisk.oms.utilities.dto.CampaniaDTO;
+import edu.puj.aes.pica.asperisk.product.service.jpa.entity.Campania;
+import org.mapstruct.Mapper;
 
-import org.mapstruct.*;
 
 /**
  * Mapper for the entity Campania and its DTO CampaniaDTO.

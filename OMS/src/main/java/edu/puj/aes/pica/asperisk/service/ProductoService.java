@@ -1,11 +1,9 @@
 package edu.puj.aes.pica.asperisk.service;
 
-import edu.puj.aes.pica.asperisk.domain.Producto;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
 import edu.puj.aes.pica.asperisk.product.service.client.ProductServiceRestClient;
+import edu.puj.aes.pica.asperisk.oms.utilities.dto.ProductoDTO;
 import edu.puj.aes.pica.asperisk.repository.ProductoRepository;
-import edu.puj.aes.pica.asperisk.service.dto.ProductoDTO;
-import edu.puj.aes.pica.asperisk.service.mapper.ProductoMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +23,12 @@ public class ProductoService {
 
     private final ProductoRepository productoRepository;
 
-    private final ProductoMapper productoMapper;
 
     @Autowired
     private ProductServiceRestClient productServiceRestClient;
 
-    public ProductoService(ProductoRepository productoRepository, ProductoMapper productoMapper) {
+    public ProductoService(ProductoRepository productoRepository) {
         this.productoRepository = productoRepository;
-        this.productoMapper = productoMapper;
     }
 
     /**

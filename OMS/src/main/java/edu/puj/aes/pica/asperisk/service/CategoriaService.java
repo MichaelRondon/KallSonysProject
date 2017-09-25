@@ -2,15 +2,16 @@ package edu.puj.aes.pica.asperisk.service;
 
 import edu.puj.aes.pica.asperisk.domain.Categoria;
 import edu.puj.aes.pica.asperisk.repository.CategoriaRepository;
-import edu.puj.aes.pica.asperisk.service.dto.CategoriaDTO;
+import edu.puj.aes.pica.asperisk.oms.utilities.dto.CategoriaDTO;
+import edu.puj.aes.pica.asperisk.product.service.client.CategoriaServiceRestClient;
 import edu.puj.aes.pica.asperisk.service.mapper.CategoriaMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 /**
  * Service Implementation for managing Categoria.
@@ -23,11 +24,13 @@ public class CategoriaService {
 
     private final CategoriaRepository categoriaRepository;
 
-    private final CategoriaMapper categoriaMapper;
+//    private final CategoriaMapper categoriaMapper;
+    @Autowired
+    private CategoriaServiceRestClient categoriaServiceRestClient;
 
-    public CategoriaService(CategoriaRepository categoriaRepository, CategoriaMapper categoriaMapper) {
+    public CategoriaService(CategoriaRepository categoriaRepository/*, CategoriaMapper categoriaMapper*/) {
         this.categoriaRepository = categoriaRepository;
-        this.categoriaMapper = categoriaMapper;
+//        this.categoriaMapper = categoriaMapper;
     }
 
     /**
@@ -38,41 +41,58 @@ public class CategoriaService {
      */
     public CategoriaDTO save(CategoriaDTO categoriaDTO) {
         log.debug("Request to save Categoria : {}", categoriaDTO);
-        Categoria categoria = categoriaMapper.toEntity(categoriaDTO);
-        categoria = categoriaRepository.save(categoria);
-        return categoriaMapper.toDto(categoria);
+//        Categoria categoria = categoriaMapper.toEntity(categoriaDTO);
+//        categoria = categoriaRepository.save(categoria);
+//        return categoriaMapper.toDto(categoria);
+        return categoriaServiceRestClient.save(categoriaDTO);
     }
 
     /**
-     *  Get all the categorias.
+     * Save a categoria.
      *
-     *  @param pageable the pagination information
-     *  @return the list of entities
+     * @param categoriaDTO the entity to save
+     * @return the persisted entity
+     */
+    public CategoriaDTO update(CategoriaDTO categoriaDTO) {
+        log.debug("Request to save Categoria : {}", categoriaDTO);
+//        Categoria categoria = categoriaMapper.toEntity(categoriaDTO);
+//        categoria = categoriaRepository.save(categoria);
+//        return categoriaMapper.toDto(categoria);
+        return categoriaServiceRestClient.update(categoriaDTO);
+    }
+
+    /**
+     * Get all the categorias.
+     *
+     * @param pageable the pagination information
+     * @return the list of entities
      */
     @Transactional(readOnly = true)
     public Page<CategoriaDTO> findAll(Pageable pageable) {
-        log.debug("Request to get all Categorias");
-        return categoriaRepository.findAll(pageable)
-            .map(categoriaMapper::toDto);
+        log.info("Request to get all Categorias: {}",pageable.getSort());
+//        return categoriaRepository.findAll(pageable)
+//                .map(categoriaMapper::toDto);
+        return categoriaServiceRestClient.findAll(pageable);
     }
 
     /**
-     *  Get one categoria by id.
+     * Get one categoria by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     @Transactional(readOnly = true)
     public CategoriaDTO findOne(Long id) {
         log.debug("Request to get Categoria : {}", id);
-        Categoria categoria = categoriaRepository.findOne(id);
-        return categoriaMapper.toDto(categoria);
+//        Categoria categoria = categoriaRepository.findOne(id);
+//        return categoriaMapper.toDto(categoria);
+        return categoriaServiceRestClient.findOne(id);
     }
 
     /**
-     *  Delete the  categoria by id.
+     * Delete the categoria by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     public void delete(Long id) {
         log.debug("Request to delete Categoria : {}", id);

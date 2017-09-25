@@ -1,11 +1,9 @@
-package edu.puj.aes.pica.asperisk.service.dto;
+package edu.puj.aes.pica.asperisk.oms.utilities.dto;
 
 
+import edu.puj.aes.pica.asperisk.oms.utilities.enumeration.TipoDatoContacto;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
-import edu.puj.aes.pica.asperisk.domain.enumeration.TipoDatoContacto;
 
 /**
  * A DTO for the DatoContacto entity.

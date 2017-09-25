@@ -2,10 +2,12 @@ package edu.puj.aes.pica.asperisk.service;
 
 import edu.puj.aes.pica.asperisk.domain.Campania;
 import edu.puj.aes.pica.asperisk.repository.CampaniaRepository;
-import edu.puj.aes.pica.asperisk.service.dto.CampaniaDTO;
+import edu.puj.aes.pica.asperisk.oms.utilities.dto.CampaniaDTO;
+import edu.puj.aes.pica.asperisk.product.service.client.CategoriaServiceRestClient;
 import edu.puj.aes.pica.asperisk.service.mapper.CampaniaMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

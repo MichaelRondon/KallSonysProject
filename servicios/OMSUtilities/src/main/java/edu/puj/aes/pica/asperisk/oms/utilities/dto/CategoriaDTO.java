@@ -1,4 +1,4 @@
-package edu.puj.aes.pica.asperisk.service.dto;
+package edu.puj.aes.pica.asperisk.oms.utilities.dto;
 
 
 import java.io.Serializable;

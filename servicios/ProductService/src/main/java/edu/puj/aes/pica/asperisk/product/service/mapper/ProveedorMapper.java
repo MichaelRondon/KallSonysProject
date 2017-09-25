@@ -1,8 +1,7 @@
-package edu.puj.aes.pica.asperisk.service.mapper;
+package edu.puj.aes.pica.asperisk.product.service.mapper;
 
-import edu.puj.aes.pica.asperisk.domain.*;
 import edu.puj.aes.pica.asperisk.oms.utilities.dto.ProveedorDTO;
-import edu.puj.aes.pica.asperisk.service.mapper.EntityMapper;
+import edu.puj.aes.pica.asperisk.product.service.jpa.entity.Proveedor;
 
 import org.mapstruct.*;
 
@@ -14,6 +13,7 @@ public interface ProveedorMapper extends EntityMapper <ProveedorDTO, Proveedor> 
     
     @Mapping(target = "datosContactos", ignore = true)
     @Mapping(target = "productos", ignore = true)
+    @Override
     Proveedor toEntity(ProveedorDTO proveedorDTO); 
     default Proveedor fromId(Long id) {
         if (id == null) {

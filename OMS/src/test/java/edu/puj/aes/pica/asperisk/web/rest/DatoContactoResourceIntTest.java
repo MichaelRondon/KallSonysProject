@@ -4,8 +4,7 @@ import edu.puj.aes.pica.asperisk.OmsApp;
 
 import edu.puj.aes.pica.asperisk.domain.DatoContacto;
 import edu.puj.aes.pica.asperisk.repository.DatoContactoRepository;
-import edu.puj.aes.pica.asperisk.service.dto.DatoContactoDTO;
-import edu.puj.aes.pica.asperisk.service.mapper.DatoContactoMapper;
+import edu.puj.aes.pica.asperisk.oms.utilities.dto.DatoContactoDTO;
 import edu.puj.aes.pica.asperisk.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -30,7 +29,8 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import edu.puj.aes.pica.asperisk.domain.enumeration.TipoDatoContacto;
+import edu.puj.aes.pica.asperisk.oms.utilities.enumeration.TipoDatoContacto;
+import edu.puj.aes.pica.asperisk.service.mapper.DatoContactoMapper;
 /**
  * Test class for the DatoContactoResource REST controller.
  *

@@ -1,4 +1,4 @@
-package edu.puj.aes.pica.asperisk.web.rest.util;
+package edu.puj.aes.pica.asperisk.oms.utilities.rest.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

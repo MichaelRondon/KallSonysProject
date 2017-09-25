@@ -5,8 +5,7 @@ import edu.puj.aes.pica.asperisk.OmsApp;
 import edu.puj.aes.pica.asperisk.domain.Proveedor;
 import edu.puj.aes.pica.asperisk.repository.ProveedorRepository;
 import edu.puj.aes.pica.asperisk.service.ProveedorService;
-import edu.puj.aes.pica.asperisk.service.dto.ProveedorDTO;
-import edu.puj.aes.pica.asperisk.service.mapper.ProveedorMapper;
+import edu.puj.aes.pica.asperisk.oms.utilities.dto.ProveedorDTO;
 import edu.puj.aes.pica.asperisk.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -31,7 +30,8 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import edu.puj.aes.pica.asperisk.domain.enumeration.Estado;
+import edu.puj.aes.pica.asperisk.oms.utilities.enumeration.Estado;
+import edu.puj.aes.pica.asperisk.service.mapper.ProveedorMapper;
 /**
  * Test class for the ProveedorResource REST controller.
  *

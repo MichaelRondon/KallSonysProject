@@ -1,4 +1,4 @@
-package edu.puj.aes.pica.asperisk.domain.enumeration;
+package edu.puj.aes.pica.asperisk.oms.utilities.enumeration;
 
 /**
  * The Estado enumeration.

@@ -5,7 +5,7 @@ import edu.puj.aes.pica.asperisk.OmsApp;
 import edu.puj.aes.pica.asperisk.domain.Categoria;
 import edu.puj.aes.pica.asperisk.repository.CategoriaRepository;
 import edu.puj.aes.pica.asperisk.service.CategoriaService;
-import edu.puj.aes.pica.asperisk.service.dto.CategoriaDTO;
+import edu.puj.aes.pica.asperisk.oms.utilities.dto.CategoriaDTO;
 import edu.puj.aes.pica.asperisk.service.mapper.CategoriaMapper;
 import edu.puj.aes.pica.asperisk.web.rest.errors.ExceptionTranslator;
 

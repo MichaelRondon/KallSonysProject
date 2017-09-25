@@ -1,8 +1,7 @@
-package edu.puj.aes.pica.asperisk.service.dto;
+package edu.puj.aes.pica.asperisk.oms.utilities.dto;
 
 
 import java.time.Instant;
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
@@ -10,7 +9,7 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import edu.puj.aes.pica.asperisk.domain.enumeration.Estado;
+import edu.puj.aes.pica.asperisk.oms.utilities.enumeration.Estado;
 import lombok.Data;
 
 /**
@@ -20,7 +19,6 @@ public class ProductoDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
     private String nombre;
 
     private String descripcion;
