@@ -1,6 +1,6 @@
 package edu.puj.aes.pica.asperisk.product.service.jpa.entity;
 
-import edu.puj.aes.pica.asperisk.product.service.jpa.entity.enumeration.TipoDatoContacto;
+import edu.puj.aes.pica.asperisk.oms.utilities.enumeration.TipoDatoContacto;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 

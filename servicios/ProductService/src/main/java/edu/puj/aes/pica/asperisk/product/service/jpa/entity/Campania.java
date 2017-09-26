@@ -1,12 +1,12 @@
 package edu.puj.aes.pica.asperisk.product.service.jpa.entity;
 
-import edu.puj.aes.pica.asperisk.product.service.jpa.entity.enumeration.Estado;
+import edu.puj.aes.pica.asperisk.oms.utilities.model.State;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -36,19 +36,21 @@ public class Campania implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado")
-    private Estado estado;
+    private State estado;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "categoria")
     private edu.puj.aes.pica.asperisk.oms.utilities.model.Categoria categoria;
 
     @Column(name = "fecha_inicio")
-    private LocalDate fechaInicio;
+    private Date fechaInicio;
+//    private LocalDate fechaInicio;
 
     @Column(name = "fecha_fin")
-    private LocalDate fechaFin;
+    private Date fechaFin;
+//    private LocalDate fechaFin;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "campania_productos",
                joinColumns = @JoinColumn(name="campanias_id", referencedColumnName="id"),
@@ -89,42 +91,42 @@ public class Campania implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Estado getEstado() {
+    public State getEstado() {
         return estado;
     }
 
-    public Campania estado(Estado estado) {
+    public Campania estado(State estado) {
         this.estado = estado;
         return this;
     }
 
-    public void setEstado(Estado estado) {
+    public void setEstado(State estado) {
         this.estado = estado;
     }
 
-    public LocalDate getFechaInicio() {
+    public Date getFechaInicio() {
         return fechaInicio;
     }
 
-    public Campania fechaInicio(LocalDate fechaInicio) {
+    public Campania fechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
         return this;
     }
 
-    public void setFechaInicio(LocalDate fechaInicio) {
+    public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public LocalDate getFechaFin() {
+    public Date getFechaFin() {
         return fechaFin;
     }
 
-    public Campania fechaFin(LocalDate fechaFin) {
+    public Campania fechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
         return this;
     }
 
-    public void setFechaFin(LocalDate fechaFin) {
+    public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
     }
 

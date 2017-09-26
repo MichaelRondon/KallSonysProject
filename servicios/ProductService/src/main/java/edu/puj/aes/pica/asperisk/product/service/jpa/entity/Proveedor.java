@@ -1,7 +1,7 @@
 package edu.puj.aes.pica.asperisk.product.service.jpa.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import edu.puj.aes.pica.asperisk.product.service.jpa.entity.enumeration.Estado;
+import edu.puj.aes.pica.asperisk.oms.utilities.enumeration.Estado;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 

@@ -1,7 +1,8 @@
 package edu.puj.aes.pica.asperisk.product.service.jpa.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import edu.puj.aes.pica.asperisk.product.service.jpa.entity.enumeration.Estado;
+import edu.puj.aes.pica.asperisk.oms.utilities.enumeration.Estado;
+import edu.puj.aes.pica.asperisk.oms.utilities.model.State;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -10,6 +11,7 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -43,13 +45,13 @@ public class Producto implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado")
-    private Estado estado;
+    private State estado;
 
     @Column(name = "disponibilidad")
     private Integer disponibilidad;
 
     @Column(name = "fecha_rev_disponibilidad")
-    private Instant fechaRevDisponibilidad;
+    private Date fechaRevDisponibilidad;
 
     @Column(name = "marca")
     private String marca;
@@ -112,16 +114,16 @@ public class Producto implements Serializable {
         this.precio = precio;
     }
 
-    public Estado getEstado() {
+    public State getEstado() {
         return estado;
     }
 
-    public Producto estado(Estado estado) {
+    public Producto estado(State estado) {
         this.estado = estado;
         return this;
     }
 
-    public void setEstado(Estado estado) {
+    public void setEstado(State estado) {
         this.estado = estado;
     }
 
@@ -138,16 +140,16 @@ public class Producto implements Serializable {
         this.disponibilidad = disponibilidad;
     }
 
-    public Instant getFechaRevDisponibilidad() {
+    public Date getFechaRevDisponibilidad() {
         return fechaRevDisponibilidad;
     }
 
-    public Producto fechaRevDisponibilidad(Instant fechaRevDisponibilidad) {
+    public Producto fechaRevDisponibilidad(Date fechaRevDisponibilidad) {
         this.fechaRevDisponibilidad = fechaRevDisponibilidad;
         return this;
     }
 
-    public void setFechaRevDisponibilidad(Instant fechaRevDisponibilidad) {
+    public void setFechaRevDisponibilidad(Date fechaRevDisponibilidad) {
         this.fechaRevDisponibilidad = fechaRevDisponibilidad;
     }
 
