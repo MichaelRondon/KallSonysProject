@@ -81,15 +81,20 @@ public class CampaniaResource {
     /**
      * GET  /campanias : get all the campanias.
      *
-     * @param pageable the pagination information
+     * @param page
+     * @param sort
+     * @param size
      * @return the ResponseEntity with status 200 (OK) and the list of campanias in body
      */
     @GetMapping("/campanias")
-    public ResponseEntity<List<Campanign>> getAllCampanias(@ApiParam Pageable pageable) {
+    public ResponseEntity<List<Campanign>> getAllCampanias(
+            @RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
+            @RequestParam(value = "sort", defaultValue = "", required = false) String sort,
+            @RequestParam(value = "size", defaultValue = "1", required = false) Integer size) {
         log.debug("REST request to get a page of Campanias");
-        Page<Campanign> page = campaniaService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/campanias");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        Page<Campanign> response = campaniaService.findAll(PaginationUtil.getPageRequest(page, sort, size));
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(response, "/api/campanias");
+        return new ResponseEntity<>(response.getContent(), headers, HttpStatus.OK);
     }
 
     /**

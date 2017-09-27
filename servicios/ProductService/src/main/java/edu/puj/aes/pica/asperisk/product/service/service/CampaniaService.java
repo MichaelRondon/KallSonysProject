@@ -66,8 +66,12 @@ public class CampaniaService {
      */
     @Transactional(readOnly = true)
     public Campanign findOne(Long id) {
-        log.debug("Request to get Campania : {}", id);
-        Campania campania = campaniaRepository.findOneWithEagerRelationships(id);
+        log.info("Request to get Campania : {}", id);
+        Campania campania = campaniaRepository.findOne(id);
+        if(campania == null){
+            return null;
+        }
+//        Campania campania = campaniaRepository.findOneWithEagerRelationships(id);
         return campaniaMapper.toDto(campania);
     }
 

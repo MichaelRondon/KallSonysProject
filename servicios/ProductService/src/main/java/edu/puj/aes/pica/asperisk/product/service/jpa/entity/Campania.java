@@ -7,8 +7,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 
@@ -50,12 +48,14 @@ public class Campania implements Serializable {
     private Date fechaFin;
 //    private LocalDate fechaFin;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "campania_productos",
-               joinColumns = @JoinColumn(name="campanias_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="productos_id", referencedColumnName="id"))
-    private Set<Producto> productos = new HashSet<>();
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+//    @JoinTable(name = "campania_productos",
+//               joinColumns = @JoinColumn(name="campanias_id", referencedColumnName="id"),
+//               inverseJoinColumns = @JoinColumn(name="productos_id", referencedColumnName="id"))
+//    private Set<Producto> productos = new HashSet<>();
+    
+    private String productos;
 
     public Long getId() {
         return id;
@@ -130,28 +130,35 @@ public class Campania implements Serializable {
         this.fechaFin = fechaFin;
     }
 
-    public Set<Producto> getProductos() {
+    public String getProductos() {
         return productos;
     }
 
-    public Campania productos(Set<Producto> productos) {
-        this.productos = productos;
-        return this;
-    }
-
-    public Campania addProductos(Producto producto) {
-        this.productos.add(producto);
-        return this;
-    }
-
-    public Campania removeProductos(Producto producto) {
-        this.productos.remove(producto);
-        return this;
-    }
-
-    public void setProductos(Set<Producto> productos) {
+//    public Set<Producto> getProductos() {
+//        return productos;
+//    }
+    public void setProductos(String productos) {
         this.productos = productos;
     }
+
+//    public Campania productos(Set<Producto> productos) {
+//        this.productos = productos;
+//        return this;
+//    }
+
+//    public Campania addProductos(Producto producto) {
+//        this.productos.add(producto);
+//        return this;
+//    }
+
+//    public Campania removeProductos(Producto producto) {
+//        this.productos.remove(producto);
+//        return this;
+//    }
+
+//    public void setProductos(Set<Producto> productos) {
+//        this.productos = productos;
+//    }
 
     public edu.puj.aes.pica.asperisk.oms.utilities.model.Categoria getCategoria() {
         return categoria;

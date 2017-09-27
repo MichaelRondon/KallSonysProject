@@ -30,7 +30,7 @@ import org.springframework.data.domain.Sort.Direction;
 @RequestMapping("/api")
 public class CategoriaResource {
 
-    private final Logger log = LoggerFactory.getLogger(CategoriaResource.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CategoriaResource.class);
 
     private static final String ENTITY_NAME = "categoria";
 
@@ -52,7 +52,7 @@ public class CategoriaResource {
     @PostMapping("/categorias")
 //    @Timed
     public ResponseEntity<CategoriaDTO> createCategoria(@RequestBody CategoriaDTO categoriaDTO) throws URISyntaxException {
-        log.debug("REST request to save Categoria : {}", categoriaDTO);
+        LOGGER.debug("REST request to save Categoria : {}", categoriaDTO);
         if (categoriaDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new categoria cannot already have an ID")).body(null);
         }
@@ -75,7 +75,7 @@ public class CategoriaResource {
     @PutMapping("/categorias")
 //    @Timed
     public ResponseEntity<CategoriaDTO> updateCategoria(@RequestBody CategoriaDTO categoriaDTO) throws URISyntaxException {
-        log.debug("REST request to update Categoria : {}", categoriaDTO);
+        LOGGER.debug("REST request to update Categoria : {}", categoriaDTO);
         if (categoriaDTO.getId() == null) {
             return createCategoria(categoriaDTO);
         }
@@ -100,23 +100,9 @@ public class CategoriaResource {
             @RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
             @RequestParam(value = "sort", defaultValue = "", required = false) String sort,
             @RequestParam(value = "size", defaultValue = "1", required = false) Integer size) {
-        log.info("REST request to get a page of Categorias. Page: {} Sort: {}", page, sort);
-        PageRequest pageRequest = new PageRequest(page, size);
-        if (!sort.isEmpty()) {
-            Sort.Order order;
-            String property = "id";
-            if(sort.contains(":")){
-                property = sort.substring(0,sort.indexOf(":"));
-            }
-            if (sort.contains("DESC")) {
-                order = new Sort.Order(Direction.DESC, property);
-            }else{
-                order = new Sort.Order(Direction.ASC, property);
-            }
-            pageRequest = new PageRequest(page, size, new Sort(order));
-        }
 
-        Page<CategoriaDTO> response = categoriaService.findAll(pageRequest);
+        LOGGER.info("REST request to get a page of Categorias. Page: {} Sort: {}", page, sort);
+        Page<CategoriaDTO> response = categoriaService.findAll(PaginationUtil.getPageRequest(page, sort, size));
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(response, "/api/categorias");
         return new ResponseEntity<>(response.getContent(), headers, HttpStatus.OK);
     }
@@ -131,7 +117,7 @@ public class CategoriaResource {
     @GetMapping("/categorias/{id}")
 //    @Timed
     public ResponseEntity<CategoriaDTO> getCategoria(@PathVariable Long id) {
-        log.debug("REST request to get Categoria : {}", id);
+        LOGGER.debug("REST request to get Categoria : {}", id);
         CategoriaDTO categoriaDTO = categoriaService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(categoriaDTO));
     }
@@ -145,7 +131,7 @@ public class CategoriaResource {
     @DeleteMapping("/categorias/{id}")
 //    @Timed
     public ResponseEntity<Void> deleteCategoria(@PathVariable Long id) {
-        log.debug("REST request to delete Categoria : {}", id);
+        LOGGER.debug("REST request to delete Categoria : {}", id);
         categoriaService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }

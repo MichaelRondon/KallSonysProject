@@ -81,6 +81,9 @@ public class ProductUtilSingleton {
         builder.queryParam("items_per_page", pageable.getPageSize());
         LOGGER.info("page: {}", pageable.getPageNumber());
         LOGGER.info("itemsPerPage: {}", pageable.getPageSize());
+        if (pageable.getSort() == null) {
+            return builder;
+        }
 
         Iterator<Sort.Order> iterator = pageable.getSort().iterator();
         if (iterator.hasNext()) {

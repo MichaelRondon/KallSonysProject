@@ -1,6 +1,8 @@
 package edu.puj.aes.pica.asperisk.oms.utilities.rest.util;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -39,8 +41,26 @@ public final class PaginationUtil {
         return headers;
     }
 
+    public static PageRequest getPageRequest(Integer page, String sort, Integer size){
+        PageRequest pageRequest = new PageRequest(page, size);
+        if (!sort.isEmpty()) {
+            Sort.Order order;
+            String property = "id";
+            if(sort.contains(":")){
+                property = sort.substring(0,sort.indexOf(":"));
+            }
+            if (sort.contains("DESC")) {
+                order = new Sort.Order(Sort.Direction.DESC, property);
+            }else{
+                order = new Sort.Order(Sort.Direction.ASC, property);
+            }
+            pageRequest = new PageRequest(page, size, new Sort(order));
+        }
+        return pageRequest;
+    }
 
     private static String generateUri(String baseUrl, int page, int size) {
         return UriComponentsBuilder.fromUriString(baseUrl).queryParam("page", page).queryParam("size", size).toUriString();
     }
+    
 }

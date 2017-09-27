@@ -1,9 +1,15 @@
 package edu.puj.aes.pica.asperisk.product.service.mapper;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.Campanign;
+import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
 import edu.puj.aes.pica.asperisk.product.service.jpa.entity.Campania;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +19,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CampaniaMapperImpl implements CampaniaMapper {
+
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(CampaniaMapperImpl.class);
 
     @Autowired
     private ProductoMapper productoMapper;
@@ -28,7 +36,7 @@ public class CampaniaMapperImpl implements CampaniaMapper {
         campania.setId(dto.getId());
         campania.setNombre(dto.getNombre());
 
-        campania.setProductos(dto.getProductos().parallelStream().map(productoMapper::toEntity).collect(Collectors.toSet()));
+        campania.setProductos(mapProductsDtoToJSONString(dto.getProductos()));
         return campania;
     }
 
@@ -43,8 +51,30 @@ public class CampaniaMapperImpl implements CampaniaMapper {
         campaniaDTO.setFechaInicio(entity.getFechaInicio());
         campaniaDTO.setId(entity.getId());
         campaniaDTO.setNombre(entity.getNombre());
-        campaniaDTO.setProductos(entity.getProductos().parallelStream().map(productoMapper::toDto).collect(Collectors.toList()));
+        campaniaDTO.setProductos(mapJSONStringToProducts(entity.getProductos()));
         return campaniaDTO;
+    }
+
+    public List<Product> mapJSONStringToProducts(String jsonProducts) {
+        ObjectMapper mapper = new ObjectMapper();
+        List<Product> products = new LinkedList<>();
+        try {
+            Long[] readValue = mapper.readValue(jsonProducts, Long[].class);
+            List<Long> asList = Arrays.asList(readValue);
+            Product product;
+            for (Long long1 : asList) {
+                product = new Product();
+                product.setId(long1);
+                products.add(product);
+            }
+        } catch (IOException ex) {
+            LOGGER.error("Error convirtiendo cadena JSON {} a Products. Error: {}", jsonProducts, ex.getMessage());
+        }
+        return products;
+    }
+
+    public String mapProductsDtoToJSONString(List<Product> productos) {
+        return Arrays.toString(productos.stream().map(Product::getId).collect(Collectors.toList()).toArray());
     }
 
     @Override
