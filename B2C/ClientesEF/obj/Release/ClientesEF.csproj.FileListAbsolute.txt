@@ -1,0 +1,8 @@
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesEF\bin\Release\ClientesEF.dll.config
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesEF\bin\Release\ClientesEF.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesEF\bin\Release\ClientesEF.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesEF\bin\Release\EntityFramework.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesEF\bin\Release\EntityFramework.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesEF\obj\Release\ClientesEF.csprojResolveAssemblyReference.cache
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesEF\obj\Release\ClientesEF.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesEF\obj\Release\ClientesEF.pdb

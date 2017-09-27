@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="ADDRESSes">
+      <EntityTypeMapping TypeName="Model.ADDRESS">
+        <MappingFragment StoreEntitySet="ADDRESS">
+          <ScalarProperty Name="STREET" ColumnName="STREET" />
+          <ScalarProperty Name="STATE" ColumnName="STATE" />
+          <ScalarProperty Name="ZIP" ColumnName="ZIP" />
+          <ScalarProperty Name="COUNTRY" ColumnName="COUNTRY" />
+          <ScalarProperty Name="ADDRESSTYPE" ColumnName="ADDRESSTYPE" />
+          <ScalarProperty Name="ADDRID" ColumnName="ADDRID" />
+          <ScalarProperty Name="CITY" ColumnName="CITY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CUSTOMERs">
+      <EntityTypeMapping TypeName="Model.CUSTOMER">
+        <MappingFragment StoreEntitySet="CUSTOMER">
+          <ScalarProperty Name="CUSTID" ColumnName="CUSTID" />
+          <ScalarProperty Name="FNAME" ColumnName="FNAME" />
+          <ScalarProperty Name="LNAME" ColumnName="LNAME" />
+          <ScalarProperty Name="PHONENUMBER" ColumnName="PHONENUMBER" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="CREDITCARDTYPE" ColumnName="CREDITCARDTYPE" />
+          <ScalarProperty Name="CREDITCARDNUMBER" ColumnName="CREDITCARDNUMBER" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="SALT" ColumnName="SALT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ITEMS">
+      <EntityTypeMapping TypeName="Model.ITEM">
+        <MappingFragment StoreEntitySet="ITEMS">
+          <ScalarProperty Name="ITEMID" ColumnName="ITEMID" />
+          <ScalarProperty Name="PRODID" ColumnName="PRODID" />
+          <ScalarProperty Name="PRODUCTNAME" ColumnName="PRODUCTNAME" />
+          <ScalarProperty Name="PARTNUM" ColumnName="PARTNUM" />
+          <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+          <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+          <ScalarProperty Name="ORDID" ColumnName="ORDID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ORDERS">
+      <EntityTypeMapping TypeName="Model.ORDER">
+        <MappingFragment StoreEntitySet="ORDERS">
+          <ScalarProperty Name="CUSTID" ColumnName="CUSTID" />
+          <ScalarProperty Name="ORDID" ColumnName="ORDID" />
+          <ScalarProperty Name="ORDERDATE" ColumnName="ORDERDATE" />
+          <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="COMMENTS" ColumnName="COMMENTS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CUSTOMER_ADDRESS" TypeName="Model.CUSTOMER_ADDRESS" StoreEntitySet="CUSTOMER_ADDRESS">
+      <EndProperty Name="CUSTOMER">
+        <ScalarProperty Name="CUSTID" ColumnName="CUSTID" />
+      </EndProperty>
+      <EndProperty Name="ADDRESS">
+        <ScalarProperty Name="ADDRID" ColumnName="ADDRESSID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

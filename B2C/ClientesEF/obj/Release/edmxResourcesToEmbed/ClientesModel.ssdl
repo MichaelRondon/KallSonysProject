@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="11.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ADDRESS">
+    <Key>
+      <PropertyRef Name="ADDRID" />
+    </Key>
+    <Property Name="STREET" Type="varchar2" MaxLength="40" />
+    <Property Name="STATE" Type="varchar2" MaxLength="40" />
+    <Property Name="ZIP" Type="varchar2" MaxLength="10" />
+    <Property Name="COUNTRY" Type="varchar2" MaxLength="40" />
+    <Property Name="ADDRESSTYPE" Type="varchar2" MaxLength="10" />
+    <Property Name="ADDRID" Type="varchar2" MaxLength="4000" Nullable="false" />
+    <Property Name="CITY" Type="varchar2" MaxLength="40" />
+  </EntityType>
+  <EntityType Name="CUSTOMER">
+    <Key>
+      <PropertyRef Name="CUSTID" />
+    </Key>
+    <Property Name="CUSTID" Type="varchar2" MaxLength="40" Nullable="false" />
+    <Property Name="FNAME" Type="varchar2" MaxLength="40" />
+    <Property Name="LNAME" Type="varchar2" MaxLength="40" />
+    <Property Name="PHONENUMBER" Type="varchar2" MaxLength="40" />
+    <Property Name="EMAIL" Type="varchar2" MaxLength="40" />
+    <Property Name="PASSWORD" Type="varchar2" MaxLength="40" />
+    <Property Name="CREDITCARDTYPE" Type="varchar2" MaxLength="40" />
+    <Property Name="CREDITCARDNUMBER" Type="varchar2" MaxLength="40" />
+    <Property Name="STATUS" Type="varchar2" MaxLength="10" />
+    <Property Name="SALT" Type="varchar2" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="CUSTOMER_ADDRESS">
+    <Key>
+      <PropertyRef Name="CUSTID" />
+      <PropertyRef Name="ADDRESSID" />
+    </Key>
+    <Property Name="CUSTID" Type="varchar2" MaxLength="40" Nullable="false" />
+    <Property Name="ADDRESSID" Type="varchar2" MaxLength="4000" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ITEMS">
+    <Key>
+      <PropertyRef Name="ITEMID" />
+    </Key>
+    <Property Name="ITEMID" Type="number" Precision="9" Scale="0" Nullable="false" />
+    <Property Name="PRODID" Type="number" Precision="22" Scale="0" Nullable="false" />
+    <Property Name="PRODUCTNAME" Type="varchar2" MaxLength="200" />
+    <Property Name="PARTNUM" Type="varchar2" MaxLength="50" />
+    <Property Name="PRICE" Type="number" Precision="9" Scale="2" />
+    <Property Name="QUANTITY" Type="number" Precision="9" Scale="0" />
+    <Property Name="ORDID" Type="number" Precision="9" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ORDERS">
+    <Key>
+      <PropertyRef Name="ORDID" />
+    </Key>
+    <Property Name="CUSTID" Type="varchar2" MaxLength="40" />
+    <Property Name="ORDID" Type="number" Precision="9" Scale="0" Nullable="false" />
+    <Property Name="ORDERDATE" Type="date" />
+    <Property Name="PRICE" Type="number" Precision="9" Scale="2" />
+    <Property Name="STATUS" Type="varchar2" MaxLength="10" />
+    <Property Name="COMMENTS" Type="varchar2" MaxLength="4000" />
+  </EntityType>
+  <Association Name="CUSTOMER_ADDRESS_FK">
+    <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CUSTOMER_ADDRESS" Type="Self.CUSTOMER_ADDRESS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CUSTOMER">
+        <PropertyRef Name="CUSTID" />
+      </Principal>
+      <Dependent Role="CUSTOMER_ADDRESS">
+        <PropertyRef Name="CUSTID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CUSTOMER_ADDRESS_FK2">
+    <End Role="ADDRESS" Type="Self.ADDRESS" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CUSTOMER_ADDRESS" Type="Self.CUSTOMER_ADDRESS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ADDRESS">
+        <PropertyRef Name="ADDRID" />
+      </Principal>
+      <Dependent Role="CUSTOMER_ADDRESS">
+        <PropertyRef Name="ADDRESSID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ITEMS_FK">
+    <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="1" />
+    <End Role="ITEMS" Type="Self.ITEMS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ORDERS">
+        <PropertyRef Name="ORDID" />
+      </Principal>
+      <Dependent Role="ITEMS">
+        <PropertyRef Name="ORDID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ORDERS_FK">
+    <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="0..1" />
+    <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CUSTOMER">
+        <PropertyRef Name="CUSTID" />
+      </Principal>
+      <Dependent Role="ORDERS">
+        <PropertyRef Name="CUSTID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="ADDRESS" EntityType="Self.ADDRESS" Schema="B2C" store:Type="Tables" />
+    <EntitySet Name="CUSTOMER" EntityType="Self.CUSTOMER" Schema="B2C" store:Type="Tables" />
+    <EntitySet Name="CUSTOMER_ADDRESS" EntityType="Self.CUSTOMER_ADDRESS" Schema="B2C" store:Type="Tables" />
+    <EntitySet Name="ITEMS" EntityType="Self.ITEMS" Schema="B2C" store:Type="Tables" />
+    <EntitySet Name="ORDERS" EntityType="Self.ORDERS" Schema="B2C" store:Type="Tables" />
+    <AssociationSet Name="CUSTOMER_ADDRESS_FK" Association="Self.CUSTOMER_ADDRESS_FK">
+      <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+      <End Role="CUSTOMER_ADDRESS" EntitySet="CUSTOMER_ADDRESS" />
+    </AssociationSet>
+    <AssociationSet Name="CUSTOMER_ADDRESS_FK2" Association="Self.CUSTOMER_ADDRESS_FK2">
+      <End Role="ADDRESS" EntitySet="ADDRESS" />
+      <End Role="CUSTOMER_ADDRESS" EntitySet="CUSTOMER_ADDRESS" />
+    </AssociationSet>
+    <AssociationSet Name="ITEMS_FK" Association="Self.ITEMS_FK">
+      <End Role="ORDERS" EntitySet="ORDERS" />
+      <End Role="ITEMS" EntitySet="ITEMS" />
+    </AssociationSet>
+    <AssociationSet Name="ORDERS_FK" Association="Self.ORDERS_FK">
+      <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+      <End Role="ORDERS" EntitySet="ORDERS" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
