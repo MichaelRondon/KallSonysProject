@@ -193,7 +193,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
     }
 
     @Override
-    public List<Product> findAllByIds(List<String> ids) throws ProductTransactionException {
+    public List<Product> findAllByIds(List<Long> ids) throws ProductTransactionException {
         ElasticSearchInputMultiGet elasticSearchInputMultiGet = new ElasticSearchInputMultiGet(elasticSearchInput);
         elasticSearchInputMultiGet.setIds(ids);
         MultiGetResponse multiGetResponse = executeTransaction(new MultiGet(), elasticSearchInputMultiGet);

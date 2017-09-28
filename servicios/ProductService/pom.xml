@@ -27,6 +27,7 @@
             <groupId>edu.puj.aes.pica.asperisk</groupId>
             <artifactId>oms-utilities</artifactId>
             <version>1.0</version>
+            <type>jar</type>
         </dependency>
 		
         <dependency>
