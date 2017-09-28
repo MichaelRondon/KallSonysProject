@@ -29,6 +29,7 @@ import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.ProductScrollResponse;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.Response;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.ScrollSearchRequest;
+import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.IDsQuery;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -168,10 +169,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
                             scrollSearchRequest.getBasicSearchParams(),
                             productScrollResponse.getProductos())) {
                 SearchResponse searchResponse = scrollSearchFromElasticSearch(scrollSearchRequest);
-                List<Product> responseList = Arrays.stream(searchResponse.getHits()
-                        .getHits()).parallel()
-                        .map(hit -> mapToProduct(hit.getSourceAsString()))
-                        .collect(Collectors.toList());
+                List<Product> responseList = getListFromSearchResponse(searchResponse);
                 productScrollResponse.setScrollId(searchResponse.getScrollId());
                 productScrollResponse.getProductos().addAll(responseList);
 
@@ -196,9 +194,16 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
     public List<Product> findAllByIds(List<Long> ids) throws ProductTransactionException {
         ElasticSearchInputMultiGet elasticSearchInputMultiGet = new ElasticSearchInputMultiGet(elasticSearchInput);
         elasticSearchInputMultiGet.setIds(ids);
-        MultiGetResponse multiGetResponse = executeTransaction(new MultiGet(), elasticSearchInputMultiGet);
-        LOGGER.info("multiGetResponse: {}", multiGetResponse.getResponses().length);
-        return getListOfProducts(multiGetResponse);
+        SearchResponse searchResponse = executeTransaction(new IDsQuery(), elasticSearchInputMultiGet);
+        LOGGER.info("idsResponse: {}", searchResponse);
+        return getListFromSearchResponse(searchResponse);
+    }
+    
+    private List<Product> getListFromSearchResponse(SearchResponse searchResponse){
+        return Arrays.stream(searchResponse.getHits()
+                        .getHits()).parallel()
+                        .map(hit -> mapToProduct(hit.getSourceAsString()))
+                        .collect(Collectors.toList());
     }
 
     private List<Product> getListOfProducts(MultiGetResponse multiGetResponse) {
