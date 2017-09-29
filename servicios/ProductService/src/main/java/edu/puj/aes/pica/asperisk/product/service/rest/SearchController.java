@@ -64,7 +64,7 @@ public class SearchController {
     public ResponseEntity<Void> delete(@RequestBody Product product) throws ProductTransactionException {
         LOGGER.info("Ingresando a delete");
         elasticSearchService.delete(product);
-        return ResponseEntity.ok();
+        return ResponseEntity.ok().build();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

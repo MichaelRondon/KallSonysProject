@@ -49,7 +49,7 @@ public class ProductoService {
 //        Producto producto = productoMapper.toEntity(productoDTO);
 //        producto = productoRepository.save(producto);
 //        return productoMapper.toDto(producto);
-        return productServiceRestClient.delete(productoDTO);
+        productServiceRestClient.delete(productoDTO);
     }
 
     /**
