@@ -19,7 +19,7 @@ public interface ProductService {
 
     ProductsResponse consultarHistorico(HistoricoRequest historicoRequest);
 
-    ProductsResponse buscar(SearchRequest searchRequest);
+    ProductsResponse buscar(SearchRequest searchRequest) throws ProductTransactionException;
 
     CampaignResponse campanias(CampaignRequest campaniasRequest);
 

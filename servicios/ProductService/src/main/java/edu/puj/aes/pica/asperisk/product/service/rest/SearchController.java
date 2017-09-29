@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.util.Date;
+import java.util.logging.Level;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -148,7 +149,7 @@ public class SearchController {
             @RequestParam(value = "items_per_page", defaultValue = "-1", required = false) Integer itemsPerPage,
             @RequestParam(value = "sort", defaultValue = "", required = false) String sort,
             @RequestParam(value = "sort_type", defaultValue = "", required = false) Sort.Direction sortType,
-            @RequestParam(value = "custom", defaultValue = "", required = false) String custom) {
+            @RequestParam(value = "custom", defaultValue = "", required = false) String custom) throws ProductTransactionException {
 
         BasicProveedor basicProveedor = new BasicProveedor();
         basicProveedor.setId(proveedor);
@@ -181,7 +182,8 @@ public class SearchController {
         searchRequest.setPrecioMin(precioMin);
 
         LOGGER.info("Busca searchRequest: {}", searchRequest);
-        ProductsResponse productsResponse = productService.buscar(searchRequest);
+        ProductsResponse productsResponse;
+        productsResponse = productService.buscar(searchRequest);
         LOGGER.info("Encuentra productsResponse: {}", productsResponse);
         return new ResponseEntity(productsResponse, HttpStatus.OK);
     }

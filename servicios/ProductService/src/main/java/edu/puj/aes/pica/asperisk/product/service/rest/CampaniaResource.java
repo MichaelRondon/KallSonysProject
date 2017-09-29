@@ -121,6 +121,7 @@ public class CampaniaResource {
     public ResponseEntity<Campanign> getCampania(@PathVariable Long id) {
         LOGGER.debug("REST request to get Campania : {}", id);
         Campanign campaniaDTO = campaniaService.findOne(id);
+        LOGGER.info("founded: {}", campaniaDTO);
         List<Long> collect = campaniaDTO.getProductos().stream().map(Product::getId).collect(Collectors.toList());
         try {
             List<Product> findAllByIds = elasticSearchService.findAllByIds(collect);
