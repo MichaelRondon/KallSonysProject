@@ -149,5 +149,10 @@ public class ProductServiceDummy implements ProductService {
     public List<Product> findAllByIds(List<Long> ids) throws ProductTransactionException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void delete(Product product) throws ProductTransactionException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
 

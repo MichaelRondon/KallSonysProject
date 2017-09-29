@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 public interface CategoriaServiceRestClient{
     
     CategoriaDTO save(CategoriaDTO categoriaDTO);
+    void delete(CategoriaDTO categoriaDTO);
     CategoriaDTO update(CategoriaDTO categoriaDTO);
     Page<CategoriaDTO> findAll(Pageable pageable);
     CategoriaDTO findOne(Long id);

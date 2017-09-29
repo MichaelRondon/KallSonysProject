@@ -29,6 +29,7 @@ import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.ProductScrollResponse;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.Response;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.ScrollSearchRequest;
+import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.DeleteTransaction;
 import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.ElasticSearchInputMultiBuilders;
 import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.IDsQuery;
 import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.SearchMultiBuilder;
@@ -41,6 +42,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.get.MultiGetItemResponse;
 import org.elasticsearch.action.get.MultiGetResponse;
@@ -153,6 +155,15 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             LOGGER.error(errorMessage, ex);
             throw new ProductTransactionException(errorMessage, ex);
         }
+    }
+
+    @Override
+    public void delete(Product product) throws ProductTransactionException {
+        elasticSearchInput = new ElasticSearchInput();
+        elasticSearchInput.setId(product.getId().toString());
+        DeleteResponse deleteResponse = executeTransaction(new DeleteTransaction(), elasticSearchInput);
+        LOGGER.info("deleteResponse.status(): {}", deleteResponse.status());
+        clearProductCache();
     }
 
     @Override

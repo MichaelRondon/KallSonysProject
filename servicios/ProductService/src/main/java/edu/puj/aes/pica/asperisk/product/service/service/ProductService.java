@@ -30,6 +30,8 @@ public interface ProductService {
     Product update(Product product) throws ProductTransactionException;
 
     Product findOne(String id) throws ProductTransactionException;
+    
+    void delete(Product product) throws ProductTransactionException;
 
     List<Product> findAllByIds(List<Long> ids) throws ProductTransactionException;
 

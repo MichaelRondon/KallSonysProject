@@ -69,5 +69,11 @@ public class CampaniaServiceRestClientImpl implements CampaniaServiceRestClient{
                 .getForObject(String.format("%s/%d", CAMPANIA_SERVICE_URL, id),
                         Campanign.class);
     }
+
+    @Override
+    public void delete(Campanign campanignDTO) {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.delete(CAMPANIA_SERVICE_URL, campanignDTO);
+    }
     
 }

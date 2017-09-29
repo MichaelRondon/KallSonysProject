@@ -53,11 +53,18 @@ public class SearchController {
 
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<Product> update(@RequestBody Product product) throws ProductTransactionException {
-        LOGGER.info("Ingresando a create");
+        LOGGER.info("Ingresando a update");
         product = elasticSearchService.update(product);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(product.getId()).toUri();
         return ResponseEntity.created(location).body(product);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE)
+    public ResponseEntity<Void> delete(@RequestBody Product product) throws ProductTransactionException {
+        LOGGER.info("Ingresando a delete");
+        elasticSearchService.delete(product);
+        return ResponseEntity.ok();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

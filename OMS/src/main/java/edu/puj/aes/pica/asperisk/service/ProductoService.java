@@ -23,7 +23,6 @@ public class ProductoService {
 
     private final ProductoRepository productoRepository;
 
-
     @Autowired
     private ProductServiceRestClient productServiceRestClient;
 
@@ -43,6 +42,14 @@ public class ProductoService {
 //        producto = productoRepository.save(producto);
 //        return productoMapper.toDto(producto);
         return productServiceRestClient.save(productoDTO);
+    }
+    
+    public void delete(ProductoDTO productoDTO) {
+        log.debug("Request to delete Producto : {}", productoDTO);
+//        Producto producto = productoMapper.toEntity(productoDTO);
+//        producto = productoRepository.save(producto);
+//        return productoMapper.toDto(producto);
+        return productServiceRestClient.delete(productoDTO);
     }
 
     /**

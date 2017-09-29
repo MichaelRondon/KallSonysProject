@@ -72,4 +72,10 @@ public class CategoriaServiceRestClientImpl implements CategoriaServiceRestClien
                         CategoriaDTO.class);
     }
 
+    @Override
+    public void delete(CategoriaDTO categoriaDTO) {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.delete(CATEGORIAS_SERVICE_URL, categoriaDTO);
+    }
+
 }
