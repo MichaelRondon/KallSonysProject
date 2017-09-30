@@ -1,5 +1,6 @@
 package edu.puj.aes.pica.asperisk.oms.utilities.model;
 
+import java.io.Serializable;
 import lombok.Data;
 import lombok.ToString;
 
@@ -8,7 +9,7 @@ import lombok.ToString;
  */
 @Data
 @ToString
-public class BasicClient {
+public class BasicClient implements Serializable{
 
     private String ip;
     private Long clienteId;
