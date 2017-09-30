@@ -87,6 +87,9 @@ public class ProductoService {
      */
     public void delete(Long id) {
         log.debug("Request to delete Producto : {}", id);
-        productoRepository.delete(id);
+//        productoRepository.delete(id);
+        ProductoDTO productoDTO = new ProductoDTO();
+        productoDTO.setId(id);
+        productServiceRestClient.delete(productoDTO);
     }
 }

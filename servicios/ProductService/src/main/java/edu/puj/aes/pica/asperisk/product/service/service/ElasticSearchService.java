@@ -161,6 +161,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
     public void delete(Product product) throws ProductTransactionException {
         elasticSearchInput = new ElasticSearchInput();
         elasticSearchInput.setId(product.getId().toString());
+        LOGGER.info("delete id: {}", elasticSearchInput.getId());
         DeleteResponse deleteResponse = executeTransaction(new DeleteTransaction(), elasticSearchInput);
         LOGGER.info("deleteResponse.status(): {}", deleteResponse.status());
         clearProductCache();
