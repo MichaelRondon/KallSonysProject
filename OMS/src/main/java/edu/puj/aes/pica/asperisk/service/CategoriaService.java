@@ -96,6 +96,6 @@ public class CategoriaService {
      */
     public void delete(Long id) {
         log.debug("Request to delete Categoria : {}", id);
-        categoriaRepository.delete(id);
+        categoriaServiceRestClient.delete(id);
     }
 }

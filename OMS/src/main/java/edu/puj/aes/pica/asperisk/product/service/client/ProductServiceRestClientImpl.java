@@ -38,9 +38,9 @@ public class ProductServiceRestClientImpl implements ProductServiceRestClient {
     private static String findAllScrollId = "-999";
 
     @Override
-    public void delete (ProductoDTO productoDTO) {
+    public void delete (Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(PRODUCT_SERVICE_URL, productoDTO);
+        restTemplate.delete(String.format("%s/%d",PRODUCT_SERVICE_URL,id));
     }
 
     @Override

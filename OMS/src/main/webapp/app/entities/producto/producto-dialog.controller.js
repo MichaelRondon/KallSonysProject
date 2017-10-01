@@ -22,6 +22,7 @@
         vm.proveedores = Proveedor.query();
         vm.proveedoresChecked = [];
         vm.idProductEnProv = [];
+        vm.producImageSmallBaseUrl = 'http://laptop-diego:9091/api/imageSmall/';
 
         $timeout(function () {
             angular.element('.form-group:eq(1)>input').focus();

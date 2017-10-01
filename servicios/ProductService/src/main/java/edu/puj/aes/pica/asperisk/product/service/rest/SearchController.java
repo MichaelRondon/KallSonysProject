@@ -60,10 +60,10 @@ public class SearchController {
         return ResponseEntity.created(location).body(product);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
-    public ResponseEntity<Void> delete(@RequestBody Product product) throws ProductTransactionException {
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> delete(@PathVariable Long id) throws ProductTransactionException {
         LOGGER.info("Ingresando a delete");
-        elasticSearchService.delete(product);
+        elasticSearchService.delete(id);
         return ResponseEntity.ok().build();
     }
 

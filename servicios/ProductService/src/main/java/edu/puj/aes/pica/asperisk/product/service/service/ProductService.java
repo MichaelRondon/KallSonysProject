@@ -31,7 +31,7 @@ public interface ProductService {
 
     Product findOne(String id) throws ProductTransactionException;
     
-    void delete(Product product) throws ProductTransactionException;
+    void delete(Long id) throws ProductTransactionException;
 
     List<Product> findAllByIds(List<Long> ids) throws ProductTransactionException;
 

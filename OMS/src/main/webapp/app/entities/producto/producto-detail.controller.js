@@ -12,6 +12,7 @@
 
         vm.producto = entity;
         vm.previousState = previousState.name;
+        vm.producImageSmallBaseUrl = 'http://laptop-diego:9091/api/imageSmall/';
 
         var unsubscribe = $rootScope.$on('omsApp:productoUpdate', function(event, result) {
             vm.producto = result;

@@ -94,6 +94,6 @@ public class CampaniaService {
      */
     public void delete(Long id) {
         log.debug("Request to delete Campania : {}", id);
-        campaniaRepository.delete(id);
+        campaniaServiceRestClient.delete(id);
     }
 }

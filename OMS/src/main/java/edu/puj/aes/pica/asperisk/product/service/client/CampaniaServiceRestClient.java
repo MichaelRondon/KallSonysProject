@@ -17,7 +17,7 @@ import org.springframework.data.domain.Pageable;
 public interface CampaniaServiceRestClient{
     
     Campanign save(Campanign campanignDTO);
-    void delete(Campanign campanignDTO);
+    void delete(Long id);
     Campanign update(Campanign campanignDTO);
     Page<Campanign> findAll(Pageable pageable);
     Campanign findOne(Long id);

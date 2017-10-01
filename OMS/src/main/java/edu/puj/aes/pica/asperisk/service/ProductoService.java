@@ -44,13 +44,13 @@ public class ProductoService {
         return productServiceRestClient.save(productoDTO);
     }
     
-    public void delete(ProductoDTO productoDTO) {
-        log.debug("Request to delete Producto : {}", productoDTO);
+//    public void delete(ProductoDTO productoDTO) {
+//        log.debug("Request to delete Producto : {}", productoDTO);
 //        Producto producto = productoMapper.toEntity(productoDTO);
 //        producto = productoRepository.save(producto);
 //        return productoMapper.toDto(producto);
-        productServiceRestClient.delete(productoDTO);
-    }
+//        productServiceRestClient.delete(productoDTO);
+//    }
 
     /**
      * Get all the productos.
@@ -88,8 +88,6 @@ public class ProductoService {
     public void delete(Long id) {
         log.debug("Request to delete Producto : {}", id);
 //        productoRepository.delete(id);
-        ProductoDTO productoDTO = new ProductoDTO();
-        productoDTO.setId(id);
-        productServiceRestClient.delete(productoDTO);
+        productServiceRestClient.delete(id);
     }
 }

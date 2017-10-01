@@ -22,5 +22,5 @@ public interface ProductServiceRestClient {
 
     Product findOne(Long id);
 
-    void delete(ProductoDTO productoDTO);
+    void delete(Long id);
 }

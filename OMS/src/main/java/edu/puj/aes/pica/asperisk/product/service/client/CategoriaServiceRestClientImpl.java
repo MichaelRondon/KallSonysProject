@@ -7,6 +7,7 @@ package edu.puj.aes.pica.asperisk.product.service.client;
 
 import edu.puj.aes.pica.asperisk.oms.utilities.dto.CategoriaDTO;
 import edu.puj.aes.pica.asperisk.oms.utilities.dto.ProductoDTO;
+import static edu.puj.aes.pica.asperisk.product.service.client.CampaniaServiceRestClientImpl.CAMPANIA_SERVICE_URL;
 import static edu.puj.aes.pica.asperisk.product.service.client.ProductServiceRestClientImpl.PRODUCT_SERVICE_URL;
 import java.util.HashMap;
 import java.util.List;
@@ -73,9 +74,9 @@ public class CategoriaServiceRestClientImpl implements CategoriaServiceRestClien
     }
 
     @Override
-    public void delete(CategoriaDTO categoriaDTO) {
+    public void delete(Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(CATEGORIAS_SERVICE_URL, categoriaDTO);
+        restTemplate.delete(String.format("%s/%d", CATEGORIAS_SERVICE_URL, id));
     }
 
 }

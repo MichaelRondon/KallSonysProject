@@ -51,7 +51,7 @@ public class ProductoResource {
     @PostMapping("/productos")
     @Timed
     public ResponseEntity<ProductoDTO> createProducto(@Valid @RequestBody ProductoDTO productoDTO) throws URISyntaxException {
-        log.debug("REST request to save Producto : {}", productoDTO);
+        log.debug("REST! request to save Producto : {}", productoDTO);
         if (productoDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new producto cannot already have an ID")).body(null);
         }

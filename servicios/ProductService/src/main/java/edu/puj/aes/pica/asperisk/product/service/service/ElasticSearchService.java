@@ -158,9 +158,9 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
     }
 
     @Override
-    public void delete(Product product) throws ProductTransactionException {
+    public void delete(Long id) throws ProductTransactionException {
         elasticSearchInput = new ElasticSearchInput();
-        elasticSearchInput.setId(product.getId().toString());
+        elasticSearchInput.setId(String.valueOf(id));
         LOGGER.info("delete id: {}", elasticSearchInput.getId());
         DeleteResponse deleteResponse = executeTransaction(new DeleteTransaction(), elasticSearchInput);
         LOGGER.info("deleteResponse.status(): {}", deleteResponse.status());

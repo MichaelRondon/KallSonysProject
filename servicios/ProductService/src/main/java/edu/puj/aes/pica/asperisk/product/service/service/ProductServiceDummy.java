@@ -151,7 +151,7 @@ public class ProductServiceDummy implements ProductService {
     }
 
     @Override
-    public void delete(Product product) throws ProductTransactionException {
+    public void delete(Long id) throws ProductTransactionException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -71,9 +71,9 @@ public class CampaniaServiceRestClientImpl implements CampaniaServiceRestClient{
     }
 
     @Override
-    public void delete(Campanign campanignDTO) {
+    public void delete(Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(CAMPANIA_SERVICE_URL, campanignDTO);
+        restTemplate.delete(String.format("%s/%d", CAMPANIA_SERVICE_URL, id));
     }
     
 }
