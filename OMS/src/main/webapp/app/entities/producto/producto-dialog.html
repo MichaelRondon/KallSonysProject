@@ -76,17 +76,28 @@
         <div class="form-group col-sm-12">
             <label class="control-label">Imágen pequeña</label>
             <img id="field_image_small" ng-src="{{vm.producImageSmallBaseUrl + vm.producto.id}}"
-                 alt="Producto" style="width:150px;height:150px;"/>
+                 alt="Producto" style="width:100px;height:100px;"/>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="control-label">Cargar imágen pequeña</label>
+            <button type="button" class="btn btn-primary btn-block" 
+                    ui-sref="producto({id_product: vm.producto.id})">
+                <span>
+                    Evidencia
+                    &nbsp;
+                </span>
+                <span class="glyphicon glyphicon-file"></span>
+            </button>
         </div>
         <div class="form-group col-sm-12">
             <label class="control-label">Imágen mediana</label>
-            <img id="field_image_medium" ng-src="{{vm.producImageSmallBaseUrl + vm.producto.id}}"
+            <img id="field_image_medium" ng-src="{{vm.producImageMediumBaseUrl + vm.producto.id}}"
                  alt="Producto" style="width:150px;height:150px;"/>
         </div>
         <div class="form-group col-sm-12">
             <label class="control-label">Imágen grande</label>
-            <img  id="field_image_ig" ng-src="{{vm.producImageSmallBaseUrl + vm.producto.id}}"
-                  alt="Producto" style="width:150px;height:150px;"/>
+            <img  id="field_image_ig" ng-src="{{vm.producImageLargeBaseUrl + vm.producto.id}}"
+                  alt="Producto" style="width:200px;height:200px;"/>
         </div>
         <!--<div class="form-group">-->
         <!--<label class="control-label" data-translate="omsApp.producto.keyWords" for="field_keyWords">Key Words</label>-->

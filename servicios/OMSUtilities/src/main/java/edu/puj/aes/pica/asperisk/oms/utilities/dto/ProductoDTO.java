@@ -37,7 +37,7 @@ public class ProductoDTO implements Serializable {
 
     private String marca;
 
-    @JsonProperty("key-words")
+//    @JsonProperty("key-words")
     private List<String> keyWords;
 
     private List<ProveedorInfoDTO> proveedores;

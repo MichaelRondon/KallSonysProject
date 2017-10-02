@@ -21,7 +21,9 @@
         vm.predicate = 'id';
         vm.reset = reset;
         vm.reverse = true;
-        vm.producImageSmallBaseUrl = 'http://laptop-diego:9091/api/imageSmall/';
+        vm.producImageSmallBaseUrl = 'http://laptop-diego:9091/api/ImageSmall/';
+        vm.producImageMediumBaseUrl = 'http://laptop-diego:9091/api/ImageMedium/';
+        vm.producImageLargeBaseUrl = 'http://laptop-diego:9091/api/ImageLarge/';
 
         loadAll();
 
