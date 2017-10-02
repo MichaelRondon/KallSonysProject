@@ -6,7 +6,6 @@
 package edu.puj.aes.pica.asperisk.product.service.client;
 
 import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
-import edu.puj.aes.pica.asperisk.oms.utilities.dto.ProductoDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,9 +15,9 @@ import org.springframework.data.domain.Pageable;
  */
 public interface ProductServiceRestClient {
 
-    ProductoDTO save(ProductoDTO productoDTO);
+    Product save(Product product);
 
-    Page<ProductoDTO> findAll(Pageable pageable);
+    Page<Product> findAll(Pageable pageable);
 
     Product findOne(Long id);
 

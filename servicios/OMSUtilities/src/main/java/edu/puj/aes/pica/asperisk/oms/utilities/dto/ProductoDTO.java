@@ -1,7 +1,6 @@
 package edu.puj.aes.pica.asperisk.oms.utilities.dto;
 
 
-import java.time.Instant;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
@@ -9,7 +8,10 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import edu.puj.aes.pica.asperisk.oms.utilities.enumeration.Estado;
+import edu.puj.aes.pica.asperisk.oms.utilities.model.State;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
 import lombok.Data;
 
 /**
@@ -25,12 +27,12 @@ public class ProductoDTO implements Serializable {
 
     private BigDecimal precio;
 
-    private Estado estado;
+    private State estado;
 
     private Integer disponibilidad;
 
-    @JsonProperty("fecha-rev-disponibilidad")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+//    @JsonProperty("fecha-rev-disponibilidad")
+//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Instant fechaRevDisponibilidad;
 
     private String marca;
@@ -130,11 +132,11 @@ public class ProductoDTO implements Serializable {
         this.precio = precio;
     }
 
-    public Estado getEstado() {
+    public State getEstado() {
         return estado;
     }
 
-    public void setEstado(Estado estado) {
+    public void setEstado(State estado) {
         this.estado = estado;
     }
 

@@ -42,10 +42,12 @@ public class ProductoResource {
     }
 
     /**
-     * POST  /productos : Create a new producto.
+     * POST /productos : Create a new producto.
      *
      * @param productoDTO the productoDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new productoDTO, or with status 400 (Bad Request) if the producto has already an ID
+     * @return the ResponseEntity with status 201 (Created) and with body the
+     * new productoDTO, or with status 400 (Bad Request) if the producto has
+     * already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/productos")
@@ -57,17 +59,18 @@ public class ProductoResource {
         }
         ProductoDTO result = productoService.save(productoDTO);
         return ResponseEntity.created(new URI("/api/productos/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+                .body(result);
     }
 
     /**
-     * PUT  /productos : Updates an existing producto.
+     * PUT /productos : Updates an existing producto.
      *
      * @param productoDTO the productoDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated productoDTO,
-     * or with status 400 (Bad Request) if the productoDTO is not valid,
-     * or with status 500 (Internal Server Error) if the productoDTO couldn't be updated
+     * @return the ResponseEntity with status 200 (OK) and with body the updated
+     * productoDTO, or with status 400 (Bad Request) if the productoDTO is not
+     * valid, or with status 500 (Internal Server Error) if the productoDTO
+     * couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/productos")
@@ -79,15 +82,16 @@ public class ProductoResource {
         }
         ProductoDTO result = productoService.save(productoDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, productoDTO.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, productoDTO.getId().toString()))
+                .body(result);
     }
 
     /**
-     * GET  /productos : get all the productos.
+     * GET /productos : get all the productos.
      *
      * @param pageable the pagination information
-     * @return the ResponseEntity with status 200 (OK) and the list of productos in body
+     * @return the ResponseEntity with status 200 (OK) and the list of productos
+     * in body
      */
     @GetMapping("/productos")
     @Timed
@@ -99,22 +103,24 @@ public class ProductoResource {
     }
 
     /**
-     * GET  /productos/:id : get the "id" producto.
+     * GET /productos/:id : get the "id" producto.
      *
      * @param id the id of the productoDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the productoDTO, or with status 404 (Not Found)
+     * @return the ResponseEntity with status 200 (OK) and with body the
+     * productoDTO, or with status 404 (Not Found)
      */
     @GetMapping("/productos/{id}")
     @Timed
-    public ResponseEntity<Product> getProducto(@PathVariable Long id) {
+    public ResponseEntity<ProductoDTO> getProducto(@PathVariable Long id) {
         log.debug("REST request to get Producto : {}", id);
-        Product productoDTO = productoService.findOne(id);
+        ProductoDTO productoDTO = productoService.findOne(id);
+        log.debug("Producto : {}", productoDTO);
 //        ProductoDTO productoDTO = productoService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(productoDTO));
     }
 
     /**
-     * DELETE  /productos/:id : delete the "id" producto.
+     * DELETE /productos/:id : delete the "id" producto.
      *
      * @param id the id of the productoDTO to delete
      * @return the ResponseEntity with status 200 (OK)

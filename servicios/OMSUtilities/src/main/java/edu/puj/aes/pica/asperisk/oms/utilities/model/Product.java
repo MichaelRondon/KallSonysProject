@@ -1,6 +1,7 @@
 package edu.puj.aes.pica.asperisk.oms.utilities.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import lombok.Data;
@@ -27,4 +28,6 @@ public class Product implements Serializable{
     @JsonProperty("fecha_rev_disponibilidad")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date fechaRevDisponibilidad;
-}
+//    @JsonProperty("fechaRevDisponibilidad")
+//    private String fechaRevDisponibilidadString;
+    }

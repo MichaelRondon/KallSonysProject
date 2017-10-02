@@ -38,32 +38,32 @@ public class ProductServiceRestClientImpl implements ProductServiceRestClient {
     private static String findAllScrollId = "-999";
 
     @Override
-    public void delete (Long id) {
+    public void delete(Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(String.format("%s/%d",PRODUCT_SERVICE_URL,id));
+        restTemplate.delete(String.format("%s/%d", PRODUCT_SERVICE_URL, id));
     }
 
     @Override
-    public ProductoDTO save(ProductoDTO productoDTO) {
+    public Product save(Product productoDTO) {
         RestTemplate restTemplate = new RestTemplate();
         if (productoDTO.getId() == null) {
 
-            return restTemplate.postForObject(PRODUCT_SERVICE_URL, productoDTO, ProductoDTO.class);
+            return restTemplate.postForObject(PRODUCT_SERVICE_URL, productoDTO, Product.class);
         }
         HttpHeaders headers = new HttpHeaders();
-        HttpEntity<ProductoDTO> requestEntity = new HttpEntity<>(productoDTO, headers);
-        HttpEntity<ProductoDTO> response = restTemplate.exchange(PRODUCT_SERVICE_URL, HttpMethod.PUT, requestEntity, ProductoDTO.class, new HashMap());
+        HttpEntity<Product> requestEntity = new HttpEntity<>(productoDTO, headers);
+        HttpEntity<Product> response = restTemplate.exchange(PRODUCT_SERVICE_URL, HttpMethod.PUT, requestEntity, Product.class, new HashMap());
 //        restTemplate.put(PRODUCT_SERVICE_URL, productoDTO);
         return response.getBody();
     }
 
     @Override
-    public Page<ProductoDTO> findAll(Pageable pageable) {
+    public Page<Product> findAll(Pageable pageable) {
 
         LOGGER.info("ProductServiceRestClientImpl.getFindAllScrollId(): {}", ProductServiceRestClientImpl.getFindAllScrollId());
 
         RestTemplate restTemplate = new RestTemplate();
-        
+
 //        Map<String, Object> parameters = new HashMap();
 //        parameters.put("scrollId", ProductServiceRestClientImpl.getFindAllScrollId());
 //        parameters = ProductUtilSingleton.getInstance().getBasicSearchParams(pageable, parameters);
@@ -72,7 +72,6 @@ public class ProductServiceRestClientImpl implements ProductServiceRestClient {
 //        ProductScrollResponse productScrollResponse = restTemplate
 //                .getForObject(String.format("%s/scroll", PRODUCT_SERVICE_URL),
 //                        ProductScrollResponse.class, parameters);
-
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/scroll", PRODUCT_SERVICE_URL));
         builder.queryParam("scrollId", ProductServiceRestClientImpl.getFindAllScrollId());
         builder = ProductUtilSingleton.getInstance().getBasicSearchParams(pageable, builder);
@@ -86,6 +85,7 @@ public class ProductServiceRestClientImpl implements ProductServiceRestClient {
         ProductServiceRestClientImpl.setFindAllScrollId(productScrollResponse.getScrollId());
         LOGGER.info("ProductServiceRestClientImpl.getFindAllScrollId_2(): {}", ProductServiceRestClientImpl.getFindAllScrollId());
         PageImpl pageImpl = new PageImpl(productScrollResponse.getProductos());
+        productScrollResponse.getProductos().forEach(p -> LOGGER.info("PRoduct: {}", p.getFechaRevDisponibilidad()));
         return pageImpl;
     }
 
