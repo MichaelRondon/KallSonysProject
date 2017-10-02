@@ -173,44 +173,6 @@
                                 $state.go('^');
                             });
                         }]
-                })
-                .state('producto.delete.upload-file', {
-                    parent: 'producto',
-                    url: '/upload-file',
-                    data: {
-                        authorities: ['ROLE_USER']
-                    },
-                    onEnter: ['$stateParams', '$state', '$uibModal', 'archivosListListener', 'EntityFileUploadControllerConfig', function ($stateParams, $state, $uibModal, archivosListListener, EntityFileUploadControllerConfig) {
-                            this.modal = $uibModal.open({
-                                templateUrl: 'app/entities/_components/entity-file-uploader/templates/modal-file-upload.html',
-                                controller: 'EntityFileUploadController',
-                                controllerAs: 'vm',
-                                backdrop: 'static',
-                                size: 'md',
-                                resolve: {
-                                    controllerConfig: function () {
-                                        return new EntityFileUploadControllerConfig({
-                                            resourceURL: 'api/productos/smallImage',
-                                            uploadSuccessEventName: 'omsApp:smallImageUpdate',
-                                            fileParamName: 'archivo',
-                                            requestParams: {
-                                                idArchivo: "",
-                                                idEstado: $stateParams.id_product
-                                            }
-                                        });
-                                    }
-                                }
-                            });
-                            this.modal.result.then(function () {
-                                archivosListListener.dispatch();
-                                $state.go('^');
-                            }, function (reason) {
-                                archivosListListener.dispatch();
-                                if (reason === 'force-close')
-                                    return;
-                                $state.go('^');
-                            });
-                        }]
                 });
     }
 

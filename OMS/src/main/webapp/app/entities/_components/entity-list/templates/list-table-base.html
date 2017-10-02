@@ -1,0 +1,98 @@
+    <div class="table-responsive" ng-init="fieldsConfig=vm.getListFields(); listExtraClasses=vm.listExtraClasses();">
+        <div ng-if="vm.loading" class="middle-box text-center">
+            <h3>Cargando...</h3>
+            <img src="content/images/loading-indicator.gif" alt="">
+        </div>
+        <h3 ng-if="!vm.loading && !vm.entitiesData.length" class="text-center">No se encontraron resultados</h3>
+        <table ng-if="!vm.loading && vm.entitiesData.length" class="jh-table table table-striped" ng-class="listExtraClasses">
+            <thead ng-init="isSortable=vm.isSortableList();">
+                <tr ng-if="isSortable" jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th ng-if="fieldsConfig.editLink || fieldsConfig.deleteLink || fieldsConfig.detailLink || fieldsConfig.extraLink"></th>
+                    <th ng-repeat="columnField in fieldsConfig.fields" ng-if="!columnField.disabled" jh-sort-by="{{columnField.sortBy}}">
+                        <span>{{columnField.label}}</span> <span ng-class="{'glyphicon glyphicon-sort':columnField.sortBy}"></span>
+                    </th>
+                </tr>
+                <tr ng-if="!isSortable" callback="vm.transition()">
+                    <th ng-if="fieldsConfig.editLink || fieldsConfig.deleteLink || fieldsConfig.detailLink || fieldsConfig.extraLink"></th>
+                    <th ng-repeat="columnField in fieldsConfig.fields" ng-if="!columnField.disabled">
+                        <span>{{columnField.label}}</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <tr ng-repeat="entity in vm.entitiesData track by entity.id"> -->
+                <tr ng-repeat="entity in vm.entitiesData">
+                    <td class="text-right" ng-if="fieldsConfig.editLink || fieldsConfig.deleteLink || fieldsConfig.detailLink || fieldsConfig.extraLink">
+                        <div class="btn-group flex-btn-group-container" ng-init="isItemEditable=vm.isListItemEditableEntity(entity);">
+                            <button type="button"
+                                    ng-if="fieldsConfig.detailLink" 
+                                    ng-init="link=fieldsConfig.detailLink(entity); isDisabled=link.isDisabled()"
+                                    ui-state="link.state"
+                                    ui-state-params="link.stateParams"
+                                    ng-disabled="isDisabled"
+                                    class="btn btn-sm" ng-class="link.linkButtonClasses || 'btn-info'">{{link.detailLinkLabel || 'Ver más &nbsp;'}} 
+                                <span ng-class="link.linkIconClasses || 'glyphicon glyphicon glyphicon-eye-open'"></span>
+                            </button>
+
+                            <button type="button"
+                                    ng-if="fieldsConfig.editLink" 
+                                    ng-init="link=fieldsConfig.editLink(entity); isDisabled=link.isDisabled()"
+                                    ui-state="link.state"
+                                    ui-state-params="link.stateParams"
+                                    ng-disabled="isDisabled"
+                                    class="btn btn-sm" ng-class="link.linkButtonClasses || {'btn-primary':isItemEditable, 'btn-success':!isItemEditable}">
+                                <span ng-class="link.linkIconClasses || {'glyphicon glyphicon-pencil':isItemEditable, 'glyphicon glyphicon glyphicon-zoom-in':!isItemEditable}"></span>
+                            </button>
+                            
+                            <button type="button"
+                                    ng-if="fieldsConfig.deleteLink && isItemEditable" 
+                                    ng-init="link=fieldsConfig.deleteLink(entity)"
+                                    ui-state="link.state"
+                                    ui-state-params="link.stateParams"
+                                    class="btn btn-sm" ng-class="link.linkButtonClasses || 'btn-danger'">
+                                <span ng-class="link.linkIconClasses || 'glyphicon glyphicon-remove-circle'"></span>
+                            </button>
+
+                            <button type="button"
+                                    ng-if="fieldsConfig.extraLink && fieldsConfig.extraLink(entity).isVisible()" 
+                                    ng-init="link=fieldsConfig.extraLink(entity); isDisabled=link.isDisabled()"
+                                    ui-state="link.state"
+                                    ui-state-params="link.stateParams"
+                                    ng-disabled="isDisabled"
+                                    ng-click="link.handleClick()"
+                                    class="btn btn-sm" ng-class="link.linkButtonClasses || 'btn-info'">{{link.extraLinkLabel}}
+                                <span ng-class="link.linkIconClasses"></span>
+                            </button>
+                        </div>
+                    </td>
+                    <td ng-repeat="columnField in fieldsConfig.fields" ng-if="!columnField.disabled">
+
+                        <span ng-class="columnField.styleClasses(entity)" ng-if="!columnField.linkToState && !columnField.linkExternal && !columnField.asIndicadorCumple && !columnField.asFlagChecker && !columnField.asLabelList && !columnField.asStatusLabel">
+                            {{columnField.value(entity)}} 
+                        </span>
+                        <a ng-if="columnField.linkToState && columnField.value(entity)" 
+                            ng-init="linkToState = columnField.linkToState(entity)"
+                            ui-state="linkToState.state" 
+                            ui-state-params="linkToState.stateParams"
+                            ng-class="linkToState.styleClasses">
+                            <span ng-class="linkToState.linkIconClasses || 'hidden'"></span>
+                            <span ng-class="linkToState.labelClasses">{{columnField.value(entity)}}</span>
+                        </a>
+                        <a ng-if="columnField.linkExternal" target="_blank"
+                            ng-href="{{columnField.linkExternal(entity).url}}">
+                            {{columnField.linkExternal(entity).text}}
+                        </a>
+                        <indicador-cumple ng-if="columnField.asIndicadorCumple" cumple="columnField.value(entity)" class="small"></indicador-cumple>
+                        <flag-checker ng-if="columnField.asFlagChecker" checked="columnField.value(entity)" class="small"></flag-checker>
+                        <div ng-if="columnField.asLabelList" >
+                            <div ng-repeat="item in columnField.value(entity)">
+                                <span class="label" ng-class="columnField.extraClasses || 'label-info'">{{ item }}</span>
+                            </div>
+                        </div>
+                        <div ng-if="columnField.asStatusLabel" ng-class="{'text-strikeline':vm.isListItemDiscardedEntity(entity)}" ng-bind-html="columnField.value(entity)"></div>
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </div>

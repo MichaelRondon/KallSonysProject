@@ -1,0 +1,75 @@
+    <div class="row entity-list-filter">
+            <form class="form-horizontal" ng-if="vm.showFilter" ng-cloak name="vm.filterForm" role="form" ng-submit="vm.filterResults()" novalidate show-validation>
+                <fieldset>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group" ng-class="{'has-error':vm.filterForm.filterBy.$invalid}">
+                            <label for="field_filterBy" class="col-xs-3 col-sm-4 col-md-3 control-label">Filtrar por:</label>
+                            <div class="col-xs-9 col-sm-8 col-md-9">
+                                <div class="input-group  col-xs-12">
+                                    <select required class="form-control" id="field_filterBy" name="filterBy" ng-model="vm.filterByField" ng-options="filterField as filterField.label for filterField in vm.filterOptions track by filterField.param" ng-change="vm.onFilterByTypeChange(filterField)">
+                                        <option value="">Escoja el criterio de busqueda</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group" ng-class="{'has-error':vm.filterForm.filterSearch.$invalid}">
+                            <label for="field_filterBy" class="col-xs-3 control-label">Busqueda:</label>
+                            <div class="col-xs-7">
+                                <div class="input-group  col-xs-12" ng-switch="vm.filterByField.type">
+                                    
+
+
+                                    <select ng-switch-when="options" 
+                                        required class="form-control" id="field_filterSearch" name="filterSearch" 
+                                        ng-model="vm.filterSearch" ng-options="filterOption as filterOption.label for filterOption in vm.filterByField.options track by filterOption.value">
+                                        <option value="">Seleccione</option>
+                                    </select>
+
+                                    <input ng-switch-when="text" 
+                                        required type="text" class="form-control" name="filterSearch" id="field_filterSearch"
+                                        ng-model="vm.filterSearch" placeholder="Escriba la busqueda" 
+                                        ng-minlength="0" ng-maxlength="50" />
+                                    
+                                    <input ng-switch-when="id" required type="number" class="form-control" name="filterSearch" id="field_filterSearch"
+                                        ng-model="vm.filterSearch" placeholder="Escriba el ID (solo números)" 
+                                        min="1" max="9999999999" ng-maxlength="10" />
+
+                                    <input ng-switch-when="number" required type="number" class="form-control" name="filterSearch" id="field_filterSearch"
+                                        ng-model="vm.filterSearch" placeholder="{{vm.filterByField.options.placeholder}}" 
+                                        min="{{vm.filterByField.options.min}}" max="{{vm.filterByField.options.max}}" ng-maxlength="{{vm.filterByField.options.maxlength || 5}}" />
+
+
+                                    <input ng-switch-when="date" required id="field_filterSearch" type="text" class="form-control" name="filterSearch" datetime-picker="yyyy-MM-dd" ng-model="vm.filterSearch" enable-time="false" is-open="vm.datePickerFilterIsOpen" ng-click="vm.datePickerFilterIsOpen=!vm.datePickerFilterIsOpen"
+                                      />
+                                    <span ng-switch-when="date" class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="vm.datePickerFilterIsOpen=!vm.datePickerFilterIsOpen">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                    </span>
+
+                                    <input ng-switch-default required type="text" class="form-control" name="filterSearch" id="field_filterSearch" readonly="true"  disabled="true" 
+                                        ng-model="vm.filterSearch" placeholder="No ha seleccionado filtro" />
+
+                                    <input ng-switch-when="month" required id="field_filterSearch" type="text" class="form-control" name="filterSearch" datetime-picker="yyyy - MMMM"  datepicker-options="vm.monthDatePickerOptions" ng-model="vm.filterSearch" enable-time="false" is-open="vm.monthDatePickerFilterIsOpen" ng-click="vm.monthDatePickerFilterIsOpen=!vm.monthDatePickerFilterIsOpen"
+                                      />
+                                    <span ng-switch-when="month" class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="vm.monthDatePickerFilterIsOpen=!vm.monthDatePickerFilterIsOpen">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                    </span>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <button type="submit" class="btn" ng-class="{'btn-primary':!vm.filterForm.$invalid && vm.filterForm.$dirty, 'btn-danger':vm.filterForm.$invalid || vm.filterForm.$pristine}" ng-disabled="vm.filterForm.$invalid || vm.filterForm.$pristine">
+                                    <span class="fa fa-chevron-right"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
