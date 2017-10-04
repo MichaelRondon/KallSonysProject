@@ -2,9 +2,9 @@
     'use strict';
 
     angular
-    // .module('omsApp')
-        .module('omsApp')
-        .controller('ProductoDialogController', ProductoDialogController);
+            // .module('omsApp')
+            .module('omsApp')
+            .controller('ProductoDialogController', ProductoDialogController);
 
     ProductoDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Producto', 'ProveedorProducto', 'Categoria', 'Proveedor'];
 
@@ -26,6 +26,11 @@
         vm.producImageMediumBaseUrl = 'http://laptop-diego:9091/api/ImageMedium/';
         vm.producImageLargeBaseUrl = 'http://laptop-diego:9091/api/ImageLarge/';
 
+        if (vm.producto.keyWords) {
+            vm.tags = [];
+            vm.producto.keyWords.forEach(loadTagsFromKeyWords);
+        }
+
         $timeout(function () {
             angular.element('.form-group:eq(1)>input').focus();
         });
@@ -43,10 +48,10 @@
             vm.producto.proveedores = [];
             var proveedorIndex;
             for (proveedorIndex in vm.proveedores) {
-                var provId_=vm.proveedores[proveedorIndex].id
+                var provId_ = vm.proveedores[proveedorIndex].id
                 if (vm.proveedoresChecked[provId_]) {
-                    vm.producto.proveedores[indexProv] = {"id":-1,"idProducto":"-1"};
-                    vm.producto.proveedores[indexProv].id=provId_;
+                    vm.producto.proveedores[indexProv] = {"id": -1, "idProducto": "-1"};
+                    vm.producto.proveedores[indexProv].id = provId_;
                     vm.producto.proveedores[indexProv].idProducto = vm.idProductEnProv[provId_];
                     indexProv++;
                 }
@@ -62,6 +67,10 @@
 
         function saveTagTextOnKeyWord(item, index) {
             vm.producto.keyWords[index] = item.text;
+        }
+
+        function loadTagsFromKeyWords(item, index) {
+            vm.tags[index] = item;
         }
 
         vm.stateChanged = function stateChanged(proveedorId) {

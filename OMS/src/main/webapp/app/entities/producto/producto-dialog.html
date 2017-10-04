@@ -10,7 +10,7 @@
     <div class="modal-body row">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group col-xs-12 col-sm-6" ng-show="vm.producto.id">
-            <label for="id" data-translate="global.field.id">ID</label>
+            <label for="id" >Código</label>
             <input type="text" class="form-control" id="id" name="id"
                    ng-model="vm.producto.id" readonly/>
         </div>
@@ -26,7 +26,7 @@
                 </p>
             </div>
         </div>
-        <div class="form-group col-xs-12 col-sm-6">
+        <div class="form-group col-xs-12 col-sm-12">
             <label class="control-label" data-translate="omsApp.producto.descripcion" for="field_descripcion">Descripcion</label>
             <input type="text" class="form-control" name="descripcion" id="field_descripcion"
                    ng-model="vm.producto.descripcion"
@@ -73,28 +73,42 @@
                    />
         </div>
 
-        <div class="form-group col-sm-12">
+        <div class="form-group col-xs-12 col-sm-6">
+            <label data-translate="omsApp.producto.categoria" for="field_categoria">Categoria</label>
+            <select class="form-control" id="field_categoria" name="categoria" ng-model="vm.producto.categoria"
+                    ng-options="categoria.categoria as categoria.categoria for categoria in vm.categorias">
+                <option value=""></option>
+            </select>
+        </div>
+        
+        <div class="form-group col-xs-12 col-sm-12">
+            <label class="control-label">Key Words (Presione Enter por cada etiqueta)</label>
+            <tags-input id="field_keyWords2" ng-model="vm.tags"></tags-input>
+        </div>
+    </div>
+
+    <div class="modal-body row">
+        <div class="form-group col-xs-12 col-sm-6" ng-show="vm.producto.id">
             <label class="control-label">Imágen pequeña</label>
             <img id="field_image_small" ng-src="{{vm.producImageSmallBaseUrl + vm.producto.id}}"
                  alt="Producto" style="width:100px;height:100px;"/>
         </div>
-        <div class="form-group col-sm-6">
-            <label class="control-label">Cargar imágen pequeña</label>
+        <div class="form-group col-xs-12 col-sm-6" ng-show="vm.producto.id">
             <button type="button" class="btn btn-primary btn-block" 
                     ui-sref="imagen-producto({id_product: vm.producto.id})">
                 <span>
-                    Evidencia
+                    Cargar imágen pequeña
                     &nbsp;
                 </span>
                 <span class="glyphicon glyphicon-file"></span>
             </button>
         </div>
-        <div class="form-group col-sm-12">
+        <div class="form-group col-sm-12" ng-show="vm.producto.id">
             <label class="control-label">Imágen mediana</label>
             <img id="field_image_medium" ng-src="{{vm.producImageMediumBaseUrl + vm.producto.id}}"
                  alt="Producto" style="width:150px;height:150px;"/>
         </div>
-        <div class="form-group col-sm-12">
+        <div class="form-group col-sm-12" ng-show="vm.producto.id">
             <label class="control-label">Imágen grande</label>
             <img  id="field_image_ig" ng-src="{{vm.producImageLargeBaseUrl + vm.producto.id}}"
                   alt="Producto" style="width:200px;height:200px;"/>
@@ -105,24 +119,6 @@
         <!--ng-model="vm.producto.keyWords"-->
         <!--/>-->
         <!--</div>-->
-
-        <div class="form-group col-xs-6">
-            <label class="control-label">Key Words (Presione Enter por cada etiqueta)</label>
-            <tags-input id="field_keyWords2" ng-model="vm.tags"></tags-input>
-            <!--<p>Model: {{vm.tags}}</p>-->
-        </div>
-
-        <div class="form-group col-xs-12 col-sm-6">
-            <label data-translate="omsApp.producto.categoria" for="field_categoria">Categoria</label>
-            <select class="form-control" id="field_categoria" name="categoria" ng-model="vm.producto.categoria"
-                    ng-options="categoria.categoria as categoria.categoria for categoria in vm.categorias">
-                <option value=""></option>
-            </select>
-            <!--<select class="form-control" id="field_categoria" name="categoria" ng-model="vm.producto.categoriaId"-->
-            <!--ng-options="categoria.id as categoria.categoria for categoria in vm.categorias">-->
-            <!--<option value=""></option>-->
-            <!--</select>-->
-        </div>
 
         <div class="col-sm-12">
             <label for="field_rel_proveedores">Proveedor</label>
