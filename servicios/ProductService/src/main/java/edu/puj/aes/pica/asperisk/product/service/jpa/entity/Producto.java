@@ -33,6 +33,8 @@ public class Producto implements Serializable {
 //    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
 //    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
+    
+    private Long elasticSearchId;
 
     @NotNull
     @Column(name = "nombre", nullable = false)
@@ -52,6 +54,7 @@ public class Producto implements Serializable {
     private Integer disponibilidad;
 
     @Column(name = "fecha_rev_disponibilidad")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaRevDisponibilidad;
 
     @Column(name = "marca")
@@ -216,6 +219,14 @@ public class Producto implements Serializable {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public Long getElasticSearchId() {
+        return elasticSearchId;
+    }
+
+    public void setElasticSearchId(Long elasticSearchId) {
+        this.elasticSearchId = elasticSearchId;
     }
 
     @Override

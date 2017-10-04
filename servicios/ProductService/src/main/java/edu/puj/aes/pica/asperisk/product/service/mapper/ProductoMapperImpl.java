@@ -32,6 +32,7 @@ public class ProductoMapperImpl implements ProductoMapper {
         productoDTO.setMarca(producto.getMarca());
         productoDTO.setNombre(producto.getNombre());
         productoDTO.setPrecio(producto.getPrecio());
+        productoDTO.setElasticSearchId(producto.getElasticSearchId());
 //        productoDTO.setProveedores(producto.getProveedores());
         return productoDTO;
     }
@@ -52,6 +53,7 @@ public class ProductoMapperImpl implements ProductoMapper {
         producto.setMarca(productoDTO.getMarca());
         producto.setNombre(productoDTO.getMarca());
         producto.setPrecio(productoDTO.getPrecio());
+        producto.setElasticSearchId(productoDTO.getElasticSearchId());
         return producto;
     }
 

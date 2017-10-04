@@ -70,6 +70,10 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
     private ElasticSearchInput elasticSearchInput;
 
     @Autowired
+    @Qualifier("jpa")
+    private ProductService jpaProductService;
+
+    @Autowired
     private CacheManager cacheManager;
 
     @Override
@@ -128,7 +132,16 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             elasticSearchInput.setId(nextIdProduct.toString());
             IndexResponse indexResponse = executeTransaction(new SetSourceAndGet(), elasticSearchInput);
             clearProductCache();
-            return findOne(indexResponse.getId());
+            Product findOne = findOne(indexResponse.getId());
+            Runnable runnable = () -> {
+                try {
+                    jpaProductService.create(findOne);
+                } catch (ProductTransactionException ex) {
+                    LOGGER.error("Error persistiendo producto mediante JPA", ex);
+                }
+            };
+            (new Thread(runnable)).start();
+            return findOne;
         } catch (JsonProcessingException ex) {
             String errorMessage = String.format("Error convirtiendo el objeto Product en json. Objeto: %s, mensaje: %s",
                     product, ex.getMessage());
@@ -148,7 +161,16 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             UpdateResponse updateResponse = executeTransaction(new UpdateAndGet(), elasticSearchInput);
             LOGGER.info("updateResponse.getGetResult(): {}", updateResponse.getGetResult());
             clearProductCache();
-            return findOne(updateResponse.getId());
+            Product findOne = findOne(updateResponse.getId());
+            Runnable runnable = () -> {
+                try {
+                    jpaProductService.update(findOne);
+                } catch (ProductTransactionException ex) {
+                    LOGGER.error("Error persistiendo producto mediante JPA", ex);
+                }
+            };
+            (new Thread(runnable)).start();
+            return findOne;
         } catch (JsonProcessingException ex) {
             String errorMessage = String.format("Error convirtiendo el objeto Product en json. Objeto: %s, mensaje: %s",
                     product, ex.getMessage());
@@ -165,6 +187,14 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         DeleteResponse deleteResponse = executeTransaction(new DeleteTransaction(), elasticSearchInput);
         LOGGER.info("deleteResponse.status(): {}", deleteResponse.status());
         clearProductCache();
+        Runnable runnable = () -> {
+            try {
+                jpaProductService.delete(id);
+            } catch (ProductTransactionException ex) {
+                LOGGER.error("Error persistiendo producto mediante JPA", ex);
+            }
+        };
+        (new Thread(runnable)).start();
     }
 
     @Override

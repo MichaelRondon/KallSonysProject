@@ -1,7 +1,6 @@
 package edu.puj.aes.pica.asperisk.oms.utilities.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import lombok.Data;
@@ -15,6 +14,7 @@ import java.util.Set;
 public class Product implements Serializable{
 
     private Long id;
+    private Long elasticSearchId;
     private String nombre;
     private String descripcion;
     private String categoria;
