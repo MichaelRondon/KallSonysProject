@@ -22,7 +22,8 @@ public class ProductoMapperImpl implements ProductoMapper {
     @Override
     public Product toDto(Producto producto) {
         Product productoDTO = new Product();
-        productoDTO.setCategoria(producto.getCategoria() != null ? producto.getCategoria().getCategoria() : null);
+        productoDTO.setCategoria(producto.getCategoria());
+//        productoDTO.setCategoria(producto.getCategoria() != null ? producto.getCategoria().getCategoria() : null);
         productoDTO.setDescripcion(producto.getDescripcion());
         productoDTO.setDisponibilidad(producto.getDisponibilidad());
         productoDTO.setEstado(producto.getEstado());
@@ -32,19 +33,18 @@ public class ProductoMapperImpl implements ProductoMapper {
         productoDTO.setMarca(producto.getMarca());
         productoDTO.setNombre(producto.getNombre());
         productoDTO.setPrecio(producto.getPrecio());
-        productoDTO.setElasticSearchId(producto.getElasticSearchId());
 //        productoDTO.setProveedores(producto.getProveedores());
         return productoDTO;
     }
 
     @Override
     public Producto toEntity(Product productoDTO) {
-        Categoria categoria = new Categoria();
+//        Categoria categoria = new Categoria();
         Producto producto = new Producto();
-        if(productoDTO.getCategoria() != null){
-            categoria.setCategoria(productoDTO.getCategoria() );
-        }
-        producto.setCategoria(categoria);
+//        if(productoDTO.getCategoria() != null){
+//            categoria.setCategoria(productoDTO.getCategoria() );
+//        }
+        producto.setCategoria(productoDTO.getCategoria());
         producto.setDescripcion(productoDTO.getDescripcion());
         producto.setDisponibilidad(productoDTO.getDisponibilidad());
         producto.setEstado(productoDTO.getEstado());
@@ -53,7 +53,7 @@ public class ProductoMapperImpl implements ProductoMapper {
         producto.setMarca(productoDTO.getMarca());
         producto.setNombre(productoDTO.getMarca());
         producto.setPrecio(productoDTO.getPrecio());
-        producto.setElasticSearchId(productoDTO.getElasticSearchId());
+        producto.setKeyWords(productoDTO.getKeyWords().toString());
         return producto;
     }
 

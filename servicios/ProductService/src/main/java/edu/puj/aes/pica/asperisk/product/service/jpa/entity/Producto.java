@@ -34,8 +34,6 @@ public class Producto implements Serializable {
 //    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
     
-    private Long elasticSearchId;
-
     @NotNull
     @Column(name = "nombre", nullable = false)
     private String nombre;
@@ -68,8 +66,10 @@ public class Producto implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ProveedorProducto> proveedores = new HashSet<>();
 
-    @ManyToOne
-    private Categoria categoria;
+    private String categoria;
+    
+//    @ManyToOne
+//    private Categoria categoria;
 
     public Long getId() {
         return id;
@@ -208,25 +208,17 @@ public class Producto implements Serializable {
         this.proveedores = proveedorProductos;
     }
 
-    public Categoria getCategoria() {
+    public String getCategoria() {
         return categoria;
     }
 
-    public Producto categoria(Categoria categoria) {
+    public Producto categoria(String categoria) {
         this.categoria = categoria;
         return this;
     }
 
-    public void setCategoria(Categoria categoria) {
+    public void setCategoria(String categoria) {
         this.categoria = categoria;
-    }
-
-    public Long getElasticSearchId() {
-        return elasticSearchId;
-    }
-
-    public void setElasticSearchId(Long elasticSearchId) {
-        this.elasticSearchId = elasticSearchId;
     }
 
     @Override

@@ -14,7 +14,6 @@ import java.util.Set;
 public class Product implements Serializable{
 
     private Long id;
-    private Long elasticSearchId;
     private String nombre;
     private String descripcion;
     private String categoria;
