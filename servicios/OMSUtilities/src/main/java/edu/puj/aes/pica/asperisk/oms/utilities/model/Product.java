@@ -25,7 +25,8 @@ public class Product implements Serializable{
     private Set<BasicProveedor> proveedores;
     private Integer disponibilidad;
     @JsonProperty("fecha_rev_disponibilidad")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd")
+//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date fechaRevDisponibilidad;
 //    @JsonProperty("fechaRevDisponibilidad")
 //    private String fechaRevDisponibilidadString;

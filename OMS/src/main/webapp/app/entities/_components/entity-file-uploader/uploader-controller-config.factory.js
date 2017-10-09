@@ -67,8 +67,8 @@
             },
 
             onError:function(ctrl, error){
-                if(error.headers('X-siccApp-error') || error.headers('x-siccapp-error')){
-                    var message=error.headers('X-siccApp-error') || error.headers('x-siccapp-error');
+                if(error.headers('X-omsApp-error') || error.headers('x-omsApp-error')){
+                    var message=error.headers('X-omsApp-error') || error.headers('x-omsApp-error');
                     ctrl.uploadErrorMsg=message;
                 }
                 else{

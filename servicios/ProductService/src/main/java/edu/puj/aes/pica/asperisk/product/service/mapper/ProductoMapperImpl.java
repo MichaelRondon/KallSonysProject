@@ -8,6 +8,7 @@ package edu.puj.aes.pica.asperisk.product.service.mapper;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
 import edu.puj.aes.pica.asperisk.product.service.jpa.entity.Categoria;
 import edu.puj.aes.pica.asperisk.product.service.jpa.entity.Producto;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
@@ -29,12 +30,21 @@ public class ProductoMapperImpl implements ProductoMapper {
         productoDTO.setEstado(producto.getEstado());
         productoDTO.setFechaRevDisponibilidad(producto.getFechaRevDisponibilidad());
         productoDTO.setId(producto.getId());
-//        productoDTO.setKeyWords(producto.getKeyWords());
+        productoDTO.setKeyWords(transformKeyWordsToList(producto.getKeyWords()));
         productoDTO.setMarca(producto.getMarca());
         productoDTO.setNombre(producto.getNombre());
         productoDTO.setPrecio(producto.getPrecio());
 //        productoDTO.setProveedores(producto.getProveedores());
         return productoDTO;
+    }
+    
+    private List<String> transformKeyWordsToList(String keyWordsString){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(keyWordsString);
+        stringBuilder.deleteCharAt(stringBuilder.indexOf("["));
+        stringBuilder.deleteCharAt(stringBuilder.indexOf("]"));
+        String toString = stringBuilder.toString();
+        return Arrays.asList(toString.split(","));
     }
 
     @Override

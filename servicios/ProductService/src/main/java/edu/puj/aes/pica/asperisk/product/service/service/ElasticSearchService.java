@@ -422,8 +422,9 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         int page = basicSearchParams.getPage() == null ? 0 : basicSearchParams.getPage();
         int itemsPerPage = basicSearchParams.getItemsPerPage() == null ? totalList.size() : basicSearchParams.getItemsPerPage();
         LOGGER.info("page: {}, itemsPerPage; {}, totalList.size(): {}", page, itemsPerPage, totalList.size());
-        LOGGER.info("conditional: {}", (page * itemsPerPage > totalList.size()));
-        if (page * itemsPerPage > totalList.size()) {
+        boolean conditional = (page + 1) * itemsPerPage >= totalList.size();
+        LOGGER.info("conditional: {}", conditional);
+        if (conditional) {
             return true;
         }
         return false;
@@ -447,6 +448,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
 
         asperiskPage.setTotalElements(list.size());
         asperiskPage.setTotalPages(asperiskPage.getTotalElements() / basicSearchParams.getItemsPerPage());
+        LOGGER.info("asperiskPage.getTotalPages(: {}", asperiskPage.getTotalPages());
 
         int lastIndex = 999;
         int firstIndex = 0;

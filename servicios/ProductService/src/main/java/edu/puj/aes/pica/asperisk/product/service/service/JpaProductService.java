@@ -26,71 +26,73 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Qualifier("jpa")
-public class JpaProductService implements ProductService{
+public class JpaProductService implements ProductService {
     
     private final Logger log = LoggerFactory.getLogger(JpaProductService.class);
-
+    
     @Autowired
     private ProductoRepository productoRepository;
-
+    
     @Autowired
     private ProductoMapperImpl productoMapperImpl;
-
+    
     @Override
     public ProductsResponse consultarHistorico(HistoricoRequest historicoRequest) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public ProductsResponse buscar(SearchRequest searchRequest) throws ProductTransactionException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public CampaignResponse campanias(CampaignRequest campaniasRequest) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public TestResponse test() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public Product create(Product product) throws ProductTransactionException {
         Producto save = productoRepository.save(productoMapperImpl.toEntity(product));
         return productoMapperImpl.toDto(save);
     }
-
+    
     @Override
     public Product update(Product product) throws ProductTransactionException {
         Producto save = productoRepository.save(productoMapperImpl.toEntity(product));
         return productoMapperImpl.toDto(save);
     }
-
+    
     @Override
     public Product findOne(String id) throws ProductTransactionException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Producto save = productoRepository.findOne(Long.parseLong(id));
+        log.info("Producto: {}", save);
+        return productoMapperImpl.toDto(save);
     }
-
+    
     @Override
     public void delete(Long id) throws ProductTransactionException {
         productoRepository.delete(id);
     }
-
+    
     @Override
     public List<Product> findAllByIds(List<Long> ids) throws ProductTransactionException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public List<Product> findAll() throws ProductTransactionException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public ProductScrollResponse findAll(ScrollSearchRequest scrollSearchRequest) throws ProductTransactionException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
 }

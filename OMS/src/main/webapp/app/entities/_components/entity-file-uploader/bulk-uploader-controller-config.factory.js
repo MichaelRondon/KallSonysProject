@@ -1,7 +1,7 @@
 (function() {
     'use strict';
     angular
-        .module('siccApp')
+        .module('omsApp')
         .factory('BulkFileUploadControllerConfig', BulkFileUploadControllerConfig);
 
     BulkFileUploadControllerConfig.$inject = ['EntityFileUploadControllerConfig', 'FileUploaderUtil', 'SICCParams'];

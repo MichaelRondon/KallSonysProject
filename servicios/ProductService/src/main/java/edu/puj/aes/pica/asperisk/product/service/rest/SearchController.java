@@ -42,6 +42,10 @@ public class SearchController {
     @Qualifier("elastic")
     private ProductService elasticSearchService;
 
+    @Autowired
+    @Qualifier("jpa")
+    private ProductService jpaSearchService;
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Product> create(@RequestBody Product product) throws ProductTransactionException {
         LOGGER.info("Ingresando a create");
@@ -69,8 +73,12 @@ public class SearchController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Product> findOne(@PathVariable String id) throws ProductTransactionException {
-        LOGGER.info("Ingresando a create");
-        Product product = elasticSearchService.findOne(id);
+        LOGGER.info("Ingresando a get id");
+        long initTime = System.currentTimeMillis();
+        Product product = jpaSearchService.findOne(id);
+//        Product product = elasticSearchService.findOne(id);
+        LOGGER.info("TIEMPO busqueda por id: {}", (System.currentTimeMillis() - initTime));
+        LOGGER.info("product: {}", product);
         return ResponseEntity.ok(product);
     }
 

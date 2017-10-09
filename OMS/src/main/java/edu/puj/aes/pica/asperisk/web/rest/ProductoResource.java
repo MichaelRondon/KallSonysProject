@@ -97,8 +97,11 @@ public class ProductoResource {
     @Timed
     public ResponseEntity<List<ProductoDTO>> getAllProductos(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Productos");
+        log.info("pageable: {}", pageable);
         Page<ProductoDTO> page = productoService.findAll(pageable);
+        log.info("page: {}", page);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/productos");
+        log.info("headers: {}", headers);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 

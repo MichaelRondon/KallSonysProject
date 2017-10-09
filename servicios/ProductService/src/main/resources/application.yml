@@ -4,6 +4,7 @@ spring:
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:sqlserver://LAPTOP-MICHAEL\SQLSERVER2008R2;database=product-service
+#        url: jdbc:sqlserver://LAPTOP-MICHAEL\SQLSERVER2008R2;database=product-service-loaded
         username: michael
         password: michael
         hikari:
@@ -22,7 +23,7 @@ spring:
             hibernate.cache.use_second_level_cache: true
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: false
-#            hibernate.hbm2ddl.auto: create-drop
+#            hibernate.hbm2ddl.auto: create
 #            hibernate.cache.region.factory_class: net.sf.ehcache.hibernate.EhCacheRegionFactory
 #            hibernate.cache.region.factory_class: io.github.jhipster.config.jcache.NoDefaultJCacheRegionFactory
             hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory

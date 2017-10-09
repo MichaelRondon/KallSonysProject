@@ -87,7 +87,7 @@
                                 $state.go('^', {}, {reload: false});
                             }, function () {
                                 $state.go('^');
-                            });
+                });
                         }]
                 })
                 .state('producto.new', {
@@ -116,7 +116,7 @@
                                             keyWords: null,
                                             id: null
                                         };
-                                    }
+    }
                                 }
                             }).result.then(function () {
                                 $state.go('producto', null, {reload: 'producto'});

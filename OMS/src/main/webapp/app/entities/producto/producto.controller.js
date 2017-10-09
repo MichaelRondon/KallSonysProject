@@ -2,7 +2,9 @@
     'use strict';
 
     angular
-        .module('omsApp')
+        .module('omsApp'
+//, ['angularFileUpload']
+        )
         .controller('ProductoController', ProductoController);
 
     ProductoController.$inject = ['Producto', 'ParseLinks', 'AlertService', 'paginationConstants'];
@@ -21,9 +23,9 @@
         vm.predicate = 'id';
         vm.reset = reset;
         vm.reverse = true;
-        vm.producImageSmallBaseUrl = 'http://laptop-diego:9091/api/ImageSmall/';
-        vm.producImageMediumBaseUrl = 'http://laptop-diego:9091/api/ImageMedium/';
-        vm.producImageLargeBaseUrl = 'http://laptop-diego:9091/api/ImageLarge/';
+        vm.productImageSmallBaseUrl = 'http://laptop-diego:9091/api/ImageSmall/';
+        vm.productImageMediumBaseUrl = 'http://laptop-diego:9091/api/ImageMedium/';
+        vm.productImageLargeBaseUrl = 'http://laptop-diego:9091/api/ImageLarge/';
 
         loadAll();
 
@@ -43,6 +45,8 @@
 
             function onSuccess(data, headers) {
                 vm.links = ParseLinks.parse(headers('link'));
+//                alert(vm.links.last);
+//                alert(vm.links['last']);
                 vm.totalItems = headers('X-Total-Count');
                 for (var i = 0; i < data.length; i++) {
                     vm.productos.push(data[i]);

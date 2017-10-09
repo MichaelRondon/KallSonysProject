@@ -64,14 +64,6 @@ public class ProductServiceRestClientImpl implements ProductServiceRestClient {
 
         RestTemplate restTemplate = new RestTemplate();
 
-//        Map<String, Object> parameters = new HashMap();
-//        parameters.put("scrollId", ProductServiceRestClientImpl.getFindAllScrollId());
-//        parameters = ProductUtilSingleton.getInstance().getBasicSearchParams(pageable, parameters);
-//        LOGGER.info("parameters: {}", parameters);
-//        
-//        ProductScrollResponse productScrollResponse = restTemplate
-//                .getForObject(String.format("%s/scroll", PRODUCT_SERVICE_URL),
-//                        ProductScrollResponse.class, parameters);
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/scroll", PRODUCT_SERVICE_URL));
         builder.queryParam("scrollId", ProductServiceRestClientImpl.getFindAllScrollId());
         builder = ProductUtilSingleton.getInstance().getBasicSearchParams(pageable, builder);
@@ -81,11 +73,18 @@ public class ProductServiceRestClientImpl implements ProductServiceRestClient {
         ResponseEntity<ProductScrollResponse> exchange = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, ProductScrollResponse.class);
         ProductScrollResponse productScrollResponse = exchange.getBody();
 
-        LOGGER.info("productScrollResponse.getScrollId(): {}", productScrollResponse.getScrollId());
         ProductServiceRestClientImpl.setFindAllScrollId(productScrollResponse.getScrollId());
         LOGGER.info("ProductServiceRestClientImpl.getFindAllScrollId_2(): {}", ProductServiceRestClientImpl.getFindAllScrollId());
-        PageImpl pageImpl = new PageImpl(productScrollResponse.getProductos());
+        LOGGER.info("productScrollResponse.getProductos().size(): {}", productScrollResponse.getProductos().size());
+        LOGGER.info("productScrollResponse.getPage().getTotalElements(): {}", productScrollResponse.getPage().getTotalElements());
+        PageImpl pageImpl = new PageImpl(productScrollResponse.getProductos(),pageable, productScrollResponse.getPage().getTotalElements());
         productScrollResponse.getProductos().forEach(p -> LOGGER.info("PRoduct: {}", p.getFechaRevDisponibilidad()));
+        LOGGER.info("pageable: {}", pageable);
+        LOGGER.info("pageable.getPageSize(): {}", pageable.getPageSize());
+        LOGGER.info("pageImpl: {}", pageImpl);
+        LOGGER.info("pageImpl.getTotalPages(): {}", pageImpl.getTotalPages());
+        LOGGER.info("pageImpl.getTotalElements(): {}", pageImpl.getTotalElements());
+        LOGGER.info("pageImpl.getNumber(): {}", pageImpl.getNumber());
         return pageImpl;
     }
 

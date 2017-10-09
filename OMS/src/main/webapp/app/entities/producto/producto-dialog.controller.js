@@ -86,6 +86,27 @@
             vm.isSaving = false;
         }
 
+        function smallImage(id) {
+            if (id) {
+                return vm.producImageSmallBaseUrl + vm.producto.id;
+            }
+            return vm.producImageSmallBaseUrl + 1;
+        }
+
+        function mediumImage(id) {
+            if (id) {
+                return vm.producImageMediumBaseUrl + vm.producto.id;
+            }
+            return vm.producImageMediumBaseUrl + 1;
+        }
+
+        function largeImage(id) {
+            if (id) {
+                return vm.producImageLargeBaseUrl + vm.producto.id;
+            }
+            return vm.producImageLargeBaseUrl + 1;
+        }
+
         vm.datePickerOpenStatus.fechaRevDisponibilidad = false;
 
         function openCalendar(date) {

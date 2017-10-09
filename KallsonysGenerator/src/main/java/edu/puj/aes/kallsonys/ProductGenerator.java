@@ -1,11 +1,11 @@
-package edu.puj.aes.pica.asperisk.service.generator;
+package edu.puj.aes.kallsonys;
 
-import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
-import edu.puj.aes.pica.asperisk.oms.utilities.model.State;
-import edu.puj.aes.pica.asperisk.product.service.client.ProductServiceRestClientImpl;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Date;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,7 +26,7 @@ public class ProductGenerator {
         product.setKeyWords(myStringRandomGen.getRamdomListStrings());
         product.setMarca(myStringRandomGen.getSentence(random.nextInt(3)));
         product.setNombre(myStringRandomGen.getSentence(random.nextInt(4)));
-        product.setPrecio(new BigDecimal(random.nextDouble()));                
+        product.setPrecio(new BigDecimal(random.nextDouble() * 10000, MathContext.DECIMAL32));
         return product;
     }
 
@@ -36,13 +36,24 @@ public class ProductGenerator {
         }
         return State.INACTIVO;
     }
-    
+
     public static void main(String[] args) {
+        System.out.println("sds");
         ProductGenerator productGenerator = new ProductGenerator();
+        System.out.println("sds2");
         ProductServiceRestClientImpl productServiceRestClientImpl = new ProductServiceRestClientImpl();
-        for (int i = 0; i < 1000000; i++) {
+
+        long initTime;
+        for (int i = 0; i < 100000; i++) {
+            initTime = System.currentTimeMillis();
+            System.out.println("i:" + i);
             productServiceRestClientImpl.save(productGenerator.getProduct());
-            
+            System.out.println("TIEMPO: " + (System.currentTimeMillis() - initTime));
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ProductGenerator.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }
