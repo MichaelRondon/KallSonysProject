@@ -5,12 +5,25 @@
             .module('omsApp')
             .controller('ImageProductController', ImageProductController);
 
-    ImageProductController.$inject = ['$scope', 'FileUploader'];
+    ImageProductController.$inject = ['$scope', 'FileUploader', '$uibModalInstance', 'entity', 'ImageProduct'];
 
-    function ImageProductController($scope, FileUploader) {
+    function ImageProductController($scope, FileUploader, $uibModalInstance, entity, ImageProduct) {
+        var vm = this;
         var uploader = $scope.uploader = new FileUploader({
-            url: 'upload.php'
+            url: 'api/imagenes-productos/upload/' + ImageProduct.getTamanio() + '/' + entity.id
         });
+        vm.tamanio = ImageProduct.getTamanio();
+        vm.producto = entity;
+        vm.clear = clear;
+        vm.save = save;
+
+        function save() {
+            clear;
+        }
+
+        function clear() {
+            $uibModalInstance.dismiss('cancel');
+        }
 
         // FILTERS
 

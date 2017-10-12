@@ -95,7 +95,7 @@
         </div>
         <div class="form-group col-xs-12 col-sm-6" ng-show="vm.producto.id">
                         <button type="button" class="btn btn-primary btn-block" 
-                                ui-sref="image-product">
+                                ui-sref="image-product-small({id:vm.producto.id})">
                             <span>
                                 Cargar imágen pequeña
                                 &nbsp;
@@ -103,15 +103,35 @@
                             <span class="glyphicon glyphicon-file"></span>
                         </button>
         </div>
-        <div class="form-group col-sm-12" ng-show="vm.producto.id">
+        <div class="form-group col-xs-12 col-sm-6" ng-show="vm.producto.id">
             <label class="control-label">Imágen mediana</label>
             <img id="field_image_medium" ng-src="{{vm.mediumImage(vm.producto.id)}}"
                  alt="Producto" style="width:150px;height:150px;"/>
         </div>
-        <div class="form-group col-sm-12" ng-show="vm.producto.id">
+        <div class="form-group col-xs-12 col-sm-6" ng-show="vm.producto.id">
+                        <button type="button" class="btn btn-primary btn-block" 
+                                ui-sref="image-product-medium({id:vm.producto.id})">
+                            <span>
+                                Cargar imágen mediana
+                                &nbsp;
+                            </span>
+                            <span class="glyphicon glyphicon-file"></span>
+                        </button>
+        </div>
+        <div class="form-group col-xs-12 col-sm-6" ng-show="vm.producto.id">
             <label class="control-label">Imágen grande</label>
             <img  id="field_image_ig" ng-src="{{vm.largeImage(vm.producto.id)}}"
                   alt="Producto" style="width:200px;height:200px;"/>
+        </div>
+        <div class="form-group col-xs-12 col-sm-6" ng-show="vm.producto.id">
+                        <button type="button" class="btn btn-primary btn-block" 
+                                ui-sref="image-product-large({id:vm.producto.id})">
+                            <span>
+                                Cargar imágen grande
+                                &nbsp;
+                            </span>
+                            <span class="glyphicon glyphicon-file"></span>
+                        </button>
         </div>
         <!--<div class="form-group">-->
         <!--<label class="control-label" data-translate="omsApp.producto.keyWords" for="field_keyWords">Key Words</label>-->

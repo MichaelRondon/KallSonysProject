@@ -56,7 +56,7 @@
                     indexProv++;
                 }
             }
-            alert(angular.toJson(vm.producto));
+//            alert(angular.toJson(vm.producto));
             vm.isSaving = true;
             if (vm.producto.id !== null) {
                 Producto.update(vm.producto, onSaveSuccess, onSaveError);
@@ -78,7 +78,7 @@
 
         function onSaveSuccess(result) {
             $scope.$emit('omsApp:productoUpdate', result);
-            $uibModalInstance.close(result);
+                $uibModalInstance.close(result);
             vm.isSaving = false;
         }
 

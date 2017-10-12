@@ -9,9 +9,7 @@ import org.ehcache.jsr107.Eh107Configuration;
 
 import java.util.concurrent.TimeUnit;
 
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.cache.JCacheManagerCustomizer;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.*;
 
 //@Configuration

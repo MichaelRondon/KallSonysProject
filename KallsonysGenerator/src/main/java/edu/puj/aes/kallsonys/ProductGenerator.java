@@ -44,7 +44,7 @@ public class ProductGenerator {
         ProductServiceRestClientImpl productServiceRestClientImpl = new ProductServiceRestClientImpl();
 
         long initTime;
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 1000000; i++) {
             initTime = System.currentTimeMillis();
             System.out.println("i:" + i);
             productServiceRestClientImpl.save(productGenerator.getProduct());

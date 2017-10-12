@@ -2,9 +2,7 @@
     'use strict';
 
     angular
-        .module('omsApp'
-//, ['angularFileUpload']
-        )
+        .module('omsApp')
         .controller('ProductoController', ProductoController);
 
     ProductoController.$inject = ['Producto', 'ParseLinks', 'AlertService', 'paginationConstants'];
@@ -45,8 +43,6 @@
 
             function onSuccess(data, headers) {
                 vm.links = ParseLinks.parse(headers('link'));
-//                alert(vm.links.last);
-//                alert(vm.links['last']);
                 vm.totalItems = headers('X-Total-Count');
                 for (var i = 0; i < data.length; i++) {
                     vm.productos.push(data[i]);
