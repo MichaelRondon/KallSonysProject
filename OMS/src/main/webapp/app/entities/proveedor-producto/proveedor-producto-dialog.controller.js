@@ -2,8 +2,8 @@
     'use strict';
 
     angular
-        .module('omsApp')
-        .controller('ProveedorProductoDialogController', ProveedorProductoDialogController);
+            .module('omsApp')
+            .controller('ProveedorProductoDialogController', ProveedorProductoDialogController);
 
     ProveedorProductoDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'ProveedorProducto', 'Proveedor', 'Producto'];
 
@@ -35,7 +35,7 @@
 
         function onSaveSuccess (result) {
             $scope.$emit('omsApp:proveedorProductoUpdate', result);
-            $uibModalInstance.close(result);
+                $uibModalInstance.close(result);
             vm.isSaving = false;
         }
 

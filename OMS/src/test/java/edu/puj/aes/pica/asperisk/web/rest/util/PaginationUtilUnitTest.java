@@ -1,5 +1,6 @@
 package edu.puj.aes.pica.asperisk.web.rest.util;
 
+import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.PaginationUtil;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;

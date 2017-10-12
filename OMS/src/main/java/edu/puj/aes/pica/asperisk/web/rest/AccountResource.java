@@ -10,7 +10,7 @@ import edu.puj.aes.pica.asperisk.service.UserService;
 import edu.puj.aes.pica.asperisk.service.dto.UserDTO;
 import edu.puj.aes.pica.asperisk.web.rest.vm.KeyAndPasswordVM;
 import edu.puj.aes.pica.asperisk.web.rest.vm.ManagedUserVM;
-import edu.puj.aes.pica.asperisk.web.rest.util.HeaderUtil;
+import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.HeaderUtil;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

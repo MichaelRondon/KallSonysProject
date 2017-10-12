@@ -29,13 +29,20 @@ import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.ProductScrollResponse;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.Response;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.ScrollSearchRequest;
+import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.DeleteTransaction;
+import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.ElasticSearchInputMultiBuilders;
+import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.IDsQuery;
+import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.SearchMultiBuilder;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.get.MultiGetItemResponse;
 import org.elasticsearch.action.get.MultiGetResponse;
@@ -63,6 +70,10 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
     private ElasticSearchInput elasticSearchInput;
 
     @Autowired
+    @Qualifier("jpa")
+    private ProductService jpaProductService;
+
+    @Autowired
     private CacheManager cacheManager;
 
     @Override
@@ -71,8 +82,32 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
     }
 
     @Override
-    public ProductsResponse buscar(SearchRequest searchRequest) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ProductsResponse buscar(SearchRequest searchRequest) throws ProductTransactionException {
+        ElasticSearchInputMultiBuilders elasticSearchInputMultiBuilders = new ElasticSearchInputMultiBuilders(new ElasticSearchInput());
+        List<Product> products = null;
+        if (searchRequest.getProduct() != null) {
+            products = getProductFromCache(searchRequest.getProduct());
+        }
+        if (products == null) {
+            try {
+                SearchResponse searchResponse = executeTransaction(new SearchMultiBuilder(), elasticSearchInputMultiBuilders);
+                products = getListFromSearchResponse(searchResponse);
+                putProductsInCache(searchRequest.getProduct(), products);
+            } catch (ProductTransactionException ex) {
+                String errorMessage = String.format("Error convirtiendo busqueda en json. Petición: %s, mensaje: %s",
+                        searchRequest, ex.getMessage());
+                LOGGER.error(errorMessage, ex);
+                throw new ProductTransactionException(errorMessage, ex);
+            }
+        }
+
+        ProductsResponse productsResponse = new ProductsResponse();
+        productsResponse.setProductos(products);
+        //Por acá iría el ordenamiento
+
+        setResponseFromOrderedList(searchRequest.getBasicSearchParams(),
+                productsResponse.getProductos(), productsResponse);
+        return productsResponse;
     }
 
     @Override
@@ -88,18 +123,33 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
     @Override
     public Product create(Product product) throws ProductTransactionException {
         try {
-            Long nextIdProduct = this.nextIdProduct();
-            product.setId(nextIdProduct);
-            String productJson = mapper.writeValueAsString(product);
-
-            elasticSearchInput = new ElasticSearchInput();
-            elasticSearchInput.setJson(productJson);
-            elasticSearchInput.setId(nextIdProduct.toString());
-            IndexResponse indexResponse = executeTransaction(new SetSourceAndGet(), elasticSearchInput);
+            Product productJPA = jpaProductService.create(product);
+            product.setId(productJPA.getId());
+//            Long nextIdProduct = this.nextIdProduct();
+//            product.setId(nextIdProduct);
+//            Product findOne = findOne(indexResponse.getId());
+            Runnable runnable = () -> {
+                try {
+                    String productJson = mapper.writeValueAsString(product);
+                    elasticSearchInput = new ElasticSearchInput();
+                    elasticSearchInput.setJson(productJson);
+                    elasticSearchInput.setId(product.getId().toString());
+                    executeTransaction(new SetSourceAndGet(), elasticSearchInput);
+                } catch (JsonProcessingException ex) {
+                    String errorMessage = String.format("Error convirtiendo el objeto Product en json. Objeto: %s, mensaje: %s",
+                            product, ex.getMessage());
+                    LOGGER.error(errorMessage, ex);
+                } catch (ProductTransactionException ex) {
+                    String errorMessage = String.format("Error persistiendo producto en Elasticsearch. Objeto: %s, mensaje: %s",
+                            product, ex.getMessage());
+                    LOGGER.error(errorMessage, ex);
+                }
+            };
+            (new Thread(runnable)).start();
             clearProductCache();
-            return findOne(indexResponse.getId());
-        } catch (JsonProcessingException ex) {
-            String errorMessage = String.format("Error convirtiendo el objeto Product en json. Objeto: %s, mensaje: %s",
+            return product;
+        } catch (ProductTransactionException ex) {
+            String errorMessage = String.format("Error persistiendo producto mediante JPA. Objeto: %s, mensaje: %s",
                     product, ex.getMessage());
             LOGGER.error(errorMessage, ex);
             throw new ProductTransactionException(errorMessage, ex);
@@ -117,13 +167,40 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             UpdateResponse updateResponse = executeTransaction(new UpdateAndGet(), elasticSearchInput);
             LOGGER.info("updateResponse.getGetResult(): {}", updateResponse.getGetResult());
             clearProductCache();
-            return findOne(updateResponse.getId());
+            Product findOne = findOne(updateResponse.getId());
+            Runnable runnable = () -> {
+                try {
+                    jpaProductService.update(findOne);
+                } catch (ProductTransactionException ex) {
+                    LOGGER.error("Error persistiendo producto mediante JPA", ex);
+                }
+            };
+            (new Thread(runnable)).start();
+            return findOne;
         } catch (JsonProcessingException ex) {
             String errorMessage = String.format("Error convirtiendo el objeto Product en json. Objeto: %s, mensaje: %s",
                     product, ex.getMessage());
             LOGGER.error(errorMessage, ex);
             throw new ProductTransactionException(errorMessage, ex);
         }
+    }
+
+    @Override
+    public void delete(Long id) throws ProductTransactionException {
+        elasticSearchInput = new ElasticSearchInput();
+        elasticSearchInput.setId(String.valueOf(id));
+        LOGGER.info("delete id: {}", elasticSearchInput.getId());
+        DeleteResponse deleteResponse = executeTransaction(new DeleteTransaction(), elasticSearchInput);
+        LOGGER.info("deleteResponse.status(): {}", deleteResponse.status());
+        clearProductCache();
+        Runnable runnable = () -> {
+            try {
+                jpaProductService.delete(id);
+            } catch (ProductTransactionException ex) {
+                LOGGER.error("Error persistiendo producto mediante JPA", ex);
+            }
+        };
+        (new Thread(runnable)).start();
     }
 
     @Override
@@ -168,10 +245,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
                             scrollSearchRequest.getBasicSearchParams(),
                             productScrollResponse.getProductos())) {
                 SearchResponse searchResponse = scrollSearchFromElasticSearch(scrollSearchRequest);
-                List<Product> responseList = Arrays.stream(searchResponse.getHits()
-                        .getHits()).parallel()
-                        .map(hit -> mapToProduct(hit.getSourceAsString()))
-                        .collect(Collectors.toList());
+                List<Product> responseList = getListFromSearchResponse(searchResponse);
                 productScrollResponse.setScrollId(searchResponse.getScrollId());
                 productScrollResponse.getProductos().addAll(responseList);
 
@@ -193,12 +267,20 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
     }
 
     @Override
-    public List<Product> findAllByIds(List<String> ids) throws ProductTransactionException {
+    public List<Product> findAllByIds(List<Long> ids) throws ProductTransactionException {
+        elasticSearchInput = new ElasticSearchInput();
         ElasticSearchInputMultiGet elasticSearchInputMultiGet = new ElasticSearchInputMultiGet(elasticSearchInput);
         elasticSearchInputMultiGet.setIds(ids);
-        MultiGetResponse multiGetResponse = executeTransaction(new MultiGet(), elasticSearchInputMultiGet);
-        LOGGER.info("multiGetResponse: {}", multiGetResponse.getResponses().length);
-        return getListOfProducts(multiGetResponse);
+        SearchResponse searchResponse = executeTransaction(new IDsQuery(), elasticSearchInputMultiGet);
+        LOGGER.info("idsResponse: {}", searchResponse);
+        return getListFromSearchResponse(searchResponse);
+    }
+
+    private List<Product> getListFromSearchResponse(SearchResponse searchResponse) {
+        return Arrays.stream(searchResponse.getHits()
+                .getHits()).parallel()
+                .map(hit -> mapToProduct(hit.getSourceAsString()))
+                .collect(Collectors.toList());
     }
 
     private List<Product> getListOfProducts(MultiGetResponse multiGetResponse) {
@@ -273,8 +355,23 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         cache.put(scrollId, products);
     }
 
+    private void putProductsInCache(Product product, List<Product> products) {
+        Cache cache = cacheManager.getCache("productSearchCache");
+        if (cache == null) {
+            LOGGER.error("Error obteniendo la instancia del cache");
+            return;
+        }
+        cache.put(product, products);
+    }
+
     private void clearProductCache() {
         Cache cache = cacheManager.getCache("productCache");
+        if (cache == null) {
+            LOGGER.error("Error obteniendo la instancia del cache");
+            return;
+        }
+        cache.clear();
+        cache = cacheManager.getCache("productSearchCache");
         if (cache == null) {
             LOGGER.error("Error obteniendo la instancia del cache");
             return;
@@ -300,6 +397,24 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         return null;
     }
 
+    private List getProductFromCache(Product product) {
+
+        Cache cache = cacheManager.getCache("productSearchCache");
+        if (cache == null) {
+            LOGGER.error("Error obteniendo la instancia del cache");
+            return null;
+        }
+        Cache.ValueWrapper valueWrapper = cache.get(product);
+        if (valueWrapper == null) {
+            return null;
+        }
+        Object get = valueWrapper.get();
+        if (get != null && get instanceof List) {
+            return (List) get;
+        }
+        return null;
+    }
+
     private boolean needScrollSearch(BasicSearchParams basicSearchParams, List totalList) {
         if (totalList == null || totalList.isEmpty()) {
             return true;
@@ -307,8 +422,9 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         int page = basicSearchParams.getPage() == null ? 0 : basicSearchParams.getPage();
         int itemsPerPage = basicSearchParams.getItemsPerPage() == null ? totalList.size() : basicSearchParams.getItemsPerPage();
         LOGGER.info("page: {}, itemsPerPage; {}, totalList.size(): {}", page, itemsPerPage, totalList.size());
-        LOGGER.info("conditional: {}", (page * itemsPerPage > totalList.size()));
-        if (page * itemsPerPage > totalList.size()) {
+        boolean conditional = (page + 1) * itemsPerPage >= totalList.size();
+        LOGGER.info("conditional: {}", conditional);
+        if (conditional) {
             return true;
         }
         return false;
@@ -332,6 +448,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
 
         asperiskPage.setTotalElements(list.size());
         asperiskPage.setTotalPages(asperiskPage.getTotalElements() / basicSearchParams.getItemsPerPage());
+        LOGGER.info("asperiskPage.getTotalPages(: {}", asperiskPage.getTotalPages());
 
         int lastIndex = 999;
         int firstIndex = 0;

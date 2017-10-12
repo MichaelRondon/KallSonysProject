@@ -28,14 +28,14 @@ public class SearchScroll extends Transaction<ElasticSearchInput, SearchResponse
         if (input.getId().equals(EMPTY_SCROLL_ID)) {
             scrollResp = transportClient.prepareSearch(input.getIndex(), input.getTipo())
                     //        .addSort(FieldSortBuilder.DOC_FIELD_NAME, SortOrder.ASC)
-                    .setScroll(new TimeValue(1000))
+                    .setScroll(new TimeValue(600000))
 //                    .setQuery(queryBuilder)
                     .setSize(100).get();
             LOGGER.info("SearchScroll. length: {}", scrollResp.getHits().totalHits);
             return scrollResp;
         }
         scrollResp = transportClient.prepareSearchScroll(input.getId())
-                .setScroll(new TimeValue(60000)).execute().actionGet();
+                .setScroll(new TimeValue(600000)).execute().actionGet();
         LOGGER.info("SearchScroll. length: {}", scrollResp.getHits().totalHits);
         return scrollResp;
     }

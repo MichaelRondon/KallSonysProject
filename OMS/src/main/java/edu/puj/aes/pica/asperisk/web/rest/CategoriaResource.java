@@ -2,9 +2,9 @@ package edu.puj.aes.pica.asperisk.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import edu.puj.aes.pica.asperisk.service.CategoriaService;
-import edu.puj.aes.pica.asperisk.web.rest.util.HeaderUtil;
-import edu.puj.aes.pica.asperisk.web.rest.util.PaginationUtil;
-import edu.puj.aes.pica.asperisk.service.dto.CategoriaDTO;
+import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.HeaderUtil;
+import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.PaginationUtil;
+import edu.puj.aes.pica.asperisk.oms.utilities.dto.CategoriaDTO;
 import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -75,7 +75,7 @@ public class CategoriaResource {
         if (categoriaDTO.getId() == null) {
             return createCategoria(categoriaDTO);
         }
-        CategoriaDTO result = categoriaService.save(categoriaDTO);
+        CategoriaDTO result = categoriaService.update(categoriaDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, categoriaDTO.getId().toString()))
             .body(result);

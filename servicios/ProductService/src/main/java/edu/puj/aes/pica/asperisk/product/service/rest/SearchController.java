@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.util.Date;
+import java.util.logging.Level;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -41,6 +42,10 @@ public class SearchController {
     @Qualifier("elastic")
     private ProductService elasticSearchService;
 
+    @Autowired
+    @Qualifier("jpa")
+    private ProductService jpaSearchService;
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Product> create(@RequestBody Product product) throws ProductTransactionException {
         LOGGER.info("Ingresando a create");
@@ -52,17 +57,28 @@ public class SearchController {
 
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<Product> update(@RequestBody Product product) throws ProductTransactionException {
-        LOGGER.info("Ingresando a create");
+        LOGGER.info("Ingresando a update");
         product = elasticSearchService.update(product);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(product.getId()).toUri();
         return ResponseEntity.created(location).body(product);
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> delete(@PathVariable Long id) throws ProductTransactionException {
+        LOGGER.info("Ingresando a delete");
+        elasticSearchService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Product> findOne(@PathVariable String id) throws ProductTransactionException {
-        LOGGER.info("Ingresando a create");
-        Product product = elasticSearchService.findOne(id);
+        LOGGER.info("Ingresando a get id");
+        long initTime = System.currentTimeMillis();
+        Product product = jpaSearchService.findOne(id);
+//        Product product = elasticSearchService.findOne(id);
+        LOGGER.info("TIEMPO busqueda por id: {}", (System.currentTimeMillis() - initTime));
+        LOGGER.info("product: {}", product);
         return ResponseEntity.ok(product);
     }
 
@@ -148,7 +164,7 @@ public class SearchController {
             @RequestParam(value = "items_per_page", defaultValue = "-1", required = false) Integer itemsPerPage,
             @RequestParam(value = "sort", defaultValue = "", required = false) String sort,
             @RequestParam(value = "sort_type", defaultValue = "", required = false) Sort.Direction sortType,
-            @RequestParam(value = "custom", defaultValue = "", required = false) String custom) {
+            @RequestParam(value = "custom", defaultValue = "", required = false) String custom) throws ProductTransactionException {
 
         BasicProveedor basicProveedor = new BasicProveedor();
         basicProveedor.setId(proveedor);
@@ -181,7 +197,8 @@ public class SearchController {
         searchRequest.setPrecioMin(precioMin);
 
         LOGGER.info("Busca searchRequest: {}", searchRequest);
-        ProductsResponse productsResponse = productService.buscar(searchRequest);
+        ProductsResponse productsResponse;
+        productsResponse = productService.buscar(searchRequest);
         LOGGER.info("Encuentra productsResponse: {}", productsResponse);
         return new ResponseEntity(productsResponse, HttpStatus.OK);
     }

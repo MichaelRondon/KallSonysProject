@@ -21,6 +21,9 @@
         vm.predicate = 'id';
         vm.reset = reset;
         vm.reverse = true;
+        vm.productImageSmallBaseUrl = 'http://laptop-diego:9091/api/ImageSmall/';
+        vm.productImageMediumBaseUrl = 'http://laptop-diego:9091/api/ImageMedium/';
+        vm.productImageLargeBaseUrl = 'http://laptop-diego:9091/api/ImageLarge/';
 
         loadAll();
 
@@ -61,5 +64,5 @@
             vm.page = page;
             loadAll();
         }
-    }
+        }
 })();

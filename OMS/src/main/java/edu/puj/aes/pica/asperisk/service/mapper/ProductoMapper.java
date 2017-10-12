@@ -1,7 +1,8 @@
 package edu.puj.aes.pica.asperisk.service.mapper;
 
 import edu.puj.aes.pica.asperisk.domain.*;
-import edu.puj.aes.pica.asperisk.service.dto.ProductoDTO;
+import edu.puj.aes.pica.asperisk.oms.utilities.dto.ProductoDTO;
+import edu.puj.aes.pica.asperisk.service.mapper.EntityMapper;
 
 import org.mapstruct.*;
 
@@ -16,10 +17,14 @@ public interface ProductoMapper extends EntityMapper <ProductoDTO, Producto> {
     @Mapping(target = "keyWords", ignore = true)
     @Mapping(target = "categoria", ignore = true)
     @Mapping(target = "proveedores", ignore = true)
+    @Mapping(target = "fechaRevDisponibilidad", ignore = true)
+    @Mapping(target = "estado", ignore = true)
     ProductoDTO toDto(Producto producto);
     @Mapping(target = "proveedores", ignore = true)
     @Mapping(target = "keyWords", ignore = true)
     @Mapping(target = "categoria", ignore = true)
+    @Mapping(target = "fechaRevDisponibilidad", ignore = true)
+    @Mapping(target = "estado", ignore = true)
 
 //    @Mapping(source = "categoriaId", target = "categoria")
     Producto toEntity(ProductoDTO productoDTO);

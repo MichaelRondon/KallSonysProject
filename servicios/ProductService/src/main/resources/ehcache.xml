@@ -1,21 +1,150 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="ehcache.xsd"
-	updateCheck="true"
-	monitoring="autodetect"
-	dynamicConfig="true">
+         xsi:noNamespaceSchemaLocation="ehcache.xsd"
+         updateCheck="true"
+         monitoring="autodetect"
+         dynamicConfig="true">
 
-	<diskStore path="java.io.tmpdir" />
+    <diskStore path="java.io.tmpdir" />
 
-	<cache name="productCache"
-		maxEntriesLocalHeap="10000"
-		maxEntriesLocalDisk="1000"
-		eternal="false"
-		diskSpoolBufferSizeMB="20"
-		timeToIdleSeconds="300" timeToLiveSeconds="600"
-		memoryStoreEvictionPolicy="LFU"
-		transactionalMode="off">
-		<persistence strategy="localTempSwap" />
-	</cache>
+    <cache name="productCache"
+               maxEntriesLocalHeap="10000"
+               maxEntriesLocalDisk="10000"
+               eternal="false"
+               diskSpoolBufferSizeMB="20"
+               timeToIdleSeconds="300" timeToLiveSeconds="600"
+               memoryStoreEvictionPolicy="LFU"
+               transactionalMode="off">
+        <persistence strategy="localTempSwap" />
+    </cache>
+
+    <cache name="productSearchCache"
+               maxEntriesLocalHeap="10000"
+               maxEntriesLocalDisk="10000"
+               eternal="false"
+               diskSpoolBufferSizeMB="20"
+               timeToIdleSeconds="300" timeToLiveSeconds="600"
+               memoryStoreEvictionPolicy="LFU"
+               transactionalMode="off">
+        <persistence strategy="localTempSwap" />
+    </cache>
+
+    <defaultCache
+        maxEntriesLocalHeap="0"
+        eternal="false"
+        timeToIdleSeconds="1200"
+        timeToLiveSeconds="1200">
+        <terracotta/>
+    </defaultCache>
+
+    <cache name="edu.puj.aes.pica.asperisk.product.service.jpa.entity.Campania"
+               maxEntriesLocalHeap="10000"
+               maxEntriesLocalDisk="10000"
+               eternal="false"
+               diskSpoolBufferSizeMB="20"
+               timeToIdleSeconds="300" timeToLiveSeconds="600"
+               memoryStoreEvictionPolicy="LFU"
+               transactionalMode="off">
+        <persistence strategy="localTempSwap" />
+    </cache>
+
+    <cache name="edu.puj.aes.pica.asperisk.product.service.jpa.entity.Campania.productos"
+               maxEntriesLocalHeap="10000"
+               maxEntriesLocalDisk="10000"
+               eternal="false"
+               diskSpoolBufferSizeMB="20"
+               timeToIdleSeconds="300" timeToLiveSeconds="600"
+               memoryStoreEvictionPolicy="LFU"
+               transactionalMode="off">
+        <persistence strategy="localTempSwap" />
+    </cache>
+
+    <cache name="edu.puj.aes.pica.asperisk.product.service.jpa.entity.Proveedor"
+               maxEntriesLocalHeap="10000"
+               maxEntriesLocalDisk="10000"
+               eternal="false"
+               diskSpoolBufferSizeMB="20"
+               timeToIdleSeconds="300" timeToLiveSeconds="600"
+               memoryStoreEvictionPolicy="LFU"
+               transactionalMode="off">
+        <persistence strategy="localTempSwap" />
+    </cache>
+
+    <cache name="edu.puj.aes.pica.asperisk.product.service.jpa.entity.ProveedorProducto"
+               maxEntriesLocalHeap="10000"
+               maxEntriesLocalDisk="10000"
+               eternal="false"
+               diskSpoolBufferSizeMB="20"
+               timeToIdleSeconds="300" timeToLiveSeconds="600"
+               memoryStoreEvictionPolicy="LFU"
+               transactionalMode="off">
+        <persistence strategy="localTempSwap" />
+    </cache>
+
+    <cache name="edu.puj.aes.pica.asperisk.product.service.jpa.entity.DatoContacto"
+               maxEntriesLocalHeap="10000"
+               maxEntriesLocalDisk="10000"
+               eternal="false"
+               diskSpoolBufferSizeMB="20"
+               timeToIdleSeconds="300" timeToLiveSeconds="600"
+               memoryStoreEvictionPolicy="LFU"
+               transactionalMode="off">
+        <persistence strategy="localTempSwap" />
+    </cache>
+
+    <cache name="edu.puj.aes.pica.asperisk.product.service.jpa.entity.Categoria"
+               maxEntriesLocalHeap="10000"
+               maxEntriesLocalDisk="10000"
+               eternal="false"
+               diskSpoolBufferSizeMB="20"
+               timeToIdleSeconds="300" timeToLiveSeconds="600"
+               memoryStoreEvictionPolicy="LFU"
+               transactionalMode="off">
+        <persistence strategy="localTempSwap" />
+    </cache>
+
+    <cache name="edu.puj.aes.pica.asperisk.product.service.jpa.entity.Producto"
+               maxEntriesLocalHeap="10000"
+               maxEntriesLocalDisk="10000"
+               eternal="false"
+               diskSpoolBufferSizeMB="20"
+               timeToIdleSeconds="300" timeToLiveSeconds="600"
+               memoryStoreEvictionPolicy="LFU"
+               transactionalMode="off">
+        <persistence strategy="localTempSwap" />
+    </cache>
+    
+    <cache name="edu.puj.aes.pica.asperisk.product.service.jpa.entity.Producto.proveedores"
+               maxEntriesLocalHeap="10000"
+               maxEntriesLocalDisk="10000"
+               eternal="false"
+               diskSpoolBufferSizeMB="20"
+               timeToIdleSeconds="300" timeToLiveSeconds="600"
+               memoryStoreEvictionPolicy="LFU"
+               transactionalMode="off">
+        <persistence strategy="localTempSwap" />
+    </cache>
+    
+    <cache name="edu.puj.aes.pica.asperisk.product.service.jpa.entity.Proveedor.productos"
+               maxEntriesLocalHeap="10000"
+               maxEntriesLocalDisk="10000"
+               eternal="false"
+               diskSpoolBufferSizeMB="20"
+               timeToIdleSeconds="300" timeToLiveSeconds="600"
+               memoryStoreEvictionPolicy="LFU"
+               transactionalMode="off">
+        <persistence strategy="localTempSwap" />
+    </cache>
+    
+    <cache name="edu.puj.aes.pica.asperisk.product.service.jpa.entity.Proveedor.datosContactos"
+               maxEntriesLocalHeap="10000"
+               maxEntriesLocalDisk="10000"
+               eternal="false"
+               diskSpoolBufferSizeMB="20"
+               timeToIdleSeconds="300" timeToLiveSeconds="600"
+               memoryStoreEvictionPolicy="LFU"
+               transactionalMode="off">
+        <persistence strategy="localTempSwap" />
+    </cache>
 
 </ehcache>

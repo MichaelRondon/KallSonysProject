@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-import edu.puj.aes.pica.asperisk.domain.enumeration.TipoDatoContacto;
+import edu.puj.aes.pica.asperisk.oms.utilities.enumeration.TipoDatoContacto;
 
 /**
  * A DatoContacto.

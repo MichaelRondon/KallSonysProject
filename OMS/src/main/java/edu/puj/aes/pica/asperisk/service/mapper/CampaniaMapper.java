@@ -1,7 +1,8 @@
 package edu.puj.aes.pica.asperisk.service.mapper;
 
+
 import edu.puj.aes.pica.asperisk.domain.*;
-import edu.puj.aes.pica.asperisk.service.dto.CampaniaDTO;
+import edu.puj.aes.pica.asperisk.oms.utilities.dto.CampaniaDTO;
 
 import org.mapstruct.*;
 

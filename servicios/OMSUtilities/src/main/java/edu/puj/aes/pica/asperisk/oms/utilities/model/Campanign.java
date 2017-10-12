@@ -24,5 +24,6 @@ public class Campanign  implements Serializable{
     @JsonProperty("fecha_fin")
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date fechaFin;
+    private Categoria categoria;
 
 }

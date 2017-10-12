@@ -25,7 +25,7 @@ public class MultiGet extends Transaction<ElasticSearchInputMultiGet, MultiGetRe
         MultiGetRequestBuilder multiGetRequestBuilder = transportClient.prepareMultiGet();
         input.getIds().forEach(id
                 -> multiGetRequestBuilder
-                        .add(input.getIndex(), input.getTipo(), id)
+                        .add(input.getIndex(), input.getTipo(), id.toString())
         );
         MultiGetResponse multiGetResponse = multiGetRequestBuilder.get();
         LOGGER.info("ResponseS. length: {}", multiGetResponse.getResponses().length);

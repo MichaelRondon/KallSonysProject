@@ -1,7 +1,7 @@
 package edu.puj.aes.pica.asperisk.web.rest;
 
 import edu.puj.aes.pica.asperisk.service.AuditEventService;
-import edu.puj.aes.pica.asperisk.web.rest.util.PaginationUtil;
+import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.PaginationUtil;
 
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;

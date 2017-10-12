@@ -19,7 +19,7 @@ public interface ProductService {
 
     ProductsResponse consultarHistorico(HistoricoRequest historicoRequest);
 
-    ProductsResponse buscar(SearchRequest searchRequest);
+    ProductsResponse buscar(SearchRequest searchRequest) throws ProductTransactionException;
 
     CampaignResponse campanias(CampaignRequest campaniasRequest);
 
@@ -30,8 +30,10 @@ public interface ProductService {
     Product update(Product product) throws ProductTransactionException;
 
     Product findOne(String id) throws ProductTransactionException;
+    
+    void delete(Long id) throws ProductTransactionException;
 
-    List<Product> findAllByIds(List<String> ids) throws ProductTransactionException;
+    List<Product> findAllByIds(List<Long> ids) throws ProductTransactionException;
 
     List<Product> findAll()throws ProductTransactionException;
     ProductScrollResponse findAll(ScrollSearchRequest scrollSearchRequest) throws ProductTransactionException;

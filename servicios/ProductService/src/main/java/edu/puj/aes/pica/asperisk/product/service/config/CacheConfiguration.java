@@ -9,14 +9,12 @@ import org.ehcache.jsr107.Eh107Configuration;
 
 import java.util.concurrent.TimeUnit;
 
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.cache.JCacheManagerCustomizer;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.*;
 
-@Configuration
-@EnableCaching
-@AutoConfigureBefore(value = {WebConfiguration.class, DatabaseConfiguration.class })
+//@Configuration
+//@EnableCaching
+//@AutoConfigureBefore(value = {WebConfiguration.class, DatabaseConfiguration.class })
 public class CacheConfiguration {
 
     private final javax.cache.configuration.Configuration<Object, Object> jcacheConfiguration;

@@ -1,0 +1,85 @@
+<div ng-init="canCreateListItems=vm.canCreateListItems();" class="entity-list">
+    <h2 ng-if="vm.getTitle()">{{vm.getTitle()}}</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid entity-list-actions">
+        TEST!!!
+        <div class="row" ng-init="hasBulkButton=vm.hasBulkButton(); mainFilter=vm.mainFilterOptions;">
+            <div class="no-padding-left no-padding-right col-xs-12 col-sm-8">
+                <button type="button" ng-if="canCreateListItems && vm.canCreate()" class="btn btn-warning" ng-click="vm.goToListItemCreate()" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        {{vm.getCreateBtnLabel()}}
+                    </span>
+                </button>
+                <button type="button" class="btn btn-warning" ng-if="canCreateListItems && hasBulkButton" ng-click="vm.goToBulkLoad()" >
+                    <span class="glyphicon glyphicon-upload"></span>
+                    <span >
+                        {{vm.getBulkLoadBtnLabel()}}
+                    </span>
+                </button>
+                <button type="button" ng-if="vm.isListWithFilters();" class="btn btn-default" ng-click="vm.toggleFilterOptions()">
+                    <span ng-if="!vm.showFilter" class="fa fa-filter"></span>
+                    <span ng-if="vm.showFilter" class="fa fa-minus"></span>
+                    <span ng-if="!vm.showFilter" class="hidden-xs">Filtrar</span>
+                    <span ng-if="vm.showFilter" class="hidden-xs">Quitar filtro</span>
+                </button>
+            </div>
+            <div class="col-xs-12 col-sm-4 no-padding-left no-padding-right">
+                <div class="dropdown pull-right" ng-if="mainFilter.visible">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        {{mainFilter.label}} 
+                        <span ng-if="vm.mainFilterCurrentSearch">
+                            ({{vm.mainFilterCurrentSearch}})
+                        </span>
+                        <span ng-if="!vm.mainFilterCurrentSearch && mainFilter.allOption">
+                            ({{mainFilter.allOptionLabel}})
+                        </span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right">
+                      <li ng-if="mainFilter.allOption" ng-class="{'active':!vm.mainFilterCurrentSearch}">
+                        <a  href="javascript:void(0);" ng-click="vm.changeMainFilter()" >{{mainFilter.allOptionLabel}}</a>
+                      </li>
+                      <li ng-repeat="filterOption in mainFilter.options" ng-class="{'active':filterOption===vm.mainFilterCurrentSearch}">
+                        <a href="javascript:void(0);" ng-click="vm.changeMainFilter(filterOption)">{{filterOption}}</a>
+                      </li>
+                    </ul>
+                </div>
+                <div ng-init="listExtraActionsTemplateURL=vm.getListExtraActionsTemplateURL()" ng-include="listExtraActionsTemplateURL"></div>
+            </div>
+        </div>
+        <div ng-if="vm.isListWithFilters();" ng-include="'app/entities/_components/entity-list/templates/list-filter-section.html'">
+        </div>
+        
+    </div>
+    <div ng-init="listTemplateURL=vm.getUIListTemplateURL()" ng-include="listTemplateURL"></div>
+    <!-- <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount"></jhi-item-count>
+    </div>
+    <uib-pager total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pager> -->
+    <div class="text-center">
+        <uib-pagination total-items="vm.totalItems" ng-change="vm.loadPage(vm.page)" ng-model='vm.page' class="pagination-sm" items-per-page='vm.itemsPerPage' boundary-links="true" max-size="5" />
+        <div class="row">
+            <div class="col-xs-12" ng-init="withPageSizeSelector=vm.hasPageSizeSelector();">
+                <p class="report__paginationText">Página {{vm.page}} de {{vm.numberOfPages}}</p>
+                <div class="btn-group" ng-if="withPageSizeSelector">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{vm.itemsPerPage}} ítems por página <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" ng-init="pageSizeOptions=vm.getPageSizeSelectorOptions();">
+                    
+                        <li ng-repeat="pageSizeOption in pageSizeOptions;"><a class="node-link" ng-click="vm.changeItemsPerPage(pageSizeOption)">{{pageSizeOption}} ítems por página</a></li>
+                        <!-- <li><a class="node-link" ng-click="vm.changeItemsPerPage(20)">20 ítems por página</a></li>
+                        <li><a class="node-link" ng-click="vm.changeItemsPerPage(50)">50 ítems por página</a></li>
+                        <li><a class="node-link" ng-click="vm.changeItemsPerPage(100)">100 ítems por página</a></li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="entity-actions" ng-if="vm.hasBackButton()">
+        <button class="btn btn-info" type="button" ng-click="vm.goToBack()" ng-if="vm.hasBackButton()">
+            <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Volver</span>
+        </button>
+    </div>
+</div>

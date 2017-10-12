@@ -23,5 +23,5 @@ public class ElasticSearchInputMultiGet extends ElasticSearchInput{
         this.setTipo(elasticSearchInput.getTipo());
     }
     
-    private List<String> ids;
+    private List<Long> ids;
 }

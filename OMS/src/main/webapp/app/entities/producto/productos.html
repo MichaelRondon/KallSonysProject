@@ -18,33 +18,22 @@
         <table class="jh-table table table-striped">
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
-                    <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                    <th><span ></span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="id"><span >Código</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="nombre"><span data-translate="omsApp.producto.nombre">Nombre</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="descripcion"><span data-translate="omsApp.producto.descripcion">Descripcion</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="precio"><span data-translate="omsApp.producto.precio">Precio</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="estado"><span data-translate="omsApp.producto.estado">Estado</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="disponibilidad"><span data-translate="omsApp.producto.disponibilidad">Disponibilidad</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="fechaRevDisponibilidad"><span data-translate="omsApp.producto.fechaRevDisponibilidad">Fecha Rev Disponibilidad</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <!--<th jh-sort-by="disponibilidad"><span data-translate="omsApp.producto.disponibilidad">Disponibilidad</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th jh-sort-by="fechaRevDisponibilidad"><span data-translate="omsApp.producto.fechaRevDisponibilidad">Fecha Rev Disponibilidad</span> <span class="glyphicon glyphicon-sort"></span></th>-->
                     <th jh-sort-by="marca"><span data-translate="omsApp.producto.marca">Marca</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="keyWords"><span data-translate="omsApp.producto.keyWords">Key Words</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="categoriaCategoria"><span data-translate="omsApp.producto.categoria">Categoria</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
                 <tr ng-repeat="producto in vm.productos track by producto.id">
-                    <td><a ui-sref="producto-detail({id:producto.id})">{{producto.id}}</a></td>
-                    <td>{{producto.nombre}}</td>
-                    <td>{{producto.descripcion}}</td>
-                    <td>{{producto.precio}}</td>
-                    <td data-translate="{{'omsApp.Estado.' + producto.estado}}">{{producto.estado}}</td>
-                    <td>{{producto.disponibilidad}}</td>
-                    <td>{{producto.fechaRevDisponibilidad | date:'medium'}}</td>
-                    <td>{{producto.marca}}</td>
-                    <td>{{producto.keyWords}}</td>
-                    <td>
-                        <a ui-sref="categoria-detail({id:producto.categoriaId})">{{producto.categoriaCategoria}}</a>
-                    </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
@@ -66,6 +55,24 @@
                                 <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
                             </button>
                         </div>
+                    </td>
+                    <td>
+                        <a ui-sref="producto-detail({id:producto.id})">
+                            <img id="field_image_small" ng-src="{{vm.producImageSmallBaseUrl}}{{producto.id}}"
+                                 alt="{{producto.nombre}}" style="width:150px;height:150px;"/>
+                        </a>
+                    </td>
+                    <td><a ui-sref="producto-detail({id:producto.id})" style="color: black;">{{producto.id}}</a></td>
+                    <td>{{producto.nombre}}</td>
+                    <td>{{producto.descripcion}}</td>
+                    <td>{{producto.precio}}</td>
+                    <td data-translate="{{'omsApp.Estado.' + producto.estado}}">{{producto.estado}}</td>
+                    <!--<td>{{producto.disponibilidad}}</td>-->
+                    <!--<td>{{producto.fechaRevDisponibilidad| date:'medium'}}</td>-->
+                    <td>{{producto.marca}}</td>
+                    <td>{{producto.keyWords}}</td>
+                    <td>
+                        <a ui-sref="categoria-detail({id:producto.categoriaId})">{{producto.categoriaCategoria}}</a>
                     </td>
                 </tr>
             </tbody>

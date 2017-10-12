@@ -2,7 +2,7 @@ package edu.puj.aes.pica.asperisk.service;
 
 import edu.puj.aes.pica.asperisk.domain.ProveedorProducto;
 import edu.puj.aes.pica.asperisk.repository.ProveedorProductoRepository;
-import edu.puj.aes.pica.asperisk.service.dto.ProveedorProductoDTO;
+import edu.puj.aes.pica.asperisk.oms.utilities.dto.ProveedorProductoDTO;
 import edu.puj.aes.pica.asperisk.service.mapper.ProveedorProductoMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

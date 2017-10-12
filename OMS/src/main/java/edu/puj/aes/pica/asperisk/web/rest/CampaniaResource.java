@@ -2,9 +2,9 @@ package edu.puj.aes.pica.asperisk.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import edu.puj.aes.pica.asperisk.service.CampaniaService;
-import edu.puj.aes.pica.asperisk.web.rest.util.HeaderUtil;
-import edu.puj.aes.pica.asperisk.web.rest.util.PaginationUtil;
-import edu.puj.aes.pica.asperisk.service.dto.CampaniaDTO;
+import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.HeaderUtil;
+import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.PaginationUtil;
+import edu.puj.aes.pica.asperisk.oms.utilities.model.Campanign;
 import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -48,12 +48,12 @@ public class CampaniaResource {
      */
     @PostMapping("/campanias")
     @Timed
-    public ResponseEntity<CampaniaDTO> createCampania(@RequestBody CampaniaDTO campaniaDTO) throws URISyntaxException {
+    public ResponseEntity<Campanign> createCampania(@RequestBody Campanign campaniaDTO) throws URISyntaxException {
         log.debug("REST request to save Campania : {}", campaniaDTO);
         if (campaniaDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new campania cannot already have an ID")).body(null);
         }
-        CampaniaDTO result = campaniaService.save(campaniaDTO);
+        Campanign result = campaniaService.save(campaniaDTO);
         return ResponseEntity.created(new URI("/api/campanias/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -70,12 +70,12 @@ public class CampaniaResource {
      */
     @PutMapping("/campanias")
     @Timed
-    public ResponseEntity<CampaniaDTO> updateCampania(@RequestBody CampaniaDTO campaniaDTO) throws URISyntaxException {
+    public ResponseEntity<Campanign> updateCampania(@RequestBody Campanign campaniaDTO) throws URISyntaxException {
         log.debug("REST request to update Campania : {}", campaniaDTO);
         if (campaniaDTO.getId() == null) {
             return createCampania(campaniaDTO);
         }
-        CampaniaDTO result = campaniaService.save(campaniaDTO);
+        Campanign result = campaniaService.update(campaniaDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, campaniaDTO.getId().toString()))
             .body(result);
@@ -89,9 +89,9 @@ public class CampaniaResource {
      */
     @GetMapping("/campanias")
     @Timed
-    public ResponseEntity<List<CampaniaDTO>> getAllCampanias(@ApiParam Pageable pageable) {
+    public ResponseEntity<List<Campanign>> getAllCampanias(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Campanias");
-        Page<CampaniaDTO> page = campaniaService.findAll(pageable);
+        Page<Campanign> page = campaniaService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/campanias");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -104,9 +104,9 @@ public class CampaniaResource {
      */
     @GetMapping("/campanias/{id}")
     @Timed
-    public ResponseEntity<CampaniaDTO> getCampania(@PathVariable Long id) {
+    public ResponseEntity<Campanign> getCampania(@PathVariable Long id) {
         log.debug("REST request to get Campania : {}", id);
-        CampaniaDTO campaniaDTO = campaniaService.findOne(id);
+        Campanign campaniaDTO = campaniaService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(campaniaDTO));
     }
 

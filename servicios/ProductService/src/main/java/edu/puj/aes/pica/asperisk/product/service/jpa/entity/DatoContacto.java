@@ -1,6 +1,6 @@
 package edu.puj.aes.pica.asperisk.product.service.jpa.entity;
 
-import edu.puj.aes.pica.asperisk.product.service.jpa.entity.enumeration.TipoDatoContacto;
+import edu.puj.aes.pica.asperisk.oms.utilities.enumeration.TipoDatoContacto;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -20,8 +20,9 @@ public class DatoContacto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+//    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @Enumerated(EnumType.STRING)
