@@ -10,6 +10,7 @@ import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.ProductScrollResponse;
 import edu.puj.aes.pica.asperisk.oms.utilities.dto.ProductoDTO;
 import java.util.HashMap;
+import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -47,7 +48,11 @@ public class ProductServiceRestClientImpl implements ProductServiceRestClient {
     public Product save(Product productoDTO) {
         RestTemplate restTemplate = new RestTemplate();
         if (productoDTO.getId() == null) {
-
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                java.util.logging.Logger.getLogger(ProductServiceRestClientImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
             return restTemplate.postForObject(PRODUCT_SERVICE_URL, productoDTO, Product.class);
         }
         HttpHeaders headers = new HttpHeaders();
@@ -78,7 +83,6 @@ public class ProductServiceRestClientImpl implements ProductServiceRestClient {
         LOGGER.info("productScrollResponse.getProductos().size(): {}", productScrollResponse.getProductos().size());
         LOGGER.info("productScrollResponse.getPage().getTotalElements(): {}", productScrollResponse.getPage().getTotalElements());
         PageImpl pageImpl = new PageImpl(productScrollResponse.getProductos(),pageable, productScrollResponse.getPage().getTotalElements());
-        productScrollResponse.getProductos().forEach(p -> LOGGER.info("PRoduct: {}", p.getFechaRevDisponibilidad()));
         LOGGER.info("pageable: {}", pageable);
         LOGGER.info("pageable.getPageSize(): {}", pageable.getPageSize());
         LOGGER.info("pageImpl: {}", pageImpl);

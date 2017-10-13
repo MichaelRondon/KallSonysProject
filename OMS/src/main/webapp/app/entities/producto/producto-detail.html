@@ -4,7 +4,7 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="dl-horizontal jh-entity-details">
-        <dt><span data-translate="omsApp.producto.nombre">Nombre</span></dt>
+        <dt style=""><span data-translate="omsApp.producto.nombre">Nombre</span></dt>
         <dd>
             <span>{{vm.producto.nombre}}</span>
         </dd>
@@ -24,7 +24,7 @@
         <dd>
             <span>{{vm.producto.disponibilidad}}</span>
         </dd>
-        <dt><span data-translate="omsApp.producto.fechaRevDisponibilidad">Fecha Rev Disponibilidad</span></dt>
+        <dt><span>Rev. Disponibilidad</span></dt>
         <dd>
             <span>{{vm.producto.fechaRevDisponibilidad | date:'medium'}}</span>
         </dd>
@@ -34,7 +34,7 @@
         </dd>
         <dt><span data-translate="omsApp.producto.keyWords">Key Words</span></dt>
         <dd>
-            <span>{{vm.producto.keyWords}}</span>
+            <span>{{vm.getKeyWordText(vm.producto.keyWords)}}</span>
         </dd>
         <dt><span data-translate="omsApp.producto.categoria">Categoria</span></dt>
         <dd>
@@ -44,18 +44,15 @@
         <dt><span>Imagen pequeña</span></dt>
         <dd>
             <span><img ng-src="{{vm.producImageSmallBaseUrl +vm.producto.id}}" alt="Producto" style="width:150px;height:150px;"/></span>
-            <!--<a ui-sref="categoria-detail({id:vm.producto.categoriaId})">{{vm.producto.categoriaCategoria}}</a>-->
         </dd>
-        <dt><span>Imagen mediana</span></dt>
+<!--        <dt><span>Imagen mediana</span></dt>
         <dd>
             <span><img ng-src="{{vm.producImageMediumBaseUrl +vm.producto.id}}" alt="Producto" style="width:150px;height:150px;"/></span>
-            <!--<a ui-sref="categoria-detail({id:vm.producto.categoriaId})">{{vm.producto.categoriaCategoria}}</a>-->
         </dd>
         <dt><span>Imagen grande</span></dt>
         <dd>
             <span><img ng-src="{{vm.producImageLargeBaseUrl +vm.producto.id}}" alt="Producto" style="width:150px;height:150px;"/></span>
-            <!--<a ui-sref="categoria-detail({id:vm.producto.categoriaId})">{{vm.producto.categoriaCategoria}}</a>-->
-        </dd>
+        </dd>-->
     </dl>
 
     <button type="submit"

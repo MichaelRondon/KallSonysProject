@@ -22,13 +22,18 @@
         vm.proveedores = Proveedor.query();
         vm.proveedoresChecked = [];
         vm.idProductEnProv = [];
-        vm.producImageSmallBaseUrl = 'http://laptop-diego:9091/api/ImageSmall/';
-        vm.producImageMediumBaseUrl = 'http://laptop-diego:9091/api/ImageMedium/';
-        vm.producImageLargeBaseUrl = 'http://laptop-diego:9091/api/ImageLarge/';
+        vm.productImageSmallBaseUrl = 'http://laptop-diego:9091/api/ImageSmall/';
+        vm.productImageMediumBaseUrl = 'http://laptop-diego:9091/api/ImageMedium/';
+        vm.productImageLargeBaseUrl = 'http://laptop-diego:9091/api/ImageLarge/';
 
         if (vm.producto.keyWords) {
-            vm.tags = [];
-            vm.producto.keyWords.forEach(loadTagsFromKeyWords);
+            if (vm.producto.keyWords && vm.producto.keyWords.length > 0) {
+                if(vm.producto.keyWords.length === 1 && vm.producto.keyWords[0] ===''){
+                    return;
+                }
+                vm.tags = [];
+                vm.producto.keyWords.forEach(loadTagsFromKeyWords);
+            }
         }
 
         $timeout(function () {
@@ -73,38 +78,14 @@
             vm.tags[index] = item;
         }
 
-        vm.stateChanged = function stateChanged(proveedorId) {
-        }
-
         function onSaveSuccess(result) {
             $scope.$emit('omsApp:productoUpdate', result);
-                $uibModalInstance.close(result);
+            $uibModalInstance.close(result);
             vm.isSaving = false;
         }
 
         function onSaveError() {
             vm.isSaving = false;
-        }
-
-        function smallImage(id) {
-            if (id) {
-                return vm.producImageSmallBaseUrl + vm.producto.id;
-            }
-            return vm.producImageSmallBaseUrl + 1;
-        }
-
-        function mediumImage(id) {
-            if (id) {
-                return vm.producImageMediumBaseUrl + vm.producto.id;
-            }
-            return vm.producImageMediumBaseUrl + 1;
-        }
-
-        function largeImage(id) {
-            if (id) {
-                return vm.producImageLargeBaseUrl + vm.producto.id;
-            }
-            return vm.producImageLargeBaseUrl + 1;
         }
 
         vm.datePickerOpenStatus.fechaRevDisponibilidad = false;

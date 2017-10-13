@@ -6,12 +6,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.State;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.Date;
 import lombok.Data;
 
 /**
