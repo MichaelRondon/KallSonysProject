@@ -61,7 +61,7 @@ public class ProductoMapperImpl implements ProductoMapper {
         producto.setFechaRevDisponibilidad(productoDTO.getFechaRevDisponibilidad());
         producto.setId(productoDTO.getId());
         producto.setMarca(productoDTO.getMarca());
-        producto.setNombre(productoDTO.getMarca());
+        producto.setNombre(productoDTO.getNombre());
         producto.setPrecio(productoDTO.getPrecio());
         producto.setKeyWords(productoDTO.getKeyWords().toString());
         return producto;

@@ -7,15 +7,17 @@ package edu.puj.aes.pica.asperisk.oms.utilities.mapper;
 
 import edu.puj.aes.pica.asperisk.oms.utilities.dto.ProductoDTO;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author acost
  */
 public class ProductoDtoToJson {
+    
+    public static final Logger LOGGER = LoggerFactory.getLogger(ProductoDtoToJson.class);
 
     public Product toJson(ProductoDTO productoDTO) {
         Product product = new Product();

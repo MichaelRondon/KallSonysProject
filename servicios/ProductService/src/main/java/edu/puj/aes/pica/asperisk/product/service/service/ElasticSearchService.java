@@ -125,9 +125,6 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         try {
             Product productJPA = jpaProductService.create(product);
             product.setId(productJPA.getId());
-//            Long nextIdProduct = this.nextIdProduct();
-//            product.setId(nextIdProduct);
-//            Product findOne = findOne(indexResponse.getId());
             Runnable runnable = () -> {
                 try {
                     String productJson = mapper.writeValueAsString(product);
@@ -135,6 +132,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
                     elasticSearchInput.setJson(productJson);
                     elasticSearchInput.setId(product.getId().toString());
                     executeTransaction(new SetSourceAndGet(), elasticSearchInput);
+                    clearProductCache();
                 } catch (JsonProcessingException ex) {
                     String errorMessage = String.format("Error convirtiendo el objeto Product en json. Objeto: %s, mensaje: %s",
                             product, ex.getMessage());
@@ -145,8 +143,8 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
                     LOGGER.error(errorMessage, ex);
                 }
             };
-            (new Thread(runnable)).start();
-            clearProductCache();
+            (new Thread(runnable)).run();
+//            (new Thread(runnable)).start();
             return product;
         } catch (ProductTransactionException ex) {
             String errorMessage = String.format("Error persistiendo producto mediante JPA. Objeto: %s, mensaje: %s",
@@ -244,6 +242,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
                     || this.needScrollSearch(
                             scrollSearchRequest.getBasicSearchParams(),
                             productScrollResponse.getProductos())) {
+                LOGGER.info("Busca en elasticsearch");
                 SearchResponse searchResponse = scrollSearchFromElasticSearch(scrollSearchRequest);
                 List<Product> responseList = getListFromSearchResponse(searchResponse);
                 productScrollResponse.setScrollId(searchResponse.getScrollId());
@@ -372,6 +371,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         }
         cache.clear();
         cache = cacheManager.getCache("productSearchCache");
+        LOGGER.info("Limpia caché producto");
         if (cache == null) {
             LOGGER.error("Error obteniendo la instancia del cache");
             return;

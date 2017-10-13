@@ -1,9 +1,9 @@
-(function() {
+(function () {
     'use strict';
 
     angular
-        .module('omsApp')
-        .controller('ProductoController', ProductoController);
+            .module('omsApp')
+            .controller('ProductoController', ProductoController);
 
     ProductoController.$inject = ['Producto', 'ParseLinks', 'AlertService', 'paginationConstants'];
 
@@ -24,10 +24,11 @@
         vm.productImageSmallBaseUrl = 'http://laptop-diego:9091/api/ImageSmall/';
         vm.productImageMediumBaseUrl = 'http://laptop-diego:9091/api/ImageMedium/';
         vm.productImageLargeBaseUrl = 'http://laptop-diego:9091/api/ImageLarge/';
+        vm.getKeyWordText = getKeyWordText;
 
         loadAll();
 
-        function loadAll () {
+        function loadAll() {
             Producto.query({
                 page: vm.page,
                 size: vm.itemsPerPage,
@@ -54,7 +55,7 @@
             }
         }
 
-        function reset () {
+        function reset() {
             vm.page = 0;
             vm.productos = [];
             loadAll();
@@ -64,5 +65,19 @@
             vm.page = page;
             loadAll();
         }
+
+        function getKeyWordText(items) {
+            var text = '';
+            if (items) {
+                var i;
+                for (i = 0; i < items.length; i++) {
+                    if(i !== 0){
+                        text += ', ';
+                    }
+                    text += items[i];
+                }
+            }
+            return text;
         }
+    }
 })();

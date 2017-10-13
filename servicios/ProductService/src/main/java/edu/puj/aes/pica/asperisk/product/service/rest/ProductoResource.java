@@ -23,16 +23,15 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.util.Date;
-import java.util.logging.Level;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @CrossOrigin(maxAge = 1728000)
 @RestController
 @RequestMapping("/api/producto")
-public class SearchController {
+public class ProductoResource {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SearchController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductoResource.class);
 
     @Autowired
     @Qualifier("dummy")

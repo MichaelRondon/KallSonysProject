@@ -23,6 +23,7 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
 
 /**
  * REST controller for managing Producto.

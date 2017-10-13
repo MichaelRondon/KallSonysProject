@@ -56,6 +56,7 @@ public class ProductImageResource {
         MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        headers.setAccept(headers.getAccept());
         String fileName = file.getName();
         ByteArrayResource resource;
         try {
@@ -78,6 +79,9 @@ public class ProductImageResource {
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(ProductImageResource.class.getName()).log(Level.SEVERE, null, ex);
             return "";
+//        } catch (RuntimeException ex) {
+//            java.util.logging.Logger.getLogger(ProductImageResource.class.getName()).log(Level.SEVERE, null, ex);
+//            return "";
         }
 
     }
