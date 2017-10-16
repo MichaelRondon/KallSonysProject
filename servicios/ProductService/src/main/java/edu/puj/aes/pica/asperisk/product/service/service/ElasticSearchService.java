@@ -19,7 +19,6 @@ import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.Elast
 import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.ElasticSearchInput;
 import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.ElasticSearchInputMultiGet;
 import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.GetProductoById;
-import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.MultiGet;
 import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.SearchScroll;
 import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.SetSourceAndGet;
 import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.UpdateAndGet;
@@ -30,7 +29,7 @@ import edu.puj.aes.pica.asperisk.oms.utilities.model.ProductScrollResponse;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.Response;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.ScrollSearchRequest;
 import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.DeleteTransaction;
-import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.ElasticSearchInputMultiBuilders;
+import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.ElasticSearchInputMultiBuilder;
 import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.IDsQuery;
 import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.SearchMultiBuilder;
 import java.io.IOException;
@@ -39,14 +38,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.get.MultiGetItemResponse;
 import org.elasticsearch.action.get.MultiGetResponse;
-import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.slf4j.LoggerFactory;
@@ -83,12 +79,13 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
 
     @Override
     public ProductsResponse buscar(SearchRequest searchRequest) throws ProductTransactionException {
-        ElasticSearchInputMultiBuilders elasticSearchInputMultiBuilders = new ElasticSearchInputMultiBuilders(new ElasticSearchInput());
+        ElasticSearchInputMultiBuilder elasticSearchInputMultiBuilders = new ElasticSearchInputMultiBuilder(new ElasticSearchInput());
         List<Product> products = null;
         if (searchRequest.getProduct() != null) {
             products = getProductFromCache(searchRequest.getProduct());
         }
         if (products == null) {
+            elasticSearchInputMultiBuilders.setSearchRequest(searchRequest);
             try {
                 SearchResponse searchResponse = executeTransaction(new SearchMultiBuilder(), elasticSearchInputMultiBuilders);
                 products = getListFromSearchResponse(searchResponse);
@@ -143,8 +140,8 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
                     LOGGER.error(errorMessage, ex);
                 }
             };
-            (new Thread(runnable)).run();
-//            (new Thread(runnable)).start();
+//            (new Thread(runnable)).run();
+            (new Thread(runnable)).start();
             return product;
         } catch (ProductTransactionException ex) {
             String errorMessage = String.format("Error persistiendo producto mediante JPA. Objeto: %s, mensaje: %s",
@@ -434,7 +431,8 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
 
         elasticSearchInput = new ElasticSearchInput();
         elasticSearchInput.setId(scrollSearchRequest.getScrollId());
-        return executeTransaction(new SearchScroll(), elasticSearchInput);
+        ElasticSearchInputMultiBuilder elasticSearchInputMultiBuilder = new ElasticSearchInputMultiBuilder(elasticSearchInput);
+        return executeTransaction(new SearchScroll(), elasticSearchInputMultiBuilder);
     }
 
     private <R extends Response> void setResponseFromOrderedList(BasicSearchParams basicSearchParams, List list, R response) {

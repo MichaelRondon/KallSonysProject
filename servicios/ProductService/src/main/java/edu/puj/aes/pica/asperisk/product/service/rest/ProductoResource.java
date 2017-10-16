@@ -196,8 +196,10 @@ public class ProductoResource {
         searchRequest.setPrecioMin(precioMin);
 
         LOGGER.info("Busca searchRequest: {}", searchRequest);
+        LOGGER.info("Busca searchRequest.getProduct: {}", searchRequest.getProduct());
         ProductsResponse productsResponse;
-        productsResponse = productService.buscar(searchRequest);
+//        productsResponse = productService.buscar(searchRequest);
+        productsResponse = elasticSearchService.buscar(searchRequest);
         LOGGER.info("Encuentra productsResponse: {}", productsResponse);
         return new ResponseEntity(productsResponse, HttpStatus.OK);
     }
