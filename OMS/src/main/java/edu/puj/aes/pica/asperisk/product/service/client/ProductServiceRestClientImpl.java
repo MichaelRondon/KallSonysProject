@@ -8,7 +8,6 @@ package edu.puj.aes.pica.asperisk.product.service.client;
 import edu.puj.aes.pica.asperisk.oms.utilities.ProductUtilSingleton;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.ProductScrollResponse;
-import edu.puj.aes.pica.asperisk.oms.utilities.dto.ProductoDTO;
 import java.util.HashMap;
 import java.util.logging.Level;
 import org.slf4j.Logger;
@@ -79,16 +78,40 @@ public class ProductServiceRestClientImpl implements ProductServiceRestClient {
         ProductScrollResponse productScrollResponse = exchange.getBody();
 
         ProductServiceRestClientImpl.setFindAllScrollId(productScrollResponse.getScrollId());
-        LOGGER.info("ProductServiceRestClientImpl.getFindAllScrollId_2(): {}", ProductServiceRestClientImpl.getFindAllScrollId());
-        LOGGER.info("productScrollResponse.getProductos().size(): {}", productScrollResponse.getProductos().size());
         LOGGER.info("productScrollResponse.getPage().getTotalElements(): {}", productScrollResponse.getPage().getTotalElements());
-        PageImpl pageImpl = new PageImpl(productScrollResponse.getProductos(),pageable, productScrollResponse.getPage().getTotalElements());
+        PageImpl pageImpl = new PageImpl(productScrollResponse.getProductos(), pageable, productScrollResponse.getPage().getTotalElements());
         LOGGER.info("pageable: {}", pageable);
-        LOGGER.info("pageable.getPageSize(): {}", pageable.getPageSize());
-        LOGGER.info("pageImpl: {}", pageImpl);
-        LOGGER.info("pageImpl.getTotalPages(): {}", pageImpl.getTotalPages());
-        LOGGER.info("pageImpl.getTotalElements(): {}", pageImpl.getTotalElements());
-        LOGGER.info("pageImpl.getNumber(): {}", pageImpl.getNumber());
+        return pageImpl;
+    }
+
+    @Override
+    public Page<Product> find(Pageable pageable, Long codigoProducto,
+            String nombreProducto, String descripcion) {
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/buscar/scroll", PRODUCT_SERVICE_URL));
+//        builder.queryParam("scrollId", ProductServiceRestClientImpl.getFindAllScrollId());
+        if (codigoProducto != null) {
+            builder.queryParam("id", codigoProducto);
+        }
+        if (nombreProducto != null && !nombreProducto.isEmpty()) {
+            builder.queryParam("nombre", nombreProducto);
+        }
+        if (descripcion != null && !descripcion.isEmpty()) {
+            builder.queryParam("descripcion", descripcion);
+        }
+        builder = ProductUtilSingleton.getInstance().getBasicSearchParams(pageable, builder);
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+        LOGGER.info("builder.toUriString(): {}", builder.toUriString());
+        ResponseEntity<ProductScrollResponse> exchange = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, ProductScrollResponse.class);
+        ProductScrollResponse productScrollResponse = exchange.getBody();
+
+//        ProductServiceRestClientImpl.setFindAllScrollId(productScrollResponse.getScrollId());
+        LOGGER.info("productScrollResponse.getPage().getTotalElements(): {}", productScrollResponse.getPage().getTotalElements());
+        PageImpl pageImpl = new PageImpl(productScrollResponse.getProductos(), pageable, productScrollResponse.getPage().getTotalElements());
+        LOGGER.info("pageable: {}", pageable);
         return pageImpl;
     }
 

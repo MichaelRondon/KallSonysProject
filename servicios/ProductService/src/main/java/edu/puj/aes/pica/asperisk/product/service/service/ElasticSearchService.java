@@ -85,7 +85,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             products = getProductFromCache(searchRequest.getProduct());
         }
         if (products == null) {
-            elasticSearchInputMultiBuilders.setSearchRequest(searchRequest);
+            elasticSearchInputMultiBuilders.setProduct(searchRequest.getProduct());
             try {
                 SearchResponse searchResponse = executeTransaction(new SearchMultiBuilder(), elasticSearchInputMultiBuilders);
                 products = getListFromSearchResponse(searchResponse);
@@ -332,7 +332,6 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
     private Product mapToProduct(String string) {
 
         try {
-            LOGGER.info("Convertir String en producto. String: {}", string);
             return mapper.readValue(string, Product.class);
         } catch (IOException ex) {
             String errorMessage = String.format("Error convirtiendo el String en Product. String: %s, mensaje: %s",
@@ -432,6 +431,9 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         elasticSearchInput = new ElasticSearchInput();
         elasticSearchInput.setId(scrollSearchRequest.getScrollId());
         ElasticSearchInputMultiBuilder elasticSearchInputMultiBuilder = new ElasticSearchInputMultiBuilder(elasticSearchInput);
+        if(scrollSearchRequest.getProduct() != null){
+            elasticSearchInputMultiBuilder.setProduct(scrollSearchRequest.getProduct());
+        }
         return executeTransaction(new SearchScroll(), elasticSearchInputMultiBuilder);
     }
 
@@ -446,7 +448,9 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
 
         asperiskPage.setTotalElements(list.size());
         asperiskPage.setTotalPages(asperiskPage.getTotalElements() / basicSearchParams.getItemsPerPage());
-        LOGGER.info("asperiskPage.getTotalPages(: {}", asperiskPage.getTotalPages());
+        LOGGER.info("asperiskPage.getTotalElements: {}", asperiskPage.getTotalElements() );
+        LOGGER.info("basicSearchParams.getItemsPerPage(): {}", basicSearchParams.getItemsPerPage() );
+        LOGGER.info("asperiskPage.getTotalPages: {}", asperiskPage.getTotalPages());
 
         int lastIndex = 999;
         int firstIndex = 0;
@@ -468,4 +472,4 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         response.setObjects(list.subList(firstIndex, lastIndex));
 
     }
-}
+        }

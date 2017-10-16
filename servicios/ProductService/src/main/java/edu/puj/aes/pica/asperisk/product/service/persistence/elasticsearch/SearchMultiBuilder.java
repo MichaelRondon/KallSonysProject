@@ -1,18 +1,9 @@
 package edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch;
 
-import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
 import edu.puj.aes.pica.asperisk.product.service.exceptions.ElasticsearchException;
+import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.unit.Fuzziness;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.IdsQueryBuilder;
-import org.elasticsearch.index.query.MatchQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import static org.elasticsearch.index.query.QueryBuilders.boolQuery;
-import static org.elasticsearch.index.query.QueryBuilders.idsQuery;
-import static org.elasticsearch.index.query.QueryBuilders.wildcardQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +20,10 @@ public class SearchMultiBuilder extends Transaction<ElasticSearchInputMultiBuild
             TransportClient transportClient) throws ElasticsearchException {
         LOGGER.info("Ejecutar MultiGet input:{}", input);
 
-        SearchResponse searchResponse = transportClient.prepareSearch(input.getIndex(), input.getTipo())
-                .setQuery(input.initBoolQueryBuilder()).get();
+        SearchRequestBuilder searchRequestBuilder = transportClient.prepareSearch(input.getIndex(), input.getTipo())
+                .setQuery(input.initBoolQueryBuilder()).setSize(40);
+        LOGGER.info("Ejecutar MultiGet searchRequestBuilder:{}", searchRequestBuilder);
+        SearchResponse searchResponse = searchRequestBuilder.get();
         return searchResponse;
     }
 

@@ -25,14 +25,21 @@
         vm.productImageMediumBaseUrl = 'http://laptop-diego:9091/api/ImageMedium/';
         vm.productImageLargeBaseUrl = 'http://laptop-diego:9091/api/ImageLarge/';
         vm.getKeyWordText = getKeyWordText;
+        vm.onChange = onChange;
 
+        vm.codigoProducto = null;
+        vm.nombreProducto = null;
+        vm.descripcion = null;
         loadAll();
 
         function loadAll() {
             Producto.query({
                 page: vm.page,
                 size: vm.itemsPerPage,
-                sort: sort()
+                sort: sort(),
+                codigoProducto: vm.codigoProducto,
+                nombreProducto: vm.nombreProducto,
+                descripcion: vm.descripcion
             }, onSuccess, onError);
             function sort() {
                 var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
@@ -71,13 +78,19 @@
             if (items) {
                 var i;
                 for (i = 0; i < items.length; i++) {
-                    if(i !== 0){
+                    if (i !== 0) {
                         text += ', ';
                     }
                     text += items[i];
                 }
             }
             return text;
+        }
+
+        function onChange() {
+            vm.productos = [];
+            vm.page = 0;
+            loadAll();
         }
     }
 })();

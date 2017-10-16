@@ -19,5 +19,6 @@ public class ScrollSearchRequest {
     private BasicSearchParams basicSearchParams;
     private BasicRequest basicRequest;
     private String scrollId;
+    private Product product;
     
 }

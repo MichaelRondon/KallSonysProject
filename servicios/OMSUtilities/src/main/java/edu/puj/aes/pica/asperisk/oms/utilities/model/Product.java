@@ -9,9 +9,11 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class Product implements Serializable{
+@EqualsAndHashCode(of = {"id", "nombre", "descripcion"})
+public class Product implements Serializable {
 
     private Long id;
     private String nombre;
@@ -25,9 +27,9 @@ public class Product implements Serializable{
     private Set<BasicProveedor> proveedores;
     private Integer disponibilidad;
     @JsonProperty("fecha_rev_disponibilidad")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
 //    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date fechaRevDisponibilidad;
 //    @JsonProperty("fechaRevDisponibilidad")
 //    private String fechaRevDisponibilidadString;
-    }
+}

@@ -1,6 +1,5 @@
 package edu.puj.aes.pica.asperisk.service;
 
-import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
 import edu.puj.aes.pica.asperisk.product.service.client.ProductServiceRestClient;
 import edu.puj.aes.pica.asperisk.oms.utilities.dto.ProductoDTO;
 import edu.puj.aes.pica.asperisk.oms.utilities.mapper.ProductoDtoToJson;
@@ -65,6 +64,16 @@ public class ProductoService {
 //        return productoRepository.findAll(pageable)
 //                .map(productoMapper::toDto);
         return productServiceRestClient.findAll(pageable).map(productoDTOToJSON::fromJson);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ProductoDTO> find(Pageable pageable,
+            Long codigoProducto,
+            String nombreProducto,
+            String descripcion) {
+        log.debug("Request to find Productos");
+        log.debug("Request to find pageable: " + pageable);
+        return productServiceRestClient.find(pageable, codigoProducto, nombreProducto, descripcion).map(productoDTOToJSON::fromJson);
     }
 
     /**

@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -32,6 +34,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class ProductoResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductoResource.class);
+    private static final Map<Product, String> productSearchScrollMap = new HashMap<>();
 
     @Autowired
     @Qualifier("dummy")
@@ -107,6 +110,54 @@ public class ProductoResource {
         scrollSearchRequest.setBasicSearchParams(basicSearchParams);
         scrollSearchRequest.setScrollId(scrollId);
         ProductScrollResponse productScrollResponse = elasticSearchService.findAll(scrollSearchRequest);
+        return ResponseEntity.ok(productScrollResponse);
+    }
+
+    @RequestMapping(value = "/buscar/scroll", method = RequestMethod.GET)
+    public ResponseEntity<ProductScrollResponse> scrollSearch(
+            @RequestParam(value = "scrollId", defaultValue = "-999", required = false) String scrollId,
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "items_per_page", defaultValue = "-1", required = false) Integer itemsPerPage,
+            @RequestParam(value = "sort", defaultValue = "", required = false) String sort,
+            @RequestParam(value = "sort_type", defaultValue = "", required = false) Sort.Direction sortType,
+            @RequestParam(value = "id", required = false) Long id,
+            @RequestParam(value = "nombre", defaultValue = "", required = false) String nombre,
+            @RequestParam(value = "descripcion", defaultValue = "", required = false) String descripcion,
+            @RequestParam(value = "custom", defaultValue = "", required = false) String custom)
+            throws ProductTransactionException {
+        LOGGER.info("Ingresando a scrollsearch");
+        LOGGER.info("scrollId: {}", scrollId);
+
+        BasicRequest basicRequest = new BasicRequest();
+        basicRequest.setCustom(custom);
+
+        BasicSearchParams basicSearchParams = new BasicSearchParams();
+        basicSearchParams.setItemsPerPage(itemsPerPage);
+        basicSearchParams.setPage(page);
+        basicSearchParams.setSort(sort);
+        basicSearchParams.setSortType(sortType);
+
+        Product product = new Product();
+        product.setDescripcion(descripcion);
+        product.setId(id);
+        product.setNombre(nombre);
+
+        ScrollSearchRequest scrollSearchRequest = new ScrollSearchRequest();
+        scrollSearchRequest.setBasicRequest(basicRequest);
+        scrollSearchRequest.setBasicSearchParams(basicSearchParams);
+        scrollSearchRequest.setScrollId(scrollId);
+        scrollSearchRequest.setProduct(product);
+
+        if (productSearchScrollMap.containsKey(product)) {
+            scrollSearchRequest.setScrollId(productSearchScrollMap.get(product));
+        }
+
+        ProductScrollResponse productScrollResponse = elasticSearchService.findAll(scrollSearchRequest);
+
+        if (!productScrollResponse.getProductos().isEmpty()) {
+            productSearchScrollMap.put(product, productScrollResponse.getScrollId());
+        }
+
         return ResponseEntity.ok(productScrollResponse);
     }
 
@@ -195,6 +246,7 @@ public class ProductoResource {
         searchRequest.setPrecioMax(precioMax);
         searchRequest.setPrecioMin(precioMin);
 
+        LOGGER.info("Busca basicSearchParams: {}", basicSearchParams);
         LOGGER.info("Busca searchRequest: {}", searchRequest);
         LOGGER.info("Busca searchRequest.getProduct: {}", searchRequest.getProduct());
         ProductsResponse productsResponse;

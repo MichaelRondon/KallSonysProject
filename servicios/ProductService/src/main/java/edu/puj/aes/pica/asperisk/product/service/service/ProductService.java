@@ -36,6 +36,7 @@ public interface ProductService {
     List<Product> findAllByIds(List<Long> ids) throws ProductTransactionException;
 
     List<Product> findAll()throws ProductTransactionException;
+    
     ProductScrollResponse findAll(ScrollSearchRequest scrollSearchRequest) throws ProductTransactionException;
-
+    
 }

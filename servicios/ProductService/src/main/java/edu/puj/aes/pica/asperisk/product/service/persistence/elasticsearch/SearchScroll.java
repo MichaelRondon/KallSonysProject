@@ -6,12 +6,10 @@
 package edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch;
 
 import edu.puj.aes.pica.asperisk.product.service.exceptions.ElasticsearchException;
-import java.util.logging.Level;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.unit.TimeValue;
-import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

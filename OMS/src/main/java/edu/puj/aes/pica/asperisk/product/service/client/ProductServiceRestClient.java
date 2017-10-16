@@ -22,4 +22,7 @@ public interface ProductServiceRestClient {
     Product findOne(Long id);
 
     void delete(Long id);
+    
+    Page<Product> find(Pageable pageable, Long codigoProducto,
+            String nombreProducto, String descripcion);
 }

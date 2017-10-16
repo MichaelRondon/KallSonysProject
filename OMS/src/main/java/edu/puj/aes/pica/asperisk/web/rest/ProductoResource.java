@@ -1,7 +1,6 @@
 package edu.puj.aes.pica.asperisk.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
 import edu.puj.aes.pica.asperisk.service.ProductoService;
 import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.HeaderUtil;
 import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.PaginationUtil;
@@ -23,7 +22,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
 
 /**
  * REST controller for managing Producto.
@@ -91,15 +89,28 @@ public class ProductoResource {
      * GET /productos : get all the productos.
      *
      * @param pageable the pagination information
+     * @param codigoProducto
+     * @param nombreProducto
+     * @param descripcion
      * @return the ResponseEntity with status 200 (OK) and the list of productos
      * in body
      */
     @GetMapping("/productos")
     @Timed
-    public ResponseEntity<List<ProductoDTO>> getAllProductos(@ApiParam Pageable pageable) {
+    public ResponseEntity<List<ProductoDTO>> getAllProductos(@ApiParam Pageable pageable,
+            @RequestParam(value = "codigoProducto", required = false) Long codigoProducto,
+            @RequestParam(value = "nombreProducto", required = false) String nombreProducto,
+            @RequestParam(value = "descripcion", required = false) String descripcion) {
         log.debug("REST request to get a page of Productos");
         log.info("pageable: {}", pageable);
-        Page<ProductoDTO> page = productoService.findAll(pageable);
+        Page<ProductoDTO> page;
+        if ((codigoProducto == null)
+                && (nombreProducto == null || nombreProducto.isEmpty())
+                && (descripcion == null || descripcion.isEmpty())) {
+            page = productoService.findAll(pageable);
+        } else {
+            page = productoService.find(pageable, codigoProducto, nombreProducto, descripcion);
+        }
         log.info("page: {}", page);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/productos");
         log.info("headers: {}", headers);
