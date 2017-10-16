@@ -116,6 +116,42 @@
                                 $state.go('producto');
                             });
                         }]
+                })
+                .state('image-campania', {
+                    parent: 'entity',
+                    url: '/image-product/campania/{id}',
+                    data: {
+                        authorities: ['ROLE_USER'],
+                    },
+                    onEnter: ['$stateParams', '$state', '$uibModal', 'ImageProduct', function ($stateParams, $state, $uibModal, ImageProduct) {
+                            ImageProduct.setTamanio('Campania'),
+                            $uibModal.open({
+                                templateUrl: 'app/entities/image-product/image-product.html',
+                                controller: 'ImageProductController',
+                                controllerAs: 'vm',
+                                backdrop: 'static',
+                                size: 'lg',
+                                resolve: {
+                                    entity: function () {
+                                        return {
+                                            nombre: null,
+                                            descripcion: null,
+                                            precio: null,
+                                            estado: null,
+                                            disponibilidad: null,
+                                            fechaRevDisponibilidad: null,
+                                            marca: null,
+                                            keyWords: null,
+                                            id: $stateParams.id
+                                        };
+                                    }
+                                }
+                            }).result.then(function () {
+                                $state.go('producto', null, {reload: 'producto'});
+                            }, function () {
+                                $state.go('producto');
+                            });
+                        }]
                 });
     }
 

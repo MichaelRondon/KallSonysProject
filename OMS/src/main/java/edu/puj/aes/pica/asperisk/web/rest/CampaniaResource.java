@@ -49,7 +49,7 @@ public class CampaniaResource {
     @PostMapping("/campanias")
     @Timed
     public ResponseEntity<Campanign> createCampania(@RequestBody Campanign campaniaDTO) throws URISyntaxException {
-        log.debug("REST request to save Campania : {}", campaniaDTO);
+        log.info("REST request to save Campania : {}", campaniaDTO);
         if (campaniaDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new campania cannot already have an ID")).body(null);
         }

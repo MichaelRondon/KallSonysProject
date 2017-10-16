@@ -40,9 +40,9 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api")
 public class ProductImageResource {
-
+    
     private final Logger log = LoggerFactory.getLogger(ProductImageResource.class);
-
+    
     @RequestMapping(value = "/imagenes-productos/upload/{tamanio}/{id}", method = RequestMethod.POST)
     public @ResponseBody
     String handleFileUpload(
@@ -50,9 +50,9 @@ public class ProductImageResource {
             @PathVariable String id,
             @RequestParam("file") MultipartFile file) {
         log.info("Carga imágen id: {} tamanio: {}", id, tamanio);
-
+        
         RestTemplate restTemplate = new RestTemplate();
-
+        
         MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
@@ -65,16 +65,20 @@ public class ProductImageResource {
                 public String getFilename() {
                     return fileName;
                 }
-
+                
             };
             map.add(fileName, resource);
             map.add("id", id);
-
+            
             HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(map, headers);
             Map<String, String> urlVariables = new HashMap<>();
             log.info("requestEntity: {}", requestEntity);
-
-            restTemplate.exchange("http://laptop-diego:9091/api/upload", HttpMethod.POST, requestEntity, String.class, urlVariables);
+            log.info("tamanio: {}", tamanio);
+            if (tamanio.equals("Campania")) {
+                restTemplate.exchange("http://laptop-diego:9091/api/uploadCampania", HttpMethod.POST, requestEntity, String.class, urlVariables);
+            } else {
+                restTemplate.exchange("http://laptop-diego:9091/api/upload", HttpMethod.POST, requestEntity, String.class, urlVariables);
+            }
             return fileName;
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(ProductImageResource.class.getName()).log(Level.SEVERE, null, ex);
@@ -83,7 +87,7 @@ public class ProductImageResource {
 //            java.util.logging.Logger.getLogger(ProductImageResource.class.getName()).log(Level.SEVERE, null, ex);
 //            return "";
         }
-
+        
     }
-
+    
 }

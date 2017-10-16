@@ -16,7 +16,7 @@
     <br/>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-12 col-md-8 no-padding">
+            <!--<div class="col-xs-12 col-md-8 no-padding">-->
                 <div class="form-group col-xs-6 col-sm-6">
                     <label class="control-label" for="field_codigoProducto" >Código de producto</label>
                     <div class="input-group">
@@ -34,11 +34,11 @@
                 <div class="form-group col-xs-12 col-sm-12">
                     <label class="control-label" for="field_descripcionProducto">Descripción del producto</label>
                     <div class="input-group">
-                        <input class="form-control" id="field_descripcionProducto" name="descripcionProducto" size="62" ng-model="vm.descripcion"/>
+                        <input class="form-control" id="field_descripcionProducto" name="descripcionProducto" size="50" ng-model="vm.descripcion"/>
                         <!--<input class="form-control" id="field_descripcionProducto" name="descripcionProducto" ng-model="vm.descripcion" ng-change="change()"/>-->
                     </div>
                 </div>
-            </div>
+            <!--</div>-->
             <div class="form-group col-xs-12 col-sm-12">
                 <button type="button" class="btn btn-primary" ng-click="vm.onChange()">Buscar</button>
             </div>

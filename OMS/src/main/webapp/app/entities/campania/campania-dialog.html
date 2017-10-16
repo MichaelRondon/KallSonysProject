@@ -11,19 +11,28 @@
         <div class="form-group" ng-show="vm.campania.id">
             <label for="id" data-translate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
-                    ng-model="vm.campania.id" readonly />
+                   ng-model="vm.campania.id" readonly />
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="omsApp.campania.nombre" for="field_nombre">Nombre</label>
             <input type="text" class="form-control" name="nombre" id="field_nombre"
-                    ng-model="vm.campania.nombre"
-                    />
+                   ng-model="vm.campania.nombre" required
+                   />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_campania">Categoría</label>
+            <select type="text" class="form-control" name="campania" id="field_campania"
+                    ng-model="vm.campania.categoria"
+                    >
+                <option value="PRINCIPAL">Principal</option>
+                <option value="SECUNDARIO">Secundario</option>
+            </select>
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="omsApp.campania.descripcion" for="field_descripcion">Descripcion</label>
             <input type="text" class="form-control" name="descripcion" id="field_descripcion"
-                    ng-model="vm.campania.descripcion"
-                    />
+                   ng-model="vm.campania.descripcion"
+                   />
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="omsApp.campania.estado" for="field_estado">Estado</label>
@@ -34,36 +43,129 @@
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="omsApp.campania.fechaInicio" for="field_fechaInicio">Fecha Inicio</label>
-                <div class="input-group">
-                    <input id="field_fechaInicio" type="text" class="form-control" name="fechaInicio" uib-datepicker-popup="{{dateformat}}" ng-model="vm.campania.fechaInicio" is-open="vm.datePickerOpenStatus.fechaInicio"
-                    />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('fechaInicio')"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                </div>
+            <div class="input-group">
+                <input id="field_fechaInicio" type="text" class="form-control" name="fechaInicio" uib-datepicker-popup="{{dateformat}}" ng-model="vm.campania.fechaInicio" is-open="vm.datePickerOpenStatus.fechaInicio"
+                       />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="vm.openCalendar('fechaInicio')"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </div>
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="omsApp.campania.fechaFin" for="field_fechaFin">Fecha Fin</label>
-                <div class="input-group">
-                    <input id="field_fechaFin" type="text" class="form-control" name="fechaFin" uib-datepicker-popup="{{dateformat}}" ng-model="vm.campania.fechaFin" is-open="vm.datePickerOpenStatus.fechaFin"
-                    />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('fechaFin')"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
+            <div class="input-group">
+                <input id="field_fechaFin" type="text" class="form-control" name="fechaFin" uib-datepicker-popup="{{dateformat}}" ng-model="vm.campania.fechaFin" is-open="vm.datePickerOpenStatus.fechaFin"
+                       />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="vm.openCalendar('fechaFin')"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="form-group col-xs-12 col-sm-6">
+                    <label class="control-label" for="field_nombreProducto">Nombre del producto</label>
+                    <input class="form-control" id="field_nombreProducto" name="nombreProducto" ng-model="vm.nombreProductoBuscar"/>
                 </div>
+                <div class="form-group col-xs-12 col-sm-6">
+                    <br/>
+                    <button type="button" class="btn btn-primary" ng-click="vm.onChange()" style="float: right">Buscar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="jh-table table table-striped">
+                <thead>
+                    <tr>
+                        <th><span>Código</span></th>
+                        <th><span>Nombre</span></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="producto in vm.productos">
+                        <td>{{producto.id}}</td>
+                        <td>{{producto.nombre}}</td>
+                        <td class="text-right">
+                            <!--<div class="btn-group-vertical">-->
+                            <button type="button"
+                                    ng-click="vm.agregar(producto)"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down">Agregar</span>
+                            </button>
+                            <!--</div>-->
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+
         </div>
 
         <div class="form-group">
+
             <label data-translate="omsApp.campania.productos" for="field_productos">Productos</label>
-            <select class="form-control" id="field_productos" multiple name="productos" ng-model="vm.campania.productos" ng-options="producto as producto.id for producto in vm.productos track by producto.id"></select>
+            <!--<select class="form-control" id="field_productos" multiple name="productos" ng-model="vm.campania.productos" ng-options="producto as producto.id for producto in vm.productos track by producto.id"></select>-->
+            <table class="jh-table table table-striped">
+                <thead>
+                    <tr>
+                        <th><span>Código</span></th>
+                        <th><span>Nombre</span></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="producto in vm.campania.productos">
+                        <td>{{producto.id}}</td>
+                        <td>{{producto.nombre}}</td>
+                        <td class="text-right">
+                            <!--<div class="btn-group-vertical">-->
+                            <button type="button"
+                                    ng-click="vm.eliminar(producto)"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down">Eliminar</span>
+                            </button>
+                            <!--</div>-->
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
         </div>
+
+
+        <div class="row">
+            <div class="form-group col-xs-12 col-sm-6" ng-show="vm.campania.id">
+                <img id="field_image_small" ng-src="{{vm.productCampaniaBaseUrl + vm.campania.id}}"
+                     alt="{{campania.nombre}}" style="width:150px;height:150px;margin-left:auto;margin-right:auto;display: block"/>
+            </div>
+            <div class="form-group col-xs-12 col-sm-6" ng-show="vm.campania.id">
+                <button type="button" class="btn btn-primary btn-block" 
+                        ui-sref="image-campania({id:vm.campania.id})">
+                    <span>
+                        Cargar imágen
+                        &nbsp;
+                    </span>
+                    <span class="glyphicon glyphicon-file"></span>
+                </button>
+            </div>
+        </div>
+
+
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
-            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
-        </button>
-        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
-        </button>
+        <div class="form-group">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+                <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+            </button>
+            <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+                <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+            </button>
+        </div>
     </div>
 </form>

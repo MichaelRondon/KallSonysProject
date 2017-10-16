@@ -35,6 +35,7 @@ public class CampaniaServiceRestClientImpl implements CampaniaServiceRestClient{
 
     @Override
     public Campanign save(Campanign campanignDTO) {
+        LOGGER.info("Save campania campanignDTO: {}", campanignDTO);
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.postForObject(CAMPANIA_SERVICE_URL, campanignDTO, Campanign.class);
     }
