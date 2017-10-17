@@ -29,5 +29,6 @@ namespace ClientesEF
         public DbSet<CUSTOMER> CUSTOMERs { get; set; }
         public DbSet<ITEM> ITEMS { get; set; }
         public DbSet<ORDER> ORDERS { get; set; }
+        public DbSet<PASSWD_CHANGE_REQUEST> PASSWD_CHANGE_REQUEST { get; set; }
     }
 }

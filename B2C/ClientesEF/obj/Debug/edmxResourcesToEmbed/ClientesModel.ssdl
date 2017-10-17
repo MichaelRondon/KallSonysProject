@@ -58,6 +58,17 @@
     <Property Name="STATUS" Type="varchar2" MaxLength="10" />
     <Property Name="COMMENTS" Type="varchar2" MaxLength="4000" />
   </EntityType>
+  <EntityType Name="PASSWD_CHANGE_REQUEST">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Precision="9" Scale="0" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CUSTID" Type="varchar2" MaxLength="40" Nullable="false" />
+    <Property Name="EMAIL" Type="varchar2" MaxLength="40" Nullable="false" />
+    <Property Name="TOKEN" Type="varchar2" MaxLength="40" Nullable="false" />
+    <Property Name="REQUEST_DATE" Type="date" Nullable="false" />
+    <Property Name="PROCESSED" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
   <Association Name="CUSTOMER_ADDRESS_FK">
     <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -110,12 +121,25 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="PASSWD_CHANGE_REQUEST_FK">
+    <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="1" />
+    <End Role="PASSWD_CHANGE_REQUEST" Type="Self.PASSWD_CHANGE_REQUEST" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CUSTOMER">
+        <PropertyRef Name="CUSTID" />
+      </Principal>
+      <Dependent Role="PASSWD_CHANGE_REQUEST">
+        <PropertyRef Name="CUSTID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="ModelStoreContainer">
     <EntitySet Name="ADDRESS" EntityType="Self.ADDRESS" Schema="B2C" store:Type="Tables" />
     <EntitySet Name="CUSTOMER" EntityType="Self.CUSTOMER" Schema="B2C" store:Type="Tables" />
     <EntitySet Name="CUSTOMER_ADDRESS" EntityType="Self.CUSTOMER_ADDRESS" Schema="B2C" store:Type="Tables" />
     <EntitySet Name="ITEMS" EntityType="Self.ITEMS" Schema="B2C" store:Type="Tables" />
     <EntitySet Name="ORDERS" EntityType="Self.ORDERS" Schema="B2C" store:Type="Tables" />
+    <EntitySet Name="PASSWD_CHANGE_REQUEST" EntityType="Self.PASSWD_CHANGE_REQUEST" Schema="B2C" store:Type="Tables" />
     <AssociationSet Name="CUSTOMER_ADDRESS_FK" Association="Self.CUSTOMER_ADDRESS_FK">
       <End Role="CUSTOMER" EntitySet="CUSTOMER" />
       <End Role="CUSTOMER_ADDRESS" EntitySet="CUSTOMER_ADDRESS" />
@@ -131,6 +155,10 @@
     <AssociationSet Name="ORDERS_FK" Association="Self.ORDERS_FK">
       <End Role="CUSTOMER" EntitySet="CUSTOMER" />
       <End Role="ORDERS" EntitySet="ORDERS" />
+    </AssociationSet>
+    <AssociationSet Name="PASSWD_CHANGE_REQUEST_FK" Association="Self.PASSWD_CHANGE_REQUEST_FK">
+      <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+      <End Role="PASSWD_CHANGE_REQUEST" EntitySet="PASSWD_CHANGE_REQUEST" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

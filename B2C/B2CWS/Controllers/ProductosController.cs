@@ -131,16 +131,57 @@ namespace B2CWS.Controllers
             {
                 return NotFound();
             }
-
-            if (detalle == false)
+            else
             {
-                foreach (var item in campanias.campanias)
+                if (campanias.campanias != null)
                 {
-                    item.productos = null;
-                }
+                    foreach (var item in campanias.campanias)
+                    {
+                        if (detalle == false)
+                        {
+                            item.productos = null;
+                        }
+                        else
+                        {
+                            if (item.productos != null)
+                            {
+                                foreach (var prod in item.productos)
+                                {
+                                    prod.urlImage = Url.Route("DefaultApi", new { controller = "ImageThumb", id = prod.id });
+                                }
+                            }
+                        }
+                        item.urlImage = Url.Route("DefaultApi", new { controller = "ImageCampania", id = item.id });
+                    } 
+                } 
             }
 
             return Ok(campanias);
+        }
+
+        // Get
+        [Route("api/producto/slider")]
+        [ResponseType(typeof(IEnumerable<string>))]
+        public IHttpActionResult GetSlider()
+        {
+            List<string> slider = new List<string>();
+            IEnumerable<string> imgsSlider = null;
+
+            imgsSlider = ImageDownloader.GetSliderImages();
+
+            if (imgsSlider == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                foreach (var item in imgsSlider)
+                {
+                    slider.Add(Url.Route("DefaultApi", new { controller = "ImageSlider", id = item }));
+                }
+            }
+
+            return Ok(slider);
         }
     }
 }

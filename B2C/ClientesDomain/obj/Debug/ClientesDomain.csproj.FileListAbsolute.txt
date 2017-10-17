@@ -1,5 +1,5 @@
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDomain\bin\Debug\ClientesDomain.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDomain\bin\Debug\ClientesDomain.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDomain\obj\Debug\ClientesDomain.csprojResolveAssemblyReference.cache
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDomain\obj\Debug\ClientesDomain.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDomain\obj\Debug\ClientesDomain.pdb
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDomain\obj\Debug\ClientesDomain.csprojResolveAssemblyReference.cache

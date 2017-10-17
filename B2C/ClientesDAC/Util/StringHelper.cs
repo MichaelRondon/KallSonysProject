@@ -10,7 +10,15 @@ namespace ClientesDAC.Util
 {
     public static class StringHelper
     {
+        #region Constantes
+
         private const int LENGTH = 10;
+
+        private const string TEMPLATE = "<p>Hemos recibido una solicitud de cambio de clave. Para proceder por favor visite el siguiente <a href=\"{url}\" target=\"_blank\">enlace</a>, o copie y pegue la siguiente ruta en su navegador:<br /><br />{url}<br /><br /></p>";
+
+        private const string TEMPLATE_CAMBIO_PROCESADO = "<p>Hemos procesado su solicitud de cambio de clave de forma exitosa.</p>";
+
+        #endregion
 
         public static string GenerateSalt()
         {
@@ -145,6 +153,20 @@ namespace ClientesDAC.Util
             }
 
             return text.Substring(text.Length - numchars).PadLeft(text.Length, '*');
+        }
+
+        public static string MensajeCambioClave(string url)
+        {
+            StringBuilder sbMensaje = new StringBuilder(TEMPLATE);
+
+            sbMensaje.Replace("{url}", url);
+
+            return sbMensaje.ToString();
+        }
+
+        public static string MensajeCambioClaveExitoso()
+        {
+            return TEMPLATE_CAMBIO_PROCESADO;
         }
     }
 }

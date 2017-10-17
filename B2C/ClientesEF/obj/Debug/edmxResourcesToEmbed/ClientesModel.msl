@@ -63,5 +63,17 @@
         <ScalarProperty Name="ADDRID" ColumnName="ADDRESSID" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="PASSWD_CHANGE_REQUEST">
+      <EntityTypeMapping TypeName="Model.PASSWD_CHANGE_REQUEST">
+        <MappingFragment StoreEntitySet="PASSWD_CHANGE_REQUEST">
+          <ScalarProperty Name="PROCESSED" ColumnName="PROCESSED" />
+          <ScalarProperty Name="REQUEST_DATE" ColumnName="REQUEST_DATE" />
+          <ScalarProperty Name="TOKEN" ColumnName="TOKEN" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="CUSTID" ColumnName="CUSTID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

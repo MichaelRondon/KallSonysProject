@@ -16,28 +16,34 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/25/2017 21:56:18</publishTime>
     </File>
     <File Include="bin/ClientesDAC.dll">
-      <publishTime>09/27/2017 02:45:43</publishTime>
+      <publishTime>10/12/2017 01:43:42</publishTime>
     </File>
     <File Include="bin/ClientesDAC.pdb">
-      <publishTime>09/27/2017 02:45:43</publishTime>
+      <publishTime>10/12/2017 01:43:42</publishTime>
     </File>
     <File Include="bin/ClientesDomain.dll">
-      <publishTime>09/27/2017 02:43:30</publishTime>
+      <publishTime>09/30/2017 16:24:15</publishTime>
     </File>
     <File Include="bin/ClientesDomain.pdb">
-      <publishTime>09/27/2017 02:43:30</publishTime>
+      <publishTime>09/30/2017 16:24:15</publishTime>
     </File>
     <File Include="bin/ClientesEF.dll">
-      <publishTime>09/26/2017 01:51:01</publishTime>
+      <publishTime>09/30/2017 18:50:35</publishTime>
     </File>
     <File Include="bin/ClientesEF.pdb">
-      <publishTime>09/26/2017 01:51:01</publishTime>
+      <publishTime>09/30/2017 18:50:35</publishTime>
     </File>
     <File Include="bin/CLIENTWS.dll">
-      <publishTime>09/27/2017 02:45:46</publishTime>
+      <publishTime>10/12/2017 01:43:45</publishTime>
     </File>
     <File Include="bin/CLIENTWS.pdb">
-      <publishTime>09/27/2017 02:45:46</publishTime>
+      <publishTime>10/12/2017 01:43:45</publishTime>
+    </File>
+    <File Include="bin/Common.dll">
+      <publishTime>09/28/2017 01:59:02</publishTime>
+    </File>
+    <File Include="bin/Common.pdb">
+      <publishTime>09/28/2017 01:59:02</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>11/03/2015 17:43:34</publishTime>
@@ -111,6 +117,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>01/28/2015 04:02:42</publishTime>
     </File>
+    <File Include="bin/System.Web.Cors.dll">
+      <publishTime>01/28/2015 04:01:46</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.Cors.dll">
+      <publishTime>01/28/2015 04:03:04</publishTime>
+    </File>
     <File Include="bin/System.Web.Http.dll">
       <publishTime>01/28/2015 04:02:54</publishTime>
     </File>
@@ -136,7 +148,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/25/2017 21:56:03</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>09/25/2017 21:56:09</publishTime>
+      <publishTime>09/30/2017 16:47:20</publishTime>
     </File>
     <File Include="scripts/ai.0.22.9-build00167.js">
       <publishTime>09/25/2017 21:56:09</publishTime>
@@ -148,7 +160,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/25/2017 21:56:19</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/26/2017 01:56:13</publishTime>
+      <publishTime>10/12/2017 01:15:15</publishTime>
     </File>
   </ItemGroup>
 </Project>

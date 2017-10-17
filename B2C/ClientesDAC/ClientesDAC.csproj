@@ -33,6 +33,7 @@
     <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <Reference Include="Oracle.DataAccess.EntityFramework, Version=6.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -46,7 +47,6 @@
     <Compile Include="Contratos\IClientesDAC.cs" />
     <Compile Include="Implementaciones\ClientesDAC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Util\Conexion.cs" />
     <Compile Include="Util\StringHelper.cs" />
   </ItemGroup>
   <ItemGroup />
@@ -58,6 +58,10 @@
     <ProjectReference Include="..\ClientesEF\ClientesEF.csproj">
       <Project>{900de17f-01b4-4fc3-84cc-c1197ab21ad2}</Project>
       <Name>ClientesEF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{4cc284de-aceb-41a5-bdf2-3865369055cc}</Project>
+      <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -12,6 +12,8 @@
         <AssociationConnector Association="Model.ORDERS_FK" ManuallyRouted="false" />
         <AssociationConnector Association="Model.ITEMS_FK" ManuallyRouted="false" />
         <AssociationConnector Association="Model.CUSTOMER_ADDRESS" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Model.PASSWD_CHANGE_REQUEST" Width="1.5" PointX="3" PointY="7.25" />
+        <AssociationConnector Association="Model.PASSWD_CHANGE_REQUEST_FK" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

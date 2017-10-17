@@ -18,6 +18,7 @@ namespace ClientesEF
         {
             this.ORDERS = new HashSet<ORDER>();
             this.ADDRESSes = new HashSet<ADDRESS>();
+            this.PASSWD_CHANGE_REQUEST = new HashSet<PASSWD_CHANGE_REQUEST>();
         }
     
         public string CUSTID { get; set; }
@@ -33,5 +34,6 @@ namespace ClientesEF
     
         public virtual ICollection<ORDER> ORDERS { get; set; }
         public virtual ICollection<ADDRESS> ADDRESSes { get; set; }
+        public virtual ICollection<PASSWD_CHANGE_REQUEST> PASSWD_CHANGE_REQUEST { get; set; }
     }
 }

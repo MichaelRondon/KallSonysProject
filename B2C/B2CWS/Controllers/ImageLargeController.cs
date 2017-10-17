@@ -18,7 +18,7 @@ namespace B2CWS.Controllers
             try
             {
                 result.StatusCode = HttpStatusCode.OK;
-                result.Content = new ByteArrayContent(ImageDownloader.GetImage(id, ImageSizeEnum.Thumbnail));
+                result.Content = new ByteArrayContent(ImageDownloader.GetImage(id.ToString(), ImageType.Product));
                 result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
                 return result;
             }

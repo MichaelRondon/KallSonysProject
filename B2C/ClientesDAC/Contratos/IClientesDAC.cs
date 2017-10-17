@@ -12,6 +12,9 @@ namespace ClientesDAC.Contratos
         string CrearCliente(ClientesDomain.Cliente cliente);
         string ActualizarCliente(ClientesDomain.Cliente cliente);
         ClientesDomain.Cliente ConsultarCliente(string ID);
+        IEnumerable<ClientesDomain.Cliente> ConsultarCliente();
         ClientesDomain.LogonStatus ValidarCredencialesCliente(string ID, string e_mail, string passwd);
+        Task<ClientesDomain.LogonStatus> SolicitarCambioClave(string ID, string e_mail);
+        Task<ClientesDomain.LogonStatus> ProcesarCambioClave(string ID, string e_mail, string token, string passwd);
     }
 }

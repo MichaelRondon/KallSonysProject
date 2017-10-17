@@ -67,7 +67,10 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.Application
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Newtonsoft.Json.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Net.Http.Formatting.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Cors.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.Cors.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.Tracing.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.WebHost.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.AI.DependencyCollector.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.AI.ServerTelemetryChannel.xml
@@ -75,10 +78,13 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.AI.Web.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.ApplicationInsights.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.Cors.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.Tracing.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Newtonsoft.Json.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Net.Http.Formatting.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.WebHost.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Debug\B2CWS.csprojResolveAssemblyReference.cache
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Debug\B2CWS.StringResources.resources
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Debug\B2CWS.csproj.GenerateResource.Cache
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Debug\B2CWS.dll

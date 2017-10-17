@@ -7,7 +7,7 @@ namespace B2CWS.Models
 {
     public class Campania
     {
-        public long id { get; set; }
+        public long? id { get; set; }
         public string nombre { get; set; }
         public string descripcion { get; set; }
         public Producto[] productos { get; set; }
@@ -15,5 +15,6 @@ namespace B2CWS.Models
         public string fecha_inicio { get; set; } // (yyyy-MM-dd)	
         public string fecha_fin { get; set; } // (yyyy-MM-dd)	
         public string urlImage { get; set; }
+        public string categoria { get; set; }
     }
 }

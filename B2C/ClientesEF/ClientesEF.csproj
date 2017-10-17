@@ -75,6 +75,9 @@
     <Compile Include="ORDER.cs">
       <DependentUpon>ClientesModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="PASSWD_CHANGE_REQUEST.cs">
+      <DependentUpon>ClientesModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

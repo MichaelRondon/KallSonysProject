@@ -10,5 +10,6 @@ namespace CLIENTWS.Models
         public string ID { get; set; }
         public string e_mail { get; set; }
         public string passwd { get; set; }
+        public string token { get; set; }
     }
 }

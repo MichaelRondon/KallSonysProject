@@ -7,7 +7,9 @@ using ClientesDAC.Contratos;
 using ClientesDomain;
 using ClientesDAC.Util;
 using ClientesEF;
+using Common;
 using Oracle.DataAccess.EntityFramework;
+using System.Configuration;
 
 namespace ClientesDAC.Implementaciones
 {
@@ -238,6 +240,190 @@ namespace ClientesDAC.Implementaciones
             }
 
             return status;
+        }
+
+        public async Task<ClientesDomain.LogonStatus>  SolicitarCambioClave(string ID, string e_mail)
+        {
+            ClientesDomain.LogonStatus status = new LogonStatus() { result = true };
+
+            CUSTOMER clienteActual = null;
+            string token = null, url = null;
+            DateTime fechaHora = DateTime.Now;
+
+            try
+            {
+                using (var context = new ClientesEF.Entities())
+                {
+                    clienteActual = context.CUSTOMERs.FirstOrDefault(p => p.EMAIL.Equals(e_mail) || p.CUSTID.Equals(ID));
+                }
+            }
+            catch (Exception ex)
+            {
+                status.message = ex.Message;
+                status.result = false;
+            }
+
+            if (clienteActual != null)
+            {
+                // Cliente existe. 
+                // Generar token
+                token = StringHelper.GeneratePassword(fechaHora.ToString(), clienteActual.SALT);
+                url = string.Format(ConfigurationManager.AppSettings["urlCambioPasswd"], token);
+
+                try
+                {
+
+                    // Persistir petición
+                    using (var context = new ClientesEF.Entities())
+                    {
+                        PASSWD_CHANGE_REQUEST request = new PASSWD_CHANGE_REQUEST()
+                        {
+                            CUSTID = clienteActual.CUSTID,
+                            EMAIL = clienteActual.EMAIL,
+                            PROCESSED = "N",
+                            REQUEST_DATE = fechaHora,
+                            TOKEN = token
+                        };
+                        context.PASSWD_CHANGE_REQUEST.Add(request);
+                        context.SaveChanges();
+                    }
+
+                    // Enviar mail
+                    await MailHelper.SendEmail(clienteActual.EMAIL, "Solicitud de cambio de clave", StringHelper.MensajeCambioClave(url));
+
+                    status.message = "Enviado mail con indicaciones.";
+                    status.result = true;
+                    status.token = token;
+                }
+                catch (Exception ex)
+                {
+                    status.message = ex.Message;
+                    status.result = false;
+                }
+            }
+            else
+            {
+                status.message = "Usuario o dirección de correo errados.";
+                status.result = false;
+            }
+
+            return status;
+        }
+
+        public async Task<ClientesDomain.LogonStatus> ProcesarCambioClave(string ID, string e_mail, string token, string passwd)
+        {
+            ClientesDomain.LogonStatus status = new LogonStatus() { result = true };
+
+            CUSTOMER clienteActual = null;
+            PASSWD_CHANGE_REQUEST request = null;
+            DateTime fechaHora = DateTime.Now;
+            
+            try
+            {
+                using (var context = new ClientesEF.Entities())
+                {
+                    request = context.PASSWD_CHANGE_REQUEST.SingleOrDefault(p => p.TOKEN.Equals(token) && p.PROCESSED.Equals("N"));
+
+                    //clienteActual = context.CUSTOMERs.FirstOrDefault(p => p.EMAIL.Equals(e_mail) || p.CUSTID.Equals(ID));
+                    //request = clienteActual.PASSWD_CHANGE_REQUEST.FirstOrDefault(p => p.TOKEN.Equals(token) && p.PROCESSED.Equals("N"));
+
+                    if (request != null)
+                    {
+                        clienteActual = request.CUSTOMER;
+
+                        // Los datos son consistentes. Procesar el cambio
+                        clienteActual.PASSWORD = StringHelper.GeneratePassword(passwd, clienteActual.SALT);
+                        request.PROCESSED = "Y";
+                        context.SaveChanges();
+                        status.message = "Cambio de clave procesado con éxito.";
+                        status.result = true;
+                    }
+                    else
+                    {
+                        status.message = "Datos errados.";
+                        status.result = false;
+                    }
+                }
+
+                if (status.result == true)
+                {
+                    await MailHelper.SendEmail(clienteActual.EMAIL, "Cambio de clave exitoso", StringHelper.MensajeCambioClaveExitoso());
+                }
+            }
+            catch (Exception ex)
+            {
+                status.message = ex.Message;
+                status.result = false;
+            }
+            
+            return status;
+        }
+
+        public IEnumerable<ClientesDomain.Cliente> ConsultarCliente()
+        {
+            IEnumerable<ClientesDomain.Cliente> clientes = null;
+            Cliente cliente = null;
+            try
+            {
+                using (var context = new ClientesEF.Entities())
+                {
+                    var customers = context.CUSTOMERs.AsEnumerable();
+
+                    if (customers != null)
+                    {
+                        if (clientes == null)
+                        {
+                            clientes = new List<ClientesDomain.Cliente>();
+                        }
+
+                        foreach (var customer in customers)
+                        {
+                            cliente = new Cliente()
+                            {
+                                apellidos = customer.LNAME,
+                                correo_e = customer.EMAIL,
+                                documento = customer.CUSTID,
+                                estatus = customer.STATUS,
+                                nombres = customer.FNAME,
+                                tipo = customer.CREDITCARDTYPE,
+                                telefono = customer.PHONENUMBER
+                            };
+
+
+                            if (!string.IsNullOrEmpty(customer.CREDITCARDNUMBER))
+                            {
+                                cliente.numero = StringHelper.MaskText(StringHelper.Decrypt(customer.CREDITCARDNUMBER, customer.SALT, true), 4);
+                            }
+
+                            foreach (var dir in customer.ADDRESSes)
+                            {
+                                if (cliente.direcciones == null)
+                                {
+                                    cliente.direcciones = new List<Direccion>();
+                                }
+                                ((List<Direccion>)cliente.direcciones).Add(new Direccion()
+                                {
+                                    calle = dir.STREET,
+                                    ciudad = dir.CITY,
+                                    direccion = dir.ADDRID,
+                                    estado = dir.STATE,
+                                    pais = dir.COUNTRY,
+                                    tipo = dir.ADDRESSTYPE,
+                                    zipcode = dir.ZIP
+                                });
+                            }
+
+                            ((List<ClientesDomain.Cliente>)clientes).Add(cliente);
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return clientes;
         }
     }
 }

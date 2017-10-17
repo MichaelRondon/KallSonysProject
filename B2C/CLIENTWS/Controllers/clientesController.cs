@@ -5,10 +5,14 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using CLIENTWS.Models;
+using CLIENTWS.Extension;
 using System.Web.Http.Description;
+using System.Web.Http.Cors;
 
 namespace CLIENTWS.Controllers
 {
+    //[EnableCors(origins: "http://mywebclient.azurewebsites.net", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class clientesController : ApiController
     {
         #region Atributos privados
@@ -53,8 +57,13 @@ namespace CLIENTWS.Controllers
                 clienteCrear.tipo = request.datos_tarjeta.tipo;
             }
 
-            response.mensaje = DAC.CrearCliente(clienteCrear);
-            response.success = string.IsNullOrEmpty(response.mensaje);
+            string resultado = DAC.CrearCliente(clienteCrear);
+            response.success = string.IsNullOrEmpty(resultado);
+
+            if (!response.success)
+            {
+                response.mensaje = resultado;
+            }
 
             return Ok(response);
         }
@@ -141,6 +150,17 @@ namespace CLIENTWS.Controllers
 
             return Ok(response);
         }
-        
+
+        [ResponseType(typeof(IEnumerable<DatosCliente>))]
+        public IHttpActionResult get()
+        {
+            IEnumerable<DatosCliente> response = new List<DatosCliente>();
+
+            IEnumerable<ClientesDomain.Cliente> cliente = DAC.ConsultarCliente();
+
+            response = cliente.ToDatosClienteCollection();
+
+            return Ok(response);
+        }
     }
 }
