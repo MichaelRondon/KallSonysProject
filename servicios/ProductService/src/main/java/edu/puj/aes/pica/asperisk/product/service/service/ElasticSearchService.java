@@ -24,10 +24,12 @@ import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.SetSo
 import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.UpdateAndGet;
 import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.UpdateSertFields;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.BasicSearchParams;
+import edu.puj.aes.pica.asperisk.oms.utilities.model.Campanign;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.ProductScrollResponse;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.Response;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.ScrollSearchRequest;
+import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.PaginationUtil;
 import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.DeleteTransaction;
 import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.ElasticSearchInputMultiBuilder;
 import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.IDsQuery;
@@ -38,6 +40,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetResponse;
@@ -52,6 +56,8 @@ import org.springframework.cache.Cache;
 import org.springframework.stereotype.Service;
 
 import org.springframework.cache.CacheManager;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 /**
  *
@@ -60,23 +66,26 @@ import org.springframework.cache.CacheManager;
 @Service
 @Qualifier("elastic")
 public class ElasticSearchService extends ElasticConn implements ProductService {
-
+    
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(ElasticSearchService.class);
     private final ObjectMapper mapper = new ObjectMapper();
     private ElasticSearchInput elasticSearchInput;
-
+    
     @Autowired
     @Qualifier("jpa")
     private ProductService jpaProductService;
-
+    
     @Autowired
     private CacheManager cacheManager;
-
+    
+    @Autowired
+    private CampaniaService campaniaService;
+    
     @Override
     public ProductsResponse consultarHistorico(HistoricoRequest historicoRequest) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public ProductsResponse buscar(SearchRequest searchRequest) throws ProductTransactionException {
         ElasticSearchInputMultiBuilder elasticSearchInputMultiBuilders = new ElasticSearchInputMultiBuilder(new ElasticSearchInput());
@@ -97,26 +106,26 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
                 throw new ProductTransactionException(errorMessage, ex);
             }
         }
-
+        
         ProductsResponse productsResponse = new ProductsResponse();
         productsResponse.setProductos(products);
         //Por acá iría el ordenamiento
 
-        setResponseFromOrderedList(searchRequest.getBasicSearchParams(),
+        PaginationUtil.setResponseFromOrderedList(searchRequest.getBasicSearchParams(),
                 productsResponse.getProductos(), productsResponse);
         return productsResponse;
     }
-
+    
     @Override
     public CampaignResponse campanias(CampaignRequest campaniasRequest) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public TestResponse test() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public Product create(Product product) throws ProductTransactionException {
         try {
@@ -150,12 +159,12 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             throw new ProductTransactionException(errorMessage, ex);
         }
     }
-
+    
     @Override
     public Product update(Product product) throws ProductTransactionException {
         try {
             String productJson = mapper.writeValueAsString(product);
-
+            
             elasticSearchInput = new ElasticSearchInput();
             elasticSearchInput.setJson(productJson);
             elasticSearchInput.setId(product.getId().toString());
@@ -179,7 +188,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             throw new ProductTransactionException(errorMessage, ex);
         }
     }
-
+    
     @Override
     public void delete(Long id) throws ProductTransactionException {
         elasticSearchInput = new ElasticSearchInput();
@@ -197,7 +206,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         };
         (new Thread(runnable)).start();
     }
-
+    
     @Override
     public Product findOne(String id) throws ProductTransactionException {
         try {
@@ -213,15 +222,15 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             throw new ProductTransactionException(errorMessage, ex);
         }
     }
-
+    
     @Override
     public List<Product> findAll() throws ProductTransactionException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public ProductScrollResponse findAll(ScrollSearchRequest scrollSearchRequest) throws ProductTransactionException {
-
+        
         LOGGER.info("Busqueda por scroll. ScrollId: {}", scrollSearchRequest.getScrollId());
         ProductScrollResponse productScrollResponse = new ProductScrollResponse();
         productScrollResponse.setScrollId(scrollSearchRequest.getScrollId());
@@ -244,13 +253,13 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
                 List<Product> responseList = getListFromSearchResponse(searchResponse);
                 productScrollResponse.setScrollId(searchResponse.getScrollId());
                 productScrollResponse.getProductos().addAll(responseList);
-
+                
                 putProductsInCache(productScrollResponse.getScrollId(),
                         productScrollResponse.getProductos());
             }
-            setResponseFromOrderedList(scrollSearchRequest.getBasicSearchParams(),
+            PaginationUtil.setResponseFromOrderedList(scrollSearchRequest.getBasicSearchParams(),
                     productScrollResponse.getProductos(), productScrollResponse);
-
+            
             LOGGER.info("productScrollResponse.getProductos().size(): {}", productScrollResponse.getProductos().size());
             LOGGER.info("ProductScrollResponse: {}", productScrollResponse);
             return productScrollResponse;
@@ -261,7 +270,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             throw new ProductTransactionException(errorMessage, ex);
         }
     }
-
+    
     @Override
     public List<Product> findAllByIds(List<Long> ids) throws ProductTransactionException {
         elasticSearchInput = new ElasticSearchInput();
@@ -271,14 +280,54 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         LOGGER.info("idsResponse: {}", searchResponse);
         return getListFromSearchResponse(searchResponse);
     }
-
+    
+    @Override
+    public CampaignResponse findAllCampaigns(CampaignRequest campaniasRequest, boolean full) {
+        
+        PageRequest pageRequest = PaginationUtil.getPageRequest(campaniasRequest.getBasicSearchParams());
+        LOGGER.info("Busca pageRequest: {}", pageRequest);
+        Page<Campanign> findAll = campaniaService.findAll(pageRequest);
+        LOGGER.info("Busca findAll: {}", findAll);
+        LOGGER.info("Busca findAll.getContent().size(): {}", findAll.getContent().size());
+        
+        CampaignResponse campaignResponse = new CampaignResponse();
+        PaginationUtil.setResponseFromPage(campaniasRequest.getBasicSearchParams(), findAll, campaignResponse);
+        if (findAll.hasContent()) {
+            campaignResponse.setCampanias(findAll.getContent());
+            if (full) {
+                campaignResponse.getCampanias().stream().flatMap(campaign -> campaign.getProductos().stream()).forEach(this::fillProductById);
+            }
+        }
+        return campaignResponse;
+    }
+    
+    private void fillProductById(Product product) {
+        if (product.getId() != null) {
+            try {
+                Product findOne = jpaProductService.findOne(product.getId().toString());
+                product.setCategoria(findOne.getCategoria());
+                product.setDescripcion(findOne.getDescripcion());
+                product.setDisponibilidad(findOne.getDisponibilidad());
+                product.setEstado(findOne.getEstado());
+                product.setFechaRevDisponibilidad(findOne.getFechaRevDisponibilidad());
+                product.setKeyWords(findOne.getKeyWords());
+                product.setMarca(findOne.getMarca());
+                product.setNombre(findOne.getNombre());
+                product.setPrecio(findOne.getPrecio());
+                product.setProveedores(findOne.getProveedores());
+            } catch (ProductTransactionException ex) {
+                Logger.getLogger(ElasticSearchService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
     private List<Product> getListFromSearchResponse(SearchResponse searchResponse) {
         return Arrays.stream(searchResponse.getHits()
                 .getHits()).parallel()
                 .map(hit -> mapToProduct(hit.getSourceAsString()))
                 .collect(Collectors.toList());
     }
-
+    
     private List<Product> getListOfProducts(MultiGetResponse multiGetResponse) {
         List<Product> products = new LinkedList<>();
         for (MultiGetItemResponse multiGetItemResponse : multiGetResponse) {
@@ -292,7 +341,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         }
         return products;
     }
-
+    
     private Long nextIdProduct() throws ProductTransactionException {
         try {
             LOGGER.info("Consulta el siguiente valor de la secuencia para los productos");
@@ -314,13 +363,13 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
                         ex.getMessage());
                 LOGGER.error(errorMessage, ex);
             }
-
+            
             Map<String, Object> map = new HashMap<>();
             map.put("next", longValue.toString());
             executeTransaction(new UpdateSertFields(map), elasticSearchInput);
             LOGGER.info("Fin executeTransaction nextIdProduct: {}", longValue);
             return longValue;
-
+            
         } catch (ProductTransactionException ex) {
             String errorMessage = String.format("Error consultando el siguiente valor de la secuencia para los producto, mensaje: %s",
                     ex.getMessage());
@@ -328,9 +377,9 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             throw new ProductTransactionException(errorMessage, ex);
         }
     }
-
+    
     private Product mapToProduct(String string) {
-
+        
         try {
             return mapper.readValue(string, Product.class);
         } catch (IOException ex) {
@@ -340,7 +389,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             throw new RuntimeException(errorMessage, ex);
         }
     }
-
+    
     private void putProductsInCache(String scrollId, List<Product> products) {
         Cache cache = cacheManager.getCache("productCache");
         if (cache == null) {
@@ -349,7 +398,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         }
         cache.put(scrollId, products);
     }
-
+    
     private void putProductsInCache(Product product, List<Product> products) {
         Cache cache = cacheManager.getCache("productSearchCache");
         if (cache == null) {
@@ -358,7 +407,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         }
         cache.put(product, products);
     }
-
+    
     private void clearProductCache() {
         Cache cache = cacheManager.getCache("productCache");
         if (cache == null) {
@@ -374,9 +423,9 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         }
         cache.clear();
     }
-
+    
     private List getProductFromCache(String scrollId) {
-
+        
         Cache cache = cacheManager.getCache("productCache");
         if (cache == null) {
             LOGGER.error("Error obteniendo la instancia del cache");
@@ -392,9 +441,9 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         }
         return null;
     }
-
+    
     private List getProductFromCache(Product product) {
-
+        
         Cache cache = cacheManager.getCache("productSearchCache");
         if (cache == null) {
             LOGGER.error("Error obteniendo la instancia del cache");
@@ -410,7 +459,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         }
         return null;
     }
-
+    
     private boolean needScrollSearch(BasicSearchParams basicSearchParams, List totalList) {
         if (totalList == null || totalList.isEmpty()) {
             return true;
@@ -425,51 +474,15 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         }
         return false;
     }
-
+    
     private SearchResponse scrollSearchFromElasticSearch(ScrollSearchRequest scrollSearchRequest) throws ProductTransactionException {
-
+        
         elasticSearchInput = new ElasticSearchInput();
         elasticSearchInput.setId(scrollSearchRequest.getScrollId());
         ElasticSearchInputMultiBuilder elasticSearchInputMultiBuilder = new ElasticSearchInputMultiBuilder(elasticSearchInput);
-        if(scrollSearchRequest.getProduct() != null){
+        if (scrollSearchRequest.getProduct() != null) {
             elasticSearchInputMultiBuilder.setProduct(scrollSearchRequest.getProduct());
         }
         return executeTransaction(new SearchScroll(), elasticSearchInputMultiBuilder);
     }
-
-    private <R extends Response> void setResponseFromOrderedList(BasicSearchParams basicSearchParams, List list, R response) {
-
-        AsperiskPage asperiskPage = new AsperiskPage();
-        response.setPage(asperiskPage);
-
-        asperiskPage.setNumber(basicSearchParams.getPage());
-        asperiskPage.setSort(basicSearchParams.getSort());
-        asperiskPage.setSortType(basicSearchParams.getSortType() == null ? null : basicSearchParams.getSortType().name());
-
-        asperiskPage.setTotalElements(list.size());
-        asperiskPage.setTotalPages(asperiskPage.getTotalElements() / basicSearchParams.getItemsPerPage());
-        LOGGER.info("asperiskPage.getTotalElements: {}", asperiskPage.getTotalElements() );
-        LOGGER.info("basicSearchParams.getItemsPerPage(): {}", basicSearchParams.getItemsPerPage() );
-        LOGGER.info("asperiskPage.getTotalPages: {}", asperiskPage.getTotalPages());
-
-        int lastIndex = 999;
-        int firstIndex = 0;
-        LOGGER.info("basicSearchParams.getItemsPerPage(): {}", basicSearchParams.getItemsPerPage());
-        LOGGER.info("basicSearchParams.getPage(): {}", basicSearchParams.getPage());
-        if (basicSearchParams.getItemsPerPage() != null && basicSearchParams.getPage() != null) {
-            lastIndex = basicSearchParams.getItemsPerPage() * (basicSearchParams.getPage() + 1);
-            firstIndex = (basicSearchParams.getPage()) * basicSearchParams.getItemsPerPage();
-        }
-
-        LOGGER.info("lastIndex: {} firstIndex:{}", lastIndex, firstIndex);
-        if (list.size() <= firstIndex || lastIndex <= firstIndex) {
-            response.setObjects(new LinkedList<>());
-            return;
-        }
-        if (lastIndex > list.size()) {
-            lastIndex = list.size();
-        }
-        response.setObjects(list.subList(firstIndex, lastIndex));
-
-    }
-        }
+}

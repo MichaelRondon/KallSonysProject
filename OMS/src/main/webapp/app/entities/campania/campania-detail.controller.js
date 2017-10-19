@@ -12,6 +12,7 @@
 
         vm.campania = entity;
         vm.previousState = previousState.name;
+        vm.productCampaniaBaseUrl = 'http://laptop-diego:9091/api/ImageCampania/';
 
         var unsubscribe = $rootScope.$on('omsApp:campaniaUpdate', function(event, result) {
             vm.campania = result;

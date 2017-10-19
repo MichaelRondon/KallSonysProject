@@ -147,9 +147,9 @@
                                     }
                                 }
                             }).result.then(function () {
-                                $state.go('producto', null, {reload: 'producto'});
+                                $state.go('campania', null, {reload: 'campania'});
                             }, function () {
-                                $state.go('producto');
+                                $state.go('campania');
                             });
                         }]
                 });

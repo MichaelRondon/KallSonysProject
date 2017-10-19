@@ -10,7 +10,9 @@ import edu.puj.aes.pica.asperisk.product.service.model.ProductsResponse;
 import edu.puj.aes.pica.asperisk.product.service.exceptions.ProductTransactionException;
 import edu.puj.aes.pica.asperisk.product.service.service.ProductService;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.*;
+import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.PaginationUtil;
 import edu.puj.aes.pica.asperisk.product.service.model.CampaignRequest;
+import edu.puj.aes.pica.asperisk.product.service.service.CampaniaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ import java.net.URI;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -47,6 +52,9 @@ public class ProductoResource {
     @Autowired
     @Qualifier("jpa")
     private ProductService jpaSearchService;
+
+    @Autowired
+    private CampaniaService campaniaService;
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Product> create(@RequestBody Product product) throws ProductTransactionException {
@@ -258,8 +266,8 @@ public class ProductoResource {
 
     @RequestMapping(value = "/campanias", method = RequestMethod.GET)
     public ResponseEntity<CampaignResponse> campanias(@RequestParam(value = "estado", defaultValue = "ACTIVO", required = false) State estado,
-            @RequestParam(value = "page", required = false) Integer page,
-            @RequestParam(value = "items_per_page", defaultValue = "-1", required = false) Integer itemsPerPage,
+            @RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
+            @RequestParam(value = "items_per_page", defaultValue = "20", required = false) Integer itemsPerPage,
             @RequestParam(value = "sort", defaultValue = "", required = false) String sort,
             @RequestParam(value = "sort_type", defaultValue = "", required = false) Sort.Direction sortType,
             @RequestParam(value = "custom", defaultValue = "", required = false) String custom) {
@@ -280,7 +288,7 @@ public class ProductoResource {
         campaniasRequest.setBasicSearchParams(basicSearchParams);
 
         LOGGER.info("Busca campanias: {}", campaniasRequest);
-        CampaignResponse campaignResponse = productService.campanias(campaniasRequest);
+        CampaignResponse campaignResponse = elasticSearchService.findAllCampaigns(campaniasRequest, true);
         LOGGER.info("Encuentra campanias: {}", campaignResponse);
         return new ResponseEntity(campaignResponse, HttpStatus.OK);
     }

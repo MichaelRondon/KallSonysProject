@@ -16,6 +16,7 @@
         vm.reverse = pagingParams.ascending;
         vm.transition = transition;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
+        vm.productCampaniaBaseUrl = 'http://laptop-diego:9091/api/ImageCampania/';
 
         loadAll();
 

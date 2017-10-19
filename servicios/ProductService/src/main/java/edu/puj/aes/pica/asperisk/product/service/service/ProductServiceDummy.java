@@ -154,5 +154,10 @@ public class ProductServiceDummy implements ProductService {
     public void delete(Long id) throws ProductTransactionException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public CampaignResponse findAllCampaigns(CampaignRequest campaniasRequest, boolean full) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     }
 

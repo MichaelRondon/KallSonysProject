@@ -95,4 +95,9 @@ public class JpaProductService implements ProductService {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public CampaignResponse findAllCampaigns(CampaignRequest campaniasRequest, boolean full) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     }

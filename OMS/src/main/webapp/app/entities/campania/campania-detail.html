@@ -3,6 +3,12 @@
     <h2><span data-translate="omsApp.campania.detail.title">Campania</span> {{vm.campania.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
+    <div class="row">
+        <div class="form-group col-xs-12 col-sm-6" ng-show="vm.campania.id">
+            <img id="field_image_small" ng-src="{{vm.productCampaniaBaseUrl + vm.campania.id}}"
+                 alt="{{campania.nombre}}" style="width:350px;height:150px;margin-left:auto;margin-right:auto;display: block"/>
+        </div>
+    </div>
     <dl class="dl-horizontal jh-entity-details">
         <dt><span data-translate="omsApp.campania.nombre">Nombre</span></dt>
         <dd>
@@ -18,11 +24,11 @@
         </dd>
         <dt><span data-translate="omsApp.campania.fechaInicio">Fecha Inicio</span></dt>
         <dd>
-            <span>{{vm.campania.fechaInicio | date:'mediumDate'}}</span>
+            <span>{{vm.campania.fechaInicio| date:'mediumDate'}}</span>
         </dd>
         <dt><span data-translate="omsApp.campania.fechaFin">Fecha Fin</span></dt>
         <dd>
-            <span>{{vm.campania.fechaFin | date:'mediumDate'}}</span>
+            <span>{{vm.campania.fechaFin| date:'mediumDate'}}</span>
         </dd>
         <dt><span data-translate="omsApp.campania.productos">Productos</span></dt>
         <dd>
@@ -33,7 +39,7 @@
     </dl>
 
     <button type="submit"
-            ui-sref="{{ vm.previousState }}"
+            ui-sref="{{ vm.previousState}}"
             class="btn btn-info">
         <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
     </button>

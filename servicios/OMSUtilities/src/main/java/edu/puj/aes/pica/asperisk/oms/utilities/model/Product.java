@@ -20,7 +20,7 @@ public class Product implements Serializable {
     private String descripcion;
     private String categoria;
     private String marca;
-    private BigDecimal precio;
+    private BigDecimal precio = BigDecimal.ZERO;
     private State estado;
     @JsonProperty("key_words")
     private List<String> keyWords;
