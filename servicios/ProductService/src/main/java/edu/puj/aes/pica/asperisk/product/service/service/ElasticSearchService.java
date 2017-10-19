@@ -286,7 +286,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         
         PageRequest pageRequest = PaginationUtil.getPageRequest(campaniasRequest.getBasicSearchParams());
         LOGGER.info("Busca pageRequest: {}", pageRequest);
-        Page<Campanign> findAll = campaniaService.findAll(pageRequest);
+        Page<Campanign> findAll = campaniaService.findAll(pageRequest, campaniasRequest);
         LOGGER.info("Busca findAll: {}", findAll);
         LOGGER.info("Busca findAll.getContent().size(): {}", findAll.getContent().size());
         
