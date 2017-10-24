@@ -149,8 +149,8 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
                     LOGGER.error(errorMessage, ex);
                 }
             };
-//            (new Thread(runnable)).run();
-            (new Thread(runnable)).start();
+            (new Thread(runnable)).run();
+//            (new Thread(runnable)).start();
             return product;
         } catch (ProductTransactionException ex) {
             String errorMessage = String.format("Error persistiendo producto mediante JPA. Objeto: %s, mensaje: %s",
@@ -231,7 +231,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
     @Override
     public ProductScrollResponse findAll(ScrollSearchRequest scrollSearchRequest) throws ProductTransactionException {
         
-        LOGGER.info("Busqueda por scroll. ScrollId: {}", scrollSearchRequest.getScrollId());
+        LOGGER.info("Busqueda por scroll. ScrollSearchRequest: {}", scrollSearchRequest);
         ProductScrollResponse productScrollResponse = new ProductScrollResponse();
         productScrollResponse.setScrollId(scrollSearchRequest.getScrollId());
         if (!scrollSearchRequest.getScrollId().equals(SearchScroll.EMPTY_SCROLL_ID)) {

@@ -127,6 +127,7 @@ public class ProductoResource {
             @RequestParam(value = "id", required = false) Long id,
             @RequestParam(value = "nombre", defaultValue = "", required = false) String nombre,
             @RequestParam(value = "descripcion", defaultValue = "", required = false) String descripcion,
+            @RequestParam(value = "categoria", defaultValue = "", required = false) String categoria,
             @RequestParam(value = "custom", defaultValue = "", required = false) String custom)
             throws ProductTransactionException {
         LOGGER.info("Ingresando a scrollsearch");
@@ -145,6 +146,7 @@ public class ProductoResource {
         product.setDescripcion(descripcion);
         product.setId(id);
         product.setNombre(nombre);
+        product.setCategoria(categoria);
 
         ScrollSearchRequest scrollSearchRequest = new ScrollSearchRequest();
         scrollSearchRequest.setBasicRequest(basicRequest);

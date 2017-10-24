@@ -1,0 +1,101 @@
+<div>
+    <h2 data-translate="omsApp.cliente.home.title">Clientes</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="cliente.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="omsApp.cliente.home.createLabel">
+                        Crear nuevo Cliente
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+<!--    <div class="input-append">
+        <input name="search" id="search"/>
+        <button class="btn">button</button>
+    </div>-->
+    <div class="input-append">
+        <!--<div class="row">-->
+
+        <!--<div class="form-group col-xs-12 col-sm-6">-->
+        <!--<div class="input-group">-->
+            <label class="control-label" for="field_codigo_cliente">Código cliente</label>
+            <input type="text" class="" name="nombre" id="field_codigo_cliente"
+                   ng-model="vm.codigoCliente" required
+                   />
+            <!--            </div>
+            
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <br/>-->
+            <button class="btn btn-primary" ui-sref="cliente.edit({id:vm.codigoCliente})" >
+                <span class="glyphicon glyphicon-eye-open"></span>
+                <span>
+                    Buscar Cliente
+                </span>
+            </button>
+        <!--</div>-->
+        <!--</div>-->
+    </div>
+    <br/>
+    <!--    <div class="table-responsive">
+            <table class="jh-table table table-striped">
+                <thead>
+                    <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                        <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th jh-sort-by="documento"><span data-translate="omsApp.cliente.documento">Documento</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th jh-sort-by="nombres"><span data-translate="omsApp.cliente.nombres">Nombres</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th jh-sort-by="apellidos"><span data-translate="omsApp.cliente.apellidos">Apellidos</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th jh-sort-by="telefono"><span data-translate="omsApp.cliente.telefono">Telefono</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th jh-sort-by="correoE"><span data-translate="omsApp.cliente.correoE">Correo E</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th jh-sort-by="password"><span data-translate="omsApp.cliente.password">Password</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th jh-sort-by="datosTarjetaId"><span data-translate="omsApp.cliente.datosTarjeta">Datos Tarjeta</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="cliente in vm.clientes track by cliente.id">
+                        <td><a ui-sref="cliente-detail({id:cliente.id})">{{cliente.id}}</a></td>
+                        <td>{{cliente.documento}}</td>
+                        <td>{{cliente.nombres}}</td>
+                        <td>{{cliente.apellidos}}</td>
+                        <td>{{cliente.telefono}}</td>
+                        <td>{{cliente.correoE}}</td>
+                        <td>{{cliente.password}}</td>
+                        <td>
+                            <a ui-sref="tarjeta-detail({id:cliente.datosTarjetaId})">{{cliente.datosTarjetaId}}</a>
+                        </td>
+                        <td class="text-right">
+                            <div class="btn-group flex-btn-group-container">
+                                <button type="submit"
+                                        ui-sref="cliente-detail({id:cliente.id})"
+                                        class="btn btn-info btn-sm">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                    <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                                </button>
+                                <button type="submit"
+                                        ui-sref="cliente.edit({id:cliente.id})"
+                                        class="btn btn-primary btn-sm">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                    <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                                </button>
+                                <button type="submit"
+                                        ui-sref="cliente.delete({id:cliente.id})"
+                                        class="btn btn-danger btn-sm">
+                                    <span class="glyphicon glyphicon-remove-circle"></span>
+                                    <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>-->
+</div>

@@ -13,6 +13,8 @@
                 "proveedor": "Proveedor",
                 "proveedorProducto": "Proveedor Producto",
                 "categoria": "Categoria",
+                "cliente": "Cliente",
+                "tarjeta": "Tarjeta",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

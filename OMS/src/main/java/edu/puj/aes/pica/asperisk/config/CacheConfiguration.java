@@ -50,6 +50,8 @@ public class CacheConfiguration {
             cm.createCache(edu.puj.aes.pica.asperisk.domain.Proveedor.class.getName() + ".productos", jcacheConfiguration);
             cm.createCache(edu.puj.aes.pica.asperisk.domain.ProveedorProducto.class.getName(), jcacheConfiguration);
             cm.createCache(edu.puj.aes.pica.asperisk.domain.Categoria.class.getName(), jcacheConfiguration);
+            cm.createCache(edu.puj.aes.pica.asperisk.domain.Cliente.class.getName(), jcacheConfiguration);
+            cm.createCache(edu.puj.aes.pica.asperisk.domain.Tarjeta.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

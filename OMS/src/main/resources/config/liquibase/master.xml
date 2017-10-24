@@ -11,10 +11,13 @@
     <include file="config/liquibase/changelog/20170811053456_added_entity_Proveedor.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170811053457_added_entity_ProveedorProducto.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170811053458_added_entity_Categoria.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20171021010804_added_entity_Cliente.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20171021010805_added_entity_Tarjeta.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20170811053453_added_entity_constraints_Producto.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170811053454_added_entity_constraints_Campania.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170811053455_added_entity_constraints_DatoContacto.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170811053457_added_entity_constraints_ProveedorProducto.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20171021010804_added_entity_constraints_Cliente.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>
