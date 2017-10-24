@@ -75,6 +75,7 @@ public class MyStringRandomGen {
         return stringBuilder.toString();
     }
 
+    public List<String> getRamdomListStrings(){
         Random random = new Random();
         List<String> strings = new LinkedList<>();
         int nextInt = random.nextInt(10);
@@ -121,6 +122,6 @@ public class MyStringRandomGen {
         "Samsung", "Nokia", "Apple", "LG", "Nintendo", "Amazon", "Google", "Microsoft",
         "Asus", "Lenovo", "SEGA", "Acer", "IBM", "Compact", "Motorola", "Xiaomi",
         "HP", "Toshiba", "Mac", "Apple", "Hyundai", "Challenger",
-        "Kalley"
+        "Kalley", "Pollito", "Payaso"
     };
 }
