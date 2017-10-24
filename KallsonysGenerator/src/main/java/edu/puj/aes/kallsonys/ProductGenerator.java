@@ -18,7 +18,7 @@ public class ProductGenerator {
 
     public Product getProduct() {
         Product product = new Product();
-        product.setCategoria(myStringRandomGen.generateRandomString());
+        product.setCategoria(myStringRandomGen.getRamdomCategoria());
         product.setDescripcion(myStringRandomGen.getSentence(random.nextInt(15)));
         product.setDisponibilidad(random.nextInt(1000));
         product.setEstado(State.ACTIVO);
@@ -47,13 +47,14 @@ public class ProductGenerator {
         for (int i = 0; i < 1000000; i++) {
             initTime = System.currentTimeMillis();
             System.out.println("i:" + i);
+//            System.out.println("i:" + productGenerator.getProduct());
             productServiceRestClientImpl.save(productGenerator.getProduct());
             System.out.println("TIEMPO: " + (System.currentTimeMillis() - initTime));
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ProductGenerator.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            try {
+//                Thread.sleep(50);
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(ProductGenerator.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         }
     }
 }

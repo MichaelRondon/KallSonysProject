@@ -23,21 +23,21 @@ import org.slf4j.LoggerFactory;
 @ToString
 @Data
 public class ElasticSearchInputMultiBuilder extends ElasticSearchInput {
-
+    
     public static final Logger LOGGER = LoggerFactory.getLogger(ElasticSearchInputMultiBuilder.class);
-
+    
     public ElasticSearchInputMultiBuilder(ElasticSearchInput elasticSearchInput) {
         this.setId(elasticSearchInput.getId());
         this.setIndex(elasticSearchInput.getIndex());
         this.setTipo(elasticSearchInput.getTipo());
     }
-
+    
     private Product product = new Product();
-
+    
     public BoolQueryBuilder initBoolQueryBuilder() throws ElasticsearchException {
         Product product = validateInput();
         BoolQueryBuilder boolQuery = boolQuery();
-
+        
         if (product.getId() != null) {
             IdsQueryBuilder idsQuery = idsQuery(getTipo());
             idsQuery.addIds(product.getId().toString());
@@ -51,9 +51,14 @@ public class ElasticSearchInputMultiBuilder extends ElasticSearchInput {
             String description = product.getDescripcion();
             buildBoolQueryBuilder("descripcion", boolQuery, description);
         }
+        if (product.getCategoria() != null && !product.getCategoria().isEmpty()) {
+            MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("categoria", product.getCategoria()).fuzziness(Fuzziness.AUTO);
+            boolQuery.must(matchQueryBuilder);
+        }
+//        LOGGER.info("boolQuery: {}", boolQuery);
         return boolQuery;
     }
-
+    
     public Product validateInput() throws ElasticsearchException {
         StringBuilder stringBuilder;
         if (getProduct() == null) {
@@ -64,7 +69,8 @@ public class ElasticSearchInputMultiBuilder extends ElasticSearchInput {
             throw new ElasticsearchException(stringBuilder.toString());
         }
         Product product = getProduct();
-        if (product.getId() == null && product.getNombre() == null && product.getDescripcion() == null) {
+        if (product.getId() == null && product.getNombre() == null && product.getDescripcion() == null
+                && product.getCategoria() == null) {
             stringBuilder = new StringBuilder();
             stringBuilder
                     .append("No hay información suficiente para realizar la búsqueda de productos. input: ");
@@ -74,17 +80,17 @@ public class ElasticSearchInputMultiBuilder extends ElasticSearchInput {
         return product;
     }
     
-    private void buildBoolQueryBuilder(String fieldName, BoolQueryBuilder boolQuery, String field){
-            if (field.contains("*") || field.contains("?")) {
-                String[] split = field.split(" ");
-                for (String string : split) {
-                    QueryBuilder queryBuilder = wildcardQuery(fieldName, string.toLowerCase());
-                    boolQuery.should(queryBuilder);
-                }
-            } else {
-                MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery(fieldName, field).fuzziness(Fuzziness.AUTO);
-                boolQuery.must(matchQueryBuilder);
+    private void buildBoolQueryBuilder(String fieldName, BoolQueryBuilder boolQuery, String field) {
+        if (field.contains("*") || field.contains("?")) {
+            String[] split = field.split(" ");
+            for (String string : split) {
+                QueryBuilder queryBuilder = wildcardQuery(fieldName, string.toLowerCase());
+                boolQuery.should(queryBuilder);
             }
+        } else {
+            MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery(fieldName, field).fuzziness(Fuzziness.AUTO);
+            boolQuery.must(matchQueryBuilder);
+        }
         
     }
 }

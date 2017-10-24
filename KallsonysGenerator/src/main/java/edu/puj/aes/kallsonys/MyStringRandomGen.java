@@ -14,6 +14,8 @@ public class MyStringRandomGen {
     private static final String CHAR_LIST
             = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890Diegoesmaricon";
     private static final int RANDOM_STRING_LENGTH = 10;
+    private static final String[] CATEGORIAS = new String[]{"Celulares", "Televisores y Video", "Audio", "Computadores e Impresión",
+         "SmartWatch", "Cámaras", "Videojuegos", "Electrohogar", "Casa Inteligente", "Accesorios", "Drones", "Deportes"};
 
     /**
      * This method generates random string
@@ -48,6 +50,17 @@ public class MyStringRandomGen {
             return randomInt - 1;
         }
     }
+    
+    public String getRamdomCategoria() {
+        int randomInt = 0;
+        Random randomGenerator = new Random();
+        randomInt = randomGenerator.nextInt(CATEGORIAS.length);
+        if (randomInt - 1 == -1) {
+            return CATEGORIAS[randomInt];
+        } else {
+            return CATEGORIAS[randomInt - 1];
+        }
+    }
 
     public String getSentence(int wordsQuantity) {
         if (wordsQuantity <= 1) {
@@ -62,10 +75,12 @@ public class MyStringRandomGen {
         return stringBuilder.toString();
     }
 
-    public List<String> getRamdomListStrings(){
         Random random = new Random();
-        List<String> strings =  new LinkedList<>();
+        List<String> strings = new LinkedList<>();
         int nextInt = random.nextInt(10);
+        if(nextInt < 3){
+            nextInt = 10;
+        }
         for (int i = 0; i < nextInt; i++) {
             strings.add(generateRandomString());
         }
