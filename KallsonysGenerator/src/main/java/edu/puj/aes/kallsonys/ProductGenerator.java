@@ -38,9 +38,7 @@ public class ProductGenerator {
     }
 
     public static void main(String[] args) {
-        System.out.println("sds");
         ProductGenerator productGenerator = new ProductGenerator();
-        System.out.println("sds2");
         ProductServiceRestClientImpl productServiceRestClientImpl = new ProductServiceRestClientImpl();
 
         long initTime;
@@ -50,11 +48,11 @@ public class ProductGenerator {
 //            System.out.println("i:" + productGenerator.getProduct());
             productServiceRestClientImpl.save(productGenerator.getProduct());
             System.out.println("TIEMPO: " + (System.currentTimeMillis() - initTime));
-//            try {
-//                Thread.sleep(50);
-//            } catch (InterruptedException ex) {
-//                Logger.getLogger(ProductGenerator.class.getName()).log(Level.SEVERE, null, ex);
-//            }
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ProductGenerator.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

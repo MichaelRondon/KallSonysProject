@@ -149,8 +149,8 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
                     LOGGER.error(errorMessage, ex);
                 }
             };
-            (new Thread(runnable)).run();
-//            (new Thread(runnable)).start();
+//            (new Thread(runnable)).run();
+            (new Thread(runnable)).start();
             return product;
         } catch (ProductTransactionException ex) {
             String errorMessage = String.format("Error persistiendo producto mediante JPA. Objeto: %s, mensaje: %s",

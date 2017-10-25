@@ -8,6 +8,8 @@ import edu.puj.aes.pica.asperisk.oms.utilities.dto.CategoriaDTO;
 import edu.puj.aes.pica.asperisk.product.jpa.service.repository.CategoriaRepository;
 import edu.puj.aes.pica.asperisk.product.service.jpa.entity.Categoria;
 import edu.puj.aes.pica.asperisk.product.service.mapper.CategoriaMapper;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +65,7 @@ public class CategoriaService {
         return categoriaRepository.findAll(pageable)
                 .map(categoriaMapper::toDto);
     }
-
+    
     /**
      * Get one categoria by id.
      *
