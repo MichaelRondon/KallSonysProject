@@ -103,6 +103,10 @@ public class MyStringRandomGen {
         return getFromArray(MARCAS);
     }
     
+    public String getRamdomNombre(){
+        return getFromArray(NOMBRE);
+    }
+    
     private String getFromArray(String[] array) {
         Random random = new Random();
         int nextInt = random.nextInt(array.length);
@@ -123,5 +127,12 @@ public class MyStringRandomGen {
         "Asus", "Lenovo", "SEGA", "Acer", "IBM", "Compact", "Motorola", "Xiaomi",
         "HP", "Toshiba", "Mac", "Apple", "Hyundai", "Challenger",
         "Kalley", "Pollito", "Payaso"
+    };
+
+    public static final String[] NOMBRE = new String[]{
+        "Televisor", "Computador", "Laptop", "Equipo de sonido", "Impresora", "Cámara", "Móvil", "Teféfono",
+        "Mini componente", "Lavadora", "Nevera", "Video proyector", "Ventilador", "Licuadora", "Microondas", "Arrocera",
+        "Cafetera", "Aspiradora", "Dron", "Secadora", "Multifuncional", "Teatro en casa",
+        "Plancha"
     };
 }

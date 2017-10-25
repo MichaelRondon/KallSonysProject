@@ -25,7 +25,7 @@ public class ProductGenerator {
         product.setFechaRevDisponibilidad(new Date());
         product.setKeyWords(myStringRandomGen.getRamdomKeyWords());
         product.setMarca(myStringRandomGen.getRamdomMarca());
-        product.setNombre(myStringRandomGen.getSentence(random.nextInt(3)+1));
+        product.setNombre(myStringRandomGen.getRamdomNombre() + " " + myStringRandomGen.getSentence(random.nextInt(2)+1));
         product.setPrecio(new BigDecimal(random.nextDouble() * 10000, MathContext.DECIMAL32));
         return product;
     }
@@ -49,7 +49,7 @@ public class ProductGenerator {
             productServiceRestClientImpl.save(productGenerator.getProduct());
             System.out.println("TIEMPO: " + (System.currentTimeMillis() - initTime));
             try {
-                Thread.sleep(500);
+                Thread.sleep(360);
             } catch (InterruptedException ex) {
                 Logger.getLogger(ProductGenerator.class.getName()).log(Level.SEVERE, null, ex);
             }
