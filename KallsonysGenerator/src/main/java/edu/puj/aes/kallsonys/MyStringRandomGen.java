@@ -12,7 +12,7 @@ import java.util.Random;
 public class MyStringRandomGen {
 
     private static final String CHAR_LIST
-            = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890Diegoesmaricon";
     private static final int RANDOM_STRING_LENGTH = 10;
     private static final String[] CATEGORIAS = new String[]{"Celulares", "Televisores y Video", "Audio", "Computadores e Impresión",
          "SmartWatch", "Cámaras", "Videojuegos", "Electrohogar", "Casa Inteligente", "Accesorios", "Drones", "Deportes"};
@@ -75,7 +75,7 @@ public class MyStringRandomGen {
         return stringBuilder.toString();
     }
 
-    public List<String> getRamdomListStrings() {
+    public List<String> getRamdomListStrings(){
         Random random = new Random();
         List<String> strings = new LinkedList<>();
         int nextInt = random.nextInt(10);
@@ -87,4 +87,41 @@ public class MyStringRandomGen {
         }
         return strings;
     }
+
+    public List<String> getRamdomKeyWords() {
+        Random random = new Random();
+        List<String> strings = new LinkedList<>();
+        int nextInt = random.nextInt(5);
+        for (int i = 0; i < nextInt; i++) {
+            strings.add(getFromArray(KEY_WORDS));
+        }
+        strings.add(generateRandomString());
+        return strings;
+    }
+    
+    public String getRamdomMarca(){
+        return getFromArray(MARCAS);
+    }
+    
+    private String getFromArray(String[] array) {
+        Random random = new Random();
+        int nextInt = random.nextInt(array.length);
+        return array[nextInt];
+    }
+
+    public static final String[] KEY_WORDS = new String[]{
+        "Blanco", "Negro", "Gris", "Amarillo", "Azul", "Rojo", "Verde", "Naranja",
+        "Cafe", "Grande", "Pequeño", "Mediano", "HD", "Portátil", "Ligero", "De lujo",
+        "Resistente", "Suave", "Blando", "Alta definición", "Multiusuario", "Especial",
+        "Resistente", "Gamers", "Digital", "Compacto", "Estéreo", "Periférico", "Automático",
+        "Avanzado", "Científica", "Empresarial", "Híbrido", "Inalámbrico", "Insuatrial",
+        "Innovador", "Térmico", "Empresarial", "Híbrido", "Inalámbrico", "Insuatrial", "Especial"
+    };
+
+    public static final String[] MARCAS = new String[]{
+        "Samsung", "Nokia", "Apple", "LG", "Nintendo", "Amazon", "Google", "Microsoft",
+        "Asus", "Lenovo", "SEGA", "Acer", "IBM", "Compact", "Motorola", "Xiaomi",
+        "HP", "Toshiba", "Mac", "Apple", "Hyundai", "Challenger",
+        "Kalley", "Pollito", "Payaso"
+    };
 }

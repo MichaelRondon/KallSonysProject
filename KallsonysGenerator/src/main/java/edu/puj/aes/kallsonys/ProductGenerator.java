@@ -23,9 +23,9 @@ public class ProductGenerator {
         product.setDisponibilidad(random.nextInt(1000));
         product.setEstado(State.ACTIVO);
         product.setFechaRevDisponibilidad(new Date());
-        product.setKeyWords(myStringRandomGen.getRamdomListStrings());
-        product.setMarca(myStringRandomGen.getSentence(random.nextInt(3)));
-        product.setNombre(myStringRandomGen.getSentence(random.nextInt(4)));
+        product.setKeyWords(myStringRandomGen.getRamdomKeyWords());
+        product.setMarca(myStringRandomGen.getRamdomMarca());
+        product.setNombre(myStringRandomGen.getSentence(random.nextInt(3)+1));
         product.setPrecio(new BigDecimal(random.nextDouble() * 10000, MathContext.DECIMAL32));
         return product;
     }
