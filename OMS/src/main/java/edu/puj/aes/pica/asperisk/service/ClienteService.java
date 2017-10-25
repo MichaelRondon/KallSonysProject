@@ -1,11 +1,13 @@
 package edu.puj.aes.pica.asperisk.service;
 
 import edu.puj.aes.pica.asperisk.domain.Cliente;
+import edu.puj.aes.pica.asperisk.product.service.client.ClientServiceRestClient;
 import edu.puj.aes.pica.asperisk.repository.ClienteRepository;
 import edu.puj.aes.pica.asperisk.service.dto.ClienteDTO;
 import edu.puj.aes.pica.asperisk.service.mapper.ClienteMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,9 @@ public class ClienteService {
     private final Logger log = LoggerFactory.getLogger(ClienteService.class);
 
     private final ClienteRepository clienteRepository;
+    
+    @Autowired
+    private ClientServiceRestClient clientServiceRestClient;
 
     private final ClienteMapper clienteMapper;
 
@@ -41,6 +46,16 @@ public class ClienteService {
         Cliente cliente = clienteMapper.toEntity(clienteDTO);
         cliente = clienteRepository.save(cliente);
         return clienteMapper.toDto(cliente);
+    }
+    
+    @Transactional
+    public String create(String cliente){
+        return clientServiceRestClient.create(cliente.replace("correoE", "correo_e").replace("datosTarjeta", "datos_tarjeta"));
+    }
+    
+    @Transactional
+    public String update(String cliente){
+        return clientServiceRestClient.update(cliente.replace("correoE", "correo_e").replace("datosTarjeta", "datos_tarjeta"));
     }
 
     /**
@@ -67,6 +82,11 @@ public class ClienteService {
         log.debug("Request to get Cliente : {}", id);
         Cliente cliente = clienteRepository.findOne(id);
         return clienteMapper.toDto(cliente);
+    }
+    
+    public String find(String idCliente){
+        String find = clientServiceRestClient.find(idCliente);
+        return find.replace("correo_e", "correoE").replace("datos_tarjeta","datosTarjeta");
     }
 
     /**

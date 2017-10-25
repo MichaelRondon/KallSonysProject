@@ -7,9 +7,7 @@ import edu.puj.aes.pica.asperisk.service.ClienteService;
 //import edu.puj.aes.pica.asperisk.web.rest.util.HeaderUtil;
 //import edu.puj.aes.pica.asperisk.web.rest.util.PaginationUtil;
 import edu.puj.aes.pica.asperisk.service.dto.ClienteDTO;
-import edu.puj.aes.pica.asperisk.web.rest.errors.CustomParameterizedException;
 import io.swagger.annotations.ApiParam;
-import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -20,11 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * REST controller for managing Cliente.
@@ -43,46 +38,58 @@ public class ClienteResource {
         this.clienteService = clienteService;
     }
 
-    /**
-     * POST  /clientes : Create a new cliente.
-     *
-     * @param clienteDTO the clienteDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new clienteDTO, or with status 400 (Bad Request) if the cliente has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
+//    /**
+//     * POST  /clientes : Create a new cliente.
+//     *
+//     * @param clienteDTO the clienteDTO to create
+//     * @return the ResponseEntity with status 201 (Created) and with body the new clienteDTO, or with status 400 (Bad Request) if the cliente has already an ID
+//     * @throws URISyntaxException if the Location URI syntax is incorrect
+//     */
+//    @PostMapping("/clientes")
+//    @Timed
+//    public ResponseEntity<ClienteDTO> createCliente(@Valid @RequestBody ClienteDTO clienteDTO) throws URISyntaxException {
+//        log.debug("REST request to save Cliente : {}", clienteDTO);
+//        if (clienteDTO.getId() != null) {
+//            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new cliente cannot already have an ID")).body(null);
+//        }
+//        ClienteDTO result = clienteService.save(clienteDTO);
+//        return ResponseEntity.created(new URI("/api/clientes/" + result.getId()))
+//            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+//            .body(result);
+//    }
     @PostMapping("/clientes")
     @Timed
-    public ResponseEntity<ClienteDTO> createCliente(@Valid @RequestBody ClienteDTO clienteDTO) throws URISyntaxException {
-        log.debug("REST request to save Cliente : {}", clienteDTO);
-        if (clienteDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new cliente cannot already have an ID")).body(null);
-        }
-        ClienteDTO result = clienteService.save(clienteDTO);
-        return ResponseEntity.created(new URI("/api/clientes/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
-    }
+    public ResponseEntity<String> createCliente (@Valid @RequestBody String cliente) {
+        log.info("REST! request to create Cliente : {}", cliente);
+        return  new ResponseEntity<>(clienteService.create(cliente), HttpStatus.CREATED);
+    }   
 
-    /**
-     * PUT  /clientes : Updates an existing cliente.
-     *
-     * @param clienteDTO the clienteDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated clienteDTO,
-     * or with status 400 (Bad Request) if the clienteDTO is not valid,
-     * or with status 500 (Internal Server Error) if the clienteDTO couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
+//    /**
+//     * PUT  /clientes : Updates an existing cliente.
+//     *
+//     * @param clienteDTO the clienteDTO to update
+//     * @return the ResponseEntity with status 200 (OK) and with body the updated clienteDTO,
+//     * or with status 400 (Bad Request) if the clienteDTO is not valid,
+//     * or with status 500 (Internal Server Error) if the clienteDTO couldn't be updated
+//     * @throws URISyntaxException if the Location URI syntax is incorrect
+//     */
+//    @PutMapping("/clientes")
+//    @Timed
+//    public ResponseEntity<ClienteDTO> updateCliente(@Valid @RequestBody ClienteDTO clienteDTO) throws URISyntaxException {
+//        log.debug("REST request to update Cliente : {}", clienteDTO);
+//        if (clienteDTO.getId() == null) {
+//            return createCliente(clienteDTO);
+//        }
+//        ClienteDTO result = clienteService.save(clienteDTO);
+//        return ResponseEntity.ok()
+//            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, clienteDTO.getId().toString()))
+//            .body(result);
+//    }
     @PutMapping("/clientes")
     @Timed
-    public ResponseEntity<ClienteDTO> updateCliente(@Valid @RequestBody ClienteDTO clienteDTO) throws URISyntaxException {
-        log.debug("REST request to update Cliente : {}", clienteDTO);
-        if (clienteDTO.getId() == null) {
-            return createCliente(clienteDTO);
-        }
-        ClienteDTO result = clienteService.save(clienteDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, clienteDTO.getId().toString()))
-            .body(result);
+    public ResponseEntity<String> updateCliente(@Valid @RequestBody String cliente) {
+        log.info("REST request to update Cliente : {}", cliente);
+        return  new ResponseEntity<>(clienteService.update(cliente), HttpStatus.OK);
     }
 
     /**
@@ -106,16 +113,24 @@ public class ClienteResource {
      * @param id the id of the clienteDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the clienteDTO, or with status 404 (Not Found)
      */
+//    @GetMapping("/clientes/{id}")
+//    @Timed
+//    public ResponseEntity<ClienteDTO> getCliente(@PathVariable Long id) {
+//        log.debug("REST request to get Cliente : {}", id);
+//        ClienteDTO clienteDTO = clienteService.findOne(id);
+//        if(clienteDTO == null){
+//            throw new CustomParameterizedException("No encontrado");
+//        }
+//        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(clienteDTO));
+//    }
     @GetMapping("/clientes/{id}")
     @Timed
-    public ResponseEntity<ClienteDTO> getCliente(@PathVariable Long id) {
-        log.debug("REST request to get Cliente : {}", id);
-        ClienteDTO clienteDTO = clienteService.findOne(id);
-        if(clienteDTO == null){
-            throw new CustomParameterizedException("No encontrado");
-        }
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(clienteDTO));
-    }
+    public ResponseEntity<String> getCliente(@PathVariable String id) {
+        log.info("REST request to get Cliente : {}", id);
+        String find = clienteService.find(id);
+        log.info("find : {}", find);
+        return  new ResponseEntity<>(find, HttpStatus.OK);
+    }  
 
     /**
      * DELETE  /clientes/:id : delete the "id" cliente.
@@ -130,23 +145,4 @@ public class ClienteResource {
         clienteService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
-}
-
-    @GetMapping("/clientes/{id}")
-    @Timed
-    public ResponseEntity<String> getCliente(@PathVariable String id) {
-        log.info("REST request to get Cliente : {}", id);
-        return  new ResponseEntity<>(clientService.find(id), HttpStatus.OK);
-    }    
-    @PostMapping("/clientes")
-    @Timed
-    public ResponseEntity<String> createCliente (@Valid @RequestBody String cliente) {
-        log.info("REST! request to create Cliente : {}", cliente);
-        return  new ResponseEntity<>(clientService.create(cliente), HttpStatus.CREATED);
-    }    
-    @PutMapping("/clientes")
-    @Timed
-    public ResponseEntity<String> updateCliente(@Valid @RequestBody String cliente) {
-        log.info("REST request to update Cliente : {}", cliente);
-        return  new ResponseEntity<>(clientService.update(cliente), HttpStatus.OK);
-    }
+}   

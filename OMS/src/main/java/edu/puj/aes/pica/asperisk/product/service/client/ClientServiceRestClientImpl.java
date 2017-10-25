@@ -23,7 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ClientServiceRestClientImpl implements ClientServiceRestClient {
 
-    private static final String PRODUCT_SERVICE_URL = "http://laptop-diego:9092/api/clientes/";
+//    private static final String PRODUCT_SERVICE_URL = "http://laptop-diego:9092/api/clientes/";
+    private static final String PRODUCT_SERVICE_URL = "http://25.13.10.89:9092/api/clientes/";
     private static String input;
     private static String output;
     private static String salida;
