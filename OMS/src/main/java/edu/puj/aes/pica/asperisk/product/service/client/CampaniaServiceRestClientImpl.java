@@ -31,7 +31,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class CampaniaServiceRestClientImpl implements CampaniaServiceRestClient{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CampaniaServiceRestClientImpl.class);
-    public static final String CAMPANIA_SERVICE_URL = "http://localhost:7076/api/campanias";
+    public static final String CAMPANIA_SERVICE_URL = "http://laptop-michael:7076/api/campanias";
 
     @Override
     public Campanign save(Campanign campanignDTO) {

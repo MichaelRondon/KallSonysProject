@@ -131,3 +131,22 @@ public class ClienteResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }
+
+    @GetMapping("/clientes/{id}")
+    @Timed
+    public ResponseEntity<String> getCliente(@PathVariable String id) {
+        log.info("REST request to get Cliente : {}", id);
+        return  new ResponseEntity<>(clientService.find(id), HttpStatus.OK);
+    }    
+    @PostMapping("/clientes")
+    @Timed
+    public ResponseEntity<String> createCliente (@Valid @RequestBody String cliente) {
+        log.info("REST! request to create Cliente : {}", cliente);
+        return  new ResponseEntity<>(clientService.create(cliente), HttpStatus.CREATED);
+    }    
+    @PutMapping("/clientes")
+    @Timed
+    public ResponseEntity<String> updateCliente(@Valid @RequestBody String cliente) {
+        log.info("REST request to update Cliente : {}", cliente);
+        return  new ResponseEntity<>(clientService.update(cliente), HttpStatus.OK);
+    }

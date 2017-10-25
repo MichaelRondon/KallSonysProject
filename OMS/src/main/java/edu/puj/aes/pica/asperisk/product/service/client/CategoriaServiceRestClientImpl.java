@@ -34,7 +34,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class CategoriaServiceRestClientImpl implements CategoriaServiceRestClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoriaServiceRestClientImpl.class);
-    public static final String CATEGORIAS_SERVICE_URL = "http://localhost:7076/api/categorias";
+    public static final String CATEGORIAS_SERVICE_URL = "http://laptop-michael:7076/api/categorias";
 
     @Override
     public CategoriaDTO save(CategoriaDTO categoriaDTO) {
