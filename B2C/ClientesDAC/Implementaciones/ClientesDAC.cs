@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ClientesDAC.Contratos;
-using ClientesDomain;
+using ClientesEntities.Models;
 using ClientesDAC.Util;
 using ClientesEF;
 using Common;
+using Common.Util;
+using Common.DTO;
 using Oracle.DataAccess.EntityFramework;
 using System.Configuration;
 
@@ -143,9 +145,9 @@ namespace ClientesDAC.Implementaciones
             return resultado;
         }
 
-        public ClientesDomain.Cliente ConsultarCliente(string ID)
+        public ClientesEntities.Models.Cliente ConsultarCliente(string ID)
         {
-            ClientesDomain.Cliente cliente = null;
+            ClientesEntities.Models.Cliente cliente = null;
             CUSTOMER customer = null;
 
             try
@@ -242,9 +244,9 @@ namespace ClientesDAC.Implementaciones
             return status;
         }
 
-        public async Task<ClientesDomain.LogonStatus>  SolicitarCambioClave(string ID, string e_mail)
+        public async Task<ClientesEntities.Models.LogonStatus>  SolicitarCambioClave(string ID, string e_mail)
         {
-            ClientesDomain.LogonStatus status = new LogonStatus() { result = true };
+            ClientesEntities.Models.LogonStatus status = new LogonStatus() { result = true };
 
             CUSTOMER clienteActual = null;
             string token = null, url = null;
@@ -310,9 +312,9 @@ namespace ClientesDAC.Implementaciones
             return status;
         }
 
-        public async Task<ClientesDomain.LogonStatus> ProcesarCambioClave(string ID, string e_mail, string token, string passwd)
+        public async Task<ClientesEntities.Models.LogonStatus> ProcesarCambioClave(string ID, string e_mail, string token, string passwd)
         {
-            ClientesDomain.LogonStatus status = new LogonStatus() { result = true };
+            ClientesEntities.Models.LogonStatus status = new LogonStatus() { result = true };
 
             CUSTOMER clienteActual = null;
             PASSWD_CHANGE_REQUEST request = null;
@@ -359,9 +361,9 @@ namespace ClientesDAC.Implementaciones
             return status;
         }
 
-        public IEnumerable<ClientesDomain.Cliente> ConsultarCliente()
+        public IEnumerable<ClientesEntities.Models.Cliente> ConsultarCliente()
         {
-            IEnumerable<ClientesDomain.Cliente> clientes = null;
+            IEnumerable<ClientesEntities.Models.Cliente> clientes = null;
             Cliente cliente = null;
             try
             {
@@ -373,7 +375,7 @@ namespace ClientesDAC.Implementaciones
                     {
                         if (clientes == null)
                         {
-                            clientes = new List<ClientesDomain.Cliente>();
+                            clientes = new List<ClientesEntities.Models.Cliente>();
                         }
 
                         foreach (var customer in customers)
@@ -413,7 +415,7 @@ namespace ClientesDAC.Implementaciones
                                 });
                             }
 
-                            ((List<ClientesDomain.Cliente>)clientes).Add(cliente);
+                            ((List<ClientesEntities.Models.Cliente>)clientes).Add(cliente);
                         }
                     }
                 }

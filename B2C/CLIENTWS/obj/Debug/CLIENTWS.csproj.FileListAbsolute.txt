@@ -1,3 +1,4 @@
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\obj\Debug\CLIENTWS.csprojResolveAssemblyReference.cache
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\ApplicationInsights.config
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\roslyn\csc.exe
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -15,7 +16,7 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\CLIENTWS.dll.confi
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\CLIENTWS.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\CLIENTWS.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\ClientesDAC.dll
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\ClientesDomain.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\ClientesEntities.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Microsoft.AI.Agent.Intercept.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Microsoft.AI.DependencyCollector.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Microsoft.AI.PerfCounterCollector.dll
@@ -29,6 +30,7 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Net.Http.Fo
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.Cors.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.Http.Cors.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.Http.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.Http.Tracing.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.Http.WebHost.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.Mvc.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\ClientesEF.dll
@@ -40,7 +42,7 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.WebPage
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.WebPages.Deployment.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\ClientesDAC.pdb
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\ClientesDomain.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\ClientesEntities.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Microsoft.AI.DependencyCollector.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Microsoft.AI.Web.xml
@@ -48,6 +50,7 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Microsoft.AI.Windo
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Microsoft.ApplicationInsights.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.Http.Cors.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.Http.Tracing.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.Mvc.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Newtonsoft.Json.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Net.Http.Formatting.xml
@@ -60,6 +63,5 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.WebPage
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.WebPages.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Microsoft.Web.Infrastructure.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.WebPages.Deployment.xml
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\obj\Debug\CLIENTWS.csprojResolveAssemblyReference.cache
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\obj\Debug\CLIENTWS.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\obj\Debug\CLIENTWS.pdb

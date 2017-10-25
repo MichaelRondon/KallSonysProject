@@ -27,6 +27,7 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Net.Http.Forma
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Cors.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.Cors.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.Tracing.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.WebHost.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.AI.DependencyCollector.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.AI.ServerTelemetryChannel.xml
@@ -35,6 +36,7 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.AI.WindowsS
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.ApplicationInsights.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.Cors.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.Tracing.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Newtonsoft.Json.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Net.Http.Formatting.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.xml
@@ -43,6 +45,4 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Release\B2CWS.StringR
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Release\B2CWS.csproj.GenerateResource.Cache
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Release\B2CWS.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Release\B2CWS.pdb
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.Tracing.dll
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.Tracing.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Release\B2CWS.csprojResolveAssemblyReference.cache

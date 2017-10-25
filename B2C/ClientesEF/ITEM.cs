@@ -21,6 +21,7 @@ namespace ClientesEF
         public Nullable<decimal> PRICE { get; set; }
         public Nullable<int> QUANTITY { get; set; }
         public int ORDID { get; set; }
+        public string CATEGORY { get; set; }
     
         public virtual ORDER ORDER { get; set; }
     }

@@ -33,6 +33,7 @@
     <EntitySetMapping Name="ITEMS">
       <EntityTypeMapping TypeName="Model.ITEM">
         <MappingFragment StoreEntitySet="ITEMS">
+          <ScalarProperty Name="CATEGORY" ColumnName="CATEGORY" />
           <ScalarProperty Name="ITEMID" ColumnName="ITEMID" />
           <ScalarProperty Name="PRODID" ColumnName="PRODID" />
           <ScalarProperty Name="PRODUCTNAME" ColumnName="PRODUCTNAME" />

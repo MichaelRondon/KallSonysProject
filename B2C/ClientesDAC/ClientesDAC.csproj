@@ -51,9 +51,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\ClientesDomain\ClientesDomain.csproj">
+    <ProjectReference Include="..\ClientesDomain\ClientesEntities.csproj">
       <Project>{223731c7-5db5-444c-a10a-c05c678c9ba3}</Project>
-      <Name>ClientesDomain</Name>
+      <Name>ClientesEntities</Name>
     </ProjectReference>
     <ProjectReference Include="..\ClientesEF\ClientesEF.csproj">
       <Project>{900de17f-01b4-4fc3-84cc-c1197ab21ad2}</Project>

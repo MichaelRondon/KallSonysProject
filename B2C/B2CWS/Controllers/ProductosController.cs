@@ -1,8 +1,7 @@
-﻿using System;
+﻿#region Directivas using
+using System;
 using System.Collections.Generic;
 using System.Data;
-//using System.Data.Entity;
-//using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -12,20 +11,41 @@ using System.Web.Http.Description;
 using B2CWS.Models;
 using System.Net.Http.Headers;
 using System.Text;
+using Common.DTO;
+using Common.Util;
 using B2CWS.Util;
+using System.Web.Http.Cors;
+using OrdenesEntities.Models;
+using OrdenesDAC.Contratos;
+using OrdenesDAC.Implementaciones;
+#endregion
 
 namespace B2CWS.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ProductosController : ApiController
     {
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        //db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
+        #region Atributos
+
+        private IOrdenesDAC _ordenesDAC;
+
+        #endregion
+
+        #region Propiedades
+
+        public IOrdenesDAC OrdenesDAC
+        {
+            get
+            {
+                if (_ordenesDAC == null)
+                {
+                    _ordenesDAC = new OrdenesDAC.Implementaciones.OrdenesDAC();
+                }
+                return _ordenesDAC;
+            }
+        }
+
+        #endregion
 
         // Get
         [Route("api/producto/historico/vendidos")]
@@ -43,19 +63,22 @@ namespace B2CWS.Controllers
                 sort_type = sort_type,
                 custom = custom
             };
-            string parameters = WebClientHelper.ParametrosSearch(_params);
-            string path = string.Format("{0}?{1}", StringResources.ServicioHistoricoProductos, parameters);
 
-            QueryProductos productos = null;
-            HttpResponseMessage response = await WebClientHelper.Client.GetAsync(path);
-            if (response.IsSuccessStatusCode)
-            {
-                productos = await response.Content.ReadAsAsync<QueryProductos>();
-            }
+            QueryProductos productos = await OrdenesDAC.HistoricoVendidos(_params);
 
             if (productos == null)
             {
                 return NotFound();
+            }
+            else
+            {
+                if (productos.productos != null)
+                {
+                    foreach (var prod in productos.productos)
+                    {
+                        prod.urlImage = Url.Route("DefaultApi", new { controller = "ImageThumb", id = prod.id });
+                    }
+                }
             }
 
             return Ok(productos);
@@ -84,16 +107,8 @@ namespace B2CWS.Controllers
                 sort_type = sort_type,
                 custom = custom
             };
-            string parameters = WebClientHelper.ParametrosSearch(_params);
-            
-            string path = string.Format("{0}?{1}", StringResources.ServicioBuscarProductos, parameters); // Path base de los productos
 
-            QueryProductos productos = null;
-            HttpResponseMessage response = await WebClientHelper.Client.GetAsync(path);
-            if (response.IsSuccessStatusCode)
-            {
-                productos = await response.Content.ReadAsAsync<QueryProductos>();
-            }
+            QueryProductos productos = await OrdenesDAC.BuscarProductos(_params);
 
             if (productos == null)
             {
@@ -106,7 +121,7 @@ namespace B2CWS.Controllers
         // Get
         [Route("api/producto/campanias")]
         [ResponseType(typeof(QueryCampanias))]
-        public async Task<IHttpActionResult> GetCampanias(string estado = "", int page = 0, int items_per_page = 0, string sort = "", string sort_type = "", string custom = "", bool detalle = true)
+        public async Task<IHttpActionResult> GetCampanias(string estado = "", int page = 0, int items_per_page = 0, string sort = "", string sort_type = "", string custom = "", bool detalle = true, string categoria = "")
         {
             Parametros _params = new Parametros()
             {
@@ -115,17 +130,11 @@ namespace B2CWS.Controllers
                 items_per_page = items_per_page,
                 sort = sort,
                 sort_type = sort_type,
-                custom = custom
+                custom = custom,
+                categoria = categoria
             };
-            string parameters = WebClientHelper.ParametrosSearch(_params);
-            string path = string.Format("{0}?{1}", StringResources.ServicioCampanias, parameters);
 
-            QueryCampanias campanias = null;
-            HttpResponseMessage response = await WebClientHelper.Client.GetAsync(path);
-            if (response.IsSuccessStatusCode)
-            {
-                campanias = await response.Content.ReadAsAsync<QueryCampanias>();
-            }
+            QueryCampanias campanias = await OrdenesDAC.BuscarCampanias(_params);
 
             if (campanias == null)
             {
@@ -152,8 +161,8 @@ namespace B2CWS.Controllers
                             }
                         }
                         item.urlImage = Url.Route("DefaultApi", new { controller = "ImageCampania", id = item.id });
-                    } 
-                } 
+                    }
+                }
             }
 
             return Ok(campanias);
@@ -183,5 +192,42 @@ namespace B2CWS.Controllers
 
             return Ok(slider);
         }
+
+        //// Get
+        [Route("api/producto/{id}")]
+        [ResponseType(typeof(Producto))]
+        public async Task<IHttpActionResult> GetProducto(long id)
+        {
+            Producto producto = await OrdenesDAC.ConsultarProducto(id);
+
+            if (producto == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(producto);
+        }
+
+        //// Get
+        [Route("api/categorias")]
+        [ResponseType(typeof(IEnumerable<Categoria>))]
+        public async Task<IHttpActionResult> GetCategorias(int page = 0, int size = 0)
+        {
+            Parametros _params = new Parametros()
+            {
+                page = page,
+                size = size
+            };
+
+            IEnumerable<Categoria> categorias = await OrdenesDAC.BuscarCategorias(_params);
+
+            if (categorias == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(categorias);
+        }
+
     }
 }

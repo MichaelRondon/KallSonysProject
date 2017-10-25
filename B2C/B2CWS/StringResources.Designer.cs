@@ -95,5 +95,27 @@ namespace B2CWS {
                 return ResourceManager.GetString("ServicioLocalImagenes", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to api/producto.
+        /// </summary>
+        internal static string ServicioProductos
+        {
+            get
+            {
+                return ResourceManager.GetString("ServicioProductos", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to api/categorias.
+        /// </summary>
+        internal static string ServicioCategorias
+        {
+            get
+            {
+                return ResourceManager.GetString("ServicioCategorias", resourceCulture);
+            }
+        }
     }
 }

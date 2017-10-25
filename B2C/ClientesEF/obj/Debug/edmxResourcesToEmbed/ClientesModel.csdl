@@ -35,7 +35,7 @@
     <Key>
       <PropertyRef Name="ITEMID" />
     </Key>
-    <Property Name="ITEMID" Type="Int32" Nullable="false" />
+    <Property Name="ITEMID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="PRODID" Type="Decimal" Precision="22" Scale="0" Nullable="false" />
     <Property Name="PRODUCTNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="PARTNUM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -43,13 +43,14 @@
     <Property Name="QUANTITY" Type="Int32" />
     <Property Name="ORDID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="ORDER" Relationship="Self.ITEMS_FK" FromRole="ITEMS" ToRole="ORDERS" />
+    <Property Name="CATEGORY" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="ORDER">
     <Key>
       <PropertyRef Name="ORDID" />
     </Key>
     <Property Name="CUSTID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-    <Property Name="ORDID" Type="Int32" Nullable="false" />
+    <Property Name="ORDID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ORDERDATE" Type="DateTime" />
     <Property Name="PRICE" Type="Decimal" Precision="9" Scale="2" />
     <Property Name="STATUS" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />

@@ -95,6 +95,10 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3\lib\net45\System.Web.Http.Cors.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Http.Tracing, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Tracing.5.2.3\lib\net45\System.Web.Http.Tracing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
@@ -122,7 +126,9 @@
     <Content Include="Global.asax" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -166,9 +172,9 @@
       <Project>{a8da3748-a734-4945-ae73-25d348185383}</Project>
       <Name>ClientesDAC</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ClientesDomain\ClientesDomain.csproj">
+    <ProjectReference Include="..\ClientesDomain\ClientesEntities.csproj">
       <Project>{223731c7-5db5-444c-a10a-c05c678c9ba3}</Project>
-      <Name>ClientesDomain</Name>
+      <Name>ClientesEntities</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -39,20 +39,21 @@
     <Key>
       <PropertyRef Name="ITEMID" />
     </Key>
-    <Property Name="ITEMID" Type="number" Precision="9" Scale="0" Nullable="false" />
+    <Property Name="ITEMID" Type="number" Precision="9" Scale="0" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="PRODID" Type="number" Precision="22" Scale="0" Nullable="false" />
     <Property Name="PRODUCTNAME" Type="varchar2" MaxLength="200" />
     <Property Name="PARTNUM" Type="varchar2" MaxLength="50" />
     <Property Name="PRICE" Type="number" Precision="9" Scale="2" />
     <Property Name="QUANTITY" Type="number" Precision="9" Scale="0" />
     <Property Name="ORDID" Type="number" Precision="9" Scale="0" Nullable="false" />
+    <Property Name="CATEGORY" Type="varchar2" MaxLength="4000" />
   </EntityType>
   <EntityType Name="ORDERS">
     <Key>
       <PropertyRef Name="ORDID" />
     </Key>
     <Property Name="CUSTID" Type="varchar2" MaxLength="40" />
-    <Property Name="ORDID" Type="number" Precision="9" Scale="0" Nullable="false" />
+    <Property Name="ORDID" Type="number" Precision="9" Scale="0" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ORDERDATE" Type="date" />
     <Property Name="PRICE" Type="number" Precision="9" Scale="2" />
     <Property Name="STATUS" Type="varchar2" MaxLength="10" />

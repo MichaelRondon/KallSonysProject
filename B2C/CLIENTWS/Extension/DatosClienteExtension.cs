@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using CLIENTWS.Models;
+using ClientesEntities.Models;
 
 namespace CLIENTWS.Extension
 {
     public static class DatosClienteExtension
     {
-        public static IEnumerable<DatosCliente> ToDatosClienteCollection(this IEnumerable<ClientesDomain.Cliente> from)
+        public static IEnumerable<DatosCliente> ToDatosClienteCollection(this IEnumerable<ClientesEntities.Models.Cliente> from)
         {
             List<DatosCliente> retorno = new List<DatosCliente>();
             DatosCliente response = null;
@@ -40,9 +41,9 @@ namespace CLIENTWS.Extension
                     {
                         if (response.direcciones == null)
                         {
-                            response.direcciones = new List<Direccion>();
+                            response.direcciones = new List<Models.Direccion>();
                         }
-                        ((List<Direccion>)response.direcciones).Add(new Direccion()
+                        ((List<Models.Direccion>)response.direcciones).Add(new Models.Direccion()
                         {
                             calle = dir.calle,
                             ciudad = dir.ciudad,

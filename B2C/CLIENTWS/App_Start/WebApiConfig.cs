@@ -10,6 +10,7 @@ namespace CLIENTWS
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            config.EnableSystemDiagnosticsTracing();
             config.EnableCors();
 
             // Web API routes

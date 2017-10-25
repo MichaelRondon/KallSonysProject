@@ -42,7 +42,7 @@ namespace CLIENTWS.Controllers
                 success = true
             };
 
-            ClientesDomain.Cliente clienteCrear = new ClientesDomain.Cliente() {
+            ClientesEntities.Models.Cliente clienteCrear = new ClientesEntities.Models.Cliente() {
                 apellidos = request.apellidos,
                 correo_e = request.correo_e,
                 documento = request.documento,
@@ -65,7 +65,14 @@ namespace CLIENTWS.Controllers
                 response.mensaje = resultado;
             }
 
-            return Ok(response);
+            if (response.success == true)
+            {
+                return Created(Url.Route("DefaultApi", new { controller = "clientes", id = request.documento }), response);
+            }
+            else
+            {
+                return BadRequest(response.mensaje);
+            }
         }
 
         [ResponseType(typeof(ResponseCliente))]
@@ -78,7 +85,7 @@ namespace CLIENTWS.Controllers
                 success = true
             };
 
-            ClientesDomain.Cliente clienteActualizar = new ClientesDomain.Cliente()
+            ClientesEntities.Models.Cliente clienteActualizar = new ClientesEntities.Models.Cliente()
             {
                 apellidos = request.apellidos,
                 correo_e = request.correo_e,
@@ -106,7 +113,7 @@ namespace CLIENTWS.Controllers
         {
             DatosCliente response = new DatosCliente();
 
-            ClientesDomain.Cliente cliente = DAC.ConsultarCliente(ID);
+            ClientesEntities.Models.Cliente cliente = DAC.ConsultarCliente(ID);
 
             if (cliente != null)
             {
@@ -156,7 +163,7 @@ namespace CLIENTWS.Controllers
         {
             IEnumerable<DatosCliente> response = new List<DatosCliente>();
 
-            IEnumerable<ClientesDomain.Cliente> cliente = DAC.ConsultarCliente();
+            IEnumerable<ClientesEntities.Models.Cliente> cliente = DAC.ConsultarCliente();
 
             response = cliente.ToDatosClienteCollection();
 

@@ -1,4 +1,4 @@
-﻿using ClientesDomain;
+﻿using ClientesEntities.Models;
 using CLIENTWS.Models;
 using System;
 using System.Collections.Generic;
