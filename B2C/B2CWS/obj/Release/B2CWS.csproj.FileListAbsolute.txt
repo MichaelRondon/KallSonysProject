@@ -46,3 +46,17 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Release\B2CWS.csproj.
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Release\B2CWS.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Release\B2CWS.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Release\B2CWS.csprojResolveAssemblyReference.cache
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Common.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\OrdenesDAC.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\OrdenesEntities.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\ShoppingCartDAC.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\ShoppingCartEntities.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\ClientesEF.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\EntityFramework.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Common.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\OrdenesDAC.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\OrdenesEntities.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\ShoppingCartDAC.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\ShoppingCartEntities.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\ClientesEF.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\EntityFramework.xml

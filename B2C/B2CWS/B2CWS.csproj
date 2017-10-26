@@ -131,6 +131,7 @@
     <Compile Include="Controllers\ImageCampaniaController.cs" />
     <Compile Include="Controllers\ImageSliderController.cs" />
     <Compile Include="Controllers\OrdenesController.cs" />
+    <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\UploadCampaniaController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\ImageLargeController.cs" />
@@ -184,6 +185,14 @@
     <ProjectReference Include="..\OrdenesEntities\OrdenesEntities.csproj">
       <Project>{03ce071f-67dc-43aa-baff-d2cc2605b63b}</Project>
       <Name>OrdenesEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ShoppingCartDAC\ShoppingCartDAC.csproj">
+      <Project>{478f42bf-8809-4b6e-902f-9e593f6deb61}</Project>
+      <Name>ShoppingCartDAC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ShoppingCartEntities\ShoppingCartEntities.csproj">
+      <Project>{3e942ad8-1f0b-41e2-bba4-8f7733951d63}</Project>
+      <Name>ShoppingCartEntities</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

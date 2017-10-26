@@ -29,12 +29,13 @@
     <Property Name="SALT" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="ORDERS" Relationship="Self.ORDERS_FK" FromRole="CUSTOMER" ToRole="ORDERS" />
     <NavigationProperty Name="ADDRESSes" Relationship="Self.CUSTOMER_ADDRESS" FromRole="CUSTOMER" ToRole="ADDRESS" />
+    <NavigationProperty Name="PASSWD_CHANGE_REQUEST" Relationship="Model.PASSWD_CHANGE_REQUEST_FK" FromRole="CUSTOMER" ToRole="PASSWD_CHANGE_REQUEST" />
   </EntityType>
   <EntityType Name="ITEM">
     <Key>
       <PropertyRef Name="ITEMID" />
     </Key>
-    <Property Name="ITEMID" Type="Int32" Nullable="false" />
+    <Property Name="ITEMID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="PRODID" Type="Decimal" Precision="22" Scale="0" Nullable="false" />
     <Property Name="PRODUCTNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="PARTNUM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -42,13 +43,14 @@
     <Property Name="QUANTITY" Type="Int32" />
     <Property Name="ORDID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="ORDER" Relationship="Self.ITEMS_FK" FromRole="ITEMS" ToRole="ORDERS" />
+    <Property Name="CATEGORY" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="ORDER">
     <Key>
       <PropertyRef Name="ORDID" />
     </Key>
     <Property Name="CUSTID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-    <Property Name="ORDID" Type="Int32" Nullable="false" />
+    <Property Name="ORDID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ORDERDATE" Type="DateTime" />
     <Property Name="PRICE" Type="Decimal" Precision="9" Scale="2" />
     <Property Name="STATUS" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
@@ -101,5 +103,34 @@
       <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
       <End Role="ADDRESS" EntitySet="ADDRESSes" />
     </AssociationSet>
+    <EntitySet Name="PASSWD_CHANGE_REQUEST" EntityType="Model.PASSWD_CHANGE_REQUEST" />
+    <AssociationSet Name="PASSWD_CHANGE_REQUEST_FK" Association="Model.PASSWD_CHANGE_REQUEST_FK">
+      <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+      <End Role="PASSWD_CHANGE_REQUEST" EntitySet="PASSWD_CHANGE_REQUEST" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="PASSWD_CHANGE_REQUEST">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CUSTID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="EMAIL" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="TOKEN" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="REQUEST_DATE" Type="DateTime" Nullable="false" />
+    <Property Name="PROCESSED" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="CUSTOMER" Relationship="Model.PASSWD_CHANGE_REQUEST_FK" FromRole="PASSWD_CHANGE_REQUEST" ToRole="CUSTOMER" />
+  </EntityType>
+  <Association Name="PASSWD_CHANGE_REQUEST_FK">
+    <End Type="Model.CUSTOMER" Role="CUSTOMER" Multiplicity="1" />
+    <End Type="Model.PASSWD_CHANGE_REQUEST" Role="PASSWD_CHANGE_REQUEST" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CUSTOMER">
+        <PropertyRef Name="CUSTID" />
+      </Principal>
+      <Dependent Role="PASSWD_CHANGE_REQUEST">
+        <PropertyRef Name="CUSTID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

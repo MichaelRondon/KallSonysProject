@@ -1,0 +1,14 @@
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\bin\Release\ShoppingCartDAC.dll.config
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\bin\Release\ShoppingCartDAC.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\bin\Release\ShoppingCartDAC.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\bin\Release\ClientesEF.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\bin\Release\Common.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\bin\Release\EntityFramework.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\bin\Release\ShoppingCartEntities.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\bin\Release\ClientesEF.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\bin\Release\Common.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\bin\Release\ShoppingCartEntities.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\bin\Release\EntityFramework.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\obj\Release\ShoppingCartDAC.csprojResolveAssemblyReference.cache
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\obj\Release\ShoppingCartDAC.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\obj\Release\ShoppingCartDAC.pdb

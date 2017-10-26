@@ -15,9 +15,13 @@ namespace CLIENTWS.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class clientesController : ApiController
     {
-        #region Atributos privados
+        #region Atributos
 
         private ClientesDAC.Contratos.IClientesDAC _dac;
+
+        #endregion
+
+        #region Propiedades
 
         private ClientesDAC.Contratos.IClientesDAC DAC
         {

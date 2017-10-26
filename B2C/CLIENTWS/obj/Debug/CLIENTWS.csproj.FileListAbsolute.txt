@@ -1,4 +1,3 @@
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\obj\Debug\CLIENTWS.csprojResolveAssemblyReference.cache
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\ApplicationInsights.config
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\roslyn\csc.exe
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -63,5 +62,6 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.WebPage
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.WebPages.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Microsoft.Web.Infrastructure.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.WebPages.Deployment.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\obj\Debug\CLIENTWS.csprojResolveAssemblyReference.cache
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\obj\Debug\CLIENTWS.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\obj\Debug\CLIENTWS.pdb

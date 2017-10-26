@@ -16,7 +16,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/18/2017 15:12:13</publishTime>
     </File>
     <File Include="bin/B2CWS.dll">
-      <publishTime>10/23/2017 23:28:31</publishTime>
+      <publishTime>10/25/2017 23:33:47</publishTime>
+    </File>
+    <File Include="bin/ClientesEF.dll">
+      <publishTime>10/25/2017 23:30:27</publishTime>
+    </File>
+    <File Include="bin/Common.dll">
+      <publishTime>10/25/2017 23:30:27</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.dll">
+      <publishTime>11/03/2015 17:43:34</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>12/07/2015 19:04:38</publishTime>
@@ -44,6 +53,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>08/03/2014 20:33:56</publishTime>
+    </File>
+    <File Include="bin/OrdenesDAC.dll">
+      <publishTime>10/25/2017 23:30:28</publishTime>
+    </File>
+    <File Include="bin/OrdenesEntities.dll">
+      <publishTime>10/25/2017 23:30:27</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/18/2015 20:19:46</publishTime>
@@ -81,6 +96,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/roslyn/VBCSCompiler.exe.config">
       <publishTime>06/18/2015 20:19:46</publishTime>
     </File>
+    <File Include="bin/ShoppingCartDAC.dll">
+      <publishTime>10/25/2017 23:33:44</publishTime>
+    </File>
+    <File Include="bin/ShoppingCartEntities.dll">
+      <publishTime>10/25/2017 23:30:27</publishTime>
+    </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>01/28/2015 04:02:42</publishTime>
     </File>
@@ -112,7 +133,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/18/2017 15:12:13</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/19/2017 01:18:15</publishTime>
+      <publishTime>10/25/2017 23:30:31</publishTime>
     </File>
   </ItemGroup>
 </Project>

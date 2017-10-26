@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTO\Parametros.cs" />
+    <Compile Include="Enums\EstadoOrden.cs" />
     <Compile Include="Resources\StringResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -1,0 +1,5 @@
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartEntities\bin\Release\ShoppingCartEntities.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartEntities\bin\Release\ShoppingCartEntities.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartEntities\obj\Release\ShoppingCartEntities.csprojResolveAssemblyReference.cache
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartEntities\obj\Release\ShoppingCartEntities.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartEntities\obj\Release\ShoppingCartEntities.pdb
