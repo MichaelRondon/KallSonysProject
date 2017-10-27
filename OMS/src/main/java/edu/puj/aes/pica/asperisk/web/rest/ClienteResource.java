@@ -1,13 +1,17 @@
 package edu.puj.aes.pica.asperisk.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.HeaderUtil;
 import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.PaginationUtil;
 import edu.puj.aes.pica.asperisk.service.ClienteService;
-//import edu.puj.aes.pica.asperisk.web.rest.util.HeaderUtil;
-//import edu.puj.aes.pica.asperisk.web.rest.util.PaginationUtil;
 import edu.puj.aes.pica.asperisk.service.dto.ClienteDTO;
+import edu.puj.aes.pica.asperisk.web.rest.errors.CustomParameterizedException;
 import io.swagger.annotations.ApiParam;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -20,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * REST controller for managing Cliente.
@@ -59,10 +64,23 @@ public class ClienteResource {
 //    }
     @PostMapping("/clientes")
     @Timed
-    public ResponseEntity<String> createCliente (@Valid @RequestBody String cliente) {
+    public ResponseEntity<String> createCliente(@Valid @RequestBody String cliente) throws URISyntaxException {
         log.info("REST! request to create Cliente : {}", cliente);
-        return  new ResponseEntity<>(clienteService.create(cliente), HttpStatus.CREATED);
-    }   
+        String create;
+        Map<String, Object> map;
+        try {
+            create = clienteService.create(cliente);
+            ObjectMapper mapper = new ObjectMapper();
+            map = mapper.readValue(cliente, new TypeReference<Map<String, Object>>() {
+            });
+        } catch (CustomParameterizedException | IOException cpe) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, cpe.getMessage(), "")).body(null);
+        }
+
+        return ResponseEntity.created(new URI("/api/clientes/" + map.get("documento")))
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, map.get("documento").toString()))
+                .body(create);
+    }
 
 //    /**
 //     * PUT  /clientes : Updates an existing cliente.
@@ -87,16 +105,30 @@ public class ClienteResource {
 //    }
     @PutMapping("/clientes")
     @Timed
-    public ResponseEntity<String> updateCliente(@Valid @RequestBody String cliente) {
+    public ResponseEntity<String> updateCliente(@Valid @RequestBody String cliente) throws URISyntaxException {
         log.info("REST request to update Cliente : {}", cliente);
-        return  new ResponseEntity<>(clienteService.update(cliente), HttpStatus.OK);
+        String update;
+        Map<String, Object> map;
+        try {
+            update = clienteService.update(cliente);
+            ObjectMapper mapper = new ObjectMapper();
+            map = mapper.readValue(cliente, new TypeReference<Map<String, Object>>() {
+            });
+        } catch (CustomParameterizedException | IOException cpe) {
+            log.error("Error al actualizar el cliente: {}", cpe.getMessage());
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, cpe.getMessage(), "")).body(null);
+        }
+        return ResponseEntity.created(new URI("/api/clientes/" + map.get("documento")))
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, map.get("documento").toString()))
+                .body(update);
     }
 
     /**
-     * GET  /clientes : get all the clientes.
+     * GET /clientes : get all the clientes.
      *
      * @param pageable the pagination information
-     * @return the ResponseEntity with status 200 (OK) and the list of clientes in body
+     * @return the ResponseEntity with status 200 (OK) and the list of clientes
+     * in body
      */
     @GetMapping("/clientes")
     @Timed
@@ -108,10 +140,11 @@ public class ClienteResource {
     }
 
     /**
-     * GET  /clientes/:id : get the "id" cliente.
+     * GET /clientes/:id : get the "id" cliente.
      *
      * @param id the id of the clienteDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the clienteDTO, or with status 404 (Not Found)
+     * @return the ResponseEntity with status 200 (OK) and with body the
+     * clienteDTO, or with status 404 (Not Found)
      */
 //    @GetMapping("/clientes/{id}")
 //    @Timed
@@ -129,11 +162,11 @@ public class ClienteResource {
         log.info("REST request to get Cliente : {}", id);
         String find = clienteService.find(id);
         log.info("find : {}", find);
-        return  new ResponseEntity<>(find, HttpStatus.OK);
-    }  
+        return new ResponseEntity<>(find, HttpStatus.OK);
+    }
 
     /**
-     * DELETE  /clientes/:id : delete the "id" cliente.
+     * DELETE /clientes/:id : delete the "id" cliente.
      *
      * @param id the id of the clienteDTO to delete
      * @return the ResponseEntity with status 200 (OK)
@@ -145,4 +178,4 @@ public class ClienteResource {
         clienteService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
-}   
+}

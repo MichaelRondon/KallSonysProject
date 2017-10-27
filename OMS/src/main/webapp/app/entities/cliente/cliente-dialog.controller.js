@@ -13,6 +13,8 @@
         vm.cliente = entity;
         vm.clear = clear;
         vm.save = save;
+        vm.isMatch = true;
+        vm.change = change;
         vm.datostarjetas = Tarjeta.query({filter: 'cliente-is-null'});
         $q.all([vm.cliente.$promise, vm.datostarjetas.$promise]).then(function() {
             if (!vm.cliente.datosTarjetaId) {
@@ -29,6 +31,10 @@
 
         function clear () {
             $uibModalInstance.dismiss('cancel');
+        }
+
+        function change () {
+            vm.isMatch = !(vm.cliente.password) || vm.cliente.password === vm.password_rep;
         }
 
         function save () {

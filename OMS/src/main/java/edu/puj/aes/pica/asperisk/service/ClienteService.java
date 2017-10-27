@@ -50,12 +50,12 @@ public class ClienteService {
     
     @Transactional
     public String create(String cliente){
-        return clientServiceRestClient.create(cliente.replace("correoE", "correo_e").replace("datosTarjeta", "datos_tarjeta"));
+        return clientServiceRestClient.create(cliente.replace("correoE", "correo_e").replace("tarjeta", "datos_tarjeta"));
     }
     
     @Transactional
     public String update(String cliente){
-        return clientServiceRestClient.update(cliente.replace("correoE", "correo_e").replace("datosTarjeta", "datos_tarjeta"));
+        return clientServiceRestClient.update(cliente.replace("correoE", "correo_e").replace("tarjeta", "datos_tarjeta"));
     }
 
     /**
@@ -86,7 +86,7 @@ public class ClienteService {
     
     public String find(String idCliente){
         String find = clientServiceRestClient.find(idCliente);
-        return find.replace("correo_e", "correoE").replace("datos_tarjeta","datosTarjeta");
+        return find.replace("correo_e", "correoE").replace("datos_tarjeta","tarjeta");
     }
 
     /**

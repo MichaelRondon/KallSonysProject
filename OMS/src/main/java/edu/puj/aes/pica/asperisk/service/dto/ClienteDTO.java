@@ -10,8 +10,6 @@ import java.util.Objects;
  */
 public class ClienteDTO implements Serializable {
 //{"documento":"CC4385452452589342","nombres":"Michael Fdsafe","apellidos":"Tales","telefono":"231423","correo_e":"sqqdjvdj@fjdsad.com","password":"47523","id":null,"datos_tarjeta":{"tipo":"ewrufre","numero":"782495"}}
-//   PLATINUM
-//PREMIUM
 //    CC79987979
     private Long id;
 
