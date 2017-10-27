@@ -94,7 +94,8 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         if (products == null) {
             elasticSearchInputMultiBuilders.setProduct(searchRequest.getProduct());
             try {
-                SearchResponse searchResponse = executeTransaction(new SearchMultiBuilder(), elasticSearchInputMultiBuilders);
+                SearchResponse searchResponse = executeTransaction(new SearchMultiBuilder(),
+                        elasticSearchInputMultiBuilders);
                 products = getListFromSearchResponse(searchResponse);
                 putProductsInCache(searchRequest.getProduct(), products);
             } catch (ProductTransactionException ex) {
@@ -130,30 +131,34 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             Product productJPA = jpaProductService.create(product);
             product.setId(productJPA.getId());
             try {
-                createInElasticSearch(product);
+                this.createInElasticSearch(product);
             } catch (JsonProcessingException ex) {
-                String errorMessage = String.format("Error convirtiendo el objeto Product en json. Objeto: %s, mensaje: %s",
-                        product, ex.getMessage());
+                String errorMessage = String
+                        .format("Error convirtiendo el objeto Product en json. Objeto: %s, mensaje: %s",
+                                product, ex.getMessage());
                 LOGGER.error(errorMessage, ex);
                 this.declineJPACreation(productJPA.getId());
                 throw new ProductTransactionException(errorMessage, ex);
-            } catch (ProductTransactionException | RuntimeException ex) {
-                String errorMessage = String.format("Error persistiendo producto en Elasticsearch. Objeto: %s, mensaje: %s",
-                        product, ex.getMessage());
+            } catch (Exception ex) {
+                String errorMessage = String
+                        .format("Error persistiendo producto en Elasticsearch. Objeto: %s, mensaje: %s",
+                                product, ex.getMessage());
                 LOGGER.error(errorMessage, ex);
                 this.declineJPACreation(productJPA.getId());
                 throw new ProductTransactionException(errorMessage, ex);
             }
             return product;
         } catch (ProductTransactionException ex) {
-            String errorMessage = String.format("Error persistiendo producto mediante JPA. Objeto: %s, mensaje: %s",
-                    product, ex.getMessage());
+            String errorMessage = String
+                    .format("Error persistiendo producto mediante JPA. Objeto: %s, mensaje: %s",
+                            product, ex.getMessage());
             LOGGER.error(errorMessage, ex);
             throw new ProductTransactionException(errorMessage, ex);
         }
     }
 
-    private void createInElasticSearch(Product product) throws JsonProcessingException, ProductTransactionException {
+    private void createInElasticSearch(Product product) throws JsonProcessingException,
+            ProductTransactionException {
         LOGGER.info("Inicia persistencia en Elasticsearch id: {}", product.getId());
         long initTime = System.currentTimeMillis();
         String productJson = mapper.writeValueAsString(product);
@@ -192,6 +197,11 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
                     jpaProductService.update(findOne);
                 } catch (ProductTransactionException ex) {
                     LOGGER.error("Error persistiendo producto mediante JPA", ex);
+                    try {
+                        jpaProductService.update(findOne);
+                    } catch (ProductTransactionException ex1) {
+                        Logger.getLogger(ElasticSearchService.class.getName()).log(Level.SEVERE, null, ex1);
+                    }
                 }
             };
             (new Thread(runnable)).start();
@@ -217,6 +227,12 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
                 jpaProductService.delete(id);
             } catch (ProductTransactionException ex) {
                 LOGGER.error("Error persistiendo producto mediante JPA", ex);
+                try {
+                    jpaProductService.delete(id);
+                } catch (ProductTransactionException ex1) {
+                    Logger.getLogger(ElasticSearchService.class.getName())
+                            .log(Level.SEVERE, null, ex1);
+                }
             }
         };
         (new Thread(runnable)).start();
@@ -244,7 +260,8 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
     }
 
     @Override
-    public ProductScrollResponse findAll(ScrollSearchRequest scrollSearchRequest) throws ProductTransactionException {
+    public ProductScrollResponse findAll(ScrollSearchRequest scrollSearchRequest)
+            throws ProductTransactionException {
 
         LOGGER.info("Busqueda por scroll. ScrollSearchRequest: {}", scrollSearchRequest);
         ProductScrollResponse productScrollResponse = new ProductScrollResponse();
@@ -254,7 +271,8 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
                     .setProductos(getProductFromCache(scrollSearchRequest.getScrollId()));
             LOGGER.info("Busca en caché");
             if (productScrollResponse.getProductos().isEmpty()) {
-                LOGGER.info("No encuentra productos en caché para el scroll id: {}", scrollSearchRequest.getScrollId());
+                LOGGER.info("No encuentra productos en caché para el scroll id: {}",
+                        scrollSearchRequest.getScrollId());
                 scrollSearchRequest.setScrollId(SearchScroll.EMPTY_SCROLL_ID);
             }
         }
@@ -289,7 +307,8 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
     @Override
     public List<Product> findAllByIds(List<Long> ids) throws ProductTransactionException {
         elasticSearchInput = new ElasticSearchInput();
-        ElasticSearchInputMultiGet elasticSearchInputMultiGet = new ElasticSearchInputMultiGet(elasticSearchInput);
+        ElasticSearchInputMultiGet elasticSearchInputMultiGet
+                = new ElasticSearchInputMultiGet(elasticSearchInput);
         elasticSearchInputMultiGet.setIds(ids);
         SearchResponse searchResponse = executeTransaction(new IDsQuery(), elasticSearchInputMultiGet);
         LOGGER.info("idsResponse: {}", searchResponse);
@@ -306,11 +325,14 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         LOGGER.info("Busca findAll.getContent().size(): {}", findAll.getContent().size());
 
         CampaignResponse campaignResponse = new CampaignResponse();
-        PaginationUtil.setResponseFromPage(campaniasRequest.getBasicSearchParams(), findAll, campaignResponse);
+        PaginationUtil.setResponseFromPage(campaniasRequest.getBasicSearchParams(), findAll,
+                campaignResponse);
         if (findAll.hasContent()) {
             campaignResponse.setCampanias(findAll.getContent());
             if (full) {
-                campaignResponse.getCampanias().stream().flatMap(campaign -> campaign.getProductos().stream()).forEach(this::fillProductById);
+                campaignResponse.getCampanias().stream()
+                        .flatMap(campaign -> campaign.getProductos().stream())
+                        .forEach(this::fillProductById);
             }
         }
         return campaignResponse;
@@ -347,10 +369,12 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         List<Product> products = new LinkedList<>();
         for (MultiGetItemResponse multiGetItemResponse : multiGetResponse) {
             try {
-                products.add(mapper.readValue(multiGetItemResponse.getResponse().getSourceAsString(), Product.class));
+                products.add(mapper.readValue(multiGetItemResponse.getResponse()
+                        .getSourceAsString(), Product.class));
             } catch (IOException ex) {
-                String errorMessage = String.format("Error convirtiendo respuesta en Product. multiGetResponse: %s, mensaje: %s",
-                        multiGetResponse, ex.getMessage());
+                String errorMessage = String
+                        .format("Error convirtiendo respuesta en Product. multiGetResponse: %s, mensaje: %s",
+                                multiGetResponse, ex.getMessage());
                 LOGGER.error(errorMessage, ex);
             }
         }
@@ -370,12 +394,14 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
                 longValue = Long.parseLong((String) getResponse.getSource().get("next"));
                 longValue++;
             } catch (org.elasticsearch.index.IndexNotFoundException ex) {
-                String errorMessage = String.format("No es posible obtener el siguiente valor en la secuencia del producto: %s",
-                        ex.getMessage());
+                String errorMessage = String
+                        .format("No es posible obtener el siguiente valor en la secuencia del producto: %s",
+                                ex.getMessage());
                 LOGGER.error(errorMessage, ex);
             } catch (NumberFormatException ex) {
-                String errorMessage = String.format("Número invalido en el siguiente valor de la secuencia. Mensaje: %s",
-                        ex.getMessage());
+                String errorMessage = String
+                        .format("Número invalido en el siguiente valor de la secuencia. Mensaje: %s",
+                                ex.getMessage());
                 LOGGER.error(errorMessage, ex);
             }
 
@@ -386,8 +412,9 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             return longValue;
 
         } catch (ProductTransactionException ex) {
-            String errorMessage = String.format("Error consultando el siguiente valor de la secuencia para los producto, mensaje: %s",
-                    ex.getMessage());
+            String errorMessage = String
+                    .format("Error consultando el siguiente valor de la secuencia para los producto, mensaje: %s",
+                            ex.getMessage());
             LOGGER.error(errorMessage, ex);
             throw new ProductTransactionException(errorMessage, ex);
         }
@@ -398,8 +425,9 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         try {
             return mapper.readValue(string, Product.class);
         } catch (IOException ex) {
-            String errorMessage = String.format("Error convirtiendo el String en Product. String: %s, mensaje: %s",
-                    string, ex.getMessage());
+            String errorMessage = String
+                    .format("Error convirtiendo el String en Product. String: %s, mensaje: %s",
+                            string, ex.getMessage());
             LOGGER.error(errorMessage, ex);
             throw new RuntimeException(errorMessage, ex);
         }
@@ -421,6 +449,31 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             return;
         }
         cache.put(product, products);
+    }
+
+    public void cleanData(Product productInJPA) {
+        Runnable runnable = () -> {
+            try {
+                Product productInElasticsearch = this.findOne(productInJPA.getId().toString());
+                if (productInElasticsearch == null || productInElasticsearch.getId() == null) {
+                    throw new ProductTransactionException("Registro no encontrado en elasticsearch.");
+                }
+                if (!productInJPA.equals(productInElasticsearch)) {
+                    this.update(productInJPA);
+                }
+            } catch (ProductTransactionException ex) {
+                LOGGER.error("Error en la limpieza de datos: {}", ex.getMessage());
+                LOGGER.error("Se creará el registro en elasticsearch con id: {}", productInJPA.getId());
+                try {
+                    this.createInElasticSearch(productInJPA);
+                } catch (JsonProcessingException ex1) {
+                    Logger.getLogger(ElasticSearchService.class.getName()).log(Level.SEVERE, null, ex1);
+                } catch (ProductTransactionException ex1) {
+                    Logger.getLogger(ElasticSearchService.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            }
+        };
+        (new Thread(runnable)).start();
     }
 
     private void clearProductCache() {
@@ -480,8 +533,10 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             return true;
         }
         int page = basicSearchParams.getPage() == null ? 0 : basicSearchParams.getPage();
-        int itemsPerPage = basicSearchParams.getItemsPerPage() == null ? totalList.size() : basicSearchParams.getItemsPerPage();
-        LOGGER.info("page: {}, itemsPerPage; {}, totalList.size(): {}", page, itemsPerPage, totalList.size());
+        int itemsPerPage = basicSearchParams.getItemsPerPage() == null
+                ? totalList.size() : basicSearchParams.getItemsPerPage();
+        LOGGER.info("page: {}, itemsPerPage; {}, totalList.size(): {}", page,
+                itemsPerPage, totalList.size());
         boolean conditional = (page + 1) * itemsPerPage >= totalList.size();
         LOGGER.info("conditional: {}", conditional);
         if (conditional) {

@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,23 +42,44 @@ public class ProductGenerator {
         return State.INACTIVO;
     }
 
+    public Runnable replace(Long id, Product product) {
+        Runnable runnable;
+        runnable = () -> {
+            productServiceRestClientImpl.delete(id);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                java.util.logging.Logger.getLogger(ProductGenerator.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            productServiceRestClientImpl.save(product);
+            Product findOne = productServiceRestClientImpl.findOne(id);
+            LOGGER.info("Se remplaza el producto con id: {}", findOne.getId());
+        };
+        return runnable;
+    }
+
+    @Getter
+    private ProductServiceRestClientImpl productServiceRestClientImpl = new ProductServiceRestClientImpl();
+
     public static void main(String[] args) {
         ProductGenerator productGenerator = new ProductGenerator();
-        ProductServiceRestClientImpl productServiceRestClientImpl = new ProductServiceRestClientImpl();
         ExecutorService newFixedThreadPool = Executors.newFixedThreadPool(6);
         Runnable runnable = () -> {
             long initTime = System.currentTimeMillis();
-            productServiceRestClientImpl.save(productGenerator.getProduct());
+            productGenerator.getProductServiceRestClientImpl().save(productGenerator.getProduct());
             LOGGER.info("TIEMPO: {}", (System.currentTimeMillis() - initTime));
         };
-
-        for (int i = 0; i < 200000; i++) {
+        long contadorRemplazos = 0;
+        for (long i = 0; i < 200000; i++) {
             LOGGER.info("i: {}", i);
             try {
-                long initTime = System.currentTimeMillis();
                 newFixedThreadPool.submit(runnable);
-                LOGGER.info("TIEMPO2: {}", (System.currentTimeMillis() - initTime));
                 Thread.sleep(400);
+                if (i % 6 == 0) {
+                    contadorRemplazos++;
+                    newFixedThreadPool.submit(productGenerator.replace(contadorRemplazos,
+                            productGenerator.getProduct()));
+                }
                 if (i % 100 == 0) {
                     Thread.sleep(3500);
 

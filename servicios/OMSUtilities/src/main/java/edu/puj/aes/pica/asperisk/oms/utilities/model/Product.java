@@ -12,7 +12,7 @@ import java.util.Set;
 import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(of = {"id", "nombre", "descripcion"})
+@EqualsAndHashCode(of = {"id", "nombre", "descripcion", "categoria"})
 public class Product implements Serializable {
 
     private Long id;

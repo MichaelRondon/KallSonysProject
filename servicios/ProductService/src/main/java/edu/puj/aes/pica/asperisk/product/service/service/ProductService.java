@@ -40,4 +40,6 @@ public interface ProductService {
     ProductScrollResponse findAll(ScrollSearchRequest scrollSearchRequest) throws ProductTransactionException;
     
     CampaignResponse findAllCampaigns (CampaignRequest campaniasRequest, boolean full);
+    
+    void cleanData(Product product);
 }
