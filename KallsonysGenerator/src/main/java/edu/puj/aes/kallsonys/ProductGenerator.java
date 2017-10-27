@@ -80,7 +80,7 @@ public class ProductGenerator {
                     newFixedThreadPool.submit(productGenerator.replace(contadorRemplazos,
                             productGenerator.getProduct()));
                 }
-                if (i % 100 == 0) {
+                if (i % 50 == 0) {
                     Thread.sleep(3500);
 
                 }
