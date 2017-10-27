@@ -97,9 +97,9 @@ public class CategoriaResource {
     @GetMapping("/categorias")
 //    @Timed
     public ResponseEntity<List<CategoriaDTO>> getAllCategorias(
-            @RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
+            @RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
             @RequestParam(value = "sort", defaultValue = "", required = false) String sort,
-            @RequestParam(value = "size", defaultValue = "1", required = false) Integer size) {
+            @RequestParam(value = "size", defaultValue = "1000", required = false) Integer size) {
 
         LOGGER.info("REST request to get a page of Categorias. Page: {} Sort: {}", page, sort);
         Page<CategoriaDTO> response = categoriaService.findAll(PaginationUtil.getPageRequest(page, sort, size));

@@ -34,7 +34,7 @@ public class ProductServiceRestClientImpl implements ProductServiceRestClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductServiceRestClientImpl.class);
 
-    public static final String PRODUCT_SERVICE_URL = "http://localhost:7076/api/producto";
+    public static final String PRODUCT_SERVICE_URL = "http://laptop-michael:7076/api/producto";
     private static String findAllScrollId = "-999";
 
     @Override

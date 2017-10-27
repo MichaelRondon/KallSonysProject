@@ -12,8 +12,30 @@ import java.util.Random;
 public class MyStringRandomGen {
 
     private static final String CHAR_LIST
-            = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-    private static final int RANDOM_STRING_LENGTH = 10;
+            = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890Diegoesmaricon";
+    private static final String[] CATEGORIAS = new String[]{"Celulares", "Televisores y Video", "Audio", "Computadores e Impresión",
+        "SmartWatch", "Cámaras", "Videojuegos", "Electrohogar", "Casa Inteligente", "Accesorios", "Drones", "Deportes"};
+    public static final String[] KEY_WORDS = new String[]{
+        "Blanco", "Negro", "Gris", "Amarillo", "Azul", "Rojo", "Verde", "Naranja",
+        "Cafe", "Grande", "Pequeño", "Mediano", "HD", "Portátil", "Ligero", "De lujo",
+        "Resistente", "Suave", "Blando", "Alta definición", "Multiusuario", "Especial",
+        "Resistente", "Gamers", "Digital", "Compacto", "Estéreo", "Periférico", "Automático",
+        "Avanzado", "Científica", "Empresarial", "Híbrido", "Inalámbrico", "Insuatrial",
+        "Innovador", "Térmico", "Empresarial", "Híbrido", "Inalámbrico", "Insuatrial", "Especial"
+    };
+    public static final String[] MARCAS = new String[]{
+        "Samsung", "Nokia", "Apple", "LG", "Nintendo", "Amazon", "Google", "Microsoft",
+        "Asus", "Lenovo", "SEGA", "Acer", "IBM", "Compact", "Motorola", "Xiaomi",
+        "HP", "Toshiba", "Mac", "Apple", "Hyundai", "Challenger",
+        "Kalley", "Pollito", "Payaso"
+    };
+    public static final String[] NOMBRE = new String[]{
+        "Televisor", "Computador", "Laptop", "Equipo de sonido", "Impresora", "Cámara", "Móvil", "Teféfono",
+        "Mini componente", "Lavadora", "Nevera", "Video proyector", "Ventilador", "Licuadora", "Microondas", "Arrocera",
+        "Cafetera", "Aspiradora", "Dron", "Secadora", "Multifuncional", "Teatro en casa",
+        "Plancha",
+        "SmartWatch"
+    };
 
     /**
      * This method generates random string
@@ -24,7 +46,7 @@ public class MyStringRandomGen {
 
         StringBuilder randStr = new StringBuilder();
         Random randomLenghtGenerator = new Random();
-        int nextInt = randomLenghtGenerator.nextInt(15 + 1);
+        int nextInt = randomLenghtGenerator.nextInt(15) + 1;
         for (int i = 0; i < nextInt; i++) {
             int number = getRandomNumber();
             char ch = CHAR_LIST.charAt(number);
@@ -49,6 +71,17 @@ public class MyStringRandomGen {
         }
     }
 
+    public String getRamdomCategoria() {
+        int randomInt = 0;
+        Random randomGenerator = new Random();
+        randomInt = randomGenerator.nextInt(CATEGORIAS.length);
+        if (randomInt - 1 == -1) {
+            return CATEGORIAS[randomInt];
+        } else {
+            return CATEGORIAS[randomInt - 1];
+        }
+    }
+
     public String getSentence(int wordsQuantity) {
         if (wordsQuantity <= 1) {
             return this.generateRandomString();
@@ -61,14 +94,42 @@ public class MyStringRandomGen {
         }
         return stringBuilder.toString();
     }
-    
-    public List<String> getRamdomListStrings(){
+
+    public List<String> getRamdomListStrings() {
         Random random = new Random();
-        List<String> strings =  new LinkedList<>();
+        List<String> strings = new LinkedList<>();
         int nextInt = random.nextInt(10);
+        if (nextInt < 3) {
+            nextInt = 10;
+        }
         for (int i = 0; i < nextInt; i++) {
             strings.add(generateRandomString());
         }
         return strings;
+    }
+
+    public List<String> getRamdomKeyWords() {
+        Random random = new Random();
+        List<String> strings = new LinkedList<>();
+        int nextInt = random.nextInt(5);
+        for (int i = 0; i < nextInt; i++) {
+            strings.add(getFromArray(KEY_WORDS));
+        }
+        strings.add(generateRandomString());
+        return strings;
+    }
+
+    public String getRamdomMarca() {
+        return getFromArray(MARCAS);
+    }
+
+    public String getRamdomNombre() {
+        return getFromArray(NOMBRE);
+    }
+
+    private String getFromArray(String[] array) {
+        Random random = new Random();
+        int nextInt = random.nextInt(array.length);
+        return array[nextInt];
     }
 }

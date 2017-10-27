@@ -4,8 +4,10 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Date;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -15,17 +17,18 @@ public class ProductGenerator {
 
     private final MyStringRandomGen myStringRandomGen = new MyStringRandomGen();
     private final Random random = new Random();
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductGenerator.class);
 
     public Product getProduct() {
         Product product = new Product();
-        product.setCategoria(myStringRandomGen.generateRandomString());
+        product.setCategoria(myStringRandomGen.getRamdomCategoria());
         product.setDescripcion(myStringRandomGen.getSentence(random.nextInt(15)));
         product.setDisponibilidad(random.nextInt(1000));
         product.setEstado(State.ACTIVO);
         product.setFechaRevDisponibilidad(new Date());
-        product.setKeyWords(myStringRandomGen.getRamdomListStrings());
-        product.setMarca(myStringRandomGen.getSentence(random.nextInt(3)));
-        product.setNombre(myStringRandomGen.getSentence(random.nextInt(4)));
+        product.setKeyWords(myStringRandomGen.getRamdomKeyWords());
+        product.setMarca(myStringRandomGen.getRamdomMarca());
+        product.setNombre(myStringRandomGen.getRamdomNombre() + " " + myStringRandomGen.getSentence(random.nextInt(2) + 1));
         product.setPrecio(new BigDecimal(random.nextDouble() * 10000, MathContext.DECIMAL32));
         return product;
     }
@@ -38,21 +41,28 @@ public class ProductGenerator {
     }
 
     public static void main(String[] args) {
-        System.out.println("sds");
         ProductGenerator productGenerator = new ProductGenerator();
-        System.out.println("sds2");
         ProductServiceRestClientImpl productServiceRestClientImpl = new ProductServiceRestClientImpl();
-
-        long initTime;
-        for (int i = 0; i < 1000000; i++) {
-            initTime = System.currentTimeMillis();
-            System.out.println("i:" + i);
+        ExecutorService newFixedThreadPool = Executors.newFixedThreadPool(6);
+        Runnable runnable = () -> {
+            long initTime = System.currentTimeMillis();
             productServiceRestClientImpl.save(productGenerator.getProduct());
-            System.out.println("TIEMPO: " + (System.currentTimeMillis() - initTime));
+            LOGGER.info("TIEMPO: {}", (System.currentTimeMillis() - initTime));
+        };
+
+        for (int i = 0; i < 200000; i++) {
+            LOGGER.info("i: {}", i);
             try {
-                Thread.sleep(50);
+                long initTime = System.currentTimeMillis();
+                newFixedThreadPool.submit(runnable);
+                LOGGER.info("TIEMPO2: {}", (System.currentTimeMillis() - initTime));
+                Thread.sleep(400);
+                if (i % 100 == 0) {
+                    Thread.sleep(3500);
+
+                }
             } catch (InterruptedException ex) {
-                Logger.getLogger(ProductGenerator.class.getName()).log(Level.SEVERE, null, ex);
+                LOGGER.error("Error en el Thread", ex);
             }
         }
     }

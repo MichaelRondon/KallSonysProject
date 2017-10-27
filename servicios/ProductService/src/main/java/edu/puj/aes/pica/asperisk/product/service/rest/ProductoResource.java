@@ -10,7 +10,6 @@ import edu.puj.aes.pica.asperisk.product.service.model.ProductsResponse;
 import edu.puj.aes.pica.asperisk.product.service.exceptions.ProductTransactionException;
 import edu.puj.aes.pica.asperisk.product.service.service.ProductService;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.*;
-import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.PaginationUtil;
 import edu.puj.aes.pica.asperisk.product.service.model.CampaignRequest;
 import edu.puj.aes.pica.asperisk.product.service.service.CampaniaService;
 import org.slf4j.Logger;
@@ -27,9 +26,6 @@ import java.net.URI;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -131,6 +127,7 @@ public class ProductoResource {
             @RequestParam(value = "id", required = false) Long id,
             @RequestParam(value = "nombre", defaultValue = "", required = false) String nombre,
             @RequestParam(value = "descripcion", defaultValue = "", required = false) String descripcion,
+            @RequestParam(value = "categoria", defaultValue = "", required = false) String categoria,
             @RequestParam(value = "custom", defaultValue = "", required = false) String custom)
             throws ProductTransactionException {
         LOGGER.info("Ingresando a scrollsearch");
@@ -149,6 +146,7 @@ public class ProductoResource {
         product.setDescripcion(descripcion);
         product.setId(id);
         product.setNombre(nombre);
+        product.setCategoria(categoria);
 
         ScrollSearchRequest scrollSearchRequest = new ScrollSearchRequest();
         scrollSearchRequest.setBasicRequest(basicRequest);
@@ -270,7 +268,9 @@ public class ProductoResource {
             @RequestParam(value = "items_per_page", defaultValue = "20", required = false) Integer itemsPerPage,
             @RequestParam(value = "sort", defaultValue = "", required = false) String sort,
             @RequestParam(value = "sort_type", defaultValue = "", required = false) Sort.Direction sortType,
-            @RequestParam(value = "custom", defaultValue = "", required = false) String custom) {
+            @RequestParam(value = "custom", defaultValue = "", required = false) String custom,
+            @RequestParam(value = "categoria", defaultValue = "PRINCIPAL", required = false) 
+                    edu.puj.aes.pica.asperisk.oms.utilities.model.Categoria categoria) {
 
         CampaignRequest campaniasRequest = new CampaignRequest();
         campaniasRequest.setState(estado);
@@ -286,6 +286,7 @@ public class ProductoResource {
 
         campaniasRequest.setBasicRequest(basicRequest);
         campaniasRequest.setBasicSearchParams(basicSearchParams);
+        campaniasRequest.setCategoria(categoria);
 
         LOGGER.info("Busca campanias: {}", campaniasRequest);
         CampaignResponse campaignResponse = elasticSearchService.findAllCampaigns(campaniasRequest, true);

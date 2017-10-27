@@ -12,7 +12,7 @@ public class SetSourceAndGet extends Transaction<ElasticSearchInput, IndexRespon
 
     @Override
     public IndexResponse executeTransaction(ElasticSearchInput input, TransportClient transportClient) {
-        LOGGER.info("Ejecutar setSourceAndGet input:{}", input);
+//        LOGGER.info("Ejecutar setSourceAndGet input:{}", input);
 
         IndexRequestBuilder prepareIndex = input.getId() == null
                 ? transportClient.prepareIndex(input.getIndex(), input.getTipo())
@@ -21,8 +21,8 @@ public class SetSourceAndGet extends Transaction<ElasticSearchInput, IndexRespon
         IndexResponse response = prepareIndex.setSource(input.getJson())
                 //.setSource(input.getObject())
                 .get();
-        LOGGER.info("Response. Index: {}, Type: {}, ID: {}, response: {}", response.getIndex(), response.getType(),
-                response.getId(), response);
+//        LOGGER.info("Response. Index: {}, Type: {}, ID: {}, response: {}", response.getIndex(), response.getType(),
+//                response.getId(), response);
         return response;
     }
 }

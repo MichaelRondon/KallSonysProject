@@ -1,0 +1,23 @@
+entity Cliente {
+  documento String required,
+  nombres String required,
+  apellidos String required,
+  telefono String,
+  correoE String,
+  password String
+}
+
+entity Tarjeta{
+	tipo String required,
+	numero String required
+}
+
+relationship OneToOne{
+	Cliente{datosTarjeta} to Tarjeta
+}
+
+paginate Cliente with pagination
+
+dto * with mapstruct
+
+service Cliente with serviceClass
