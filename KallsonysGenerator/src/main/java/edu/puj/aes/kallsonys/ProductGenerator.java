@@ -74,14 +74,14 @@ public class ProductGenerator {
             LOGGER.info("i: {}", i);
             try {
                 newFixedThreadPool.submit(runnable);
-                Thread.sleep(400);
+                Thread.sleep(500);
                 if (i % 6 == 0) {
                     contadorRemplazos++;
                     newFixedThreadPool.submit(productGenerator.replace(contadorRemplazos,
                             productGenerator.getProduct()));
                 }
                 if (i % 25 == 0) {
-                    Thread.sleep(3500);
+                    Thread.sleep(4000);
 
                 }
             } catch (InterruptedException ex) {
