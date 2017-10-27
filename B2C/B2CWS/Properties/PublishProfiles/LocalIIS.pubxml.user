@@ -16,7 +16,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/18/2017 15:12:13</publishTime>
     </File>
     <File Include="bin/B2CWS.dll">
-      <publishTime>10/25/2017 23:33:47</publishTime>
+      <publishTime>10/27/2017 00:07:15</publishTime>
     </File>
     <File Include="bin/ClientesEF.dll">
       <publishTime>10/25/2017 23:30:27</publishTime>
@@ -55,7 +55,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/03/2014 20:33:56</publishTime>
     </File>
     <File Include="bin/OrdenesDAC.dll">
-      <publishTime>10/25/2017 23:30:28</publishTime>
+      <publishTime>10/27/2017 00:07:11</publishTime>
     </File>
     <File Include="bin/OrdenesEntities.dll">
       <publishTime>10/25/2017 23:30:27</publishTime>

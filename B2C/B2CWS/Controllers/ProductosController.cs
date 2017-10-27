@@ -114,6 +114,16 @@ namespace B2CWS.Controllers
             {
                 return NotFound();
             }
+            else
+            {
+                if (productos.productos != null)
+                {
+                    foreach (var prod in productos.productos)
+                    {
+                        prod.urlImage = Url.Route("DefaultApi", new { controller = "ImageThumb", id = prod.id });
+                    }
+                }
+            }
 
             return Ok(productos);
         }
@@ -203,6 +213,13 @@ namespace B2CWS.Controllers
             if (producto == null)
             {
                 return NotFound();
+            }
+            else
+            {
+                if (producto.id.HasValue)
+                {
+                    producto.urlImage = Url.Route("DefaultApi", new { controller = "ImageThumb", id = producto.id });
+                }
             }
 
             return Ok(producto);
