@@ -15,6 +15,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/ApplicationInsights.config">
       <publishTime>09/25/2017 21:56:18</publishTime>
     </File>
+    <File Include="bin/ClientesBC.dll">
+      <publishTime>10/29/2017 09:26:13</publishTime>
+    </File>
+    <File Include="bin/ClientesBC.pdb">
+      <publishTime>10/29/2017 09:26:13</publishTime>
+    </File>
     <File Include="bin/ClientesDAC.dll">
       <publishTime>10/21/2017 18:07:28</publishTime>
     </File>
@@ -28,22 +34,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/16/2017 22:34:52</publishTime>
     </File>
     <File Include="bin/ClientesEF.dll">
-      <publishTime>10/21/2017 18:07:28</publishTime>
+      <publishTime>10/27/2017 13:34:48</publishTime>
     </File>
     <File Include="bin/ClientesEF.pdb">
-      <publishTime>10/21/2017 18:07:28</publishTime>
+      <publishTime>10/27/2017 13:34:48</publishTime>
+    </File>
+    <File Include="bin/ClientesEntities.dll">
+      <publishTime>10/27/2017 13:34:48</publishTime>
+    </File>
+    <File Include="bin/ClientesEntities.pdb">
+      <publishTime>10/27/2017 13:34:48</publishTime>
     </File>
     <File Include="bin/CLIENTWS.dll">
-      <publishTime>10/23/2017 09:48:36</publishTime>
+      <publishTime>10/29/2017 09:26:16</publishTime>
     </File>
     <File Include="bin/CLIENTWS.pdb">
-      <publishTime>10/23/2017 09:48:36</publishTime>
+      <publishTime>10/29/2017 09:26:16</publishTime>
     </File>
     <File Include="bin/Common.dll">
-      <publishTime>10/16/2017 22:34:52</publishTime>
+      <publishTime>10/29/2017 09:19:12</publishTime>
     </File>
     <File Include="bin/Common.pdb">
-      <publishTime>10/16/2017 22:34:52</publishTime>
+      <publishTime>10/29/2017 09:19:12</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>11/03/2015 17:43:34</publishTime>
@@ -163,7 +175,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/25/2017 21:56:19</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/23/2017 09:48:47</publishTime>
+      <publishTime>10/29/2017 09:44:08</publishTime>
     </File>
   </ItemGroup>
 </Project>

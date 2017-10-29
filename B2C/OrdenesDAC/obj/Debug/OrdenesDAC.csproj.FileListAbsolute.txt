@@ -8,11 +8,13 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\bin\Debug\OrdenesEnt
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\bin\Debug\System.Net.Http.Formatting.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\bin\Debug\EntityFramework.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\bin\Debug\ClientesEF.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\bin\Debug\ClientesEF.dll.config
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\bin\Debug\Common.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\bin\Debug\OrdenesEntities.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\bin\Debug\Newtonsoft.Json.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\bin\Debug\System.Net.Http.Formatting.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\bin\Debug\EntityFramework.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\obj\Debug\OrdenesDAC.csprojResolveAssemblyReference.cache
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\obj\Debug\OrdenesDAC.csproj.CoreCompileInputs.cache
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\obj\Debug\OrdenesDAC.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\obj\Debug\OrdenesDAC.pdb

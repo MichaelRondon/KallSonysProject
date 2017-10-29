@@ -27,5 +27,6 @@ namespace Common.DTO
         public int tamanio { get; set; }
         public string estado { get; set; }
         public int size { get; set; }
+        public string e_mail { get; set; }
     }
 }

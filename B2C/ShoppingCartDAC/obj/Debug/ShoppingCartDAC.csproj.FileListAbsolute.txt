@@ -6,9 +6,11 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\bin\Debug\Commo
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\bin\Debug\EntityFramework.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\bin\Debug\ShoppingCartEntities.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\bin\Debug\ClientesEF.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\bin\Debug\ClientesEF.dll.config
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\bin\Debug\Common.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\bin\Debug\ShoppingCartEntities.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\bin\Debug\EntityFramework.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\obj\Debug\ShoppingCartDAC.csprojResolveAssemblyReference.cache
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\obj\Debug\ShoppingCartDAC.csproj.CoreCompileInputs.cache
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\obj\Debug\ShoppingCartDAC.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ShoppingCartDAC\obj\Debug\ShoppingCartDAC.pdb

@@ -7,7 +7,9 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\bin\Debug\Oracle.Da
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\bin\Debug\Oracle.DataAccess.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\bin\Debug\ClientesEntities.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\bin\Debug\ClientesEF.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\bin\Debug\ClientesEF.dll.config
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\bin\Debug\Common.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\obj\Debug\ClientesDAC.csprojResolveAssemblyReference.cache
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\obj\Debug\ClientesDAC.csproj.CoreCompileInputs.cache
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\obj\Debug\ClientesDAC.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\obj\Debug\ClientesDAC.pdb

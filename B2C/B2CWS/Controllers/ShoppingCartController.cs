@@ -7,8 +7,8 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Http.Cors;
 using ShoppingCartEntities.Models;
-using ShoppingCartDAC.Contratos;
-using ShoppingCartDAC.Implementaciones;
+using ShoppingCartBC.Contratos;
+using ShoppingCartBC.Implementaciones;
 
 namespace B2CWS.Controllers
 {
@@ -17,19 +17,19 @@ namespace B2CWS.Controllers
 
         #region Atributos
 
-        private IShoppingCartDAC _dac;
+        private IShoppingCartBC _dac;
 
         #endregion
         
         #region Propiedades
 
-        private IShoppingCartDAC DAC
+        private IShoppingCartBC DAC
         {
             get
             {
                 if (_dac == null)
                 {
-                    _dac = new ShoppingCartDAC.Implementaciones.ShoppingCartDAC();
+                    _dac = new ShoppingCartBC.Implementaciones.ShoppingCartBC();
                 }
                 return _dac;
             }

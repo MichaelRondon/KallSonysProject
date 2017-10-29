@@ -1,0 +1,13 @@
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\bin\Debug\ClientesBC.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\bin\Debug\ClientesBC.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\bin\Debug\ClientesEF.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\bin\Debug\ClientesEntities.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\bin\Debug\Common.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\bin\Debug\Oracle.DataAccess.EntityFramework.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\bin\Debug\Oracle.DataAccess.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\bin\Debug\ClientesEntities.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\bin\Debug\ClientesEF.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\bin\Debug\Common.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\obj\Debug\ClientesBC.csprojResolveAssemblyReference.cache
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\obj\Debug\ClientesBC.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDAC\obj\Debug\ClientesBC.pdb

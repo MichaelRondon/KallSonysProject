@@ -168,13 +168,17 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClientesDAC\ClientesDAC.csproj">
+    <ProjectReference Include="..\ClientesDAC\ClientesBC.csproj">
       <Project>{a8da3748-a734-4945-ae73-25d348185383}</Project>
-      <Name>ClientesDAC</Name>
+      <Name>ClientesBC</Name>
     </ProjectReference>
     <ProjectReference Include="..\ClientesDomain\ClientesEntities.csproj">
       <Project>{223731c7-5db5-444c-a10a-c05c678c9ba3}</Project>
       <Name>ClientesEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{4cc284de-aceb-41a5-bdf2-3865369055cc}</Project>
+      <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

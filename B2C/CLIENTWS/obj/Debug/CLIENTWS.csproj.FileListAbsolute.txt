@@ -14,8 +14,9 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\roslyn\VBCSCompile
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\CLIENTWS.dll.config
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\CLIENTWS.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\CLIENTWS.pdb
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\ClientesDAC.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\ClientesBC.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\ClientesEntities.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Common.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Microsoft.AI.Agent.Intercept.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Microsoft.AI.DependencyCollector.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Microsoft.AI.PerfCounterCollector.dll
@@ -34,14 +35,14 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.Http.We
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.Mvc.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\ClientesEF.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\EntityFramework.dll
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Common.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.Razor.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.WebPages.Razor.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.WebPages.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.WebPages.Deployment.dll
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\ClientesDAC.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\ClientesBC.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\ClientesEntities.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Common.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Microsoft.AI.DependencyCollector.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Microsoft.AI.Web.xml
@@ -56,7 +57,6 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Net.Http.Fo
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.Http.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.Http.WebHost.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\ClientesEF.pdb
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Common.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.Razor.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.WebPages.Razor.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.WebPages.xml

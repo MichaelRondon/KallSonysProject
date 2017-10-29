@@ -8,6 +8,7 @@ using CLIENTWS.Models;
 using CLIENTWS.Extension;
 using System.Web.Http.Description;
 using System.Web.Http.Cors;
+using Common;
 
 namespace CLIENTWS.Controllers
 {
@@ -17,19 +18,19 @@ namespace CLIENTWS.Controllers
     {
         #region Atributos
 
-        private ClientesDAC.Contratos.IClientesDAC _dac;
+        private ClientesBC.Contratos.IClientesBC _dac;
 
         #endregion
 
         #region Propiedades
 
-        private ClientesDAC.Contratos.IClientesDAC DAC
+        private ClientesBC.Contratos.IClientesBC DAC
         {
             get
             {
                 if (_dac == null)
                 {
-                    _dac = new ClientesDAC.Implementaciones.ClientesDAC();
+                    _dac = new ClientesBC.Implementaciones.ClientesBC();
                 }
                 return _dac;
             }
@@ -167,11 +168,39 @@ namespace CLIENTWS.Controllers
         {
             IEnumerable<DatosCliente> response = new List<DatosCliente>();
 
-            IEnumerable<ClientesEntities.Models.Cliente> cliente = DAC.ConsultarCliente();
+            IEnumerable<ClientesEntities.Models.Cliente> clientes = DAC.ConsultarCliente();
 
-            response = cliente.ToDatosClienteCollection();
+            if (clientes == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                response = clientes.ToDatosClienteCollection();
 
-            return Ok(response);
+                return Ok(response);
+            }
+        }
+
+        [ResponseType(typeof(IEnumerable<DatosCliente>))]
+        [HttpGet]
+        public IHttpActionResult buscar(string e_mail)
+        {
+            IEnumerable<DatosCliente> response = new List<DatosCliente>();
+            Common.DTO.Parametros parametros = new Common.DTO.Parametros() { e_mail = e_mail };
+
+            IEnumerable<ClientesEntities.Models.Cliente> clientes = DAC.BuscarClientes(parametros);
+
+            if (clientes == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                response = clientes.ToDatosClienteCollection();
+
+                return Ok(response);
+            }
         }
     }
 }

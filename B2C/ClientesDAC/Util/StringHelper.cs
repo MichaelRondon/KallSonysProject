@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.IO;
 
-namespace ClientesDAC.Util
+namespace ClientesBC.Util
 {
     public static class StringHelper
     {

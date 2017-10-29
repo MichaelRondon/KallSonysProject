@@ -18,15 +18,15 @@ namespace CLIENTWS.Controllers
 
         #region Atributos privados
 
-        private ClientesDAC.Contratos.IClientesDAC _dac;
+        private ClientesBC.Contratos.IClientesBC _dac;
 
-        private ClientesDAC.Contratos.IClientesDAC DAC
+        private ClientesBC.Contratos.IClientesBC DAC
         {
             get
             {
                 if (_dac == null)
                 {
-                    _dac = new ClientesDAC.Implementaciones.ClientesDAC();
+                    _dac = new ClientesBC.Implementaciones.ClientesBC();
                 }
                 return _dac;
             }

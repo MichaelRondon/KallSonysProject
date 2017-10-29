@@ -16,8 +16,8 @@ using Common.Util;
 using B2CWS.Util;
 using System.Web.Http.Cors;
 using OrdenesEntities.Models;
-using OrdenesDAC.Contratos;
-using OrdenesDAC.Implementaciones;
+using OrdenesBC.Contratos;
+using OrdenesBC.Implementaciones;
 #endregion
 
 namespace B2CWS.Controllers
@@ -27,19 +27,19 @@ namespace B2CWS.Controllers
     {
         #region Atributos
 
-        private IOrdenesDAC _ordenesDAC;
+        private IOrdenesBC _ordenesDAC;
 
         #endregion
 
         #region Propiedades
 
-        public IOrdenesDAC OrdenesDAC
+        public IOrdenesBC OrdenesDAC
         {
             get
             {
                 if (_ordenesDAC == null)
                 {
-                    _ordenesDAC = new OrdenesDAC.Implementaciones.OrdenesDAC();
+                    _ordenesDAC = new OrdenesBC.Implementaciones.OrdenesBC();
                 }
                 return _ordenesDAC;
             }
