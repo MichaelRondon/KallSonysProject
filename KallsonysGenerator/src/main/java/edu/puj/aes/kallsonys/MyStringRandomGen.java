@@ -27,7 +27,7 @@ public class MyStringRandomGen {
         "Samsung", "Nokia", "Apple", "LG", "Nintendo", "Amazon", "Google", "Microsoft",
         "Asus", "Lenovo", "SEGA", "Acer", "IBM", "Compact", "Motorola", "Xiaomi",
         "HP", "Toshiba", "Mac", "Apple", "Hyundai", "Challenger",
-        "Kalley", "Pollito", "Payaso"
+        "Kalley", "Pollito", "Payaso", "Pinpon"
     };
     public static final String[] NOMBRE = new String[]{
         "Televisor", "Computador", "Laptop", "Equipo de sonido", "Impresora", "Cámara", "Móvil", "Teféfono",
@@ -35,6 +35,10 @@ public class MyStringRandomGen {
         "Cafetera", "Aspiradora", "Dron", "Secadora", "Multifuncional", "Teatro en casa",
         "Plancha",
         "SmartWatch"
+    };
+    public static final String[] DESC_NOMBRE = new String[]{
+        "Deluxe", "Home", "Professional", "Enterprise", "Gold", "Platinum", "Silver", "Fashion",
+        "Blue Ice", "Power", "Excel"
     };
 
     /**
@@ -46,7 +50,7 @@ public class MyStringRandomGen {
 
         StringBuilder randStr = new StringBuilder();
         Random randomLenghtGenerator = new Random();
-        int nextInt = randomLenghtGenerator.nextInt(15) + 1;
+        int nextInt = randomLenghtGenerator.nextInt(15) + 3;
         for (int i = 0; i < nextInt; i++) {
             int number = getRandomNumber();
             char ch = CHAR_LIST.charAt(number);
@@ -125,6 +129,10 @@ public class MyStringRandomGen {
 
     public String getRamdomNombre() {
         return getFromArray(NOMBRE);
+    }
+
+    public String getRamdomDescNombre() {
+        return getFromArray(DESC_NOMBRE);
     }
 
     private String getFromArray(String[] array) {

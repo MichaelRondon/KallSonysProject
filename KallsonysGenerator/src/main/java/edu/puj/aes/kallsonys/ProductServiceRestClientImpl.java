@@ -5,8 +5,12 @@
  */
 package edu.puj.aes.kallsonys;
 
+import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -29,6 +33,14 @@ public class ProductServiceRestClientImpl {
         RestTemplate restTemplate = new RestTemplate();
 
             return restTemplate.postForObject(PRODUCT_SERVICE_URL, productoDTO, Product.class);
+    }
+    
+    public Product update(Product productoDTO) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<Product> requestEntity = new HttpEntity<>(productoDTO, headers);
+        HttpEntity<Product> response = restTemplate.exchange(PRODUCT_SERVICE_URL, HttpMethod.PUT, requestEntity, Product.class, new HashMap());
+        return response.getBody();
     }
 
     public Product findOne(Long id) {

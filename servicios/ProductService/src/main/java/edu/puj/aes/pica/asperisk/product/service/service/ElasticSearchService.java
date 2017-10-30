@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.puj.aes.pica.asperisk.product.service.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -196,11 +191,12 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
                 try {
                     jpaProductService.update(findOne);
                 } catch (ProductTransactionException ex) {
-                    LOGGER.error("Error persistiendo producto mediante JPA", ex);
+                    LOGGER.error("Error actualizando producto mediante JPA", ex);
                     try {
                         jpaProductService.update(findOne);
                     } catch (ProductTransactionException ex1) {
-                        Logger.getLogger(ElasticSearchService.class.getName()).log(Level.SEVERE, null, ex1);
+                    LOGGER.error("\n\n\n****Error actualizando producto mediante JPA****\n\n\n");
+                    LOGGER.error("Error actualizando producto mediante JPA", ex1);
                     }
                 }
             };
@@ -245,6 +241,9 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             elasticSearchInput.setId(id);
             GetResponse getResponse = executeTransaction(new GetProductoById(), elasticSearchInput);
             LOGGER.info("source: {}", getResponse.getSourceAsString());
+            if(getResponse.getSourceAsString() == null){
+                return null;
+            }
             return mapper.readValue(getResponse.getSourceAsString(), Product.class);
         } catch (IOException ex) {
             String errorMessage = String.format("Error convirtiendo respuesta en Product. id: %s, mensaje: %s",
@@ -451,9 +450,13 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         cache.put(product, products);
     }
 
+    @Override
     public void cleanData(Product productInJPA) {
         Runnable runnable = () -> {
             try {
+                if(productInJPA == null){
+                    return;
+                }
                 Product productInElasticsearch = this.findOne(productInJPA.getId().toString());
                 if (productInElasticsearch == null || productInElasticsearch.getId() == null) {
                     throw new ProductTransactionException("Registro no encontrado en elasticsearch.");

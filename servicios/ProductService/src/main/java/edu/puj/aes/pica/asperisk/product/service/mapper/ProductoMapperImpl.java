@@ -22,6 +22,9 @@ public class ProductoMapperImpl implements ProductoMapper {
 
     @Override
     public Product toDto(Producto producto) {
+        if (producto == null) {
+            return null;
+        }
         Product productoDTO = new Product();
         productoDTO.setCategoria(producto.getCategoria());
 //        productoDTO.setCategoria(producto.getCategoria() != null ? producto.getCategoria().getCategoria() : null);
@@ -37,8 +40,8 @@ public class ProductoMapperImpl implements ProductoMapper {
 //        productoDTO.setProveedores(producto.getProveedores());
         return productoDTO;
     }
-    
-    private List<String> transformKeyWordsToList(String keyWordsString){
+
+    private List<String> transformKeyWordsToList(String keyWordsString) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(keyWordsString);
         stringBuilder.deleteCharAt(stringBuilder.indexOf("["));
