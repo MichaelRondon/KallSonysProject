@@ -20,7 +20,7 @@ public class MyStringRandomGen {
         "Cafe", "Grande", "Pequeño", "Mediano", "HD", "Portátil", "Ligero", "De lujo",
         "Resistente", "Suave", "Blando", "Alta definición", "Multiusuario", "Especial",
         "Resistente", "Gamers", "Digital", "Compacto", "Estéreo", "Periférico", "Automático",
-        "Avanzado", "Científica", "Empresarial", "Híbrido", "Inalámbrico", "Insuatrial",
+        "Avanzado", "Científica", "Empresarial", "Híbrido", "Inalámbrico", "Industrial",
         "Innovador", "Térmico", "Empresarial", "Híbrido", "Inalámbrico", "Insuatrial", "Especial"
     };
     public static final String[] MARCAS = new String[]{

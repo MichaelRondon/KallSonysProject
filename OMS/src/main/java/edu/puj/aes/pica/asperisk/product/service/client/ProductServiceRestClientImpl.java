@@ -73,14 +73,14 @@ public class ProductServiceRestClientImpl implements ProductServiceRestClient {
         builder = ProductUtilSingleton.getInstance().getBasicSearchParams(pageable, builder);
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<?> entity = new HttpEntity<>(headers);
-        LOGGER.info("builder.toUriString(): {}", builder.toUriString());
+//        LOGGER.info("builder.toUriString(): {}", builder.toUriString());
         ResponseEntity<ProductScrollResponse> exchange = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, ProductScrollResponse.class);
         ProductScrollResponse productScrollResponse = exchange.getBody();
 
         ProductServiceRestClientImpl.setFindAllScrollId(productScrollResponse.getScrollId());
-        LOGGER.info("productScrollResponse.getPage().getTotalElements(): {}", productScrollResponse.getPage().getTotalElements());
+//        LOGGER.info("productScrollResponse.getPage().getTotalElements(): {}", productScrollResponse.getPage().getTotalElements());
         PageImpl pageImpl = new PageImpl(productScrollResponse.getProductos(), pageable, productScrollResponse.getPage().getTotalElements());
-        LOGGER.info("pageable: {}", pageable);
+//        LOGGER.info("pageable: {}", pageable);
         return pageImpl;
     }
 

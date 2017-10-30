@@ -7,7 +7,7 @@ import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.HeaderUtil;
 import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.PaginationUtil;
 import edu.puj.aes.pica.asperisk.service.ClienteService;
 import edu.puj.aes.pica.asperisk.service.dto.ClienteDTO;
-import edu.puj.aes.pica.asperisk.web.rest.errors.CustomParameterizedException;
+import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.errors.CustomParameterizedException;
 import io.swagger.annotations.ApiParam;
 import java.io.IOException;
 import java.net.URI;

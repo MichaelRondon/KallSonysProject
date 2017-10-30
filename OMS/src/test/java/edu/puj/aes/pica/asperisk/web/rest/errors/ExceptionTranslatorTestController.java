@@ -1,5 +1,6 @@
 package edu.puj.aes.pica.asperisk.web.rest.errors;
 
+import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.errors.CustomParameterizedException;
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;

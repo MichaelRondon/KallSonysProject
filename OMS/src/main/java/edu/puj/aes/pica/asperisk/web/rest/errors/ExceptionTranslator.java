@@ -1,5 +1,7 @@
 package edu.puj.aes.pica.asperisk.web.rest.errors;
 
+import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.errors.ParameterizedErrorVM;
+import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.errors.CustomParameterizedException;
 import java.util.List;
 
 import org.slf4j.Logger;
