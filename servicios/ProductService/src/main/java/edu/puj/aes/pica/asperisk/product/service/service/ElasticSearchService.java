@@ -184,7 +184,6 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             elasticSearchInput.setJson(productJson);
             elasticSearchInput.setId(product.getId().toString());
             UpdateResponse updateResponse = executeTransaction(new UpdateAndGet(), elasticSearchInput);
-            LOGGER.info("updateResponse.getGetResult(): {}", updateResponse.getGetResult());
             clearProductCache();
             Product findOne = findOne(updateResponse.getId());
             Runnable runnable = () -> {
@@ -195,8 +194,8 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
                     try {
                         jpaProductService.update(findOne);
                     } catch (ProductTransactionException ex1) {
-                    LOGGER.error("\n\n\n****Error actualizando producto mediante JPA****\n\n\n");
-                    LOGGER.error("Error actualizando producto mediante JPA", ex1);
+                        LOGGER.error("\n\n\n****Error actualizando producto mediante JPA****\n\n\n");
+                        LOGGER.error("Error actualizando producto mediante JPA", ex1);
                     }
                 }
             };
@@ -241,7 +240,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
             elasticSearchInput.setId(id);
             GetResponse getResponse = executeTransaction(new GetProductoById(), elasticSearchInput);
             LOGGER.info("source: {}", getResponse.getSourceAsString());
-            if(getResponse.getSourceAsString() == null){
+            if (getResponse.getSourceAsString() == null) {
                 return null;
             }
             return mapper.readValue(getResponse.getSourceAsString(), Product.class);
@@ -454,7 +453,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
     public void cleanData(Product productInJPA) {
         Runnable runnable = () -> {
             try {
-                if(productInJPA == null){
+                if (productInJPA == null) {
                     return;
                 }
                 Product productInElasticsearch = this.findOne(productInJPA.getId().toString());
@@ -526,6 +525,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
         }
         Object get = valueWrapper.get();
         if (get != null && get instanceof List) {
+            LOGGER.error("Encuentra producto en caché Producto: {}", get);
             return (List) get;
         }
         return null;

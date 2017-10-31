@@ -41,6 +41,7 @@ public class ElasticSearchInputMultiBuilder extends ElasticSearchInput {
         if (product.getId() != null) {
             IdsQueryBuilder idsQuery = idsQuery(getTipo());
             idsQuery.addIds(product.getId().toString());
+            idsQuery.boost(1.5f);
             boolQuery.must(idsQuery);
         }
         if (product.getNombre() != null && !product.getNombre().isEmpty()) {
@@ -52,7 +53,7 @@ public class ElasticSearchInputMultiBuilder extends ElasticSearchInput {
             buildBoolQueryBuilder("descripcion", boolQuery, description);
         }
         if (product.getCategoria() != null && !product.getCategoria().isEmpty()) {
-            MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("categoria", product.getCategoria()).fuzziness(Fuzziness.AUTO);
+            MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("categoria", product.getCategoria()).fuzziness(Fuzziness.AUTO).maxExpansions(20);
             boolQuery.must(matchQueryBuilder);
         }
 //        LOGGER.info("boolQuery: {}", boolQuery);

@@ -9,7 +9,7 @@
 
     <cache name="productCache"
                maxEntriesLocalHeap="10000"
-               maxEntriesLocalDisk="10000"
+               maxEntriesLocalDisk="100000"
                eternal="false"
                diskSpoolBufferSizeMB="20"
                timeToIdleSeconds="300" timeToLiveSeconds="600"
@@ -20,7 +20,7 @@
 
     <cache name="productSearchCache"
                maxEntriesLocalHeap="10000"
-               maxEntriesLocalDisk="10000"
+               maxEntriesLocalDisk="100000"
                eternal="false"
                diskSpoolBufferSizeMB="20"
                timeToIdleSeconds="300" timeToLiveSeconds="600"
@@ -39,7 +39,7 @@
 
     <cache name="edu.puj.aes.pica.asperisk.product.service.jpa.entity.Campania"
                maxEntriesLocalHeap="10000"
-               maxEntriesLocalDisk="10000"
+               maxEntriesLocalDisk="100000"
                eternal="false"
                diskSpoolBufferSizeMB="20"
                timeToIdleSeconds="300" timeToLiveSeconds="600"
@@ -50,7 +50,7 @@
 
     <cache name="edu.puj.aes.pica.asperisk.product.service.jpa.entity.Campania.productos"
                maxEntriesLocalHeap="10000"
-               maxEntriesLocalDisk="10000"
+               maxEntriesLocalDisk="100000"
                eternal="false"
                diskSpoolBufferSizeMB="20"
                timeToIdleSeconds="300" timeToLiveSeconds="600"
@@ -61,7 +61,7 @@
 
     <cache name="edu.puj.aes.pica.asperisk.product.service.jpa.entity.Proveedor"
                maxEntriesLocalHeap="10000"
-               maxEntriesLocalDisk="10000"
+               maxEntriesLocalDisk="100000"
                eternal="false"
                diskSpoolBufferSizeMB="20"
                timeToIdleSeconds="300" timeToLiveSeconds="600"
@@ -72,7 +72,7 @@
 
     <cache name="edu.puj.aes.pica.asperisk.product.service.jpa.entity.ProveedorProducto"
                maxEntriesLocalHeap="10000"
-               maxEntriesLocalDisk="10000"
+               maxEntriesLocalDisk="100000"
                eternal="false"
                diskSpoolBufferSizeMB="20"
                timeToIdleSeconds="300" timeToLiveSeconds="600"
@@ -83,7 +83,7 @@
 
     <cache name="edu.puj.aes.pica.asperisk.product.service.jpa.entity.DatoContacto"
                maxEntriesLocalHeap="10000"
-               maxEntriesLocalDisk="10000"
+               maxEntriesLocalDisk="100000"
                eternal="false"
                diskSpoolBufferSizeMB="20"
                timeToIdleSeconds="300" timeToLiveSeconds="600"
@@ -94,7 +94,7 @@
 
     <cache name="edu.puj.aes.pica.asperisk.product.service.jpa.entity.Categoria"
                maxEntriesLocalHeap="10000"
-               maxEntriesLocalDisk="10000"
+               maxEntriesLocalDisk="100000"
                eternal="false"
                diskSpoolBufferSizeMB="20"
                timeToIdleSeconds="300" timeToLiveSeconds="600"
@@ -105,7 +105,7 @@
 
     <cache name="edu.puj.aes.pica.asperisk.product.service.jpa.entity.Producto"
                maxEntriesLocalHeap="10000"
-               maxEntriesLocalDisk="10000"
+               maxEntriesLocalDisk="100000"
                eternal="false"
                diskSpoolBufferSizeMB="20"
                timeToIdleSeconds="300" timeToLiveSeconds="600"
@@ -116,7 +116,7 @@
     
     <cache name="edu.puj.aes.pica.asperisk.product.service.jpa.entity.Producto.proveedores"
                maxEntriesLocalHeap="10000"
-               maxEntriesLocalDisk="10000"
+               maxEntriesLocalDisk="100000"
                eternal="false"
                diskSpoolBufferSizeMB="20"
                timeToIdleSeconds="300" timeToLiveSeconds="600"
@@ -127,7 +127,7 @@
     
     <cache name="edu.puj.aes.pica.asperisk.product.service.jpa.entity.Proveedor.productos"
                maxEntriesLocalHeap="10000"
-               maxEntriesLocalDisk="10000"
+               maxEntriesLocalDisk="100000"
                eternal="false"
                diskSpoolBufferSizeMB="20"
                timeToIdleSeconds="300" timeToLiveSeconds="600"
@@ -138,7 +138,7 @@
     
     <cache name="edu.puj.aes.pica.asperisk.product.service.jpa.entity.Proveedor.datosContactos"
                maxEntriesLocalHeap="10000"
-               maxEntriesLocalDisk="10000"
+               maxEntriesLocalDisk="100000"
                eternal="false"
                diskSpoolBufferSizeMB="20"
                timeToIdleSeconds="300" timeToLiveSeconds="600"

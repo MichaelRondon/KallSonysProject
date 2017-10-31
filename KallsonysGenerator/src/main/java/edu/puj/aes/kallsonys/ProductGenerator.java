@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,14 +69,23 @@ public class ProductGenerator {
         return runnable;
     }
 
-    public Runnable findEmptyData(long l) {
+    public Runnable findEmptyData() {
         Runnable runnableFindEmpty = () -> {
-            Product findOne = productServiceRestClientImpl.findOne(l);
-            if (findOne == null) {
-                LOGGER.error("\n\n\n\n*************************Producto nulo id: {}*************************\n\n", l);
-                idWithoutData.add(l);
+            for (long i = 5414L; i < 1200000; i++) {
+//                try {
+                    Product findOne = productServiceRestClientImpl.findOne(i);
+                    if (findOne == null) {
+                        LOGGER.error("\n\n\n\n*************************Producto nulo id: {}*************************\n\n", i);
+                        idWithoutData.add(i);
+                    }
+                    LOGGER.error("ids sin datos: {}. Id actual: {}", idWithoutData, i);
+
+//                    Thread.sleep(5000);
+//                } catch (InterruptedException ex) {
+//                    java.util.logging.Logger.getLogger(ProductGenerator.class.getName()).log(Level.SEVERE, null, ex);
+//                }
             }
-            LOGGER.error("ids sin datos: {}", idWithoutData);
+
         };
         return runnableFindEmpty;
     }
@@ -91,12 +101,12 @@ public class ProductGenerator {
             productGenerator.getProductServiceRestClientImpl().save(productGenerator.getProduct());
             LOGGER.info("TIEMPO: {}", (System.currentTimeMillis() - initTime));
         };
-        long contadorRemplazos = 77483L;
+        long contadorRemplazos = 106504L;
         long long_ = 963192L;
+//        newFixedThreadPool.submit(productGenerator.findEmptyData());
         for (long i = 0; i < 1000000; i++) {
             LOGGER.info("i: {}", i);
             try {
-                newFixedThreadPool.submit(productGenerator.findEmptyData(i));
 
                 contadorRemplazos++;
                 newFixedThreadPool.submit(productGenerator.replace(contadorRemplazos,

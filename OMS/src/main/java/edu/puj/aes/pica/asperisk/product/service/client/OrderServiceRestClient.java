@@ -5,7 +5,7 @@
  */
 package edu.puj.aes.pica.asperisk.product.service.client;
 
-import java.util.Map;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,5 +15,5 @@ import org.springframework.data.domain.Pageable;
  */
 public interface OrderServiceRestClient {
     
-    Page<Map<String, Object>> rankingClientes(Pageable pageable, Long idProducto);
+    Page<Object> rankingClientes(Pageable pageable, Long idProducto);
 }
