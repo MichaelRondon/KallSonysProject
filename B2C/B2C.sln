@@ -35,6 +35,33 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingCartEntities", "Sho
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingCartBC", "ShoppingCartDAC\ShoppingCartBC.csproj", "{478F42BF-8809-4B6E-902F-9E593F6DEB61}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Tests", "4.Tests", "{3B944C23-1D10-4DB9-AAFE-A1ECD517A3E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B2CTests", "B2CTests\B2CTests.csproj", "{6699F781-1347-4C82-9270-F2646E65511C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Web", "3.Web", "{C42F8DFC-755F-49B7-A7D3-9D75350CE652}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "KallsonysMovil", "http://localhost/KallsonysMovil", "{6454ECA7-4B4F-45E2-9DDE-675D95522C6E}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "false"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/KallsonysMovil"
+		Debug.AspNetCompiler.PhysicalPath = "..\..\..\..\..\..\proyectos\PICA\Web\B2CWEB\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\KallsonysMovil\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/KallsonysMovil"
+		Release.AspNetCompiler.PhysicalPath = "..\..\..\..\..\..\proyectos\PICA\Web\B2CWEB\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\KallsonysMovil\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "..\..\..\..\..\..\proyectos\PICA\Web\B2CWEB\"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +150,22 @@ Global
 		{478F42BF-8809-4B6E-902F-9E593F6DEB61}.Release|Any CPU.Build.0 = Release|Any CPU
 		{478F42BF-8809-4B6E-902F-9E593F6DEB61}.Release|x86.ActiveCfg = Release|Any CPU
 		{478F42BF-8809-4B6E-902F-9E593F6DEB61}.Release|x86.Build.0 = Release|Any CPU
+		{6699F781-1347-4C82-9270-F2646E65511C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6699F781-1347-4C82-9270-F2646E65511C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6699F781-1347-4C82-9270-F2646E65511C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6699F781-1347-4C82-9270-F2646E65511C}.Debug|x86.Build.0 = Debug|Any CPU
+		{6699F781-1347-4C82-9270-F2646E65511C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6699F781-1347-4C82-9270-F2646E65511C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6699F781-1347-4C82-9270-F2646E65511C}.Release|x86.ActiveCfg = Release|Any CPU
+		{6699F781-1347-4C82-9270-F2646E65511C}.Release|x86.Build.0 = Release|Any CPU
+		{6454ECA7-4B4F-45E2-9DDE-675D95522C6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6454ECA7-4B4F-45E2-9DDE-675D95522C6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6454ECA7-4B4F-45E2-9DDE-675D95522C6E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6454ECA7-4B4F-45E2-9DDE-675D95522C6E}.Debug|x86.Build.0 = Debug|Any CPU
+		{6454ECA7-4B4F-45E2-9DDE-675D95522C6E}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{6454ECA7-4B4F-45E2-9DDE-675D95522C6E}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{6454ECA7-4B4F-45E2-9DDE-675D95522C6E}.Release|x86.ActiveCfg = Debug|Any CPU
+		{6454ECA7-4B4F-45E2-9DDE-675D95522C6E}.Release|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -142,5 +185,7 @@ Global
 		{23E1A82E-D4F3-441A-97AA-5373F938D127} = {E4382880-42CE-42B2-9503-DC344AA5583E}
 		{3E942AD8-1F0B-41E2-BBA4-8F7733951D63} = {F8B2569E-C13A-44C0-8AF1-AB67A7DA68A2}
 		{478F42BF-8809-4B6E-902F-9E593F6DEB61} = {D0A4453C-9284-44A6-BC36-79A2FBF81FFA}
+		{6699F781-1347-4C82-9270-F2646E65511C} = {3B944C23-1D10-4DB9-AAFE-A1ECD517A3E7}
+		{6454ECA7-4B4F-45E2-9DDE-675D95522C6E} = {C42F8DFC-755F-49B7-A7D3-9D75350CE652}
 	EndGlobalSection
 EndGlobal

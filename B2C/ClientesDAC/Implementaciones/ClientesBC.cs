@@ -36,7 +36,7 @@ namespace ClientesBC.Implementaciones
             {
                 using (var context = new ClientesEF.Entities())
                 {
-                    clienteActual = context.CUSTOMERs.FirstOrDefault(p => p.EMAIL.Equals(cliente.correo_e) || p.CUSTID.Equals(cliente.documento));
+                    clienteActual = context.CUSTOMERs.SingleOrDefault(p => p.EMAIL.Equals(cliente.correo_e) || p.CUSTID.Equals(cliente.documento));
 
                     if (clienteActual == null)
                     {
@@ -148,17 +148,18 @@ namespace ClientesBC.Implementaciones
         public ClientesEntities.Models.Cliente ConsultarCliente(string ID)
         {
             ClientesEntities.Models.Cliente cliente = null;
-            CUSTOMER customer = null;
+            // CUSTOMER customer = null;
 
             try
             {
                 using (var context = new ClientesEF.Entities())
                 {
-                    customer = context.CUSTOMERs.FirstOrDefault(p => p.CUSTID.Equals(ID));
-
-                    if (customer != null)
+                    var customers = context.CUSTOMERs.Where(p => p.CUSTID.Equals(ID, StringComparison.InvariantCultureIgnoreCase));
+                    
+                    foreach (var customer in customers)
                     {
-                        cliente = new Cliente() {
+                        cliente = new Cliente()
+                        {
                             apellidos = customer.LNAME,
                             correo_e = customer.EMAIL,
                             documento = customer.CUSTID,
@@ -172,14 +173,15 @@ namespace ClientesBC.Implementaciones
                         {
                             cliente.numero = StringHelper.MaskText(StringHelper.Decrypt(customer.CREDITCARDNUMBER, customer.SALT, true), 4);
                         }
-                        
+
                         foreach (var dir in customer.ADDRESSes)
                         {
                             if (cliente.direcciones == null)
                             {
                                 cliente.direcciones = new List<Direccion>();
                             }
-                            ((List<Direccion>)cliente.direcciones).Add(new Direccion() {
+                            ((List<Direccion>)cliente.direcciones).Add(new Direccion()
+                            {
                                 calle = dir.STREET,
                                 ciudad = dir.CITY,
                                 direccion = dir.ADDRID,
