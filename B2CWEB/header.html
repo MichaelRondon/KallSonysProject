@@ -1,0 +1,41 @@
+<div id="header">
+		<div id="subheader">
+			<div class="container">
+				<p>:::::</p>
+				<!-- <a href="#"> ::::: </a>  -->
+				<!-- <a href="#"> ::::: </a>  -->
+				<!-- <a href="#"> ::::: </a>  -->
+				<!-- <a href="#">Cuenta</a> -->
+			</div>	
+		</div>
+		<!--==main header==-->
+		<div id="main-header">
+		<!--==logo==-->
+			<div id="logo">
+				<span id="ist"><img id="img-logo" src="images/Front/logo.jpg" ></span>
+			</div>
+		<!--==search area==-->
+			<div id="search">
+			<form action="" id="myform">
+				<div  ng-controller="headercontroller" class="autosearch" style="position: relative;" > 
+									
+					<input class="search-area" placeholder="Busqueda" type="text" name="country" id="country" ng-model="country" ng-keyup="complete(country)" class="form-control"  AUTOCOMPLETE="off"/>
+					<ul class="list-group-ul" ng-model="hidethis" ng-hide="hidethis" >  
+						<li style="position: relative;z-index: 2;" id="list-group-item-kall" class="list-group-item" ng-repeat="countrydata in filterCountry" ng-click="fillTextbox(countrydata)">{{countrydata}}</li>  
+					</ul>
+					
+					<a href="#" class="search-btn btn btn-info btn-lg" onclick='document.forms["myform"].submit(); return false;'>
+					  <span class="glyphicon glyphicon-search"></span>
+					</a>
+					
+					<!-- <input class="search-btn" type="submit" name="submit"> -->
+				</div>
+			</form>
+			</div>
+		<!--==user-menu==-->
+			<div id="user-menu">
+				<li><a href="user.html"> <span class="glyphicon glyphicon-user"></span> Cuenta</a></li>
+				<li><a href="#"> <span class="glyphicon glyphicon-shopping-cart"></span> Checkout</a></li>
+			</div>
+		</div>
+</div>
