@@ -26,3 +26,7 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CTests\bin\Debug\ShoppingCart
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CTests\bin\Debug\ShoppingCartEntities.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CTests\bin\Debug\System.Net.Http.Formatting.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CTests\bin\Debug\Newtonsoft.Json.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CTests\bin\Debug\ClientesEF.dll.config
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CTests\bin\Debug\OrdenesBC.dll.config
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CTests\bin\Debug\ShoppingCartBC.dll.config
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CTests\obj\Debug\B2CTests.csproj.CoreCompileInputs.cache

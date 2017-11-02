@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B2CWS", "B2CWS\B2CWS.csproj", "{A6484E99-F342-411F-89F0-0CFFBCD2DD88}"
 EndProject
@@ -60,6 +60,13 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "KallsonysMovil", "http://lo
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		SlnRelativePath = "..\..\..\..\..\..\proyectos\PICA\Web\B2CWEB\"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAndLoadTestProject1", "WebAndLoadTestProject1\WebAndLoadTestProject1.csproj", "{7E02558D-944E-465B-A961-EEB958A0B98E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{16CF27BD-F752-4BAB-ADBB-8779F14A8D24}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
 	EndProjectSection
 EndProject
 Global
@@ -166,6 +173,14 @@ Global
 		{6454ECA7-4B4F-45E2-9DDE-675D95522C6E}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{6454ECA7-4B4F-45E2-9DDE-675D95522C6E}.Release|x86.ActiveCfg = Debug|Any CPU
 		{6454ECA7-4B4F-45E2-9DDE-675D95522C6E}.Release|x86.Build.0 = Debug|Any CPU
+		{7E02558D-944E-465B-A961-EEB958A0B98E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E02558D-944E-465B-A961-EEB958A0B98E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E02558D-944E-465B-A961-EEB958A0B98E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7E02558D-944E-465B-A961-EEB958A0B98E}.Debug|x86.Build.0 = Debug|Any CPU
+		{7E02558D-944E-465B-A961-EEB958A0B98E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E02558D-944E-465B-A961-EEB958A0B98E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E02558D-944E-465B-A961-EEB958A0B98E}.Release|x86.ActiveCfg = Release|Any CPU
+		{7E02558D-944E-465B-A961-EEB958A0B98E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -187,5 +202,10 @@ Global
 		{478F42BF-8809-4B6E-902F-9E593F6DEB61} = {D0A4453C-9284-44A6-BC36-79A2FBF81FFA}
 		{6699F781-1347-4C82-9270-F2646E65511C} = {3B944C23-1D10-4DB9-AAFE-A1ECD517A3E7}
 		{6454ECA7-4B4F-45E2-9DDE-675D95522C6E} = {C42F8DFC-755F-49B7-A7D3-9D75350CE652}
+		{7E02558D-944E-465B-A961-EEB958A0B98E} = {3B944C23-1D10-4DB9-AAFE-A1ECD517A3E7}
+		{16CF27BD-F752-4BAB-ADBB-8779F14A8D24} = {3B944C23-1D10-4DB9-AAFE-A1ECD517A3E7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C475F43F-B51A-436F-B06B-D7E01CDE8F22}
 	EndGlobalSection
 EndGlobal
