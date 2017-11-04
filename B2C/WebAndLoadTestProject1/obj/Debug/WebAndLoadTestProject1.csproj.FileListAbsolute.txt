@@ -1,8 +1,6 @@
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\bin\Debug\WebAndLoadTestProject1.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\bin\Debug\WebAndLoadTestProject1.pdb
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\bin\Debug\Microsoft.VisualStudio.QualityTools.WebTestFramework.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\obj\Debug\WebAndLoadTestProject1.csprojResolveAssemblyReference.cache
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\obj\Debug\WebAndLoadTestProject1.csproj.CoreCompileInputs.cache
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\obj\Debug\WebAndLoadTestProject1.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\obj\Debug\WebAndLoadTestProject1.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\bin\Debug\WebTests\ProductosCategoriaAudio.webtest

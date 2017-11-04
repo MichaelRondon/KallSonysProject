@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,11 +43,22 @@
   <ItemGroup>
     <Compile Include="Models\Campania.cs" />
     <Compile Include="Models\Categoria.cs" />
+    <Compile Include="Models\DatosPago.cs" />
+    <Compile Include="Models\ItemProductoCarrito.cs" />
     <Compile Include="Models\Page.cs" />
     <Compile Include="Models\Producto.cs" />
+    <Compile Include="Models\ProductoCarrito.cs" />
     <Compile Include="Models\QueryCampanias.cs" />
+    <Compile Include="Models\TotalCarrito.cs" />
     <Compile Include="Models\QueryProductos.cs" />
+    <Compile Include="Models\ResponseCarrito.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ClientesDomain\ClientesEntities.csproj">
+      <Project>{223731c7-5db5-444c-a10a-c05c678c9ba3}</Project>
+      <Name>ClientesEntities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -186,14 +186,6 @@
       <Project>{03ce071f-67dc-43aa-baff-d2cc2605b63b}</Project>
       <Name>OrdenesEntities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ShoppingCartDAC\ShoppingCartBC.csproj">
-      <Project>{478f42bf-8809-4b6e-902f-9e593f6deb61}</Project>
-      <Name>ShoppingCartBC</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ShoppingCartEntities\ShoppingCartEntities.csproj">
-      <Project>{3e942ad8-1f0b-41e2-bba4-8f7733951d63}</Project>
-      <Name>ShoppingCartEntities</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -15,5 +15,9 @@ namespace OrdenesBC.Contratos
         Task<QueryCampanias> BuscarCampanias(Parametros parametros);
         Task<Producto> ConsultarProducto(long id);
         Task<IEnumerable<Categoria>> BuscarCategorias(Parametros parametros);
+        ResponseCarrito AgregarProducto(string idCliente, ProductoCarrito producto);
+        Task<IEnumerable<ItemProductoCarrito>> ConsultarCarrito(string idCliente);
+        Task<TotalCarrito> Checkout(string idCliente, IEnumerable<ProductoCarrito> productos);
+        ResponseCarrito ProcesarPago(string idCliente, DatosPago datosPago);
     }
 }

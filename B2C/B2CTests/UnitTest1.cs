@@ -1,17 +1,10 @@
 ﻿#region Directivas using
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ClientesBC.Contratos;
 using OrdenesBC.Contratos;
-using ShoppingCartBC.Contratos;
-using ClientesBC.Implementaciones;
-using OrdenesBC.Implementaciones;
-using ShoppingCartBC.Implementaciones;
 using System.Threading.Tasks;
-using Common;
 using ClientesEntities.Models;
 using OrdenesEntities.Models;
-using ShoppingCartEntities.Models;
 using System.Linq;
 using System.Collections.Generic;
 #endregion
@@ -63,18 +56,18 @@ namespace B2CTests
         }
 
         [TestMethod]
-        public void ShoppingCartAddTest()
+        public void OrdenesAddTest()
         {
-            IShoppingCartBC shoppingCartBC = new ShoppingCartBC.Implementaciones.ShoppingCartBC();
-            var resultado = shoppingCartBC.AgregarProducto("CC79797979", new ProductoCarrito() { idProducto = 344076, cantidad = 2 });
+            IOrdenesBC OrdenesBC = new OrdenesBC.Implementaciones.OrdenesBC();
+            var resultado = OrdenesBC.AgregarProducto("CC79797979", new ProductoCarrito() { idProducto = 344076, cantidad = 2 });
             Assert.IsTrue(resultado.exitoso);
         }
 
         [TestMethod]
-        public void ConsultaShoppingCartTest()
+        public async Task ConsultaOrdenesTest()
         {
-            IShoppingCartBC shoppingCartBC = new ShoppingCartBC.Implementaciones.ShoppingCartBC();
-            var resultado = shoppingCartBC.ConsultarCarrito("CC79797979");
+            IOrdenesBC OrdenesBC = new OrdenesBC.Implementaciones.OrdenesBC();
+            var resultado = await OrdenesBC.ConsultarCarrito("CC79797979");
             Assert.IsTrue(resultado.Any());
         }
 

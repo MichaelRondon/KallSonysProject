@@ -3,3 +3,5 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesEntities\bin\Debug\Orden
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesEntities\obj\Debug\OrdenesEntities.csprojResolveAssemblyReference.cache
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesEntities\obj\Debug\OrdenesEntities.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesEntities\obj\Debug\OrdenesEntities.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesEntities\bin\Debug\ClientesEntities.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesEntities\bin\Debug\ClientesEntities.pdb

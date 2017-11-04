@@ -26,8 +26,6 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.CodeDom.Pro
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Newtonsoft.Json.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\OrdenesBC.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\OrdenesEntities.dll
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\ShoppingCartBC.dll
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\ShoppingCartEntities.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Net.Http.Formatting.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Cors.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Http.Cors.dll
@@ -39,8 +37,6 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\EntityFramework.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Common.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\OrdenesBC.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\OrdenesEntities.pdb
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\ShoppingCartBC.pdb
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\ShoppingCartEntities.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.AI.DependencyCollector.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.AI.Web.xml
@@ -60,3 +56,7 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Debug\B2CWS.StringRes
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Debug\B2CWS.csproj.GenerateResource.Cache
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Debug\B2CWS.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\obj\Debug\B2CWS.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\ClientesEntities.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\ClientesEntities.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\ClientesBC.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\ClientesBC.pdb

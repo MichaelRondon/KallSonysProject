@@ -1,14 +1,11 @@
-﻿using System;
+﻿#region Directivas using
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using System.Web.Http.Cors;
-using ShoppingCartEntities.Models;
-using ShoppingCartBC.Contratos;
-using ShoppingCartBC.Implementaciones;
+using System.Threading.Tasks;
+using OrdenesEntities.Models;
+using OrdenesBC.Contratos;
+#endregion
 
 namespace B2CWS.Controllers
 {
@@ -17,19 +14,19 @@ namespace B2CWS.Controllers
 
         #region Atributos
 
-        private IShoppingCartBC _dac;
+        private IOrdenesBC _dac;
 
         #endregion
         
         #region Propiedades
 
-        private IShoppingCartBC DAC
+        private IOrdenesBC DAC
         {
             get
             {
                 if (_dac == null)
                 {
-                    _dac = new ShoppingCartBC.Implementaciones.ShoppingCartBC();
+                    _dac = new OrdenesBC.Implementaciones.OrdenesBC();
                 }
                 return _dac;
             }
@@ -52,10 +49,10 @@ namespace B2CWS.Controllers
         }
 
         [Route("api/shoppingCart/{idCliente}")]
-        [ResponseType(typeof(IEnumerable<ProductoCarrito>))]
-        public IHttpActionResult get(string idCliente)
+        [ResponseType(typeof(IEnumerable<ItemProductoCarrito>))]
+        public async Task<IHttpActionResult> get(string idCliente)
         {
-            IEnumerable<ProductoCarrito> carrito = DAC.ConsultarCarrito(idCliente);
+            IEnumerable<ItemProductoCarrito> carrito = await DAC.ConsultarCarrito(idCliente);
 
             if (carrito == null)
             {
@@ -63,8 +60,42 @@ namespace B2CWS.Controllers
             }
             else
             {
+                foreach (var prod in carrito)
+                {
+                    prod.producto.urlImage = Url.Route("DefaultApi", new { controller = "ImageThumb", id = prod.producto.id });
+                }
                 return Ok(carrito);
             }
         }
+
+        [Route("api/shoppingCart/{idCliente}")]
+        [ResponseType(typeof(TotalCarrito))]
+        public async Task<IHttpActionResult> put(string idCliente, [FromBody]IEnumerable<ProductoCarrito> producto)
+        {
+            if (producto == null || !ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            TotalCarrito response = await DAC.Checkout(idCliente, producto);
+
+            return Ok(response);
+        }
+
+        [Route("api/shoppingCart/{idCliente}/procesarpago")]
+        [ResponseType(typeof(ResponseCarrito))]
+        [HttpPost]
+        public IHttpActionResult procesarPago(string idCliente, [FromBody]DatosPago datosPago)
+        {
+            if (datosPago == null || !ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            ResponseCarrito response = DAC.AgregarProducto(idCliente, datosPago);
+
+            return Ok(response);
+        }
+
     }
 }

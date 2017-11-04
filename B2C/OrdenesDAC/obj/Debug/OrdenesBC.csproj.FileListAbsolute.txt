@@ -16,3 +16,7 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\bin\Debug\EntityFram
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\obj\Debug\OrdenesBC.csprojResolveAssemblyReference.cache
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\obj\Debug\OrdenesBC.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\obj\Debug\OrdenesBC.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\bin\Debug\ClientesBC.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\bin\Debug\ClientesEntities.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\bin\Debug\ClientesBC.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\bin\Debug\ClientesEntities.pdb
