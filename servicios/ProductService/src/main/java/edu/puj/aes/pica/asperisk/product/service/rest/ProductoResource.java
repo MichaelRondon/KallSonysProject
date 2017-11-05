@@ -11,6 +11,7 @@ import edu.puj.aes.pica.asperisk.product.service.exceptions.ProductTransactionEx
 import edu.puj.aes.pica.asperisk.product.service.service.ProductService;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.*;
 import edu.puj.aes.pica.asperisk.product.service.model.CampaignRequest;
+import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.SearchScroll;
 import edu.puj.aes.pica.asperisk.product.service.service.CampaniaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -136,9 +137,6 @@ public class ProductoResource {
             @RequestParam(value = "custom", defaultValue = "", required = false) String custom)
             throws ProductTransactionException {
         long initTime = System.currentTimeMillis();
-        LOGGER.info("Ingresando a scrollsearch");
-        LOGGER.info("scrollId: {}", scrollId);
-
         BasicRequest basicRequest = new BasicRequest();
         basicRequest.setCustom(custom);
 
@@ -160,14 +158,16 @@ public class ProductoResource {
         scrollSearchRequest.setScrollId(scrollId);
         scrollSearchRequest.setProduct(product);
 
+        LOGGER.info("scrollSearchRequest de buscar/scroll {}", product.hashCode());
         if (productSearchScrollMap.containsKey(product)) {
             scrollSearchRequest.setScrollId(productSearchScrollMap.get(product));
         }
 
         ProductScrollResponse productScrollResponse = elasticSearchService.findAll(scrollSearchRequest);
 
-        if (!productScrollResponse.getProductos().isEmpty()) {
+        if (!productScrollResponse.getProductos().isEmpty() && productScrollResponse.getScrollId() != SearchScroll.EMPTY_SCROLL_ID) {
             productSearchScrollMap.put(product, productScrollResponse.getScrollId());
+            LOGGER.info("inserta en mapa de scroll id de buscar/scroll el producto: {} scrollId: {}", product.hashCode(), productScrollResponse.getScrollId());
         }
 
         LOGGER.info("Tiempo total GET /api/producto/buscar/scroll {}", (System.currentTimeMillis() - initTime));

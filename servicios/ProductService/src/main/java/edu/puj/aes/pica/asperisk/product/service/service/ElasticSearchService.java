@@ -282,6 +282,7 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
                 LOGGER.info("Busca en elasticsearch");
                 SearchResponse searchResponse = scrollSearchFromElasticSearch(scrollSearchRequest);
                 List<Product> responseList = getListFromSearchResponse(searchResponse);
+                LOGGER.info("Obtiene de elasticsearch: {} productos", responseList.size());
                 productScrollResponse.setScrollId(searchResponse.getScrollId());
                 productScrollResponse.getProductos().addAll(responseList);
 
@@ -292,7 +293,6 @@ public class ElasticSearchService extends ElasticConn implements ProductService 
                     productScrollResponse.getProductos(), productScrollResponse);
 
             LOGGER.info("productScrollResponse.getProductos().size(): {}", productScrollResponse.getProductos().size());
-            LOGGER.info("ProductScrollResponse: {}", productScrollResponse);
             return productScrollResponse;
         } catch (org.elasticsearch.index.IndexNotFoundException ex) {
             String errorMessage = String.format("Error convirtiendo respuesta en Product. scrollId: %s, mensaje: %s",

@@ -21,7 +21,7 @@ public class SearchMultiBuilder extends Transaction<ElasticSearchInputMultiBuild
         LOGGER.info("Ejecutar MultiGet input:{}", input);
 
         SearchRequestBuilder searchRequestBuilder = transportClient.prepareSearch(input.getIndex(), input.getTipo())
-                .setQuery(input.initBoolQueryBuilder()).setSize(40);
+                .setQuery(input.initBoolQueryBuilder()).setSize(100);
         LOGGER.info("Ejecutar MultiGet searchRequestBuilder:{}", searchRequestBuilder);
         SearchResponse searchResponse = searchRequestBuilder.get();
         return searchResponse;
