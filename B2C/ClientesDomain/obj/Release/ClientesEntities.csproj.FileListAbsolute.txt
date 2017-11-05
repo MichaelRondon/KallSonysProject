@@ -1,0 +1,4 @@
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDomain\bin\Release\ClientesEntities.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDomain\bin\Release\ClientesEntities.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDomain\obj\Release\ClientesEntities.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesDomain\obj\Release\ClientesEntities.pdb

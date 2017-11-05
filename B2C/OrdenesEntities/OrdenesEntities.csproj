@@ -49,7 +49,7 @@
     <Compile Include="Models\Producto.cs" />
     <Compile Include="Models\ProductoCarrito.cs" />
     <Compile Include="Models\QueryCampanias.cs" />
-    <Compile Include="Models\TotalCarrito.cs" />
+    <Compile Include="Models\TotalOrden.cs" />
     <Compile Include="Models\QueryProductos.cs" />
     <Compile Include="Models\ResponseCarrito.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

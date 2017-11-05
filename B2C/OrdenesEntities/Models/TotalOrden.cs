@@ -7,10 +7,10 @@ using ClientesEntities.Models;
 
 namespace OrdenesEntities.Models
 {
-    public class TotalCarrito
+    public class TotalOrden
     {
         public Cliente cliente { get; set; }
-        public double? valorTotal { get; set; }
+        public double valorTotal { get; set; }
         public int itemsTotal { get; set; }
     }
 }

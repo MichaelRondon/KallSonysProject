@@ -17,7 +17,9 @@ namespace OrdenesBC.Contratos
         Task<IEnumerable<Categoria>> BuscarCategorias(Parametros parametros);
         ResponseCarrito AgregarProducto(string idCliente, ProductoCarrito producto);
         Task<IEnumerable<ItemProductoCarrito>> ConsultarCarrito(string idCliente);
-        Task<TotalCarrito> Checkout(string idCliente, IEnumerable<ProductoCarrito> productos);
+        Task<TotalOrden> Checkout(string idCliente, IEnumerable<ProductoCarrito> productos);
         ResponseCarrito ProcesarPago(string idCliente, DatosPago datosPago);
+        TotalOrden ConsultarTotalOrden(int idOrden);
+        IEnumerable<ItemProductoCarrito> DetalleOrden(int idOrden);
     }
 }

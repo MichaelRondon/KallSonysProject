@@ -68,16 +68,17 @@ namespace B2CWS.Controllers
             }
         }
 
-        [Route("api/shoppingCart/{idCliente}")]
-        [ResponseType(typeof(TotalCarrito))]
-        public async Task<IHttpActionResult> put(string idCliente, [FromBody]IEnumerable<ProductoCarrito> producto)
+        [Route("api/shoppingCart/{idCliente}/checkout")]
+        [ResponseType(typeof(TotalOrden))]
+        [HttpPost]
+        public async Task<IHttpActionResult> checkout(string idCliente, [FromBody]IEnumerable<ProductoCarrito> producto)
         {
             if (producto == null || !ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            TotalCarrito response = await DAC.Checkout(idCliente, producto);
+            TotalOrden response = await DAC.Checkout(idCliente, producto);
 
             return Ok(response);
         }
@@ -92,7 +93,7 @@ namespace B2CWS.Controllers
                 return BadRequest();
             }
 
-            ResponseCarrito response = DAC.AgregarProducto(idCliente, datosPago);
+            ResponseCarrito response = DAC.ProcesarPago(idCliente, datosPago);
 
             return Ok(response);
         }

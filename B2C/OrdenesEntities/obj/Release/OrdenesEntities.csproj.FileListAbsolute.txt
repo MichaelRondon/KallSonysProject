@@ -2,3 +2,6 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesEntities\bin\Release\Ord
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesEntities\bin\Release\OrdenesEntities.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesEntities\obj\Release\OrdenesEntities.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesEntities\obj\Release\OrdenesEntities.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesEntities\bin\Release\ClientesEntities.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesEntities\bin\Release\ClientesEntities.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesEntities\obj\Release\OrdenesEntities.csprojResolveAssemblyReference.cache

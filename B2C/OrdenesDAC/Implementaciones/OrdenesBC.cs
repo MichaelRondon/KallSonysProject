@@ -8,6 +8,7 @@ using Common.DTO;
 using Common.Resources;
 using OrdenesBC.Contratos;
 using OrdenesEntities.Models;
+using ClientesEntities.Models;
 using ClientesEF;
 using System.Net.Http;
 
@@ -240,12 +241,12 @@ namespace OrdenesBC.Implementaciones
             return carrito;
         }
 
-        public async Task<TotalCarrito> Checkout(string idCliente, IEnumerable<ProductoCarrito> productos)
+        public async Task<TotalOrden> Checkout(string idCliente, IEnumerable<ProductoCarrito> productos)
         {
             // Se combinan los datos actuales con los existentes
             ClientesEF.ORDER ordenActual = null;
             ClientesEF.ITEM itemActual = null;
-            TotalCarrito respuesta = null;
+            TotalOrden respuesta = null;
             bool carritoPersistido = false;
 
             // Tratar de extraer una orden actual en estado "NUEVA"
@@ -320,22 +321,24 @@ namespace OrdenesBC.Implementaciones
                         {
                             if (respuesta == null)
                             {
-                                respuesta = new TotalCarrito()
+                                respuesta = new TotalOrden()
                                 {
                                     itemsTotal = 0,
                                     valorTotal = 0d
                                 };
                             }
 
-                            respuesta.itemsTotal++;
-                            respuesta.valorTotal += item.producto.precio.HasValue ? item.producto.precio.Value : 0d;
-
                             // Persistir la consulta en la base de datos
                             itemActual = ordenActual.ITEMS.Single(p => p.PRODID.Equals(item.itemCarrito.idProducto));
                             itemActual.CATEGORY = item.producto.descripcion;
                             itemActual.PRICE = Convert.ToDecimal(item.producto.precio.Value);
                             itemActual.PRODUCTNAME = item.producto.nombre;
+
+                            respuesta.itemsTotal += itemActual.QUANTITY.Value;
+                            respuesta.valorTotal += (item.producto.precio.Value * itemActual.QUANTITY.Value);
                         }
+
+                        ordenActual.PRICE = Convert.ToDecimal(respuesta.valorTotal);
 
                         context.SaveChanges();
                     }
@@ -361,9 +364,46 @@ namespace OrdenesBC.Implementaciones
                 mensaje = "Pago procesado exitosamente. ID orden: {0}"
             };
 
+            ORDER ordenActual = null;
+
             try
             {
-                // Actualizar el estado de la orden
+                using (var context = new ClientesEF.Entities())
+                {
+                    ordenActual = context.ORDERS.SingleOrDefault(p => p.CUSTID.Equals(idCliente) && p.STATUS.Equals(ESTADO_ORDEN_NUEVA));
+
+                    // Procesar pago de tarjeta de crédito
+                    bool resultadoPago = true; // Procesar pago de la orden
+
+                    // Actualizar el estado de la orden
+                    if (resultadoPago == true)
+                    {
+                        ordenActual.STATUS = ESTADO_ORDEN_EN_PROCESO;
+                        ordenActual.ORDERDATE = DateTime.Now;
+                        ADDRESS address = ordenActual.CUSTOMER.ADDRESSes.FirstOrDefault();
+
+                        if (address == null)
+                        {
+                            address = context.ADDRESSes.Create();
+                            ordenActual.CUSTOMER.ADDRESSes.Add(address);
+                        }
+
+                        address.ADDRID = String.Format("DIRECCION {0}", ordenActual.CUSTOMER.CUSTID);
+                        address.STREET = datosPago.direccionEntrega;
+                        address.CITY = datosPago.ciudadEntrega;
+                        address.COUNTRY = datosPago.paisEntrega;
+                    }
+                    else
+                    {
+                        respuesta.mensaje = "Error al procesar pago con tarjeta de crédito.";
+                        respuesta.exitoso = false;
+                        respuesta.estatus = "Error";
+                    }
+
+                    respuesta.mensaje = string.Format(respuesta.mensaje, ordenActual.ORDID);
+
+                    context.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
@@ -372,7 +412,123 @@ namespace OrdenesBC.Implementaciones
                 respuesta.estatus = "Error";
             }
 
+            // Llamar servicio backend de órdenes
+            if (respuesta.exitoso == true)
+            {
+                // TODO: LLAMAR EL SERVICIO
+            }
+            //else
+            //{
+            //    respuesta.mensaje = "Error al iniciar proceso de orden.";
+            //    respuesta.exitoso = false;
+            //    respuesta.estatus = "Error";
+            //}
+
             return respuesta;
+        }
+
+        public TotalOrden ConsultarTotalOrden(int idOrden)
+        {
+            TotalOrden total = null;
+            ORDER ordenActual = null;
+
+            try
+            {
+                using (var context = new ClientesEF.Entities())
+                {
+                    ordenActual = context.ORDERS.Single(p => p.ORDID.Equals(idOrden));
+
+                    total = new TotalOrden()
+                    {
+                        cliente = new ClientesEntities.Models.Cliente()
+                        {
+                            apellidos = ordenActual.CUSTOMER.LNAME,
+                            correo_e = ordenActual.CUSTOMER.EMAIL,
+                            documento = ordenActual.CUSTOMER.CUSTID,
+                            estatus = ordenActual.CUSTOMER.STATUS,
+                            nombres = ordenActual.CUSTOMER.FNAME,
+                            numero = ordenActual.CUSTOMER.CREDITCARDNUMBER,
+                            telefono = ordenActual.CUSTOMER.PHONENUMBER,
+                            tipo = ordenActual.CUSTOMER.CREDITCARDTYPE
+                        },
+                        valorTotal = Convert.ToDouble(ordenActual.PRICE)
+                    };
+
+                    ADDRESS address = ordenActual.CUSTOMER.ADDRESSes.FirstOrDefault();
+
+                    if (address != null)
+                    {
+                        Direccion direccion = new Direccion()
+                        {
+                            calle = address.STREET,
+                            ciudad = address.CITY,
+                            direccion = address.ADDRID,
+                            estado = address.STATE,
+                            pais = address.COUNTRY,
+                            tipo = address.ADDRESSTYPE,
+                            zipcode = address.ZIP
+                        };
+
+                        total.cliente.direcciones = new List<Direccion>() { direccion };
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                total = null;
+            }
+
+            return total;
+        }
+
+        public IEnumerable<ItemProductoCarrito> DetalleOrden(int idOrden)
+        {
+            List<ItemProductoCarrito> resultado = null;
+            ORDER ordenActual = null;
+            ItemProductoCarrito itemProductoCarrito = null;
+            Producto productoOrden = null;
+            ProductoCarrito itemProductoOrden = null;
+
+            try
+            {
+                using (var context = new ClientesEF.Entities())
+                {
+                    ordenActual = context.ORDERS.Single(p => p.ORDID.Equals(idOrden));
+
+                    foreach (var item in ordenActual.ITEMS)
+                    {
+                        if (resultado == null)
+                        {
+                            resultado = new List<ItemProductoCarrito>();
+                        }
+
+                        productoOrden = new Producto() {
+                            id = Convert.ToInt64(item.PRODID),
+                            nombre = item.PRODUCTNAME,
+                            precio = Convert.ToDouble(item.PRICE),
+                            descripcion = item.CATEGORY
+                        };
+
+                        itemProductoOrden = new ProductoCarrito() {
+                            cantidad = item.QUANTITY.Value,
+                            idProducto = Convert.ToInt64(item.PRODID)
+                        };
+
+                        itemProductoCarrito = new ItemProductoCarrito() {
+                            itemCarrito = itemProductoOrden,
+                            producto = productoOrden
+                        };
+
+                        resultado.Add(itemProductoCarrito);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                resultado = null;
+            }
+
+            return resultado;
         }
     }
 }
