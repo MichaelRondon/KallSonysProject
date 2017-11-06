@@ -7,6 +7,7 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css">
 		<link href="css/styleSlider.css" rel="stylesheet" type="text/css">
 		<link href="css/media.css" rel="stylesheet"  type="text/css">
+		<link href="css/media.css" rel="stylesheet"  type="text/css">
 		<link href="images/Front/Kallsonys.ico" rel="icon" type="image/x-icon">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<!--script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script-->
@@ -50,32 +51,42 @@
 							<div class="form-group col-xs-6 col-sm-6">
 								<label class="control-label" for="field_codigoProducto" >Código de producto</label>
 								<div class="input-group">
-									<input class="form-control" id="field_codigoProducto" name="codigoProducto" ng-model="vm.codigoProducto"/>
+									<input class="form-control" id="field_codigoProducto" name="codigoProducto" ng-model="reddit.codigoProducto"/>
 								</div>
 							</div>
 							<div class="form-group col-xs-6 col-sm-6">
 								<label class="control-label" for="field_nombreProducto">Nombre del producto</label>
 								<div class="input-group">
-									<input class="form-control" id="field_nombreProducto" name="nombreProducto" ng-model="vm.nombreProducto"/>
+									<input class="form-control" id="field_nombreProducto" name="nombreProducto" ng-model="reddit.nombreProducto"/>
 								</div>
 							</div>
 							<div class="form-group col-xs-12 col-sm-12">
 								<label class="control-label" for="field_descripcionProducto">Descripción del producto</label>
 								<div class="input-group">
-									<input class="form-control" id="field_descripcionProducto" name="descripcionProducto" size="50" ng-model="vm.descripcion"/>
+									<input class="form-control" id="field_descripcionProducto" name="descripcionProducto" size="50" ng-model="reddit.descripcion"/>
 								</div>
 							</div>
+							<div class="form-group col-xs-12 col-sm-6">
+								<label for="field_categoria">Categoria</label>
+								<select class="form-control" id="field_categoria" name="categoria" ng-model="reddit.categoriaSeleccionada"
+										ng-options="categoria.categoria as categoria.categoria for categoria in categorias">
+									<option value="">Todas</option>
+								</select>
+							</div>
 							<div class="form-group col-xs-12 col-sm-12">
-								<button type="button" class="btn btn-primary" ng-click="vm.onChange()">Buscar</button>
+								<button type="button" class="btn btn-primary" ng-click="onChange()">Buscar</button>
 							</div>
 						</div>
 					</div>
 					<br/>
+					<!--div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='1'>
+					
+					</div-->
 					<div class="table-responsive">
 						<table class="table table-striped">
 							<thead>
 								<tr>
-									<th/>
+									<th></th>
 									<th>
 										<span >Código</span>
 									</th>
@@ -95,14 +106,15 @@
 										<span>Marca</span>
 									</th>
 									<th>
-										<span>Key Words</span>
+										<span>Categoria</span>
 									</th>
-									<th/>
 								</tr>
 							</thead>
 							<tbody infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='1'>
 								<tr ng-repeat='item in reddit.items'>
 									<td>
+										<img ng-src="{{productImageSmallBaseUrl + item.id}}"
+											 alt="{{item.nombre}}" style="width:150px;height:150px;"/>
 									</td>
 									<td>
 															{{item.id}}
@@ -112,7 +124,7 @@
 									<td>{{item.precio}}</td>
 									<td>{{item.estado}}</td>
 									<td>{{item.marca}}</td>
-									<td>
+									<td>{{item.categoria}}
 
 									</td>
 								</tr>
