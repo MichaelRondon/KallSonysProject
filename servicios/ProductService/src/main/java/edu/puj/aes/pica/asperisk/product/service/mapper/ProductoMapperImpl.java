@@ -8,6 +8,7 @@ package edu.puj.aes.pica.asperisk.product.service.mapper;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
 import edu.puj.aes.pica.asperisk.product.service.jpa.entity.Categoria;
 import edu.puj.aes.pica.asperisk.product.service.jpa.entity.Producto;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,12 +43,16 @@ public class ProductoMapperImpl implements ProductoMapper {
     }
 
     private List<String> transformKeyWordsToList(String keyWordsString) {
+        if(keyWordsString ==null){
+            return new ArrayList<>();
+        }
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(keyWordsString);
         stringBuilder.deleteCharAt(stringBuilder.indexOf("["));
         stringBuilder.deleteCharAt(stringBuilder.indexOf("]"));
         String toString = stringBuilder.toString();
-        return Arrays.asList(toString.split(","));
+        return Arrays.asList(toString.split(",")).parallelStream().map(String::trim)
+                .filter(keyWord -> !keyWord.isEmpty()).collect(Collectors.toList());
     }
 
     @Override

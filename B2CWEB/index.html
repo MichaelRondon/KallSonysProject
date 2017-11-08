@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>::KallSonys</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link href="css/jquery.bxslider.css" rel="stylesheet" type="text/css">
+	<link href="css/style.css" rel="stylesheet" type="text/css">
+	<link href="css/styleSlider.css" rel="stylesheet" type="text/css">
+	<link href="css/media.css" rel="stylesheet"  type="text/css">
+	<link href="images/Front/Kallsonys.ico" rel="icon" type="image/x-icon">
+	<!-- Angular - Controllers and Libs -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script type='text/javascript' src="modules/products/jquery.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+	<script type='text/javascript' src="modules/products/ng-infinite-scroll.min.js"></script>
+	<script src="js/Controler-Angular.js"></script>
+	
+			
+	<script>
+	function myFunction() {
+		var x = document.getElementById("myTopnav");
+		if (x.className === "topnav") {
+			x.className += " responsive";
+		} else {
+			x.className = "topnav";
+		}
+	}
+	</script>
+</head>
+<body bgcolor= #ebf5fb ng-app="myapp">
+<div id="wrapper">
+	
+	<div ng-include="'header.html'"></div>
+	
+	<!--==navegation bar==-->
+	<div ng-include="'views/navegateUser.html'"></div>
+	<!-- <div id="navegation"> -->
+		<!-- <div class="topnav" id="myTopnav"> -->
+			<!-- <a href="#">Home</a> -->
+			<!-- <a href="#">Nuevos productos</a> -->
+			<!-- <a href="#">Ofertas</a> -->
+			<!-- <a href="#">Electronicos</a> -->
+			<!-- <a href="#">Accesorios</a> -->
+			<!-- <a href="#">Productos</a> -->
+			<!-- <a href="#">Ordenes</a> -->
+			<!-- <a href="javascript:void(0);" id="icon" class="icon" onclick="myFunction()">&#9776;</a> -->
+		<!-- </div> -->
+	<!-- </div> -->
+	
+	<!--==home slider ng-controller="BannerController"==-->
+	<div id="slider" ng-controller="SliderPage">
+		<div id="slider-content">
+			<img ng-if="dataLoading" style="width: 22px;height: 22px; " src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+			<div  id="slides_control">
+				<div>
+				  <carousel interval="myInterval">
+					<slide ng-repeat="slide in slides" active="slide.active">
+						<a href="{{urlProductos + slide.productId}}">
+						   <img style="width: 100%" ng-src="http://laptop-diego:9091{{slide.image}}">
+						</a>
+					</slide>
+				  </carousel>
+				</div>
+			  </div>
+		</div>
+	</div>
+	
+	<div ng-include="'content.html'"></div>
+	<div ng-include="'views/footer.html'"></div>
+	
+</div>
+	<script
+	src="http://code.jquery.com/jquery-2.2.4.js"
+	integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+	crossorigin="anonymous">
+	</script>
+	<script src="js/jquery.bxslider.min.js"></script>
+	<script src="js/my.js"></script>
+</body>
+</html>

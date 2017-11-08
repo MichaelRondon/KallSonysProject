@@ -1,0 +1,19 @@
+#slides_control > div{
+			  height: auto;
+			  width: 100%;
+			}
+			img{
+			  margin:auto;
+			  width: 400px;
+			}
+			#slides_control {
+			  /* position:absolute; */
+			  width: 100%;
+			  left:50%;
+			  top:20px;
+			  /* margin-left:-200px; */
+			}
+			
+#slider-content{
+width: 100%;height:auto;float: left; margin-top: 24px;text-align: center;	
+}			

@@ -6,6 +6,8 @@
 package edu.puj.aes.pica.asperisk.oms.utilities;
 
 import edu.puj.aes.pica.asperisk.oms.utilities.model.BasicSearchParams;
+import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.errors.CustomParameterizedException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -13,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
@@ -77,6 +81,10 @@ public class ProductUtilSingleton {
     public UriComponentsBuilder getBasicSearchParams(Pageable pageable,
             UriComponentsBuilder builder) {
 
+        if(pageable == null){
+            return builder;
+        }
+        
         builder.queryParam("page", pageable.getPageNumber());
         builder.queryParam("items_per_page", pageable.getPageSize());
         LOGGER.info("page: {}", pageable.getPageNumber());
@@ -91,8 +99,24 @@ public class ProductUtilSingleton {
             LOGGER.info("next.getProperty(): {}", next.getProperty());
             LOGGER.info("next.getDirection(): {}", next.getDirection());
             builder.queryParam("sort", next.getProperty());
-            builder.queryParam("sortType", next.getDirection());
+            builder.queryParam("sort_type", next.getDirection());
         }
         return builder;
+    }
+
+    public <R> R evalResponseAndGetBody(ResponseEntity<R> responseEntity, HttpStatus... httpStatusesAcepted) {
+        if (responseEntity == null) {
+            throw new CustomParameterizedException("Error obteniendo respuesta. La respuesta es nula");
+        }
+        if (Arrays.stream(httpStatusesAcepted).noneMatch(responseEntity.getStatusCode()::equals)) {
+            throw new CustomParameterizedException(
+                    String.format("Error obteniendo respuesta. Código de respuesta no esperado. Valor: %s. Respuesta: %s",
+                            responseEntity.getStatusCode(), responseEntity));
+        }
+        if (responseEntity.getBody() == null) {
+            throw new CustomParameterizedException(
+                    String.format("Cuerpo de la respuesta nulo. Respuesta: %s", responseEntity));
+        }
+        return responseEntity.getBody();
     }
 }

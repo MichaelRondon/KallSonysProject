@@ -1,4 +1,4 @@
-package edu.puj.aes.pica.asperisk.web.rest.errors;
+package edu.puj.aes.pica.asperisk.oms.utilities.rest.util.errors;
 
 import java.util.HashMap;
 import java.util.Map;

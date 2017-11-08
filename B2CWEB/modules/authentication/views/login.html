@@ -1,0 +1,30 @@
+﻿<form name="form" ng-submit="login()" role="form">
+	<div class="Login_div"> 
+				<span ng-show="error" class="alert alert-danger">{{error}}</span><p>&nbsp;</p>
+			
+				<div class="Tittle_div" style="width:100%">Inicia Sesión</div>
+				<div class="tittle_h2 divC1" >E-mail:</div>
+					<div class="margin-top divC1">
+						<input type="text" name="username" id="username" class="form-control" ng-model="username" required />
+						<span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">E-mail es requerido</span> 
+					</div >
+				<div class="tittle_h2 divC1 divClear">Clave:</div>
+					<div class="margin-top divC1">
+						<input type="password" name="password" id="password" class="form-control" ng-model="password" required />
+						<span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Clave es requerido</span>
+					</div>
+				<div style="height:80px;"></div>
+				<div class="divClear padding-top">
+					<button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-danger">Login</button>
+					<img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+				</div>
+				<div style="height:20px;"></div>
+				<div class="divClear padding-top">
+					<a href="#/Recovery">¿Olvidaste tu contraseña?</a>
+				</div>
+				<div style="height:10px;"></div>
+				<div class="divClear padding-top">
+					<a href="#/Create">Eres Nuevo en KallSonys?, Crea tu cuenta.</a>
+				</div>
+		</div>	
+</form>

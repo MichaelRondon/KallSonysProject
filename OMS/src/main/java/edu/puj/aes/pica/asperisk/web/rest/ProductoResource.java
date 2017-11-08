@@ -111,9 +111,7 @@ public class ProductoResource {
         } else {
             page = productoService.find(pageable, codigoProducto, nombreProducto, descripcion);
         }
-        log.info("page: {}", page);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/productos");
-        log.info("headers: {}", headers);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 

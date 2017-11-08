@@ -3,6 +3,8 @@ package edu.puj.aes.kallsonys;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -19,6 +21,7 @@ public class ProductGenerator {
 
     private final MyStringRandomGen myStringRandomGen = new MyStringRandomGen();
     private final Random random = new Random();
+    private final List<Long> idWithoutData = new LinkedList<>();
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductGenerator.class);
 
     public Product getProduct() {
@@ -66,13 +69,25 @@ public class ProductGenerator {
         return runnable;
     }
 
-    public void findEmptyData() {
-        for (long l = 0; l < 1006702; l++) {
-            Product findOne = productServiceRestClientImpl.findOne(l);
-            if (findOne == null) {
-                LOGGER.error("\n\n\n\n*************************Producto nulo id: {}*************************\n\n", l);
+    public Runnable findEmptyData() {
+        Runnable runnableFindEmpty = () -> {
+            for (long i = 5414L; i < 1200000; i++) {
+//                try {
+                    Product findOne = productServiceRestClientImpl.findOne(i);
+                    if (findOne == null) {
+                        LOGGER.error("\n\n\n\n*************************Producto nulo id: {}*************************\n\n", i);
+                        idWithoutData.add(i);
+                    }
+                    LOGGER.error("ids sin datos: {}. Id actual: {}", idWithoutData, i);
+
+//                    Thread.sleep(5000);
+//                } catch (InterruptedException ex) {
+//                    java.util.logging.Logger.getLogger(ProductGenerator.class.getName()).log(Level.SEVERE, null, ex);
+//                }
             }
-        }
+
+        };
+        return runnableFindEmpty;
     }
 
     @Getter
@@ -86,18 +101,17 @@ public class ProductGenerator {
             productGenerator.getProductServiceRestClientImpl().save(productGenerator.getProduct());
             LOGGER.info("TIEMPO: {}", (System.currentTimeMillis() - initTime));
         };
-        Runnable runnableFindEmpty = () -> {
-            productGenerator.findEmptyData();
-        };
-        long contadorRemplazos = 77483L;
+        long contadorRemplazos = 374794L;
         long long_ = 963192L;
-        newFixedThreadPool.submit(runnableFindEmpty);
+//        newFixedThreadPool.submit(productGenerator.findEmptyData());
         for (long i = 0; i < 1000000; i++) {
             LOGGER.info("i: {}", i);
             try {
+
                 contadorRemplazos++;
                 newFixedThreadPool.submit(productGenerator.replace(contadorRemplazos,
                         productGenerator.getProduct()));
+
                 Thread.sleep(500);
 //                if (i % 2 == 0) {
 //                    newFixedThreadPool.submit(runnableCreate);
@@ -105,7 +119,7 @@ public class ProductGenerator {
 ////                            productGenerator.getProduct()));
 //                    long_++;
 //                }
-                if (i % 50 == 0) {
+                if (i % 20 == 0) {
                     Thread.sleep(5000);
 
                 }

@@ -1,0 +1,127 @@
+<div>
+    <h2>Ranking clientes por producto</h2>
+    <jhi-alert></jhi-alert>
+    <div class="input-append">
+            <label class="control-label" for="field_codigo_producto">Código del Producto</label>
+            <input type="text" class="" name="codigoProducto" id="field_codigo_producto" 
+                   ng-model="vm.codigoProducto" required/>
+            <button class="btn btn-primary" ng-click="vm.ranking()" >
+                <span class="glyphicon glyphicon-eye-open"></span>
+                <span>
+                    Buscar Ranking de Clientes por Producto
+                </span>
+            </button>
+    </div>
+    <br/>
+    
+    
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="producto.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="omsApp.producto.home.createLabel">
+                        Create new Producto
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="container-fluid">
+        <div class="row">
+            <!--<div class="col-xs-12 col-md-8 no-padding">-->
+                <div class="form-group col-xs-6 col-sm-6">
+                    <label class="control-label" for="field_codigoProducto" >Código de producto</label>
+                    <div class="input-group">
+                        <input class="form-control" id="field_codigoProducto" name="codigoProducto" ng-model="vm.codigoProducto"/>
+                        <!--<input class="form-control" id="field_codigoProducto" name="codigoProducto" ng-model="vm.codigoProducto" ng-change="change()"/>-->
+                    </div>
+                </div>
+                <div class="form-group col-xs-6 col-sm-6">
+                    <label class="control-label" for="field_nombreProducto">Nombre del producto</label>
+                    <div class="input-group">
+                        <input class="form-control" id="field_nombreProducto" name="nombreProducto" ng-model="vm.nombreProducto"/>
+                        <!--<input class="form-control" id="field_nombreProducto" name="nombreProducto" ng-model="vm.nombreProducto" ng-change="change()"/>-->
+                    </div>
+                </div>
+                <div class="form-group col-xs-12 col-sm-12">
+                    <label class="control-label" for="field_descripcionProducto">Descripción del producto</label>
+                    <div class="input-group">
+                        <input class="form-control" id="field_descripcionProducto" name="descripcionProducto" size="50" ng-model="vm.descripcion"/>
+                        <!--<input class="form-control" id="field_descripcionProducto" name="descripcionProducto" ng-model="vm.descripcion" ng-change="change()"/>-->
+                    </div>
+                </div>
+            <!--</div>-->
+            <div class="form-group col-xs-12 col-sm-12">
+                <button type="button" class="btn btn-primary" ng-click="vm.onChange()">Buscar</button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
+                    <th></th>
+                    <!--<th><span ></span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <th jh-sort-by="id"><span >Código</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="nombre"><span data-translate="omsApp.producto.nombre">Nombre</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="descripcion"><span data-translate="omsApp.producto.descripcion">Descripcion</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="precio"><span data-translate="omsApp.producto.precio">Precio</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="estado"><span data-translate="omsApp.producto.estado">Estado</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <!--<th jh-sort-by="disponibilidad"><span data-translate="omsApp.producto.disponibilidad">Disponibilidad</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th jh-sort-by="fechaRevDisponibilidad"><span data-translate="omsApp.producto.fechaRevDisponibilidad">Fecha Rev Disponibilidad</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <th jh-sort-by="marca"><span data-translate="omsApp.producto.marca">Marca</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="keyWords"><span data-translate="omsApp.producto.keyWords">Key Words</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <!--<th jh-sort-by="categoriaCategoria"><span data-translate="omsApp.producto.categoria">Categoria</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+                <tr ng-repeat="producto in vm.productos track by producto.id">
+                                     <td>
+                        <a ui-sref="producto-detail({id:producto.id})">
+                            <img id="field_image_small" ng-src="{{vm.productImageSmallBaseUrl + producto.id}}"
+                                 alt="{{producto.nombre}}" style="width:150px;height:150px;"/>
+                                     </a>
+                                  </td>
+                    <td><a ui-sref="producto-detail({id:producto.id})" style="color: black;">{{producto.id}}</a></td>
+                    <td>{{producto.nombre}}</td>
+                    <td>{{producto.descripcion}}</td>
+                    <td>{{producto.precio}}</td>
+                    <td data-translate="{{'omsApp.Estado.' + producto.estado}}">{{producto.estado}}</td>
+                    <!--<td>{{producto.disponibilidad}}</td>-->
+                    <!--<td>{{producto.fechaRevDisponibilidad| date:'medium'}}</td>-->
+                    <td>{{producto.marca}}</td>
+                    <td>{{vm.getKeyWordText(producto.keyWords)}}</td>
+                    <!--                    <td>
+                                            <a ui-sref="categoria-detail({id:producto.categoriaId})">{{producto.categoriaCategoria}}</a>
+                                                         </td>-->
+                    <td class="text-right">
+                        <div class="btn-group-vertical">
+                            <button type="submit"
+                                    ui-sref="producto-detail({id:producto.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                                                      </button>
+                            <button type="submit"
+                                    ui-sref="producto.edit({id:producto.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                                                      </button>
+                            <button type="submit"
+                                    ui-sref="producto.delete({id:producto.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                                                  </button>
+                                       </div>
+                              </td>
+                      </tr>
+                 </tbody>
+        </table>
+  </div>
+</div>

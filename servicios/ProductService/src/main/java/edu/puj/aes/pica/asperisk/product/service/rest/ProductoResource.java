@@ -11,6 +11,7 @@ import edu.puj.aes.pica.asperisk.product.service.exceptions.ProductTransactionEx
 import edu.puj.aes.pica.asperisk.product.service.service.ProductService;
 import edu.puj.aes.pica.asperisk.oms.utilities.model.*;
 import edu.puj.aes.pica.asperisk.product.service.model.CampaignRequest;
+import edu.puj.aes.pica.asperisk.product.service.persistence.elasticsearch.SearchScroll;
 import edu.puj.aes.pica.asperisk.product.service.service.CampaniaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,27 +64,31 @@ public class ProductoResource {
 
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<Product> update(@RequestBody Product product) throws ProductTransactionException {
+        long initTime = System.currentTimeMillis();
         LOGGER.info("Ingresando a update");
         product = elasticSearchService.update(product);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(product.getId()).toUri();
+        LOGGER.info("Tiempo total PUT /api/producto {}", (System.currentTimeMillis() - initTime));
         return ResponseEntity.created(location).body(product);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@PathVariable Long id) throws ProductTransactionException {
+        long initTime = System.currentTimeMillis();
         LOGGER.info("Ingresando a delete");
         elasticSearchService.delete(id);
+        LOGGER.info("Tiempo total DELETE /api/producto/id {}", (System.currentTimeMillis() - initTime));
         return ResponseEntity.ok().build();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Product> findOne(@PathVariable String id) throws ProductTransactionException {
-        LOGGER.info("Ingresando a get id");
         long initTime = System.currentTimeMillis();
+        LOGGER.info("Ingresando a get id");
         Product product = jpaSearchService.findOne(id);
         elasticSearchService.cleanData(product);
-        LOGGER.info("TIEMPO busqueda por id: {}", (System.currentTimeMillis() - initTime));
+        LOGGER.info("Tiempo total GET /api/producto/id {}", (System.currentTimeMillis() - initTime));
         return ResponseEntity.ok(product);
     }
 
@@ -96,6 +101,7 @@ public class ProductoResource {
             @RequestParam(value = "sort_type", defaultValue = "", required = false) Sort.Direction sortType,
             @RequestParam(value = "custom", defaultValue = "", required = false) String custom)
             throws ProductTransactionException {
+        long initTime = System.currentTimeMillis();
         LOGGER.info("Ingresando a scrollsearch");
         LOGGER.info("scrollId: {}", scrollId);
 
@@ -113,6 +119,7 @@ public class ProductoResource {
         scrollSearchRequest.setBasicSearchParams(basicSearchParams);
         scrollSearchRequest.setScrollId(scrollId);
         ProductScrollResponse productScrollResponse = elasticSearchService.findAll(scrollSearchRequest);
+        LOGGER.info("Tiempo total GET /api/producto/scroll {}", (System.currentTimeMillis() - initTime));
         return ResponseEntity.ok(productScrollResponse);
     }
 
@@ -129,9 +136,7 @@ public class ProductoResource {
             @RequestParam(value = "categoria", defaultValue = "", required = false) String categoria,
             @RequestParam(value = "custom", defaultValue = "", required = false) String custom)
             throws ProductTransactionException {
-        LOGGER.info("Ingresando a scrollsearch");
-        LOGGER.info("scrollId: {}", scrollId);
-
+        long initTime = System.currentTimeMillis();
         BasicRequest basicRequest = new BasicRequest();
         basicRequest.setCustom(custom);
 
@@ -153,16 +158,19 @@ public class ProductoResource {
         scrollSearchRequest.setScrollId(scrollId);
         scrollSearchRequest.setProduct(product);
 
+        LOGGER.info("scrollSearchRequest de buscar/scroll {}", product.hashCode());
         if (productSearchScrollMap.containsKey(product)) {
             scrollSearchRequest.setScrollId(productSearchScrollMap.get(product));
         }
 
         ProductScrollResponse productScrollResponse = elasticSearchService.findAll(scrollSearchRequest);
 
-        if (!productScrollResponse.getProductos().isEmpty()) {
+        if (!productScrollResponse.getProductos().isEmpty() && productScrollResponse.getScrollId() != SearchScroll.EMPTY_SCROLL_ID) {
             productSearchScrollMap.put(product, productScrollResponse.getScrollId());
+            LOGGER.info("inserta en mapa de scroll id de buscar/scroll el producto: {} scrollId: {}", product.hashCode(), productScrollResponse.getScrollId());
         }
 
+        LOGGER.info("Tiempo total GET /api/producto/buscar/scroll {}", (System.currentTimeMillis() - initTime));
         return ResponseEntity.ok(productScrollResponse);
     }
 
@@ -220,6 +228,7 @@ public class ProductoResource {
             @RequestParam(value = "sort", defaultValue = "", required = false) String sort,
             @RequestParam(value = "sort_type", defaultValue = "", required = false) Sort.Direction sortType,
             @RequestParam(value = "custom", defaultValue = "", required = false) String custom) throws ProductTransactionException {
+        long initTime = System.currentTimeMillis();
 
         BasicProveedor basicProveedor = new BasicProveedor();
         basicProveedor.setId(proveedor);
@@ -251,13 +260,11 @@ public class ProductoResource {
         searchRequest.setPrecioMax(precioMax);
         searchRequest.setPrecioMin(precioMin);
 
-        LOGGER.info("Busca basicSearchParams: {}", basicSearchParams);
-        LOGGER.info("Busca searchRequest: {}", searchRequest);
-        LOGGER.info("Busca searchRequest.getProduct: {}", searchRequest.getProduct());
+        LOGGER.info("Busca basicSearchParams: {}. Product: {}", basicSearchParams, product);
         ProductsResponse productsResponse;
 //        productsResponse = productService.buscar(searchRequest);
         productsResponse = elasticSearchService.buscar(searchRequest);
-        LOGGER.info("Encuentra productsResponse: {}", productsResponse);
+        LOGGER.info("Tiempo total GET /api/producto/buscar {}", (System.currentTimeMillis() - initTime));
         return new ResponseEntity(productsResponse, HttpStatus.OK);
     }
 
@@ -268,8 +275,8 @@ public class ProductoResource {
             @RequestParam(value = "sort", defaultValue = "", required = false) String sort,
             @RequestParam(value = "sort_type", defaultValue = "", required = false) Sort.Direction sortType,
             @RequestParam(value = "custom", defaultValue = "", required = false) String custom,
-            @RequestParam(value = "categoria", defaultValue = "PRINCIPAL", required = false) 
-                    edu.puj.aes.pica.asperisk.oms.utilities.model.Categoria categoria) {
+            @RequestParam(value = "categoria", defaultValue = "PRINCIPAL", required = false) edu.puj.aes.pica.asperisk.oms.utilities.model.Categoria categoria) {
+        long initTime = System.currentTimeMillis();
 
         CampaignRequest campaniasRequest = new CampaignRequest();
         campaniasRequest.setState(estado);
@@ -287,9 +294,8 @@ public class ProductoResource {
         campaniasRequest.setBasicSearchParams(basicSearchParams);
         campaniasRequest.setCategoria(categoria);
 
-        LOGGER.info("Busca campanias: {}", campaniasRequest);
         CampaignResponse campaignResponse = elasticSearchService.findAllCampaigns(campaniasRequest, true);
-        LOGGER.info("Encuentra campanias: {}", campaignResponse);
+        LOGGER.info("Tiempo total GET /api/producto/campanias {}", (System.currentTimeMillis() - initTime));
         return new ResponseEntity(campaignResponse, HttpStatus.OK);
     }
 

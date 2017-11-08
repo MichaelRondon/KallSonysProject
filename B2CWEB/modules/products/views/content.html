@@ -1,0 +1,61 @@
+<!-- ng-controller="productsController" -->
+<div class="content-info"> 
+		
+			
+		<div>
+			<img ng-if="dataLoading" style="width: 22px;height: 22px; " src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+			<span ng-if="error">{{errorMsj}}</span>
+		</div>
+		
+		<span class="text-div">Categorias:</span>
+		<select ng-model="selectedCat" ng-click="GetProductsByCat()">
+			<option ng-repeat="x in categories" value="{{x.categoria}}">{{x.categoria}}</option>
+		</select>
+<p>&nbsp;</p> 
+		<!-- <h1>{{selectedCat}}</h1> -->
+		
+		<!-- <div ng-controller="MyCtrl"> -->
+			<!-- <!-- Repeat --> 
+			<!-- <ul> -->
+				<!-- <li ng-repeat="item in data | startFrom:pagination.currentPage*pagination.pageSize | limitTo:pagination.pageSize">{{item}}</li> -->
+			<!-- </ul> -->
+			<!-- <!-- Page UI --> 
+			<!-- <select ng-model="pagination.pageSize"> -->
+				<!-- <option value="10">10</option> -->
+				<!-- <option value="25">25</option> -->
+				<!-- <option value="100">100</option> -->
+			<!-- </select> -->
+				<!-- <button ng-disabled="pagination.currentPage == 0" ng-click="pagination.currentPage=pagination.currentPage-1">Previous</button>{{pagination.currentPage+1}}/{{pagination.numberOfPages()}} -->
+				<!-- <button ng-disabled="pagination.currentPage >= data.length/pagination.pageSize - 1" ng-click="pagination.currentPage=pagination.currentPage+1">Next</button> -->
+		<!-- </div> -->
+		
+		
+		
+		<div class="prod-container">
+			<div class="prod-box-Main" ng-repeat="producto in productos track by producto.id">
+				<h4 class="title-products">{{producto.descripcion}}</h4>
+				<div class="prod-box" >
+					<a href="{{urlProductos + producto.id}}">
+						<img ng-src="{{productImageSmallBaseUrl + producto.id}}" alt="{{producto.nombre}}">
+						<div class="prod-trans">
+							<div class="prod-feature">
+							 <input type="button" class="btn btn-warning" value="Agregar al carrito">
+							</div>	
+						</div>
+					</a>
+				</div>
+				<span class="price">$ {{producto.precio}}</span>					
+			</div>
+		</div>
+		<!-- <div id="content-Items"> -->
+			<!-- <!--==1st catbox==--> 
+				<!-- <div  ng-repeat="producto in productos track by producto.id"> -->
+					<!-- <a href="{{urlProductos + producto.id}}"> -->
+						<!-- <div class="catbox"> -->
+							<!-- <img ng-src="{{productImageSmallBaseUrl + producto.id}}" alt="{{producto.nombre}}"> -->
+							<!-- <span>{{producto.descripcion}}</span> -->
+						<!-- </div> -->
+					<!-- </a> -->
+				<!-- </div> -->
+		<!-- </div> -->
+</div>

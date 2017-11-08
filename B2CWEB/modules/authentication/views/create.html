@@ -1,0 +1,21 @@
+<!-- ng-controller="usersController" -->
+<div class="Login_div"> 
+				<div class="Tittle_div" style="width:100%">Crear Usuario</div>
+				<div class="tittle_h2 divC1">Tipo Documento:</div><div class="margin-top divC1"><input name="tipoDoc" type="text" /></div>
+				<div class="tittle_h2 divC1">Documento:</div><div class="margin-top divC1"><input name="txt_doc" type="text" ng-model="NewPost.documento"/></div>
+				<div class="tittle_h2 divC1">Nombres:</div><div class="margin-top divC1"><input name="txt_nomb" type="text" ng-model="NewPost.nombres"/></div>
+				<div class="tittle_h2 divC1">Apellidos:</div><div class="margin-top divC1"><input name="txt_ape" type="text" ng-model="NewPost.apellidos"/></div>
+				<div class="tittle_h2 divC1">Telefono:</div><div class="margin-top divC1"><input name="txt_tel" type="text" ng-model="NewPost.telefono"/></div>
+				<div class="tittle_h2 divC1">E-mail:</div><div class="margin-top divC1"><input name="txt_email" type="text" ng-model="NewPost.correo_e"/></div>
+				<div class="tittle_h2 divC1 divClear">Clave:</div><div class="margin-top divC1"><input name="txt_pass" type="password" ng-model="NewPost.password"/></div>
+				<div class="tittle_h2 divC1 divClear">Confirmar Clave:</div><div class="margin-top divC1"><input name="txt_pass_Confirm" type="password" ng-model="NewPost.Confirm_password"/></div>
+				<div class="tittle_h2 divC1 divClear"></div>
+				<div class="divClear padding-top">
+					<button type="button" class="btn btn-primary" ng-click="AddPost()" ng-disabled="inactive">Aceptar</button>
+					<button type="button" class="btn btn-primary" ng-click="limpiar()">Limpiar</button>
+				</div>
+				<div class="divClear padding-top">
+					<span class="messageSuccess">{{message}}</span><span class="messageError">{{messageError}}</span>
+					<div ng-show="loading"><img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/></div>
+				</div>
+</div>

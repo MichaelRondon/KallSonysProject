@@ -7,7 +7,7 @@ package edu.puj.aes.pica.asperisk.product.service.client;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.puj.aes.pica.asperisk.web.rest.errors.CustomParameterizedException;
+import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.errors.CustomParameterizedException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,8 +30,8 @@ public class ClientServiceRestClientImpl implements ClientServiceRestClient {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientServiceRestClientImpl.class);
 
-//    private static final String PRODUCT_SERVICE_URL = "http://laptop-diego:9092/api/clientes/";
-    private static final String PRODUCT_SERVICE_URL = "http://25.13.10.89:9092/api/clientes/";
+    private static final String CLIENT_SERVICE_URL = "http://laptop-diego:9092/api/clientes/";
+//    private static final String PRODUCT_SERVICE_URL = "http://25.13.10.89:9092/api/clientes/";
     private static String input;
     private static String output;
     private static String salida;
@@ -39,7 +39,7 @@ public class ClientServiceRestClientImpl implements ClientServiceRestClient {
     @Override
     public String find(String idCliente) {
         try {
-            URL url = new URL(PRODUCT_SERVICE_URL + idCliente);
+            URL url = new URL(CLIENT_SERVICE_URL + idCliente);
             System.out.println("url: " + url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -69,7 +69,7 @@ public class ClientServiceRestClientImpl implements ClientServiceRestClient {
     @Override
     public String create(String cliente) {
         try {
-            URL url = new URL(PRODUCT_SERVICE_URL);
+            URL url = new URL(CLIENT_SERVICE_URL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoOutput(true);
             conn.setRequestMethod("POST");
@@ -108,7 +108,7 @@ public class ClientServiceRestClientImpl implements ClientServiceRestClient {
     public String update(String cliente) {
         
         try {
-            URL url = new URL(PRODUCT_SERVICE_URL);
+            URL url = new URL(CLIENT_SERVICE_URL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoOutput(true);
             conn.setRequestMethod("PUT");

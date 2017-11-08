@@ -5,10 +5,15 @@
  */
 package edu.puj.aes.pica.asperisk.product.service.client;
 
+import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 /**
  *
  * @author acost
  */
-public class OrderServiceRestClient {
+public interface OrderServiceRestClient {
     
+    Page<Object> rankingClientes(Pageable pageable, Long idProducto);
 }

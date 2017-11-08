@@ -41,7 +41,7 @@ public class SearchScroll extends Transaction<ElasticSearchInputMultiBuilder, Se
             }
 
             scrollResp = searchRequestBuilder.get();
-            LOGGER.info("SearchScroll. length: {}", scrollResp.getHits().totalHits);
+            LOGGER.info("SearchScroll. totalHits: {}", scrollResp.getHits().totalHits);
             return scrollResp;
         }
         scrollResp = transportClient.prepareSearchScroll(input.getId())
