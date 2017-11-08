@@ -5,7 +5,7 @@ Desarrolladores:
   
 	David Camacho	https://github.com/davidcinho89
 	Diego Sánchez	https://github.com/dmsanchezr79
-	Felipe Grisales
+	Felipe Grisales https://github.com/felipexp90
 	Marcela Vaquiro	https://github.com/marcevaquiro
 	Michael Rondón	https://github.com/MichaelRondon
 
