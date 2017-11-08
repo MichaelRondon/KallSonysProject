@@ -101,7 +101,7 @@ public class ProductGenerator {
             productGenerator.getProductServiceRestClientImpl().save(productGenerator.getProduct());
             LOGGER.info("TIEMPO: {}", (System.currentTimeMillis() - initTime));
         };
-        long contadorRemplazos = 332173L;
+        long contadorRemplazos = 374794L;
         long long_ = 963192L;
 //        newFixedThreadPool.submit(productGenerator.findEmptyData());
         for (long i = 0; i < 1000000; i++) {
@@ -119,7 +119,7 @@ public class ProductGenerator {
 ////                            productGenerator.getProduct()));
 //                    long_++;
 //                }
-                if (i % 25 == 0) {
+                if (i % 20 == 0) {
                     Thread.sleep(5000);
 
                 }
