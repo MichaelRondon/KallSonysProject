@@ -58,6 +58,9 @@ public class CampaniaMapperImpl implements CampaniaMapper {
     public List<Product> mapJSONStringToProducts(String jsonProducts) {
         ObjectMapper mapper = new ObjectMapper();
         List<Product> products = new LinkedList<>();
+        if (jsonProducts == null) {
+            return products;
+        }
         try {
             Long[] readValue = mapper.readValue(jsonProducts, Long[].class);
             List<Long> asList = Arrays.asList(readValue);
@@ -74,6 +77,9 @@ public class CampaniaMapperImpl implements CampaniaMapper {
     }
 
     public String mapProductsDtoToJSONString(List<Product> productos) {
+        if (productos == null) {
+            return null;
+        }
         return Arrays.toString(productos.stream().map(Product::getId).collect(Collectors.toList()).toArray());
     }
 
