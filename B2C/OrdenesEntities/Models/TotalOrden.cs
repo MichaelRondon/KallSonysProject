@@ -12,5 +12,7 @@ namespace OrdenesEntities.Models
         public Cliente cliente { get; set; }
         public double valorTotal { get; set; }
         public int itemsTotal { get; set; }
+        public int idOrden { get; set; }
+        public string fecha_orden { get; set; }
     }
 }

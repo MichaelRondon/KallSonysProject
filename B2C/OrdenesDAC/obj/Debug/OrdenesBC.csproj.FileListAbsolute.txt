@@ -20,3 +20,4 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\bin\Debug\ClientesBC
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\bin\Debug\ClientesEntities.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\bin\Debug\ClientesBC.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\bin\Debug\ClientesEntities.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\OrdenesDAC\bin\Debug\Oracle.DataAccess.dll

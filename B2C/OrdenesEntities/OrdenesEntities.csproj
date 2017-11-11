@@ -43,12 +43,14 @@
   <ItemGroup>
     <Compile Include="Models\Campania.cs" />
     <Compile Include="Models\Categoria.cs" />
+    <Compile Include="Models\ClienteRanking.cs" />
     <Compile Include="Models\DatosPago.cs" />
     <Compile Include="Models\ItemProductoCarrito.cs" />
     <Compile Include="Models\Page.cs" />
     <Compile Include="Models\Producto.cs" />
     <Compile Include="Models\ProductoCarrito.cs" />
     <Compile Include="Models\QueryCampanias.cs" />
+    <Compile Include="Models\QueryRankingClientes.cs" />
     <Compile Include="Models\TotalOrden.cs" />
     <Compile Include="Models\QueryProductos.cs" />
     <Compile Include="Models\ResponseCarrito.cs" />

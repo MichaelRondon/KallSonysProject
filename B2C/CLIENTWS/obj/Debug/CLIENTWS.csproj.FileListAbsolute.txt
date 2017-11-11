@@ -60,8 +60,9 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\ClientesEF.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.Razor.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.WebPages.Razor.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.WebPages.xml
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\Microsoft.Web.Infrastructure.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.WebPages.Deployment.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\obj\Debug\CLIENTWS.csprojResolveAssemblyReference.cache
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\obj\Debug\CLIENTWS.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\obj\Debug\CLIENTWS.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.Helpers.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\CLIENTWS\bin\System.Web.Helpers.xml

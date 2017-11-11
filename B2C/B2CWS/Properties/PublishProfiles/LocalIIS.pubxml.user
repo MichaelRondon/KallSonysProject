@@ -12,20 +12,83 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="ApplicationInsights.config">
       <publishTime>09/18/2017 15:12:13</publishTime>
     </File>
+    <File Include="Areas/HelpPage/HelpPage.css">
+      <publishTime>11/05/2017 19:00:14</publishTime>
+    </File>
+    <File Include="Areas/HelpPage/Views/Help/Api.cshtml">
+      <publishTime>11/05/2017 19:00:14</publishTime>
+    </File>
+    <File Include="Areas/HelpPage/Views/Help/DisplayTemplates/ApiGroup.cshtml">
+      <publishTime>11/05/2017 19:00:14</publishTime>
+    </File>
+    <File Include="Areas/HelpPage/Views/Help/DisplayTemplates/CollectionModelDescription.cshtml">
+      <publishTime>11/05/2017 19:00:14</publishTime>
+    </File>
+    <File Include="Areas/HelpPage/Views/Help/DisplayTemplates/ComplexTypeModelDescription.cshtml">
+      <publishTime>11/05/2017 19:00:14</publishTime>
+    </File>
+    <File Include="Areas/HelpPage/Views/Help/DisplayTemplates/DictionaryModelDescription.cshtml">
+      <publishTime>11/05/2017 19:00:14</publishTime>
+    </File>
+    <File Include="Areas/HelpPage/Views/Help/DisplayTemplates/EnumTypeModelDescription.cshtml">
+      <publishTime>11/05/2017 19:00:14</publishTime>
+    </File>
+    <File Include="Areas/HelpPage/Views/Help/DisplayTemplates/HelpPageApiModel.cshtml">
+      <publishTime>11/05/2017 19:00:14</publishTime>
+    </File>
+    <File Include="Areas/HelpPage/Views/Help/DisplayTemplates/ImageSample.cshtml">
+      <publishTime>11/05/2017 19:00:14</publishTime>
+    </File>
+    <File Include="Areas/HelpPage/Views/Help/DisplayTemplates/InvalidSample.cshtml">
+      <publishTime>11/05/2017 19:00:14</publishTime>
+    </File>
+    <File Include="Areas/HelpPage/Views/Help/DisplayTemplates/KeyValuePairModelDescription.cshtml">
+      <publishTime>11/05/2017 19:00:14</publishTime>
+    </File>
+    <File Include="Areas/HelpPage/Views/Help/DisplayTemplates/ModelDescriptionLink.cshtml">
+      <publishTime>11/05/2017 19:00:14</publishTime>
+    </File>
+    <File Include="Areas/HelpPage/Views/Help/DisplayTemplates/Parameters.cshtml">
+      <publishTime>11/05/2017 19:00:14</publishTime>
+    </File>
+    <File Include="Areas/HelpPage/Views/Help/DisplayTemplates/Samples.cshtml">
+      <publishTime>11/05/2017 19:00:14</publishTime>
+    </File>
+    <File Include="Areas/HelpPage/Views/Help/DisplayTemplates/SimpleTypeModelDescription.cshtml">
+      <publishTime>11/05/2017 19:00:14</publishTime>
+    </File>
+    <File Include="Areas/HelpPage/Views/Help/DisplayTemplates/TextSample.cshtml">
+      <publishTime>11/05/2017 19:00:14</publishTime>
+    </File>
+    <File Include="Areas/HelpPage/Views/Help/Index.cshtml">
+      <publishTime>11/05/2017 19:00:14</publishTime>
+    </File>
+    <File Include="Areas/HelpPage/Views/Help/ResourceModel.cshtml">
+      <publishTime>11/05/2017 19:00:14</publishTime>
+    </File>
+    <File Include="Areas/HelpPage/Views/Shared/_Layout.cshtml">
+      <publishTime>11/05/2017 19:00:14</publishTime>
+    </File>
+    <File Include="Areas/HelpPage/Views/Web.config">
+      <publishTime>11/05/2017 19:00:14</publishTime>
+    </File>
+    <File Include="Areas/HelpPage/Views/_ViewStart.cshtml">
+      <publishTime>11/05/2017 19:00:14</publishTime>
+    </File>
     <File Include="bin/ApplicationInsights.config">
       <publishTime>09/18/2017 15:12:13</publishTime>
     </File>
     <File Include="bin/B2CWS.dll">
-      <publishTime>11/05/2017 11:58:12</publishTime>
+      <publishTime>11/11/2017 16:44:21</publishTime>
     </File>
     <File Include="bin/B2CWS.pdb">
-      <publishTime>11/05/2017 11:58:12</publishTime>
+      <publishTime>11/11/2017 16:44:21</publishTime>
     </File>
     <File Include="bin/ClientesBC.dll">
-      <publishTime>10/30/2017 11:31:42</publishTime>
+      <publishTime>11/11/2017 16:22:44</publishTime>
     </File>
     <File Include="bin/ClientesBC.pdb">
-      <publishTime>10/30/2017 11:31:42</publishTime>
+      <publishTime>11/11/2017 16:22:44</publishTime>
     </File>
     <File Include="bin/ClientesEF.dll">
       <publishTime>10/29/2017 12:21:01</publishTime>
@@ -72,23 +135,29 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>06/15/2015 02:06:24</publishTime>
     </File>
+    <File Include="bin/Microsoft.Web.Infrastructure.dll">
+      <publishTime>04/23/2012 15:23:58</publishTime>
+    </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>08/03/2014 20:33:56</publishTime>
     </File>
+    <File Include="bin/Oracle.DataAccess.dll">
+      <publishTime>05/24/2017 12:46:16</publishTime>
+    </File>
     <File Include="bin/OrdenesBC.dll">
-      <publishTime>11/05/2017 11:58:09</publishTime>
+      <publishTime>11/11/2017 16:25:50</publishTime>
     </File>
     <File Include="bin/OrdenesBC.pdb">
-      <publishTime>11/05/2017 11:58:09</publishTime>
+      <publishTime>11/11/2017 16:25:50</publishTime>
     </File>
     <File Include="bin/OrdenesDAC.dll">
       <publishTime>10/27/2017 00:07:11</publishTime>
     </File>
     <File Include="bin/OrdenesEntities.dll">
-      <publishTime>11/05/2017 10:00:20</publishTime>
+      <publishTime>11/11/2017 15:41:30</publishTime>
     </File>
     <File Include="bin/OrdenesEntities.pdb">
-      <publishTime>11/05/2017 10:00:20</publishTime>
+      <publishTime>11/11/2017 15:41:30</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/18/2015 20:19:46</publishTime>
@@ -138,6 +207,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/System.Web.Cors.dll">
       <publishTime>01/28/2015 04:01:46</publishTime>
     </File>
+    <File Include="bin/System.Web.Helpers.dll">
+      <publishTime>01/28/2015 04:04:30</publishTime>
+    </File>
     <File Include="bin/System.Web.Http.Cors.dll">
       <publishTime>01/28/2015 04:03:04</publishTime>
     </File>
@@ -150,11 +222,26 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/System.Web.Http.WebHost.dll">
       <publishTime>01/28/2015 04:03:46</publishTime>
     </File>
+    <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>01/28/2015 04:02:18</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>01/28/2015 04:02:32</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>01/28/2015 04:04:30</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+      <publishTime>01/28/2015 04:04:30</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.dll">
+      <publishTime>01/28/2015 04:04:30</publishTime>
+    </File>
     <File Include="Global.asax">
       <publishTime>09/18/2017 15:12:08</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>10/11/2017 00:34:23</publishTime>
+      <publishTime>11/05/2017 19:00:14</publishTime>
     </File>
     <File Include="scripts/ai.0.22.9-build00167.js">
       <publishTime>09/18/2017 15:12:14</publishTime>
@@ -163,7 +250,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/18/2017 15:12:13</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/05/2017 12:00:30</publishTime>
+      <publishTime>11/11/2017 16:43:19</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#region Directivas using
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,11 @@ using OrdenesEntities.Models;
 using ClientesEntities.Models;
 using ClientesEF;
 using System.Net.Http;
+using System.Data;
+using Oracle.DataAccess.Client;
+using System.Configuration;
+using OrdenesBC.ValidateCreditCardSVC; 
+#endregion
 
 namespace OrdenesBC.Implementaciones
 {
@@ -365,15 +371,29 @@ namespace OrdenesBC.Implementaciones
             };
 
             ORDER ordenActual = null;
+            CUSTOMER clienteActual = null;
+            string numTarjeta = null, tipoTarjeta = null;
 
             try
             {
                 using (var context = new ClientesEF.Entities())
                 {
                     ordenActual = context.ORDERS.SingleOrDefault(p => p.CUSTID.Equals(idCliente) && p.STATUS.Equals(ESTADO_ORDEN_NUEVA));
+                    clienteActual = ordenActual.CUSTOMER;
+
+                    if (string.IsNullOrEmpty(clienteActual.CREDITCARDNUMBER))
+                    {
+                        numTarjeta = datosPago.numeroTarjeta;
+                        tipoTarjeta = datosPago.tipoTarjeta;
+                    }
+                    else
+                    {
+                        numTarjeta = ClientesBC.Util.StringHelper.Decrypt(clienteActual.CREDITCARDNUMBER, clienteActual.SALT, true);
+                        tipoTarjeta = clienteActual.CREDITCARDTYPE;
+                    }
 
                     // Procesar pago de tarjeta de crédito
-                    bool resultadoPago = true; // Procesar pago de la orden
+                    bool resultadoPago = ValidarTarjetaCredito(numTarjeta, tipoTarjeta, Convert.ToDouble(ordenActual.PRICE));
 
                     // Actualizar el estado de la orden
                     if (resultadoPago == true)
@@ -451,7 +471,9 @@ namespace OrdenesBC.Implementaciones
                             telefono = ordenActual.CUSTOMER.PHONENUMBER,
                             tipo = ordenActual.CUSTOMER.CREDITCARDTYPE
                         },
-                        valorTotal = Convert.ToDouble(ordenActual.PRICE)
+                        valorTotal = Convert.ToDouble(ordenActual.PRICE),
+                        idOrden = idOrden,
+                        fecha_orden = ordenActual.ORDERDATE.HasValue ? ordenActual.ORDERDATE.Value.ToString("yyyy-MM-dd") : null
                     };
 
                     ADDRESS address = ordenActual.CUSTOMER.ADDRESSes.FirstOrDefault();
@@ -526,6 +548,175 @@ namespace OrdenesBC.Implementaciones
             catch (Exception)
             {
                 resultado = null;
+            }
+
+            return resultado;
+        }
+
+        public QueryRankingClientes ConsultarRankingRangoFechas(DateTime fechaInicio, DateTime fechaFin)
+        {
+            QueryRankingClientes ranking = null;
+
+            OracleConnection conex = null;
+            OracleDataReader reader = null;
+
+            conex = new OracleConnection(ConfigurationManager.ConnectionStrings["B2CConnection"].ConnectionString);
+
+            OracleCommand cmd = new OracleCommand() {
+                CommandText = "B2C.PKG_ORDENES.ranking_fact_clientes",
+                CommandType = CommandType.StoredProcedure,
+                Connection = conex
+            };
+
+            OracleParameter paramFechaIni = new OracleParameter() {
+                DbType = DbType.Date,
+                Direction = ParameterDirection.Input,
+                ParameterName = "p_fecha_ini",
+                Value = fechaInicio
+            };
+
+            OracleParameter paramFechaFin = new OracleParameter()
+            {
+                DbType = DbType.Date,
+                Direction = ParameterDirection.Input,
+                ParameterName = "p_fecha_fin",
+                Value = fechaFin
+            };
+
+            OracleParameter paramOutputCursor = new OracleParameter("IO_CURSOR", OracleDbType.RefCursor);
+            paramOutputCursor.Direction = ParameterDirection.Output;
+
+            cmd.Parameters.Add(paramFechaIni);
+            cmd.Parameters.Add(paramFechaFin);
+            cmd.Parameters.Add(paramOutputCursor);
+
+            try
+            {
+                conex.Open();
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    if (ranking == null)
+                    {
+                        ranking = new QueryRankingClientes();
+                        ranking.ranking = new List<ClienteRanking>();
+                    }
+
+                    ((List<ClienteRanking>)ranking.ranking).Add(new ClienteRanking() {
+                        documento = reader.GetString(0),
+                        facturado = Convert.ToDecimal(reader.GetValue(1))
+                    });
+                }
+            }
+            catch (Exception)
+            {
+                ranking = null;
+            }
+            finally
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+                if (conex != null)
+                {
+                    conex.Close();
+                }
+                reader = null;
+                conex = null;
+            }
+
+            return ranking;
+        }
+
+        public IEnumerable<TotalOrden> ConsultarOrdenesFiltros(Parametros parametros)
+        {
+            List<TotalOrden> ordenes = null;
+
+            OracleConnection conex = null;
+            OracleDataReader reader = null;
+
+            conex = new OracleConnection(ConfigurationManager.ConnectionStrings["B2CConnection"].ConnectionString);
+
+            OracleCommand cmd = new OracleCommand()
+            {
+                CommandText = "B2C.PKG_ORDENES.ordenes_x_producto",
+                CommandType = CommandType.StoredProcedure,
+                Connection = conex
+            };
+
+            OracleParameter paramIdProducto = new OracleParameter()
+            {
+                DbType = DbType.Int32,
+                Direction = ParameterDirection.Input,
+                ParameterName = "p_id_producto",
+                Value = parametros.idProducto
+            };
+
+            OracleParameter paramOutputCursor = new OracleParameter("IO_CURSOR", OracleDbType.RefCursor);
+            paramOutputCursor.Direction = ParameterDirection.Output;
+
+            cmd.Parameters.Add(paramIdProducto);
+            cmd.Parameters.Add(paramOutputCursor);
+
+            try
+            {
+                conex.Open();
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    if (ordenes == null)
+                    {
+                        ordenes = new List<TotalOrden>();
+                    }
+
+                    ordenes.Add(new TotalOrden() {
+                        idOrden = Convert.ToInt32(reader.GetValue(1)),
+                        cliente = new Cliente() { documento = reader.GetValue(0).ToString() },
+                        valorTotal = Convert.ToDouble(reader.GetValue(2)),
+                        fecha_orden = reader.GetDateTime(3).ToString("yyyy-MM-dd"),
+                    });
+                }
+            }
+            catch (Exception)
+            {
+                ordenes = null;
+            }
+            finally
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+                if (conex != null)
+                {
+                    conex.Close();
+                }
+                reader = null;
+                conex = null;
+            }
+
+            return ordenes;
+        }
+
+        private bool ValidarTarjetaCredito(string numero, string tipo, double monto)
+        {
+            bool resultado = true;
+            ValidateCreditCardClient client = null;
+
+            try
+            {
+                client = new ValidateCreditCardClient();
+
+                resultado = client.VerifyCC(new CreditCard() { ccNum = numero, ccType = tipo });
+
+                client.Close();
+            }
+            catch (Exception)
+            {
+                resultado = false;
             }
 
             return resultado;

@@ -22,3 +22,4 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CTests\bin\Debug\OrdenesBC.pd
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CTests\bin\Debug\OrdenesEntities.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CTests\bin\Debug\System.Net.Http.Formatting.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CTests\bin\Debug\Newtonsoft.Json.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CTests\bin\Debug\Oracle.DataAccess.dll

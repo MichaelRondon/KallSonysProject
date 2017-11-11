@@ -2,11 +2,12 @@
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using B2CWS.Models;
 using OrdenesEntities.Models;
 using OrdenesBC.Contratos;
 using System.Web.Http.Cors;
 using System.Collections.Generic;
+using System;
+using System.Globalization;
 #endregion
 
 namespace B2CWS.Controllers
@@ -56,6 +57,23 @@ namespace B2CWS.Controllers
             return Ok(ranking);
         }
 
+        [Route("api/ordenes/rankingClientesFechas")]
+        [ResponseType(typeof(QueryRankingClientes))]
+        public IHttpActionResult GetRankingClientesFechas(string fechaInicio, string fechaFin)
+        {
+            DateTime fechaIniConsultar, fechaFinConsultar;
+            fechaIniConsultar = DateTime.ParseExact(fechaInicio, "yyyy-MM-dd", CultureInfo.CurrentCulture);
+            fechaFinConsultar = DateTime.ParseExact(fechaFin, "yyyy-MM-dd", CultureInfo.CurrentCulture);
+            QueryRankingClientes ranking = DAC.ConsultarRankingRangoFechas(fechaIniConsultar, fechaFinConsultar);
+
+            if (ranking == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(ranking);
+        }
+
         [Route("api/ordenes/{idOrden}/total")]
         [ResponseType(typeof(TotalOrden))]
         [HttpGet]
@@ -83,6 +101,23 @@ namespace B2CWS.Controllers
             if (detalle != null)
             {
                 return Ok(detalle);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [Route("api/ordenes")]
+        [ResponseType(typeof(IEnumerable<TotalOrden>))]
+        [HttpGet]
+        public IHttpActionResult ConsultarOrdenes(int idProducto)
+        {
+            IEnumerable<TotalOrden> ordenes = DAC.ConsultarOrdenesFiltros(new Common.DTO.Parametros() { idProducto = idProducto });
+
+            if (ordenes != null)
+            {
+                return Ok(ordenes);
             }
             else
             {

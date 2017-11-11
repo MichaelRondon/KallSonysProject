@@ -17,6 +17,8 @@ namespace ClientesBC.Implementaciones
 {
     public class ClientesBC : IClientesBC
     {
+        private const string ESTATUS_CLIENTE_PLATEADO = "PLATEADO";
+
         public string ActualizarCliente(Cliente cliente)
         {
             string resultado = string.Empty;
@@ -117,7 +119,8 @@ namespace ClientesBC.Implementaciones
                 FNAME = cliente.nombres,
                 LNAME = cliente.apellidos,
                 CREDITCARDTYPE = cliente.tipo,
-                PHONENUMBER = cliente.telefono
+                PHONENUMBER = cliente.telefono,
+                STATUS = ESTATUS_CLIENTE_PLATEADO
             };
 
             // Caracteristicas de seguridad

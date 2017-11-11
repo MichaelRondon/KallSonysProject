@@ -60,3 +60,17 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\ClientesEntities.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\ClientesEntities.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\ClientesBC.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\ClientesBC.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Helpers.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Mvc.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Razor.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.WebPages.Deployment.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.WebPages.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.WebPages.Razor.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Helpers.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Mvc.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.Razor.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.WebPages.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.WebPages.Deployment.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\System.Web.WebPages.Razor.xml
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\B2CWS\bin\Oracle.DataAccess.dll

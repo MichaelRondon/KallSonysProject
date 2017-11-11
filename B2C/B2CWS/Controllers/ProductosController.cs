@@ -8,7 +8,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using B2CWS.Models;
 using System.Net.Http.Headers;
 using System.Text;
 using Common.DTO;

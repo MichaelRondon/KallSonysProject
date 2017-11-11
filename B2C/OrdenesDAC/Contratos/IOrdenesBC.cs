@@ -21,5 +21,7 @@ namespace OrdenesBC.Contratos
         ResponseCarrito ProcesarPago(string idCliente, DatosPago datosPago);
         TotalOrden ConsultarTotalOrden(int idOrden);
         IEnumerable<ItemProductoCarrito> DetalleOrden(int idOrden);
+        QueryRankingClientes ConsultarRankingRangoFechas(DateTime fechaInicio, DateTime fechaFin);
+        IEnumerable<TotalOrden> ConsultarOrdenesFiltros(Parametros parametros);
     }
 }
