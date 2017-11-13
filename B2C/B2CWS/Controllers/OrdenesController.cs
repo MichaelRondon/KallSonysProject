@@ -75,11 +75,11 @@ namespace B2CWS.Controllers
         }
 
         [Route("api/ordenes/{idOrden}/total")]
-        [ResponseType(typeof(TotalOrden))]
+        [ResponseType(typeof(Orden))]
         [HttpGet]
         public IHttpActionResult TotalOrden(int idOrden)
         {
-            TotalOrden total = DAC.ConsultarTotalOrden(idOrden);
+            Orden total = DAC.ConsultarTotalOrden(idOrden);
             
             if (total != null)
             {
@@ -109,11 +109,11 @@ namespace B2CWS.Controllers
         }
 
         [Route("api/ordenes")]
-        [ResponseType(typeof(IEnumerable<TotalOrden>))]
+        [ResponseType(typeof(IEnumerable<Orden>))]
         [HttpGet]
         public IHttpActionResult ConsultarOrdenes(int idProducto)
         {
-            IEnumerable<TotalOrden> ordenes = DAC.ConsultarOrdenesFiltros(new Common.DTO.Parametros() { idProducto = idProducto });
+            IEnumerable<Orden> ordenes = DAC.ConsultarOrdenesFiltros(new Common.DTO.Parametros() { idProducto = idProducto });
 
             if (ordenes != null)
             {
@@ -123,6 +123,73 @@ namespace B2CWS.Controllers
             {
                 return NotFound();
             }
+        }
+
+
+        [Route("api/ordenes")]
+        [ResponseType(typeof(ResponseOrdenes))]
+        [HttpPut]
+        public IHttpActionResult put(Orden request)
+        {
+            if (request == null)
+            {
+                return BadRequest();
+            }
+
+            ResponseOrdenes response = DAC.ActualizarOrden(request);
+            
+            return Ok(response);
+        }
+
+        [Route("api/ordenes/ordenesMes")]
+        [ResponseType(typeof(ResumenOrdenesMes))]
+        [HttpGet]
+        public IHttpActionResult ResumenMes(int anio, int mes)
+        {
+            ResumenOrdenesMes resumen = DAC.OrdenesMes(anio, mes);
+
+            if (resumen == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(resumen);
+            }
+        }
+
+        [Route("api/ordenes/abiertas")]
+        [ResponseType(typeof(IEnumerable<Orden>))]
+        [HttpGet]
+        public IHttpActionResult OrdenesAbiertas()
+        {
+            IEnumerable<Orden> abiertas = DAC.ConsultarOrdenesAbiertas();
+
+            if (abiertas == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(abiertas);
+            }
+        }
+
+        [Route("api/ordenes/rankingOrdenesFechas")]
+        [ResponseType(typeof(IEnumerable<Orden>))]
+        public IHttpActionResult GetRankingFacturacionFechas(string fechaInicio, string fechaFin)
+        {
+            DateTime fechaIniConsultar, fechaFinConsultar;
+            fechaIniConsultar = DateTime.ParseExact(fechaInicio, "yyyy-MM-dd", CultureInfo.CurrentCulture);
+            fechaFinConsultar = DateTime.ParseExact(fechaFin, "yyyy-MM-dd", CultureInfo.CurrentCulture);
+            IEnumerable<Orden> ranking = DAC.ConsultarRankingFacturacionOrdenes(fechaIniConsultar, fechaFinConsultar);
+
+            if (ranking == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(ranking);
         }
     }
 }

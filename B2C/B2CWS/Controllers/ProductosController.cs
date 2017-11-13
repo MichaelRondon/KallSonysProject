@@ -21,7 +21,7 @@ using OrdenesBC.Implementaciones;
 
 namespace B2CWS.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    [EnableCors("*", "*", "*")]
     public class ProductosController : ApiController
     {
         #region Atributos

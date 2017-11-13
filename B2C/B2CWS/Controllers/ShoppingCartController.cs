@@ -5,10 +5,12 @@ using System.Web.Http.Description;
 using System.Threading.Tasks;
 using OrdenesEntities.Models;
 using OrdenesBC.Contratos;
+using System.Web.Http.Cors;
 #endregion
 
 namespace B2CWS.Controllers
 {
+    [EnableCors("*", "*", "*")]
     public class ShoppingCartController : ApiController
     {
 
@@ -69,7 +71,7 @@ namespace B2CWS.Controllers
         }
 
         [Route("api/shoppingCart/{idCliente}/checkout")]
-        [ResponseType(typeof(TotalOrden))]
+        [ResponseType(typeof(QueryOrden))]
         [HttpPost]
         public async Task<IHttpActionResult> checkout(string idCliente, [FromBody]IEnumerable<ProductoCarrito> producto)
         {
@@ -78,24 +80,38 @@ namespace B2CWS.Controllers
                 return BadRequest();
             }
 
-            TotalOrden response = await DAC.Checkout(idCliente, producto);
+            QueryOrden response = await DAC.Checkout(idCliente, producto);
 
-            return Ok(response);
+            if (response == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(response); 
+            }
         }
 
         [Route("api/shoppingCart/{idCliente}/procesarpago")]
         [ResponseType(typeof(ResponseCarrito))]
         [HttpPost]
-        public IHttpActionResult procesarPago(string idCliente, [FromBody]DatosPago datosPago)
+        public async Task<IHttpActionResult> procesarPago(string idCliente, [FromBody]DatosPago datosPago)
         {
             if (datosPago == null || !ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            ResponseCarrito response = DAC.ProcesarPago(idCliente, datosPago);
+            ResponseCarrito response = await DAC.ProcesarPago(idCliente, datosPago);
 
-            return Ok(response);
+            if (response == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(response);
+            }
         }
 
     }

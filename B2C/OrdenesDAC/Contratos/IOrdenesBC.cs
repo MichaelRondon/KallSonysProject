@@ -17,11 +17,15 @@ namespace OrdenesBC.Contratos
         Task<IEnumerable<Categoria>> BuscarCategorias(Parametros parametros);
         ResponseCarrito AgregarProducto(string idCliente, ProductoCarrito producto);
         Task<IEnumerable<ItemProductoCarrito>> ConsultarCarrito(string idCliente);
-        Task<TotalOrden> Checkout(string idCliente, IEnumerable<ProductoCarrito> productos);
-        ResponseCarrito ProcesarPago(string idCliente, DatosPago datosPago);
-        TotalOrden ConsultarTotalOrden(int idOrden);
+        Task<QueryOrden> Checkout(string idCliente, IEnumerable<ProductoCarrito> productos);
+        Task<ResponseCarrito> ProcesarPago(string idCliente, DatosPago datosPago);
+        Orden ConsultarTotalOrden(int idOrden);
         IEnumerable<ItemProductoCarrito> DetalleOrden(int idOrden);
         QueryRankingClientes ConsultarRankingRangoFechas(DateTime fechaInicio, DateTime fechaFin);
-        IEnumerable<TotalOrden> ConsultarOrdenesFiltros(Parametros parametros);
+        IEnumerable<Orden> ConsultarOrdenesFiltros(Parametros parametros);
+        ResponseOrdenes ActualizarOrden(Orden orden);
+        ResumenOrdenesMes OrdenesMes(int anio, int mes);
+        IEnumerable<Orden> ConsultarOrdenesAbiertas();
+        IEnumerable<Orden> ConsultarRankingFacturacionOrdenes(DateTime fechaInicio, DateTime fechaFin);
     }
 }

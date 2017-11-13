@@ -61,6 +61,15 @@ namespace Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to api/procesobonita.
+        /// </summary>
+        public static string ServicioBonitaBPM {
+            get {
+                return ResourceManager.GetString("ServicioBonitaBPM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to api/producto/buscar.
         /// </summary>
         public static string ServicioBuscarProductos {

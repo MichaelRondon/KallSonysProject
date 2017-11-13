@@ -33,6 +33,21 @@ namespace Common.Util
             }
         }
 
+        public static HttpClient ClientBPM
+        {
+            get
+            {
+                if (_client == null)
+                {
+                    _client = new HttpClient();
+                    _client.BaseAddress = new Uri(ConfigurationManager.AppSettings["RutaBaseBPMS"]);
+                    _client.DefaultRequestHeaders.Accept.Clear();
+                    _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                }
+                return _client;
+            }
+        }
+
         public static string ParametrosSearch(Parametros parametros)
         {
             StringBuilder sb = new StringBuilder();

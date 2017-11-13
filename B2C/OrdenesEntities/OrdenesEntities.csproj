@@ -46,14 +46,19 @@
     <Compile Include="Models\ClienteRanking.cs" />
     <Compile Include="Models\DatosPago.cs" />
     <Compile Include="Models\ItemProductoCarrito.cs" />
+    <Compile Include="Models\OrdenBPM.cs" />
     <Compile Include="Models\Page.cs" />
     <Compile Include="Models\Producto.cs" />
     <Compile Include="Models\ProductoCarrito.cs" />
     <Compile Include="Models\QueryCampanias.cs" />
+    <Compile Include="Models\QueryOrden.cs" />
     <Compile Include="Models\QueryRankingClientes.cs" />
-    <Compile Include="Models\TotalOrden.cs" />
+    <Compile Include="Models\ResponseBPM.cs" />
+    <Compile Include="Models\ResponseOrdenes.cs" />
+    <Compile Include="Models\Orden.cs" />
     <Compile Include="Models\QueryProductos.cs" />
     <Compile Include="Models\ResponseCarrito.cs" />
+    <Compile Include="Models\ResumenOrdenesMes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

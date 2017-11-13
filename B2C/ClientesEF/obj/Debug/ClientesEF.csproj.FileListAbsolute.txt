@@ -3,6 +3,6 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesEF\bin\Debug\ClientesEF
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesEF\bin\Debug\ClientesEF.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesEF\bin\Debug\EntityFramework.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesEF\bin\Debug\EntityFramework.xml
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesEF\obj\Debug\ClientesEF.csprojResolveAssemblyReference.cache
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesEF\obj\Debug\ClientesEF.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesEF\obj\Debug\ClientesEF.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesEF\obj\Debug\ClientesEF.csprojResolveAssemblyReference.cache

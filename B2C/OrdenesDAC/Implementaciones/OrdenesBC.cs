@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Common.Util;
 using Common.DTO;
@@ -15,17 +14,24 @@ using System.Net.Http;
 using System.Data;
 using Oracle.DataAccess.Client;
 using System.Configuration;
-using OrdenesBC.ValidateCreditCardSVC; 
+using OrdenesBC.ValidateCreditCardSVC;
 #endregion
 
 namespace OrdenesBC.Implementaciones
 {
     public class OrdenesBC : IOrdenesBC
     {
+        #region Constantes privadas
+
         private const string ESTADO_ORDEN_NUEVA = "NUEVA";
         private const string ESTADO_ORDEN_EN_PROCESO = "EN PROCESO";
         private const string ESTADO_ORDEN_ENVIADA = "ENVIADA";
         private const string ESTADO_ORDEN_RECHAZADA = "RECHAZADA";
+        private const string ESTADO_ORDEN_EN_TRANSITO = "TRANSITO";
+        private const string ESTADO_ORDEN_CANCELADA = "CANCELADA";
+        private const string ESTADO_ORDEN_ENTREGADA = "ENTREGADA"; 
+
+        #endregion
 
         public async Task<QueryCampanias> BuscarCampanias(Parametros parametros)
         {
@@ -247,12 +253,13 @@ namespace OrdenesBC.Implementaciones
             return carrito;
         }
 
-        public async Task<TotalOrden> Checkout(string idCliente, IEnumerable<ProductoCarrito> productos)
+        public async Task<QueryOrden> Checkout(string idCliente, IEnumerable<ProductoCarrito> productos)
         {
             // Se combinan los datos actuales con los existentes
             ClientesEF.ORDER ordenActual = null;
             ClientesEF.ITEM itemActual = null;
-            TotalOrden respuesta = null;
+            QueryOrden queryRespuesta = null;
+            Orden ordenRespuesta = null;
             bool carritoPersistido = false;
 
             // Tratar de extraer una orden actual en estado "NUEVA"
@@ -325,9 +332,9 @@ namespace OrdenesBC.Implementaciones
 
                         foreach (var item in consultaCarrito)
                         {
-                            if (respuesta == null)
+                            if (ordenRespuesta == null)
                             {
-                                respuesta = new TotalOrden()
+                                ordenRespuesta = new Orden()
                                 {
                                     itemsTotal = 0,
                                     valorTotal = 0d
@@ -340,11 +347,11 @@ namespace OrdenesBC.Implementaciones
                             itemActual.PRICE = Convert.ToDecimal(item.producto.precio.Value);
                             itemActual.PRODUCTNAME = item.producto.nombre;
 
-                            respuesta.itemsTotal += itemActual.QUANTITY.Value;
-                            respuesta.valorTotal += (item.producto.precio.Value * itemActual.QUANTITY.Value);
+                            ordenRespuesta.itemsTotal += itemActual.QUANTITY.Value;
+                            ordenRespuesta.valorTotal += (item.producto.precio.Value * itemActual.QUANTITY.Value);
                         }
 
-                        ordenActual.PRICE = Convert.ToDecimal(respuesta.valorTotal);
+                        ordenActual.PRICE = Convert.ToDecimal(ordenRespuesta.valorTotal);
 
                         context.SaveChanges();
                     }
@@ -355,13 +362,19 @@ namespace OrdenesBC.Implementaciones
                     throw;
                 }
 
-                respuesta.cliente = new ClientesBC.Implementaciones.ClientesBC().ConsultarCliente(idCliente); 
+                ordenRespuesta.cliente = new ClientesBC.Implementaciones.ClientesBC().ConsultarCliente(idCliente);
+
+                queryRespuesta = new QueryOrden()
+                {
+                    orden = ordenRespuesta,
+                    items = consultaCarrito
+                };
             }
 
-            return respuesta;
+            return queryRespuesta;
         }
 
-        public ResponseCarrito ProcesarPago(string idCliente, DatosPago datosPago)
+        public async Task<ResponseCarrito> ProcesarPago(string idCliente, DatosPago datosPago)
         {
             ResponseCarrito respuesta = new ResponseCarrito()
             {
@@ -435,21 +448,41 @@ namespace OrdenesBC.Implementaciones
             // Llamar servicio backend de órdenes
             if (respuesta.exitoso == true)
             {
-                // TODO: LLAMAR EL SERVICIO
+                ResponseBPM responseBPM = await InvocarProcesoBPM(ordenActual);
+                if (responseBPM != null)
+                {
+                    try
+                    {
+                        using (var context = new ClientesEF.Entities())
+                        {
+                            ordenActual = context.ORDERS.SingleOrDefault(p => p.ORDID.Equals(ordenActual.ORDID));
+
+                            ordenActual.COMMENTS = Newtonsoft.Json.JsonConvert.SerializeObject(responseBPM);
+                         
+                            context.SaveChanges();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        respuesta.mensaje = ex.Message;
+                        respuesta.exitoso = false;
+                        respuesta.estatus = "Error";
+                    }
+                }
+                else
+                {
+                    respuesta.mensaje = "Error al iniciar proceso de orden.";
+                    respuesta.exitoso = false;
+                    respuesta.estatus = "Error";
+                }
             }
-            //else
-            //{
-            //    respuesta.mensaje = "Error al iniciar proceso de orden.";
-            //    respuesta.exitoso = false;
-            //    respuesta.estatus = "Error";
-            //}
 
             return respuesta;
         }
 
-        public TotalOrden ConsultarTotalOrden(int idOrden)
+        public Orden ConsultarTotalOrden(int idOrden)
         {
-            TotalOrden total = null;
+            Orden total = null;
             ORDER ordenActual = null;
 
             try
@@ -458,7 +491,7 @@ namespace OrdenesBC.Implementaciones
                 {
                     ordenActual = context.ORDERS.Single(p => p.ORDID.Equals(idOrden));
 
-                    total = new TotalOrden()
+                    total = new Orden()
                     {
                         cliente = new ClientesEntities.Models.Cliente()
                         {
@@ -473,7 +506,8 @@ namespace OrdenesBC.Implementaciones
                         },
                         valorTotal = Convert.ToDouble(ordenActual.PRICE),
                         idOrden = idOrden,
-                        fecha_orden = ordenActual.ORDERDATE.HasValue ? ordenActual.ORDERDATE.Value.ToString("yyyy-MM-dd") : null
+                        fecha_orden = ordenActual.ORDERDATE.HasValue ? ordenActual.ORDERDATE.Value.ToString("yyyy-MM-dd") : null,
+                        estado = ordenActual.STATUS
                     };
 
                     ADDRESS address = ordenActual.CUSTOMER.ADDRESSes.FirstOrDefault();
@@ -630,9 +664,9 @@ namespace OrdenesBC.Implementaciones
             return ranking;
         }
 
-        public IEnumerable<TotalOrden> ConsultarOrdenesFiltros(Parametros parametros)
+        public IEnumerable<Orden> ConsultarOrdenesFiltros(Parametros parametros)
         {
-            List<TotalOrden> ordenes = null;
+            List<Orden> ordenes = null;
 
             OracleConnection conex = null;
             OracleDataReader reader = null;
@@ -669,14 +703,15 @@ namespace OrdenesBC.Implementaciones
                 {
                     if (ordenes == null)
                     {
-                        ordenes = new List<TotalOrden>();
+                        ordenes = new List<Orden>();
                     }
 
-                    ordenes.Add(new TotalOrden() {
+                    ordenes.Add(new Orden() {
                         idOrden = Convert.ToInt32(reader.GetValue(1)),
                         cliente = new Cliente() { documento = reader.GetValue(0).ToString() },
                         valorTotal = Convert.ToDouble(reader.GetValue(2)),
                         fecha_orden = reader.GetDateTime(3).ToString("yyyy-MM-dd"),
+                        estado = reader.GetValue(4).ToString(),
                     });
                 }
             }
@@ -720,6 +755,231 @@ namespace OrdenesBC.Implementaciones
             }
 
             return resultado;
+        }
+
+        private async Task<ResponseBPM> InvocarProcesoBPM(ORDER orden)
+        {
+            string path = StringResources.ServicioBonitaBPM;
+            OrdenBPM ordenBPM = new OrdenBPM() { fechaOrden = orden.ORDERDATE.Value.ToString("yyyy-MM-dd"), orderId = orden.ORDID };
+            ResponseBPM responseBPM = null;
+
+            HttpResponseMessage response = await WebClientHelper.ClientBPM.PostAsJsonAsync(path, ordenBPM);
+            if (response.IsSuccessStatusCode)
+            {
+                responseBPM = await response.Content.ReadAsAsync<ResponseBPM>();
+            }
+
+            return responseBPM;
+        }
+
+        public ResponseOrdenes ActualizarOrden(Orden orden)
+        {
+            ResponseOrdenes response = new ResponseOrdenes() {
+                estatus = "Ok",
+                exitoso = true,
+                mensaje = "Orden actualizada exitosamente"
+            };
+
+            ORDER ordenActual = null;
+
+            try
+            {
+                using (var context = new ClientesEF.Entities())
+                {
+                    ordenActual = context.ORDERS.Single(p => p.ORDID.Equals(orden.idOrden));
+
+                    // Solamente se actualiza el estado de la orden
+                    ordenActual.STATUS = orden.estado;
+
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                response.estatus = "Error";
+                response.exitoso = false;
+                response.mensaje = string.Format("Error al actualizar orden: {0}", ex.Message);
+            }
+
+            return response;
+        }
+
+        public ResumenOrdenesMes OrdenesMes(int anio, int mes)
+        {
+            ResumenOrdenesMes ordenesMes = null;
+
+            OracleConnection conex = null;
+            OracleDataReader reader = null;
+
+            conex = new OracleConnection(ConfigurationManager.ConnectionStrings["B2CConnection"].ConnectionString);
+
+            OracleCommand cmd = new OracleCommand()
+            {
+                CommandText = "B2C.PKG_ORDENES.resumen_ordenes_mes",
+                CommandType = CommandType.StoredProcedure,
+                Connection = conex
+            };
+
+            OracleParameter paramAnio = new OracleParameter()
+            {
+                DbType = DbType.Int32,
+                Direction = ParameterDirection.Input,
+                ParameterName = "p_anio",
+                Value = anio
+            };
+
+            OracleParameter paramMes = new OracleParameter()
+            {
+                DbType = DbType.Int32,
+                Direction = ParameterDirection.Input,
+                ParameterName = "p_mes",
+                Value = mes
+            };
+
+            OracleParameter paramOutputCursor = new OracleParameter("IO_CURSOR", OracleDbType.RefCursor);
+            paramOutputCursor.Direction = ParameterDirection.Output;
+
+            cmd.Parameters.Add(paramAnio);
+            cmd.Parameters.Add(paramMes);
+            cmd.Parameters.Add(paramOutputCursor);
+
+            try
+            {
+                conex.Open();
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    if (ordenesMes == null)
+                    {
+                        ordenesMes = new ResumenOrdenesMes();
+                    }
+
+                    ordenesMes.numeroOrdenes = Convert.ToInt32(reader.GetValue(1));
+                    ordenesMes.totalFacturado = Convert.ToInt32(reader.GetValue(0));
+                }
+            }
+            catch (Exception)
+            {
+                ordenesMes = null;
+            }
+            finally
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+                if (conex != null)
+                {
+                    conex.Close();
+                }
+                reader = null;
+                conex = null;
+            }
+
+            return ordenesMes;
+        }
+
+        public IEnumerable<Orden> ConsultarOrdenesAbiertas()
+        {
+            List<Orden> ordenes = null;
+            Orden ordenActual = null;
+
+            try
+            {
+                using (var context = new ClientesEF.Entities())
+                {
+                    var ordenesConsulta = context.ORDERS.Where(p => p.STATUS.Equals(ESTADO_ORDEN_EN_PROCESO) || p.STATUS.Equals(ESTADO_ORDEN_EN_TRANSITO)).OrderBy(q => q.ORDERDATE);
+
+                    foreach (var item in ordenesConsulta)
+                    {
+                        if (ordenes == null)
+                        {
+                            ordenes = new List<Orden>();
+                        }
+
+                        ordenActual = CreateOrden(item);
+
+                        ordenes.Add(ordenActual);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                ordenes = null;
+            }
+
+            return ordenes;
+        }
+
+        public IEnumerable<Orden> ConsultarRankingFacturacionOrdenes(DateTime fechaInicio, DateTime fechaFin)
+        {
+            List<Orden> ordenes = null;
+
+            try
+            {
+                using (var context = new ClientesEF.Entities())
+                {
+                    var ordenesRanking = context.ORDERS.Where(p => p.STATUS.Equals(ESTADO_ORDEN_ENTREGADA) && p.ORDERDATE >= fechaInicio && p.ORDERDATE <= fechaFin).OrderByDescending(q => q.PRICE);
+
+                    foreach (var item in ordenesRanking)
+                    {
+                        if (ordenes == null)
+                        {
+                            ordenes = new List<Orden>();
+                        }
+
+                        ordenes.Add(CreateOrden(item));
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                ordenes = null;
+            }
+
+            return ordenes;
+        }
+
+        private Orden CreateOrden(ORDER ordendb)
+        {
+            Orden ordenActual = new Orden()
+            {
+                estado = ordendb.STATUS,
+                fecha_orden = ordendb.ORDERDATE.Value.ToString("yyyy-MM-dd"),
+                idOrden = ordendb.ORDID,
+                valorTotal = Convert.ToDouble(ordendb.PRICE.Value),
+                cliente = new Cliente()
+                {
+                    apellidos = ordendb.CUSTOMER.LNAME,
+                    correo_e = ordendb.CUSTOMER.EMAIL,
+                    documento = ordendb.CUSTID,
+                    estatus = ordendb.CUSTOMER.STATUS,
+                    nombres = ordendb.CUSTOMER.FNAME,
+                    numero = string.IsNullOrEmpty(ordendb.CUSTOMER.CREDITCARDNUMBER) ? null : ClientesBC.Util.StringHelper.MaskText(ClientesBC.Util.StringHelper.Decrypt(ordendb.CUSTOMER.CREDITCARDNUMBER, ordendb.CUSTOMER.SALT, true), 4),
+                    telefono = ordendb.CUSTOMER.PHONENUMBER,
+                    tipo = ordendb.CUSTOMER.CREDITCARDTYPE,
+                }
+            };
+
+            if (ordendb.CUSTOMER.ADDRESSes.Any())
+            {
+                ADDRESS direccionActual = ordendb.CUSTOMER.ADDRESSes.First();
+                ordenActual.cliente.direcciones = new List<Direccion>() {
+                                new Direccion()
+                                {
+                                    calle = direccionActual.STREET,
+                                    ciudad = direccionActual.CITY,
+                                    direccion = direccionActual.ADDRID,
+                                    estado = direccionActual.STATE,
+                                    pais = direccionActual.COUNTRY,
+                                    tipo = direccionActual.ADDRESSTYPE,
+                                    zipcode = direccionActual.ZIP
+                                }
+                            };
+            }
+
+            return ordenActual;
         }
     }
 }
