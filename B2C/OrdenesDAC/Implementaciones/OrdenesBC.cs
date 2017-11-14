@@ -89,6 +89,7 @@ namespace OrdenesBC.Implementaciones
             if (response.IsSuccessStatusCode)
             {
                 producto = await response.Content.ReadAsAsync<Producto>();
+                producto.urlImage = string.Format("api/ImageThumb/{0}", id);
             }
 
             return producto;
@@ -980,6 +981,58 @@ namespace OrdenesBC.Implementaciones
             }
 
             return ordenActual;
+        }
+
+        public async Task<QueryOrden> Subtotal(string idCliente, IEnumerable<ProductoCarrito> productos)
+        {
+            // Se combinan los datos actuales con los existentes
+            QueryOrden queryRespuesta = null;
+            Orden ordenRespuesta = null;
+            List<ItemProductoCarrito> consultaCarrito = null;
+            Producto producto = null;
+            
+            try
+            {
+                foreach (var productoSubtotal in productos)
+                {
+                    if (ordenRespuesta == null)
+                    {
+                        ordenRespuesta = new Orden()
+                        {
+                            itemsTotal = 0,
+                            valorTotal = 0d
+                        };
+
+                        consultaCarrito = new List<ItemProductoCarrito>();
+                    }
+
+                    producto = await ConsultarProducto(productoSubtotal.idProducto);
+
+                    consultaCarrito.Add(new ItemProductoCarrito() {
+                        itemCarrito = new ProductoCarrito() { cantidad = productoSubtotal.cantidad, idProducto = productoSubtotal.idProducto},
+                        producto = producto
+                    });
+
+                    ordenRespuesta.itemsTotal += productoSubtotal.cantidad;
+                    ordenRespuesta.valorTotal += (producto.precio.Value * productoSubtotal.cantidad);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            ordenRespuesta.cliente = new ClientesBC.Implementaciones.ClientesBC().ConsultarCliente(idCliente);
+
+            queryRespuesta = new QueryOrden()
+            {
+                orden = ordenRespuesta,
+                items = consultaCarrito
+            };
+            //} // fin if
+
+            return queryRespuesta;
         }
     }
 }

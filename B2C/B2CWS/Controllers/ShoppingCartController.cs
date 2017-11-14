@@ -114,5 +114,26 @@ namespace B2CWS.Controllers
             }
         }
 
+        [Route("api/shoppingCart/{idCliente}/subtotal")]
+        [ResponseType(typeof(QueryOrden))]
+        [HttpPost]
+        public async Task<IHttpActionResult> subtotal(string idCliente, [FromBody]IEnumerable<ProductoCarrito> producto)
+        {
+            if (producto == null || !ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            QueryOrden response = await DAC.Subtotal(idCliente, producto);
+
+            if (response == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(response);
+            }
+        }
     }
 }

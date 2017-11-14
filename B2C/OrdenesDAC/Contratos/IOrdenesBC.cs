@@ -27,5 +27,6 @@ namespace OrdenesBC.Contratos
         ResumenOrdenesMes OrdenesMes(int anio, int mes);
         IEnumerable<Orden> ConsultarOrdenesAbiertas();
         IEnumerable<Orden> ConsultarRankingFacturacionOrdenes(DateTime fechaInicio, DateTime fechaFin);
+        Task<QueryOrden> Subtotal(string idCliente, IEnumerable<ProductoCarrito> productos);
     }
 }
