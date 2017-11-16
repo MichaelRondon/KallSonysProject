@@ -42,7 +42,7 @@ public class OrderServiceRestClientImpl implements OrderServiceRestClient {
         LOGGER.info("rankingClientes pageable: {}, idProducto:{}", pageable, idProducto);
         RestTemplate restTemplate = new RestTemplate();
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/rankingClientes", ORDERS_SERVICE_URL));
-        builder = UriComponentsBuilder.fromHttpUrl("http://www.mocky.io/v2/59f7dfc92f0000042b5586e4");
+//        builder = UriComponentsBuilder.fromHttpUrl("http://www.mocky.io/v2/59f7dfc92f0000042b5586e4");
 
         builder = ProductUtilSingleton.getInstance().getBasicSearchParams(pageable, builder);
         if (idProducto != null) {
@@ -51,6 +51,7 @@ public class OrderServiceRestClientImpl implements OrderServiceRestClient {
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<?> entity = new HttpEntity<>(headers);
         ResponseEntity<Map> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, Map.class);
+        LOGGER.info("rankingClientes responseEntity: {}, responseEntity.getBody():{}", responseEntity, responseEntity.getBody());
         Map ranking = ProductUtilSingleton.getInstance().evalResponseAndGetBody(responseEntity, HttpStatus.OK);
         if (!ranking.containsKey("ranking")) {
             throw new CustomParameterizedException(

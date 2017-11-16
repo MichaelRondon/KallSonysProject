@@ -15,7 +15,7 @@
     <br/>
     
     
-    <div class="container-fluid">
+<!--    <div class="container-fluid">
         <div class="row">
             <div class="col-xs-4 no-padding-left">
                 <button class="btn btn-primary" ui-sref="producto.new" >
@@ -26,55 +26,51 @@
                 </button>
             </div>
         </div>
-    </div>
-    <br/>
-    <div class="container-fluid">
+    </div>-->
+    <!--<br/>-->
+<!--    <div class="container-fluid">
         <div class="row">
-            <!--<div class="col-xs-12 col-md-8 no-padding">-->
+            <div class="col-xs-12 col-md-8 no-padding">
                 <div class="form-group col-xs-6 col-sm-6">
                     <label class="control-label" for="field_codigoProducto" >Código de producto</label>
                     <div class="input-group">
                         <input class="form-control" id="field_codigoProducto" name="codigoProducto" ng-model="vm.codigoProducto"/>
-                        <!--<input class="form-control" id="field_codigoProducto" name="codigoProducto" ng-model="vm.codigoProducto" ng-change="change()"/>-->
+                        <input class="form-control" id="field_codigoProducto" name="codigoProducto" ng-model="vm.codigoProducto" ng-change="change()"/>
                     </div>
                 </div>
                 <div class="form-group col-xs-6 col-sm-6">
                     <label class="control-label" for="field_nombreProducto">Nombre del producto</label>
                     <div class="input-group">
                         <input class="form-control" id="field_nombreProducto" name="nombreProducto" ng-model="vm.nombreProducto"/>
-                        <!--<input class="form-control" id="field_nombreProducto" name="nombreProducto" ng-model="vm.nombreProducto" ng-change="change()"/>-->
+                        <input class="form-control" id="field_nombreProducto" name="nombreProducto" ng-model="vm.nombreProducto" ng-change="change()"/>
                     </div>
                 </div>
                 <div class="form-group col-xs-12 col-sm-12">
                     <label class="control-label" for="field_descripcionProducto">Descripción del producto</label>
                     <div class="input-group">
                         <input class="form-control" id="field_descripcionProducto" name="descripcionProducto" size="50" ng-model="vm.descripcion"/>
-                        <!--<input class="form-control" id="field_descripcionProducto" name="descripcionProducto" ng-model="vm.descripcion" ng-change="change()"/>-->
+                        <input class="form-control" id="field_descripcionProducto" name="descripcionProducto" ng-model="vm.descripcion" ng-change="change()"/>
                     </div>
                 </div>
-            <!--</div>-->
+            </div>
             <div class="form-group col-xs-12 col-sm-12">
                 <button type="button" class="btn btn-primary" ng-click="vm.onChange()">Buscar</button>
             </div>
         </div>
     </div>
-    <br/>
+    <br/>-->
     <div class="table-responsive">
         <table class="jh-table table table-striped">
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
                     <th></th>
-                    <!--<th><span ></span> <span class="glyphicon glyphicon-sort"></span></th>-->
                     <th jh-sort-by="id"><span >Código</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="nombre"><span data-translate="omsApp.producto.nombre">Nombre</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="descripcion"><span data-translate="omsApp.producto.descripcion">Descripcion</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="precio"><span data-translate="omsApp.producto.precio">Precio</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="estado"><span data-translate="omsApp.producto.estado">Estado</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <!--<th jh-sort-by="disponibilidad"><span data-translate="omsApp.producto.disponibilidad">Disponibilidad</span> <span class="glyphicon glyphicon-sort"></span></th>-->
-                    <!--<th jh-sort-by="fechaRevDisponibilidad"><span data-translate="omsApp.producto.fechaRevDisponibilidad">Fecha Rev Disponibilidad</span> <span class="glyphicon glyphicon-sort"></span></th>-->
                     <th jh-sort-by="marca"><span data-translate="omsApp.producto.marca">Marca</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="keyWords"><span data-translate="omsApp.producto.keyWords">Key Words</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <!--<th jh-sort-by="categoriaCategoria"><span data-translate="omsApp.producto.categoria">Categoria</span> <span class="glyphicon glyphicon-sort"></span></th>-->
                     <th></th>
                 </tr>
             </thead>
@@ -91,13 +87,8 @@
                     <td>{{producto.descripcion}}</td>
                     <td>{{producto.precio}}</td>
                     <td data-translate="{{'omsApp.Estado.' + producto.estado}}">{{producto.estado}}</td>
-                    <!--<td>{{producto.disponibilidad}}</td>-->
-                    <!--<td>{{producto.fechaRevDisponibilidad| date:'medium'}}</td>-->
                     <td>{{producto.marca}}</td>
                     <td>{{vm.getKeyWordText(producto.keyWords)}}</td>
-                    <!--                    <td>
-                                            <a ui-sref="categoria-detail({id:producto.categoriaId})">{{producto.categoriaCategoria}}</a>
-                                                         </td>-->
                     <td class="text-right">
                         <div class="btn-group-vertical">
                             <button type="submit"
