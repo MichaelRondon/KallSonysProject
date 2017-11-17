@@ -1,10 +1,14 @@
 package edu.puj.aes.pica.asperisk.product.service.client;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.puj.aes.pica.asperisk.oms.utilities.ProductUtilSingleton;
 import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.errors.CustomParameterizedException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,21 +32,23 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Service
 @Transactional
 public class OrderServiceRestClientImpl implements OrderServiceRestClient {
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderServiceRestClientImpl.class);
 
     public static final String ORDERS_SERVICE_URL = "http://laptop-diego:9091/api/ordenes";
-    
+
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
     @Autowired
     private ClientServiceRestClient clientServiceRestClient;
-    
+
     @Override
     public Page<Object> rankingClientes(Pageable pageable, Long idProducto) {
-        
+
         LOGGER.info("rankingClientes pageable: {}, idProducto:{}", pageable, idProducto);
         RestTemplate restTemplate = new RestTemplate();
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/rankingClientes", ORDERS_SERVICE_URL));
-        builder = UriComponentsBuilder.fromHttpUrl("http://www.mocky.io/v2/59f7dfc92f0000042b5586e4");
+//        builder = UriComponentsBuilder.fromHttpUrl("http://www.mocky.io/v2/5a0e421c3000009f134334ec");
 
         builder = ProductUtilSingleton.getInstance().getBasicSearchParams(pageable, builder);
         if (idProducto != null) {
@@ -64,18 +70,23 @@ public class OrderServiceRestClientImpl implements OrderServiceRestClient {
                     agregaInfoCliente(((Map) entry));
                 }
             });
-            LOGGER.info("documentos: {}", documentos);
             PageImpl pageImpl = new PageImpl(documentos, pageable, documentos.size());
             return pageImpl;
         }
         return new PageImpl(new ArrayList<>(), pageable, 0);
     }
-    
+
     private void agregaInfoCliente(Map entrada) {
         if (entrada.containsKey("documento") && entrada.get("documento") != null) {
             String cliente = clientServiceRestClient.find(entrada.get("documento").toString());
             if (cliente != null && !cliente.isEmpty()) {
-                entrada.put("cliente", cliente);
+                try {
+                    Map<String, Object> map = OBJECT_MAPPER.readValue(cliente, new TypeReference<Map<String, Object>>() {
+                    });
+                    entrada.put("cliente", map);
+                } catch (IOException ex) {
+                    java.util.logging.Logger.getLogger(OrderServiceRestClientImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }

@@ -7,7 +7,7 @@
     OrdenesReport.$inject = ['$resource', 'DateUtils'];
 
     function OrdenesReport ($resource, DateUtils) {
-        var resourceUrl =  'api/ordenes/';
+        var resourceUrl =  'api/ordenes/rankingClientes';
 
         return $resource(resourceUrl, {}, {
             'rankingClientes': { 
