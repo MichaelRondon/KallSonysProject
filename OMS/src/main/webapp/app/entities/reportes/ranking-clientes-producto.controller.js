@@ -5,9 +5,9 @@
             .module('omsApp')
             .controller('RankingClientesProducto', RankingClientesProducto);
 
-    RankingClientesProducto.$inject = ['Producto', 'ParseLinks', 'AlertService', 'paginationConstants', 'OrdenesReport'];
+    RankingClientesProducto.$inject = ['Producto', 'ParseLinks', 'AlertService', 'paginationConstants', 'OrdenesReport', 'pagingParams'];
 
-    function RankingClientesProducto(Producto, ParseLinks, AlertService, paginationConstants, OrdenesReport) {
+    function RankingClientesProducto(Producto, ParseLinks, AlertService, paginationConstants, OrdenesReport, pagingParams) {
 
         var vm = this;
         
@@ -20,12 +20,14 @@
         vm.itemsPerPage = paginationConstants.itemsPerPage;
         vm.productImageSmallBaseUrl = 'http://laptop-diego:9091/api/ImageSmall/';
         vm.rankingClientes = [];
+        vm.showResults = {
+            show  : false
+          };
         
-        
 
 
 
-        vm.productos = [];
+        vm.producto=null;
         vm.loadPage = loadPage;
         vm.links = {
             last: 0
@@ -34,6 +36,9 @@
 //        loadAll();
         
         function ranking() {
+            if(vm.codigoProducto === null || vm.codigoProducto === ''){
+                return;
+            }
             OrdenesReport.rankingClientes({
                 page: vm.page,
                 size: vm.itemsPerPage,
@@ -54,7 +59,9 @@
                 vm.totalItems = headers('X-Total-Count');
                 vm.queryCount = vm.totalItems;
                 vm.rankingClientes = data;
+                vm.producto=Producto.get({id: vm.codigoProducto});
                 vm.page = pagingParams.page;
+                vm.showResults.show=true;
             }
 
             function onError(error) {
@@ -68,6 +75,10 @@
                 sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
                 search: vm.currentSearch
             });
+        }
+        
+        function showResults() {
+            show  : false;
         }
         
         

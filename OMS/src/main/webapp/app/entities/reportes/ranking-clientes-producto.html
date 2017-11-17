@@ -2,117 +2,132 @@
     <h2>Ranking clientes por producto</h2>
     <jhi-alert></jhi-alert>
     <div class="input-append">
-            <label class="control-label" for="field_codigo_producto">Código del Producto</label>
-            <input type="text" class="" name="codigoProducto" id="field_codigo_producto" 
-                   ng-model="vm.codigoProducto" required/>
-            <button class="btn btn-primary" ng-click="vm.ranking()" >
-                <span class="glyphicon glyphicon-eye-open"></span>
-                <span>
-                    Buscar Ranking de Clientes por Producto
-                </span>
-            </button>
+        <label class="control-label" for="field_codigo_producto">Código del Producto</label>
+        <input type="text" class="" name="codigoProducto" id="field_codigo_producto" 
+               ng-model="vm.codigoProducto" required/>
+        <button class="btn btn-primary" ng-click="vm.ranking()" >
+            <span class="glyphicon glyphicon-eye-open"></span>
+            <span>
+                Buscar Clientes
+            </span>
+        </button>
     </div>
     <br/>
-    
-    
-<!--    <div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-4 no-padding-left">
-                <button class="btn btn-primary" ui-sref="producto.new" >
-                    <span class="glyphicon glyphicon-plus"></span>
-                    <span  data-translate="omsApp.producto.home.createLabel">
-                        Create new Producto
-                    </span>
-                </button>
-            </div>
-        </div>
-    </div>-->
-    <!--<br/>-->
-<!--    <div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-12 col-md-8 no-padding">
-                <div class="form-group col-xs-6 col-sm-6">
-                    <label class="control-label" for="field_codigoProducto" >Código de producto</label>
-                    <div class="input-group">
-                        <input class="form-control" id="field_codigoProducto" name="codigoProducto" ng-model="vm.codigoProducto"/>
-                        <input class="form-control" id="field_codigoProducto" name="codigoProducto" ng-model="vm.codigoProducto" ng-change="change()"/>
-                    </div>
+
+
+    <!--    <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-4 no-padding-left">
+                    <button class="btn btn-primary" ui-sref="producto.new" >
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span  data-translate="omsApp.producto.home.createLabel">
+                            Create new Producto
+                        </span>
+                    </button>
                 </div>
-                <div class="form-group col-xs-6 col-sm-6">
-                    <label class="control-label" for="field_nombreProducto">Nombre del producto</label>
-                    <div class="input-group">
-                        <input class="form-control" id="field_nombreProducto" name="nombreProducto" ng-model="vm.nombreProducto"/>
-                        <input class="form-control" id="field_nombreProducto" name="nombreProducto" ng-model="vm.nombreProducto" ng-change="change()"/>
+            </div>
+        </div>-->
+    <!--<br/>-->
+    <!--    <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-md-8 no-padding">
+                    <div class="form-group col-xs-6 col-sm-6">
+                        <label class="control-label" for="field_codigoProducto" >Código de producto</label>
+                        <div class="input-group">
+                            <input class="form-control" id="field_codigoProducto" name="codigoProducto" ng-model="vm.codigoProducto"/>
+                            <input class="form-control" id="field_codigoProducto" name="codigoProducto" ng-model="vm.codigoProducto" ng-change="change()"/>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-6 col-sm-6">
+                        <label class="control-label" for="field_nombreProducto">Nombre del producto</label>
+                        <div class="input-group">
+                            <input class="form-control" id="field_nombreProducto" name="nombreProducto" ng-model="vm.nombreProducto"/>
+                            <input class="form-control" id="field_nombreProducto" name="nombreProducto" ng-model="vm.nombreProducto" ng-change="change()"/>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-12">
+                        <label class="control-label" for="field_descripcionProducto">Descripción del producto</label>
+                        <div class="input-group">
+                            <input class="form-control" id="field_descripcionProducto" name="descripcionProducto" size="50" ng-model="vm.descripcion"/>
+                            <input class="form-control" id="field_descripcionProducto" name="descripcionProducto" ng-model="vm.descripcion" ng-change="change()"/>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group col-xs-12 col-sm-12">
-                    <label class="control-label" for="field_descripcionProducto">Descripción del producto</label>
-                    <div class="input-group">
-                        <input class="form-control" id="field_descripcionProducto" name="descripcionProducto" size="50" ng-model="vm.descripcion"/>
-                        <input class="form-control" id="field_descripcionProducto" name="descripcionProducto" ng-model="vm.descripcion" ng-change="change()"/>
-                    </div>
+                    <button type="button" class="btn btn-primary" ng-click="vm.onChange()">Buscar</button>
                 </div>
             </div>
-            <div class="form-group col-xs-12 col-sm-12">
-                <button type="button" class="btn btn-primary" ng-click="vm.onChange()">Buscar</button>
-            </div>
         </div>
-    </div>
-    <br/>-->
+        <br/>-->
+    
+    
+    <dl class="dl-horizontal jh-entity-details" ng-show="vm.showResults.show">
+        <dt><span>Nombre</span></dt>
+        <dd>
+            <span>{{vm.producto.nombre}}</span>
+        </dd>
+        <dt><span>Descripcion</span></dt>
+        <dd>
+            <span>{{vm.producto.descripcion}}</span>
+        </dd>
+        <dt><span>Precio</span></dt>
+        <dd>
+            <span>{{vm.producto.precio}}</span>
+        </dd>
+        <dt><span>Estado</span></dt>
+        <dd>
+            <span>{{vm.producto.estado}}</span>
+        </dd>
+        <dt><span>Disponibilidad</span></dt>
+        <dd>
+            <span>{{vm.producto.disponibilidad}}</span>
+        </dd>
+        <dt><span>Rev. Disponibilidad</span></dt>
+        <dd>
+            <span>{{vm.producto.fechaRevDisponibilidad | date:'medium'}}</span>
+        </dd>
+        <dt><span>Marca</span></dt>
+        <dd>
+            <span>{{vm.producto.marca}}</span>
+        </dd>
+        <dt><span>Imagen pequeña</span></dt>
+        <dd>
+            <span><img ng-src="{{vm.productImageSmallBaseUrl + vm.producto.id}}" alt="Producto" style="width:300px;height:250px;"/></span>
+        </dd>
+    </dl>
+    <br/>
+    
+    
     <div class="table-responsive">
         <table class="jh-table table table-striped">
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
-                    <th></th>
-                    <th jh-sort-by="id"><span >Código</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="nombre"><span data-translate="omsApp.producto.nombre">Nombre</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="descripcion"><span data-translate="omsApp.producto.descripcion">Descripcion</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="precio"><span data-translate="omsApp.producto.precio">Precio</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="estado"><span data-translate="omsApp.producto.estado">Estado</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="marca"><span data-translate="omsApp.producto.marca">Marca</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="keyWords"><span data-translate="omsApp.producto.keyWords">Key Words</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th></th>
+                    <th><span>Documento</span></th>
+                    <th><span>Nombres</span> </th>
+                    <th><span>Apellidos</span> </th>
+                    <th><span>Telefono</span> </th>
+                    <th><span>Correo</span> </th>
+                    <th><span>Estatus</span> </th>
+                    <th><span>Facturado</span> </th>
                 </tr>
             </thead>
-            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
-                <tr ng-repeat="producto in vm.productos track by producto.id">
-                                     <td>
-                        <a ui-sref="producto-detail({id:producto.id})">
-                            <img id="field_image_small" ng-src="{{vm.productImageSmallBaseUrl + producto.id}}"
-                                 alt="{{producto.nombre}}" style="width:150px;height:150px;"/>
-                                     </a>
-                                  </td>
-                    <td><a ui-sref="producto-detail({id:producto.id})" style="color: black;">{{producto.id}}</a></td>
-                    <td>{{producto.nombre}}</td>
-                    <td>{{producto.descripcion}}</td>
-                    <td>{{producto.precio}}</td>
-                    <td data-translate="{{'omsApp.Estado.' + producto.estado}}">{{producto.estado}}</td>
-                    <td>{{producto.marca}}</td>
-                    <td>{{vm.getKeyWordText(producto.keyWords)}}</td>
-                    <td class="text-right">
-                        <div class="btn-group-vertical">
-                            <button type="submit"
-                                    ui-sref="producto-detail({id:producto.id})"
-                                    class="btn btn-info btn-sm">
-                                <span class="glyphicon glyphicon-eye-open"></span>
-                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
-                                                      </button>
-                            <button type="submit"
-                                    ui-sref="producto.edit({id:producto.id})"
-                                    class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
-                                                      </button>
-                            <button type="submit"
-                                    ui-sref="producto.delete({id:producto.id})"
-                                    class="btn btn-danger btn-sm">
-                                <span class="glyphicon glyphicon-remove-circle"></span>
-                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
-                                                  </button>
-                                       </div>
-                              </td>
-                      </tr>
-                 </tbody>
+            <tbody>
+                <tr ng-repeat="rankingCliente in vm.rankingClientes track by rankingCliente.documento">
+                    <td><a  ui-sref="cliente.edit({id:rankingCliente.documento})">{{rankingCliente.documento}}</a></td>
+                    <td>{{rankingCliente.cliente.nombres}}</td>
+                    <td>{{rankingCliente.cliente.apellidos}}</td>
+                    <td>{{rankingCliente.cliente.telefono}}</td>
+                    <td>{{rankingCliente.cliente.correo_e}}</td>
+                    <td>{{rankingCliente.cliente.estatus}}</td>
+                    <td>{{rankingCliente.facturado}}</td>
+                </tr>
+            </tbody>
         </table>
-  </div>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</table>
+</div>
 </div>
