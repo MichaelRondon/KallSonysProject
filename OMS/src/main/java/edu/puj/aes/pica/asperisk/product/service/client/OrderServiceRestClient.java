@@ -16,4 +16,6 @@ import org.springframework.data.domain.Pageable;
 public interface OrderServiceRestClient {
     
     Page<Object> rankingClientes(Pageable pageable, Long idProducto);
+    Page<Object> rankingOrdenes(Pageable pageable, Long idProducto);
+    Page<Object> ordenesAbiertas(Pageable pageable);
 }

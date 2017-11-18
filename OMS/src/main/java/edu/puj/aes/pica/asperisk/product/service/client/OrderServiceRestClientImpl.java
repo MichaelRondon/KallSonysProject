@@ -6,6 +6,7 @@ import edu.puj.aes.pica.asperisk.oms.utilities.ProductUtilSingleton;
 import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.errors.CustomParameterizedException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -74,6 +75,45 @@ public class OrderServiceRestClientImpl implements OrderServiceRestClient {
             return pageImpl;
         }
         return new PageImpl(new ArrayList<>(), pageable, 0);
+    }
+
+    @Override
+    public Page<Object> rankingOrdenes(Pageable pageable, Long idProducto) {
+
+        LOGGER.info("rankingOrdenes pageable: {}, idProducto:{}", pageable, idProducto);
+        RestTemplate restTemplate = new RestTemplate();
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ORDERS_SERVICE_URL);
+//        builder = UriComponentsBuilder.fromHttpUrl("http://www.mocky.io/v2/5a0e421c3000009f134334ec");
+
+        builder = ProductUtilSingleton.getInstance().getBasicSearchParams(pageable, builder);
+        if (idProducto != null) {
+            builder.queryParam("idProducto", idProducto);
+        }
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+        ResponseEntity<Object[]> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, Object[].class);
+        Object[] ordenes = ProductUtilSingleton.getInstance().evalResponseAndGetBody(responseEntity, HttpStatus.OK);
+        PageImpl pageImpl = new PageImpl(Arrays.asList(ordenes), pageable, ordenes.length);
+        return pageImpl;
+    }
+
+    @Override
+    public Page<Object> ordenesAbiertas(Pageable pageable) {
+
+        LOGGER.info("ordenesAbiertas pageable: {}", pageable);
+        RestTemplate restTemplate = new RestTemplate();
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/abiertas",ORDERS_SERVICE_URL));
+
+        builder = ProductUtilSingleton.getInstance().getBasicSearchParams(pageable, builder);
+//        if (idProducto != null) {
+//            builder.queryParam("idProducto", idProducto);
+//        }
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+        ResponseEntity<Object[]> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, Object[].class);
+        Object[] ordenes = ProductUtilSingleton.getInstance().evalResponseAndGetBody(responseEntity, HttpStatus.OK);
+        PageImpl pageImpl = new PageImpl(Arrays.asList(ordenes), pageable, ordenes.length);
+        return pageImpl;
     }
 
     private void agregaInfoCliente(Map entrada) {

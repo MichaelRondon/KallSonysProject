@@ -31,12 +31,38 @@ public class OrdenesResource {
     private OrderServiceRestClient orderServiceRestClient;
 
     @GetMapping("/ordenes/rankingClientes")
-    public ResponseEntity<List<Object>> getProducto(@ApiParam Pageable pageable,
-            @RequestParam(value = "idProducto", required = false) Long idProducto) {
+    public ResponseEntity<List<Object>> getRankigCliente(@ApiParam Pageable pageable,
+            @RequestParam(value = "idProducto", required = true) Long idProducto) {
+        long initTime = System.currentTimeMillis();
         log.debug("REST request to get /ordenes/rankingClientes idProducto: {}", idProducto);
         Page<Object> page = orderServiceRestClient.rankingClientes(pageable, idProducto);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/ordenes/rankingClientes");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        ResponseEntity<List<Object>> response = new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        log.debug("Fin get /ordenes/rankingClientes Tiempo: {}", (System.currentTimeMillis()-initTime));
+        return response;
+    }
+
+    @GetMapping("/ordenes")
+    public ResponseEntity<List<Object>> getOrdenes(@ApiParam Pageable pageable,
+            @RequestParam(value = "idProducto", required = true) Long idProducto) {
+        long initTime = System.currentTimeMillis();
+        log.debug("REST request to get /ordenes idProducto: {}", idProducto);
+        Page<Object> page = orderServiceRestClient.rankingOrdenes(pageable, idProducto);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/ordenes");
+        ResponseEntity<List<Object>> response =  new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        log.debug("Fin get /ordenes Tiempo: {}", (System.currentTimeMillis()-initTime));
+        return response;
+    }
+
+    @GetMapping("/ordenes/abiertas")
+    public ResponseEntity<List<Object>> getOrdenesAbiertas(@ApiParam Pageable pageable) {
+        long initTime = System.currentTimeMillis();
+        log.debug("REST request to get /ordenes/abiertas");
+        Page<Object> page = orderServiceRestClient.ordenesAbiertas(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/ordenes/abiertas");
+        ResponseEntity<List<Object>> response =  new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        log.debug("Fin get /ordenes/abiertas Tiempo: {}", (System.currentTimeMillis()-initTime));
+        return response;
     }
 
 }

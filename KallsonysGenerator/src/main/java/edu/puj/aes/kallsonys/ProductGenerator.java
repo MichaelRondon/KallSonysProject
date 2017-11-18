@@ -101,7 +101,7 @@ public class ProductGenerator {
             productGenerator.getProductServiceRestClientImpl().save(productGenerator.getProduct());
             LOGGER.info("TIEMPO: {}", (System.currentTimeMillis() - initTime));
         };
-        long contadorRemplazos =  676291L;
+        long contadorRemplazos =  699192L;
         long long_ = 963192L;
 //        newFixedThreadPool.submit(productGenerator.findEmptyData());
         for (long i = 0; i < 1000000; i++) {
@@ -112,7 +112,7 @@ public class ProductGenerator {
                 newFixedThreadPool.submit(productGenerator.replace(contadorRemplazos,
                         productGenerator.getProduct()));
 
-                Thread.sleep(500);
+                Thread.sleep(700);
 //                if (i % 2 == 0) {
 //                    newFixedThreadPool.submit(runnableCreate);
 ////                    newFixedThreadPool.submit(productGenerator.replace(long_,

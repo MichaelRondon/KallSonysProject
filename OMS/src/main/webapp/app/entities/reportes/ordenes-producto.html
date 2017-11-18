@@ -1,0 +1,84 @@
+<div>
+    <h2>Ordenes por producto</h2>
+    <jhi-alert></jhi-alert>
+    <div class="input-append">
+        <label class="control-label" for="field_codigo_producto">Código del Producto</label>
+        <input type="text" class="" name="codigoProducto" id="field_codigo_producto" 
+               ng-model="vm.codigoProducto" required/>
+        <button class="btn btn-primary" ng-click="vm.consultar()" >
+            <span class="glyphicon glyphicon-eye-open"></span>
+            <span>
+                Buscar Órdenes
+            </span>
+        </button>
+    </div>
+    <br/>
+    
+    <dl class="dl-horizontal jh-entity-details" ng-show="vm.showResults.show">
+        <dt><span>Nombre</span></dt>
+        <dd>
+            <span>{{vm.producto.nombre}}</span>
+        </dd>
+        <dt><span>Descripcion</span></dt>
+        <dd>
+            <span>{{vm.producto.descripcion}}</span>
+        </dd>
+        <dt><span>Precio</span></dt>
+        <dd>
+            <span>{{vm.producto.precio}}</span>
+        </dd>
+        <dt><span>Estado</span></dt>
+        <dd>
+            <span>{{vm.producto.estado}}</span>
+        </dd>
+        <dt><span>Disponibilidad</span></dt>
+        <dd>
+            <span>{{vm.producto.disponibilidad}}</span>
+        </dd>
+        <dt><span>Rev. Disponibilidad</span></dt>
+        <dd>
+            <span>{{vm.producto.fechaRevDisponibilidad | date:'medium'}}</span>
+        </dd>
+        <dt><span>Marca</span></dt>
+        <dd>
+            <span>{{vm.producto.marca}}</span>
+        </dd>
+        <dt><span>Imagen pequeña</span></dt>
+        <dd>
+            <span><img ng-src="{{vm.productImageSmallBaseUrl + vm.producto.id}}" alt="Producto" style="width:300px;height:250px;"/></span>
+        </dd>
+    </dl>
+    <br/>
+    
+    
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
+                    <th><span>Documento cliente</span></th>
+                    <th><span>Estado órden</span> </th>
+                    <th><span>Fecha órden</span> </th>
+                    <th><span>ID. órden</span> </th>
+                    <th><span>Total items</span> </th>
+                    <th><span>Valor total</span> </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="orden in vm.ordenes track by orden.idOrden">
+                    <td><a  ui-sref="cliente.edit({id:orden.cliente.documento})">{{orden.cliente.documento}}</a></td>
+                    <td>{{orden.estado}}</td>
+                    <td>{{orden.fecha_orden}}</td>
+                    <td>{{orden.idOrden}}</td>
+                    <td>{{orden.itemsTotal}}</td>
+                    <td>{{orden.valorTotal}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</table>
+</div>
+</div>

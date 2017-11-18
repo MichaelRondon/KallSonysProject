@@ -11,7 +11,7 @@
         $stateProvider
                 .state('ranking-clientes-producto', {
                     parent: 'entity',
-                    url: '/reportes',
+                    url: '/ranking-clientes-producto',
                     data: {
                         authorities: ['ROLE_USER'],
                         pageTitle: 'Reporte clienes por producto'
@@ -51,39 +51,88 @@
                             }]
                     }
                 })
-//                .state('producto-detail', {
-//                    parent: 'producto',
-//                    url: '/producto/{id}',
-//                    data: {
-//                        authorities: ['ROLE_USER'],
-//                        pageTitle: 'omsApp.producto.detail.title'
-//                    },
-//                    views: {
-//                        'content@': {
-//                            templateUrl: 'app/entities/producto/producto-detail.html',
-//                            controller: 'ProductoDetailController',
-//                            controllerAs: 'vm'
-//                        }
-//                    },
-//                    resolve: {
-//                        translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-//                                $translatePartialLoader.addPart('producto');
-//                                $translatePartialLoader.addPart('estado');
-//                                return $translate.refresh();
-//                            }],
-//                        entity: ['$stateParams', 'Producto', function ($stateParams, Producto) {
-//                                return Producto.get({id: $stateParams.id}).$promise;
-//                            }],
-//                        previousState: ["$state", function ($state) {
-//                                var currentStateData = {
-//                                    name: $state.current.name || 'producto',
-//                                    params: $state.params,
-//                                    url: $state.href($state.current.name, $state.params)
-//                                };
-//                                return currentStateData;
-//                            }]
-//                    }
-//                })
+                .state('ordenes-producto', {
+                    parent: 'entity',
+                    url: '/ordenes-producto',
+                    data: {
+                        authorities: ['ROLE_USER'],
+                        pageTitle: 'Reporte ordenes por producto'
+                    },
+                    views: {
+                        'content@': {
+                            templateUrl: 'app/entities/reportes/ordenes-producto.html',
+                            controller: 'OrdenesProductoController',
+                            controllerAs: 'vm'
+                        }
+                    },
+                    params: {
+                        page: {
+                            value: '1',
+                            squash: true
+                        },
+                        sort: {
+                            value: 'id,asc',
+                            squash: true
+                        },
+                        search: null
+                    },
+                    resolve: {
+                        pagingParams: ['$stateParams', 'PaginationUtil', function ($stateParams, PaginationUtil) {
+                                return {
+                                    page: PaginationUtil.parsePage($stateParams.page),
+                                    sort: $stateParams.sort,
+                                    predicate: PaginationUtil.parsePredicate($stateParams.sort),
+                                    ascending: PaginationUtil.parseAscending($stateParams.sort),
+                                    search: $stateParams.search
+                                };
+                            }],
+                        translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                                $translatePartialLoader.addPart('global');
+                                return $translate.refresh();
+                            }]
+                    }
+                })
+                .state('ordenes-abiertas', {
+                    parent: 'entity',
+                    url: '/ordenes-abiertas',
+                    data: {
+                        authorities: ['ROLE_USER'],
+                        pageTitle: 'Reporte ordenes abiertas'
+                    },
+                    views: {
+                        'content@': {
+                            templateUrl: 'app/entities/reportes/ordenes-abiertas.html',
+                            controller: 'OrdenesAbiertasController',
+                            controllerAs: 'vm'
+                        }
+                    },
+                    params: {
+                        page: {
+                            value: '1',
+                            squash: true
+                        },
+                        sort: {
+                            value: 'id,asc',
+                            squash: true
+                        },
+                        search: null
+                    },
+                    resolve: {
+                        pagingParams: ['$stateParams', 'PaginationUtil', function ($stateParams, PaginationUtil) {
+                                return {
+                                    page: PaginationUtil.parsePage($stateParams.page),
+                                    sort: $stateParams.sort,
+                                    predicate: PaginationUtil.parsePredicate($stateParams.sort),
+                                    ascending: PaginationUtil.parseAscending($stateParams.sort),
+                                    search: $stateParams.search
+                                };
+                            }],
+                        translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                                $translatePartialLoader.addPart('global');
+                                return $translate.refresh();
+                            }]
+                    }
+                })
 //                .state('producto-detail.edit', {
 //                    parent: 'producto-detail',
 //                    url: '/detail/edit',
