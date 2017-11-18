@@ -133,6 +133,47 @@
                             }]
                     }
                 })
+                .state('ordenes-cerradas', {
+                    parent: 'entity',
+                    url: '/ordenes-cerradas',
+                    data: {
+                        authorities: ['ROLE_USER'],
+                        pageTitle: 'Reporte ordenes cerradas'
+                    },
+                    views: {
+                        'content@': {
+                            templateUrl: 'app/entities/reportes/ordenes-cerradas.html',
+                            controller: 'OrdenesCerradasController',
+                            controllerAs: 'vm'
+                        }
+                    },
+                    params: {
+                        page: {
+                            value: '1',
+                            squash: true
+                        },
+                        sort: {
+                            value: 'id,asc',
+                            squash: true
+                        },
+                        search: null
+                    },
+                    resolve: {
+                        pagingParams: ['$stateParams', 'PaginationUtil', function ($stateParams, PaginationUtil) {
+                                return {
+                                    page: PaginationUtil.parsePage($stateParams.page),
+                                    sort: $stateParams.sort,
+                                    predicate: PaginationUtil.parsePredicate($stateParams.sort),
+                                    ascending: PaginationUtil.parseAscending($stateParams.sort),
+                                    search: $stateParams.search
+                                };
+                            }],
+                        translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                                $translatePartialLoader.addPart('global');
+                                return $translate.refresh();
+                            }]
+                    }
+                })
 //                .state('producto-detail.edit', {
 //                    parent: 'producto-detail',
 //                    url: '/detail/edit',

@@ -21,6 +21,12 @@
                 isArray: true,
                 idProducto: null
             },
+            'cerradas': {
+                url: 'api/ordenes/cerradas',
+                method: 'GET', 
+//                isArray: true,
+                fecha: null
+            },
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {

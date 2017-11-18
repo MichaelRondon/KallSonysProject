@@ -2,8 +2,11 @@ package edu.puj.aes.pica.asperisk.web.rest;
 
 import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.PaginationUtil;
 import edu.puj.aes.pica.asperisk.product.service.client.OrderServiceRestClient;
+import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
+import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +41,7 @@ public class OrdenesResource {
         Page<Object> page = orderServiceRestClient.rankingClientes(pageable, idProducto);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/ordenes/rankingClientes");
         ResponseEntity<List<Object>> response = new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-        log.debug("Fin get /ordenes/rankingClientes Tiempo: {}", (System.currentTimeMillis()-initTime));
+        log.debug("Fin get /ordenes/rankingClientes Tiempo: {}", (System.currentTimeMillis() - initTime));
         return response;
     }
 
@@ -49,8 +52,8 @@ public class OrdenesResource {
         log.debug("REST request to get /ordenes idProducto: {}", idProducto);
         Page<Object> page = orderServiceRestClient.rankingOrdenes(pageable, idProducto);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/ordenes");
-        ResponseEntity<List<Object>> response =  new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-        log.debug("Fin get /ordenes Tiempo: {}", (System.currentTimeMillis()-initTime));
+        ResponseEntity<List<Object>> response = new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        log.debug("Fin get /ordenes Tiempo: {}", (System.currentTimeMillis() - initTime));
         return response;
     }
 
@@ -60,9 +63,22 @@ public class OrdenesResource {
         log.debug("REST request to get /ordenes/abiertas");
         Page<Object> page = orderServiceRestClient.ordenesAbiertas(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/ordenes/abiertas");
-        ResponseEntity<List<Object>> response =  new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-        log.debug("Fin get /ordenes/abiertas Tiempo: {}", (System.currentTimeMillis()-initTime));
+        ResponseEntity<List<Object>> response = new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        log.debug("Fin get /ordenes/abiertas Tiempo: {}", (System.currentTimeMillis() - initTime));
         return response;
+    }
+
+    @GetMapping("/ordenes/cerradas")
+    public ResponseEntity<Object> getOrdenesCerradas(
+            @RequestParam(value = "fecha", required = true) Instant fecha) {
+        long initTime = System.currentTimeMillis();
+        log.debug("REST request to get /ordenes/cerradas fecha: {}", fecha);
+        Object object = orderServiceRestClient.ordenesCerradas(fecha);
+        ResponseEntity<Object> ordenesCerradas = ResponseUtil.wrapOrNotFound(Optional.ofNullable(object));
+        log.debug("ordenesCerradas.hasBody(): {}", ordenesCerradas.hasBody());
+        log.debug("ordenesCerradas.getBody(): {}", ordenesCerradas.getBody());
+        log.debug("Fin get /ordenes/cerradas Tiempo: {}", (System.currentTimeMillis() - initTime));
+        return ordenesCerradas;
     }
 
 }

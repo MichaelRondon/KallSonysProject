@@ -1,0 +1,44 @@
+<div>
+    <h2>Ordenes cerradas</h2>
+    <jhi-alert></jhi-alert>
+
+    <div class="row">
+        <div class="form-group col-xs-12 col-sm-6">
+            <label class="control-label" for="field_fechaCierre">Fecha</label>
+            <div class="input-group">
+                <input id="field_fechaCierre" type="text" class="form-control" name="fechaCierre"
+                       datetime-picker="MM/yyyy" ng-model="vm.fechaCierre" 
+                       datepicker-popup="MM/yyyy" datepicker-options="{minMode: 'month'}" datepicker-mode="'month'" enable-time="false"
+                       is-open="vm.datePickerOpenStatus.fechaCierre" disabled
+                       />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default"
+                            ng-click="vm.openCalendar('fechaCierre')"><i
+                            class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-6">
+            <button class="btn btn-primary" ng-click="vm.consultar()" style="margin-top:23px;">
+                <span class="glyphicon glyphicon-eye-open"></span>
+                <span>
+                    Buscar Órdenes
+                </span>
+            </button>
+        </div>
+    </div>
+    <br/>
+
+
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>numeroOrdenes</span></dt>
+        <dd>
+            <span>{{vm.orden.numeroOrdenes}}</span>
+        </dd>
+        <dt><span>totalFacturado</span></dt>
+        <dd>
+            <span>{{vm.orden.totalFacturado}}</span>
+        </dd>
+    </dl>
+
+</div>

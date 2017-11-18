@@ -5,6 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.puj.aes.pica.asperisk.oms.utilities.ProductUtilSingleton;
 import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.errors.CustomParameterizedException;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -102,7 +106,7 @@ public class OrderServiceRestClientImpl implements OrderServiceRestClient {
 
         LOGGER.info("ordenesAbiertas pageable: {}", pageable);
         RestTemplate restTemplate = new RestTemplate();
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/abiertas",ORDERS_SERVICE_URL));
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/abiertas", ORDERS_SERVICE_URL));
 
         builder = ProductUtilSingleton.getInstance().getBasicSearchParams(pageable, builder);
 //        if (idProducto != null) {
@@ -114,6 +118,30 @@ public class OrderServiceRestClientImpl implements OrderServiceRestClient {
         Object[] ordenes = ProductUtilSingleton.getInstance().evalResponseAndGetBody(responseEntity, HttpStatus.OK);
         PageImpl pageImpl = new PageImpl(Arrays.asList(ordenes), pageable, ordenes.length);
         return pageImpl;
+    }
+
+    @Override
+    public Object ordenesCerradas(Instant fecha) {
+
+        LOGGER.info("ordenesCerradas fecha: {}", fecha);
+        RestTemplate restTemplate = new RestTemplate();
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/ordenesMes", ORDERS_SERVICE_URL));
+
+//        builder = ProductUtilSingleton.getInstance().getBasicSearchParams(pageable, builder);
+        if (fecha != null) {
+            LocalDateTime localDateTime = LocalDateTime.ofInstant(fecha, ZoneId.systemDefault());
+            int mes = localDateTime.getMonthValue();
+            int anno = localDateTime.getYear();
+            builder.queryParam("mes", mes);
+            builder.queryParam("anio", anno);
+        }
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+        ResponseEntity<Object> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, Object.class);
+//        Object[] ordenes = ProductUtilSingleton.getInstance().evalResponseAndGetBody(responseEntity, HttpStatus.OK);
+//        PageImpl pageImpl = new PageImpl(Arrays.asList(ordenes), pageable, ordenes.length);
+//        return pageImpl;
+        return responseEntity.getBody();
     }
 
     private void agregaInfoCliente(Map entrada) {
