@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.temporal.ChronoField;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -121,13 +121,74 @@ public class OrderServiceRestClientImpl implements OrderServiceRestClient {
     }
 
     @Override
+    public Page<Object> rankingOrdenesCerradas(Pageable pageable, Instant fechaInicio, Instant fechaFin) {
+
+        LOGGER.info("rankingOrdenesCerradas pageable, fechaInicio, fechaFin: {}", pageable, fechaInicio, fechaFin);
+        RestTemplate restTemplate = new RestTemplate();
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/rankingOrdenesFechas", ORDERS_SERVICE_URL));
+
+        builder = ProductUtilSingleton.getInstance().getBasicSearchParams(pageable, builder);
+        if (fechaInicio != null && fechaFin != null) {
+            DateTimeFormatter formatter
+                    = DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneId.systemDefault());
+            String fechaInicioString = formatter.format(fechaInicio);
+            String fechaFinString = formatter.format(fechaFin);
+            builder.queryParam("fechaInicio", fechaInicioString);
+            builder.queryParam("fechaFin", fechaFinString);
+        }
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+        ResponseEntity<Object[]> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, Object[].class);
+        Object[] ordenes = ProductUtilSingleton.getInstance().evalResponseAndGetBody(responseEntity, HttpStatus.OK);
+        PageImpl pageImpl = new PageImpl(Arrays.asList(ordenes), pageable, ordenes.length);
+        return pageImpl;
+    }
+
+    @Override
+    public Page<Object> rankingClientes(Pageable pageable, Instant fechaInicio, Instant fechaFin) {
+
+        LOGGER.info("rankingCliente pageable, fechaInicio, fechaFin: {}", pageable, fechaInicio, fechaFin);
+        RestTemplate restTemplate = new RestTemplate();
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/rankingClientesFechas", ORDERS_SERVICE_URL));
+
+        builder = ProductUtilSingleton.getInstance().getBasicSearchParams(pageable, builder);
+        if (fechaInicio != null && fechaFin != null) {
+            DateTimeFormatter formatter
+                    = DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneId.systemDefault());
+            String fechaInicioString = formatter.format(fechaInicio);
+            String fechaFinString = formatter.format(fechaFin);
+            builder.queryParam("fechaInicio", fechaInicioString);
+            builder.queryParam("fechaFin", fechaFinString);
+        }
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+        ResponseEntity<Map> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, Map.class);
+        Map ranking = ProductUtilSingleton.getInstance().evalResponseAndGetBody(responseEntity, HttpStatus.OK);
+        if (!ranking.containsKey("ranking")) {
+            throw new CustomParameterizedException(
+                    String.format("Cuerpo de la respuesta sin el campo ranking. Respuesta: %s", ranking));
+        }
+        Object get = ranking.get("ranking");
+        if (get instanceof List) {
+            List documentos = (List) get;
+            documentos.parallelStream().forEach(entry -> {
+                if (entry instanceof Map) {
+                    agregaInfoCliente(((Map) entry));
+                }
+            });
+            PageImpl pageImpl = new PageImpl(documentos, pageable, documentos.size());
+            return pageImpl;
+        }
+        return new PageImpl(new ArrayList<>(), pageable, 0);
+    }
+
+    @Override
     public Object ordenesCerradas(Instant fecha) {
 
         LOGGER.info("ordenesCerradas fecha: {}", fecha);
         RestTemplate restTemplate = new RestTemplate();
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/ordenesMes", ORDERS_SERVICE_URL));
 
-//        builder = ProductUtilSingleton.getInstance().getBasicSearchParams(pageable, builder);
         if (fecha != null) {
             LocalDateTime localDateTime = LocalDateTime.ofInstant(fecha, ZoneId.systemDefault());
             int mes = localDateTime.getMonthValue();
@@ -138,9 +199,6 @@ public class OrderServiceRestClientImpl implements OrderServiceRestClient {
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<?> entity = new HttpEntity<>(headers);
         ResponseEntity<Object> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, Object.class);
-//        Object[] ordenes = ProductUtilSingleton.getInstance().evalResponseAndGetBody(responseEntity, HttpStatus.OK);
-//        PageImpl pageImpl = new PageImpl(Arrays.asList(ordenes), pageable, ordenes.length);
-//        return pageImpl;
         return responseEntity.getBody();
     }
 

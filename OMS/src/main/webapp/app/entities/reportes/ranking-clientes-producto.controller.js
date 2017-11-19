@@ -23,9 +23,6 @@
         vm.showResults = {
             show  : false
           };
-        
-
-
 
         vm.producto=null;
         vm.loadPage = loadPage;
@@ -33,7 +30,6 @@
             last: 0
         };
         vm.reset = reset;
-//        loadAll();
         
         function ranking() {
             if(vm.codigoProducto === null || vm.codigoProducto === ''){

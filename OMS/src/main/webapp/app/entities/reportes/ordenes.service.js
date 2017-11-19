@@ -21,6 +21,20 @@
                 isArray: true,
                 idProducto: null
             },
+            'rankingCerradas': {
+                url: 'api/ordenes/rankingOrdenesFechas',
+                method: 'GET', 
+                isArray: true,
+                fechaInicio: null,
+                fechaFin: null
+            },
+            'rankingClientes': {
+                url: 'api/ordenes/rankingClientesFechas',
+                method: 'GET', 
+                isArray: true,
+                fechaInicio: null,
+                fechaFin: null
+            },
             'cerradas': {
                 url: 'api/ordenes/cerradas',
                 method: 'GET', 

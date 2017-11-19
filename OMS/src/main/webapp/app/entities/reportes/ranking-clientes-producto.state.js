@@ -174,6 +174,88 @@
                             }]
                     }
                 })
+                .state('ranking-ordenes-cerradas', {
+                    parent: 'entity',
+                    url: '/ranking-ordenes-cerradas',
+                    data: {
+                        authorities: ['ROLE_USER'],
+                        pageTitle: 'Reporte ordenes cerradas'
+                    },
+                    views: {
+                        'content@': {
+                            templateUrl: 'app/entities/reportes/ranking-ordenes-cerradas.html',
+                            controller: 'RankingOrdenesCerrradasController',
+                            controllerAs: 'vm'
+                        }
+                    },
+                    params: {
+                        page: {
+                            value: '1',
+                            squash: true
+                        },
+                        sort: {
+                            value: 'id,asc',
+                            squash: true
+                        },
+                        search: null
+                    },
+                    resolve: {
+                        pagingParams: ['$stateParams', 'PaginationUtil', function ($stateParams, PaginationUtil) {
+                                return {
+                                    page: PaginationUtil.parsePage($stateParams.page),
+                                    sort: $stateParams.sort,
+                                    predicate: PaginationUtil.parsePredicate($stateParams.sort),
+                                    ascending: PaginationUtil.parseAscending($stateParams.sort),
+                                    search: $stateParams.search
+                                };
+                            }],
+                        translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                                $translatePartialLoader.addPart('global');
+                                return $translate.refresh();
+                            }]
+                    }
+                })
+                .state('ranking-clientes-fecha', {
+                    parent: 'entity',
+                    url: '/ranking-clientes-fecha',
+                    data: {
+                        authorities: ['ROLE_USER'],
+                        pageTitle: 'Reporte clientes por facturacion'
+                    },
+                    views: {
+                        'content@': {
+                            templateUrl: 'app/entities/reportes/ranking-clientes-fecha.html',
+                            controller: 'RankingClientesFechaController',
+                            controllerAs: 'vm'
+                        }
+                    },
+                    params: {
+                        page: {
+                            value: '1',
+                            squash: true
+                        },
+                        sort: {
+                            value: 'id,asc',
+                            squash: true
+                        },
+                        search: null
+                    },
+                    resolve: {
+                        pagingParams: ['$stateParams', 'PaginationUtil', function ($stateParams, PaginationUtil) {
+                                return {
+                                    page: PaginationUtil.parsePage($stateParams.page),
+                                    sort: $stateParams.sort,
+                                    predicate: PaginationUtil.parsePredicate($stateParams.sort),
+                                    ascending: PaginationUtil.parseAscending($stateParams.sort),
+                                    search: $stateParams.search
+                                };
+                            }],
+                        translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                                $translatePartialLoader.addPart('global');
+                                return $translate.refresh();
+                            }]
+                    }
+                })
 //                .state('producto-detail.edit', {
 //                    parent: 'producto-detail',
 //                    url: '/detail/edit',

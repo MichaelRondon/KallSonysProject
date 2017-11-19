@@ -81,4 +81,29 @@ public class OrdenesResource {
         return ordenesCerradas;
     }
 
+    @GetMapping("/ordenes/rankingOrdenesFechas")
+    public ResponseEntity<List<Object>> getOrdenesCerradas(@ApiParam Pageable pageable,
+            @RequestParam(value = "fechaInicio", required = true) Instant fechaInicio,
+            @RequestParam(value = "fechaFin", required = true) Instant fechaFin) {
+        long initTime = System.currentTimeMillis();
+        log.debug("REST request to get /ordenes/rankingOrdenesFechas fechaInicio: {}. fechaFin: {}", fechaInicio, fechaFin);
+        Page<Object> rankingOrdenesCerradas = orderServiceRestClient.rankingOrdenesCerradas(pageable, fechaInicio, fechaFin);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(rankingOrdenesCerradas, "/api/ordenes/rankingOrdenesFechas");
+        ResponseEntity<List<Object>> response = new ResponseEntity<>(rankingOrdenesCerradas.getContent(), headers, HttpStatus.OK);
+        log.debug("Fin get /ordenes/rankingOrdenesFechas Tiempo: {}", (System.currentTimeMillis() - initTime));
+        return response;
+    }
+
+    @GetMapping("/ordenes/rankingClientesFechas")
+    public ResponseEntity<List<Object>> getRankingClientes(@ApiParam Pageable pageable,
+            @RequestParam(value = "fechaInicio", required = true) Instant fechaInicio,
+            @RequestParam(value = "fechaFin", required = true) Instant fechaFin) {
+        long initTime = System.currentTimeMillis();
+        log.debug("REST request to get /ordenes/rankingClientesFechas fechaInicio: {}. fechaFin: {}", fechaInicio, fechaFin);
+        Page<Object> rankingOrdenesCerradas = orderServiceRestClient.rankingClientes(pageable, fechaInicio, fechaFin);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(rankingOrdenesCerradas, "/api/ordenes/rankingClientes");
+        ResponseEntity<List<Object>> response = new ResponseEntity<>(rankingOrdenesCerradas.getContent(), headers, HttpStatus.OK);
+        log.debug("Fin get /ordenes/rankingClientesFechas Tiempo: {}", (System.currentTimeMillis() - initTime));
+        return response;
+    }
 }

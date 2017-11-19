@@ -1,0 +1,74 @@
+<div>
+    <h2>Ordenes por producto</h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="form-group col-xs-12 col-sm-6">
+            <label class="control-label" for="field_fechaInicio">Fecha inicio</label>
+            <div class="input-group">
+                <input id="field_fechaInicio" type="text" class="form-control" name="fechaInicio"
+                       ng-model="vm.fechaInicio" 
+                       datetime-picker="yyyy/MM/dd" enable-time="false"
+                       is-open="vm.datePickerOpenStatus.fechaInicio" disabled
+                       />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default"
+                            ng-click="vm.openCalendar('fechaInicio')"><i
+                            class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-6">
+            <label class="control-label" for="field_fechaFin">Fecha fin</label>
+            <div class="input-group">
+                <input id="field_fechaFin" type="text" class="form-control" name="fechaFin"
+                       ng-model="vm.fechaFin" 
+                       datetime-picker="yyyy/MM/dd" enable-time="false"
+                       is-open="vm.datePickerOpenStatus.fechaFin" disabled
+                       />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default"
+                            ng-click="vm.openCalendar('fechaFin')"><i
+                            class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-6">
+            <button class="btn btn-primary" ng-click="vm.consultar()" style="margin-top:23px;">
+                <span class="glyphicon glyphicon-eye-open"></span>
+                <span>
+                    Buscar Órdenes
+                </span>
+            </button>
+        </div>
+    </div>
+    <br/>
+    
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
+                    <th><span>Documento cliente</span></th>
+                    <th><span>Estado órden</span> </th>
+                    <th><span>Fecha órden</span> </th>
+                    <th><span>ID. órden</span> </th>
+                    <th><span>Total items</span> </th>
+                    <th><span>Valor total</span> </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="orden in vm.ordenes track by orden.idOrden">
+                    <td><a  ui-sref="cliente.edit({id:orden.cliente.documento})">{{orden.cliente.documento}}</a></td>
+                    <td>{{orden.estado}}</td>
+                    <td>{{orden.fecha_orden}}</td>
+                    <td>{{orden.idOrden}}</td>
+                    <td>{{orden.itemsTotal}}</td>
+                    <td>{{orden.valorTotal}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

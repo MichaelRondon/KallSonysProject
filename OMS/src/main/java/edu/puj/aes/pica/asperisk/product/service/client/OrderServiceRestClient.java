@@ -20,4 +20,6 @@ public interface OrderServiceRestClient {
     Page<Object> rankingOrdenes(Pageable pageable, Long idProducto);
     Page<Object> ordenesAbiertas(Pageable pageable);
     Object ordenesCerradas(Instant fecha);
+    Page<Object> rankingOrdenesCerradas(Pageable pageable, Instant fechaInicio, Instant fechaFin);
+    Page<Object> rankingClientes(Pageable pageable, Instant fechaInicio, Instant fechaFin);
 }
