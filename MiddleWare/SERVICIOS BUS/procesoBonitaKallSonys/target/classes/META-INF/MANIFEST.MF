@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1511078386092
+Build-Jdk: 1.8.0_121
+Built-By: DELL
+Bundle-Description: Business Process Kallsonys
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0.html
+Bundle-ManifestVersion: 2
+Bundle-Name: Business Process Kallsonys [BusinessProcessKallsonys]
+Bundle-SymbolicName: BusinessProcessKallsonys
+Bundle-Version: 1.0.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: com.javeriana.aggregators;uses:="org.apache.camel,org.ap
+ ache.camel.processor.aggregate";version="1.0.0.SNAPSHOT",com.javeriana.
+ kallsonys;version="1.0.0.SNAPSHOT",com.javeriana.model;version="1.0.0.S
+ NAPSHOT",com.javeriana.processors;uses:="org.apache.camel,org.apache.co
+ mmons.logging,com.javeriana.model,javax.ws.rs.core,com.javeriana.kallso
+ nys,org.w3c.dom,org.slf4j,javax.xml.parsers";version="1.0.0.SNAPSHOT",c
+ om.javeriana.service;uses:="javax.jws,javax.ws.rs,com.javeriana.model";
+ version="1.0.0.SNAPSHOT"
+Import-Package: com.fasterxml.jackson.jaxrs.json;version="[2.6,3)",javax
+ .jws,javax.ws.rs;version="[2.0,3)",javax.ws.rs.core;version="[2.0,3)",j
+ avax.xml.parsers,org.apache.camel;version="[2.17,3)",org.apache.camel.p
+ rocessor.aggregate;version="[2.17,3)",org.apache.commons.logging;versio
+ n="[1.2,2)",org.slf4j;version="[1.7,2)",org.w3c.dom
+Tool: Bnd-1.50.0

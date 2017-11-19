@@ -1,0 +1,15 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:rap="http://rapidservice.com.co/RapidServiceCotizacion">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <rap:processQuouteElement>
+         <orderId>${headers.orderId}</orderId>
+         #foreach($carrito in ${body})       
+        	<items>
+    	        <itemId>${carrito.producto.nombre}</itemId>
+	            <quantity>${carrito.itemCarrito.cantidad}</quantity>
+            	<price>${carrito.producto.precio}</price>
+         	</items>
+         #end
+      </rap:processQuouteElement>
+   </soapenv:Body>
+</soapenv:Envelope>

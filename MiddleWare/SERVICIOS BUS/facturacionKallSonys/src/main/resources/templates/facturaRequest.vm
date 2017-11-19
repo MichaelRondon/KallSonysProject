@@ -1,0 +1,10 @@
+<transaction>
+	<TransactionID />
+	<TransactionNumber>${body.orderNumber}</TransactionNumber>
+	<TransactionYear>${body.orderFinishedYear}</TransactionYear>
+	<TransactionMonth>${body.orderFinishedMonth}</TransactionMonth>
+	<TransactionDay>${body.orderFinishedDay}</TransactionDay>
+	<AccountID>${headers.account}</AccountID>
+	<WithdrawalAmount/>
+	<DepositAmount>${body.orderTotalValue}</DepositAmount>
+</transaction>

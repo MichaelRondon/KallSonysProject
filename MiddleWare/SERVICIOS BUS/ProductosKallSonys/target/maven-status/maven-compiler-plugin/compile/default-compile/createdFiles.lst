@@ -1,0 +1,10 @@
+com\javeriana\processors\CreateProcessProcessor.class
+com\javeriana\model\PeticionCasoBpm.class
+com\javeriana\service\CrmService.class
+com\javeriana\model\PeticionInfoUsuario.class
+com\javeriana\service\CrmServiceImpl.class
+com\javeriana\service\ProductosService.class
+com\javeriana\service\ProductosServiceIml.class
+com\javeriana\processors\ProcessorResponseGetInfo.class
+com\javeriana\model\TravelRequestInput.class
+com\javeriana\model\Usuario.class

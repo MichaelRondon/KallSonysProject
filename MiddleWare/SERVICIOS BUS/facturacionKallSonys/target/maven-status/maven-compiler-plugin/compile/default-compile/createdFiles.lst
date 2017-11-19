@@ -1,0 +1,17 @@
+com\javeriana\processors\CreateProcessProcessor.class
+com\javeriana\model\PeticionCasoBpm.class
+com\javeriana\kallsonys\Direccion.class
+com\javeriana\kallsonys\Orden.class
+com\javeriana\model\PeticionInfoUsuario.class
+com\javeriana\model\FacturaResponse.class
+com\javeriana\kallsonys\Cliente.class
+com\javeriana\model\StarProcessBonitaRequest.class
+com\javeriana\service\ProductosService.class
+com\javeriana\model\ValidationOrderResponse.class
+com\javeriana\service\ProductosServiceIml.class
+com\javeriana\processors\ProcessorResponseGetInfo.class
+com\javeriana\model\FacturaRequest.class
+com\javeriana\model\OrderRequestInput.class
+com\javeriana\model\TravelRequestInput.class
+com\javeriana\model\Usuario.class
+com\javeriana\model\ValidationOrderRequest.class

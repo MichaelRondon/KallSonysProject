@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:camel="http://camel.apache.org/schema/spring"
+    xmlns:ctx="http://www.springframework.org/schema/context"
+    xmlns:cxf="http://camel.apache.org/schema/cxf"
+    xmlns:http-conf="http://cxf.apache.org/transports/http/configuration"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xmlns:osgi="http://www.springframework.org/schema/osgi"
+    xmlns:osgix="http://www.springframework.org/schema/osgi-compendium"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://camel.apache.org/schema/cxf 
+    http://camel.apache.org/schema/cxf/camel-cxf.xsd     
+    http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd        
+    http://camel.apache.org/schema/spring 
+    http://camel.apache.org/schema/spring/camel-spring.xsd        
+    http://www.springframework.org/schema/jee 
+    http://www.springframework.org/schema/jee/spring-jee.xsd        
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd        
+    http://www.springframework.org/schema/osgi-compendium 
+    http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium.xsd        
+    http://www.springframework.org/schema/osgi 
+    http://www.springframework.org/schema/osgi/spring-osgi.xsd        
+    http://cxf.apache.org/transports/http/configuration 
+    http://cxf.apache.org/schemas/configuration/http-conf.xsd">     
+       
+    <bean class="org.apache.activemq.camel.component.ActiveMQComponent" id="activemq">
+        <property name="brokerURL" value="tcp://localhost:61616"/>
+        <property name="userName" value="admin"/>
+        <property name="password" value="admin"/>
+        <property name="usePooledConnection" value="false"/>
+    </bean>   
+       
+    <bean id="productosBean" class="com.javeriana.service.ProductosServiceIml" />
+    <bean id="myProcessor" class="com.javeriana.processors.ProcessorResponseGetInfo" />       
+     
+    <cxf:rsServer id="rsServer" address="http://0.0.0.0:3538/api" loggingFeatureEnabled="false">
+    	<cxf:serviceBeans>
+     		<ref bean="productosBean" />
+  		</cxf:serviceBeans>
+  		<cxf:providers>
+     		<bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider" />
+  		</cxf:providers>
+    </cxf:rsServer>    
+       
+       
+    <camelContext id="_camelContext1" xmlns="http://camel.apache.org/schema/spring">   
+		      
+		<route id="_route1">
+	        <from uri="cxfrs:bean:rsServer?bindingStyle=Default"/>	
+	        <!-- <log message="Processing CXF route....http method ${headers}" /> --> 		
+    		<choice>
+      			<when>
+        			<simple>${header.operationName} == 'enviarfactura'</simple> 
+        			<bean ref="productosBean" method="enviarfactura" />
+        			<removeHeaders pattern="CamelHttp*"/>	         			
+            		<choice>
+            			<when>
+            				<simple>${body.orderManufacter} == 'SONY'</simple>
+            				<setHeader headerName="account">
+            					<constant>10017</constant>
+            				</setHeader>
+            			</when>
+            			<when>
+            				<simple>${body.orderManufacter} == 'RAPIDSERVICE'</simple>
+            				<setHeader headerName="account">
+            					<constant>10024</constant>
+            				</setHeader>
+            			</when>
+            		</choice>       	
+            		<setHeader headerName="CamelVelocityResourceUri" >
+	    	            <simple>templates/facturaRequest.vm</simple>
+    	        	</setHeader>
+	            	<to id="_to2" uri="velocity:dummy?loaderCache=false">
+	                	<description>Get xml request from template velocity</description>
+            		</to>		
+            		<camel:inOnly uri="activemq:Facturacion" />             		            		
+            		<setHeader headerName="Content-Type">
+        				<constant>application/json</constant>
+        			</setHeader>
+            		<process ref="myProcessor" />
+					<to uri="mock:endProcess"/>
+				</when>  		
+    		</choice> 		
+        </route>      
+		      		
+    </camelContext>
+</beans>

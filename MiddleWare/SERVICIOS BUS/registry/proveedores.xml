@@ -1,0 +1,4 @@
+<proveedores>
+	<proveedor name="SONY" >direct:sony</proveedor>
+	<proveedor name="RAPIDSERVICE" >direct:rapidservice</proveedor>
+</proveedores>

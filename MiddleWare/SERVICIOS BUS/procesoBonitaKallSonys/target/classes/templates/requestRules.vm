@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:def="http://DefaultNamespace" xmlns:con="http://context.rules.openl.org">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <def:RangoValor>
+         <def:categoria>${headers.order.cliente.estatus}</def:categoria>
+         <def:valor>${headers.order.valorTotal}</def:valor>
+      </def:RangoValor>
+   </soapenv:Body>
+</soapenv:Envelope>

@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:camel="http://camel.apache.org/schema/spring"
+    xmlns:ctx="http://www.springframework.org/schema/context"
+    xmlns:cxf="http://camel.apache.org/schema/cxf"
+    xmlns:http-conf="http://cxf.apache.org/transports/http/configuration"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xmlns:osgi="http://www.springframework.org/schema/osgi"
+    xmlns:osgix="http://www.springframework.org/schema/osgi-compendium"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://camel.apache.org/schema/cxf 
+    http://camel.apache.org/schema/cxf/camel-cxf.xsd     
+    http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd        
+    http://camel.apache.org/schema/spring 
+    http://camel.apache.org/schema/spring/camel-spring.xsd        
+    http://www.springframework.org/schema/jee 
+    http://www.springframework.org/schema/jee/spring-jee.xsd        
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd        
+    http://www.springframework.org/schema/osgi-compendium 
+    http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium.xsd        
+    http://www.springframework.org/schema/osgi 
+    http://www.springframework.org/schema/osgi/spring-osgi.xsd        
+    http://cxf.apache.org/transports/http/configuration 
+    http://cxf.apache.org/schemas/configuration/http-conf.xsd">     
+       
+    <bean id="productosBean" class="com.javeriana.service.ProductosServiceIml" />
+    <bean id="myProcessor" class="com.javeriana.processors.ProcessorResponseGetInfo" />
+    <bean id="processAuth" class="com.javeriana.processors.CreateProcessProcessor" />
+	<!-- <bean id="rulesBeanResponse" class="com.service.RulesServiceResponse" /> -->          
+     
+    <cxf:rsServer id="rsServer" address="http://0.0.0.0:7076/api" loggingFeatureEnabled="false">
+    	<cxf:serviceBeans>
+     		<ref bean="productosBean" />
+  		</cxf:serviceBeans>
+  		<cxf:providers>
+     		<bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider" />
+  		</cxf:providers>
+    </cxf:rsServer>    
+       
+       
+    <camelContext id="_camelContext1" xmlns="http://camel.apache.org/schema/spring">   
+    	<dataFormats>
+  			<json id="jack" library="Jackson"/>  			
+		</dataFormats>
+		      
+		<route id="_route1">
+	        <from uri="cxfrs:bean:rsServer?bindingStyle=Default"/>	
+	        <!-- <log message="Processing CXF route....http method ${headers}" /> --> 		
+    		<choice>
+      			<when>
+        			<simple>${header.operationName} == 'producto'</simple>
+        			<process ref="myProcessor" /> 
+        			<to uri="mock:end"/>
+        			<!-- <bean ref="rulesBean" method="ipsPuedeAutMedicamento" />  -->
+      			</when>
+      			<when>
+        			<simple>${header.operationName} == 'procesobonita'</simple>
+        			<process ref="myProcessor" />         			
+        			<removeHeaders pattern="CamelHttp*"/>
+        			<setHeader headerName="Content-Type">
+        				<constant>application/x-www-form-urlencoded</constant>
+        			</setHeader>
+        			<setHeader headerName="CamelHttpMethod">
+						<constant>POST</constant>
+					</setHeader>
+					<setHeader headerName="Host">
+						<constant>localhost:8080</constant>
+					</setHeader>
+					<camel:setBody>
+                    	<camel:simple>username=walter.bates&amp;password=bpm&amp;redirect=false</camel:simple>
+                    </camel:setBody> 
+					<to uri="http4://localhost:8080/bonita/loginservice?bridgeEndpoint=false" />
+					
+					
+					<setHeader headerName="autenticacion">
+						<simple>${header.cookie}</simple>
+					</setHeader>
+					<process ref="processAuth" />  
+				    <removeHeaders pattern="CamelHttp*"/>				  
+					<setHeader headerName="Content-Type">
+        				<constant>application/json</constant>
+        			</setHeader>
+        			<setHeader headerName="CamelHttpMethod">
+						<constant>POST</constant>
+					</setHeader>
+					<setHeader headerName="Host">
+						<constant>localhost:8080</constant>
+					</setHeader>
+					<marshal ref="jack" />
+					<log message="BODY ::::: ${body}"/>
+					<log message="HEADERS ::::: ${headers}"/>
+					
+        			<!-- <to uri="http4://localhost:8080/bonita/API/bpm/case?bridgeEndpoint=false" /> -->  	
+        			<to uri="http4://localhost:8080/bonita/API/bpm/process/7307546741270448062/instantiation?bridgeEndpoint=false" />				
+        			<to uri="mock:end"/>
+        			<!-- <bean ref="rulesBean" method="ipsPuedeAutMedicamento" />  -->
+      			</when>
+      			<when>
+        			<simple>${header.operationName} == 'campanias'</simple>
+        			<process ref="myProcessor" /> 
+        			<removeHeaders pattern="CamelHttp*"/>
+        			<recipientList>
+  						<simple>https4://25.95.119.43:7076/api/producto/buscar?bridgeEndpoint=true&amp;sslContextParametersRef=sslContextParameters</simple>
+  					</recipientList>
+        			<to uri="mock:end"/>
+        			<!--<bean ref="rulesBean" method="ipsSePuedeAutorizar" />  -->
+      			</when>
+    		</choice> 		
+        </route>      
+		      
+		<route id="_route2">
+        	<from uri="direct:getInfoUsuario"/> 
+        	<setHeader headerName="identificacionAfiliado">
+				<simple>${body.get(0).identificacionAfiliado}</simple>
+			</setHeader>
+			<setHeader headerName="Host">
+				<constant>salesforce.com</constant>
+			</setHeader>
+			<removeHeader headerName="operationName" />
+			<removeHeader headerName="path_to_match_slash" />
+			<removeHeaders pattern="CamelHttp*"/>
+        	<to uri="direct:login"/>
+        	<removeHeaders pattern="CamelHttp*"/>
+  			<setHeader headerName="Authorization">
+  				<simple>${body.get('token_type')} ${body.get('access_token')}</simple>
+  			</setHeader>  			  		
+  			<setHeader headerName="CamelHttpMethod">
+				<constant>GET</constant>
+			</setHeader>
+			<setHeader headerName="Accept">
+				<constant>*/*</constant>
+			</setHeader>	
+			<setHeader headerName="urlServicio">
+				<constant>na35.salesforce.com</constant>
+			</setHeader>
+			<to uri="direct:urlUsuario"/>
+			<setHeader headerName="urlAfiliado">
+  				<simple>${body.get('records').get(0).get('attributes').get('url')}</simple>
+  			</setHeader>
+  			<setHeader headerName="CamelHttpUrl">
+				<simple>https://${header.urlServicio}/${header.urlAfiliado}</simple>
+			</setHeader>
+			<setHeader headerName="CamelHttpUri">
+				<simple>${header.urlAfiliado}</simple>
+			</setHeader>
+			<setHeader headerName="CamelServletContextPath">
+				<simple>${header.urlAfiliado}</simple>
+			</setHeader>  	
+			<setBody>
+  				<constant></constant>
+  			</setBody>	
+  			<recipientList>
+  				<simple>https4://${header.urlServicio}/${header.urlAfiliado}?bridgeEndpoint=true&amp;sslContextParametersRef=sslContextParameters</simple>
+  			</recipientList>	  			
+  			<unmarshal ref="jack" />   	  			
+  			<process ref="myProcessor" />  			
+        </route>      
+		          
+		<route id="_route3">
+        	<from uri="direct:crearActualizarUsuario"/> 
+        	<setHeader headerName="identificacionAfiliado">
+				<simple>${body.identificacionAfiliado}</simple>
+			</setHeader>
+			<setHeader headerName="Host">
+				<constant>salesforce.com</constant>
+			</setHeader>
+        	<to uri="direct:login"/>
+        	<removeHeaders pattern="CamelHttp*"/>
+  			<setHeader headerName="Authorization">
+  				<simple>${body.get('token_type')} ${body.get('access_token')}</simple>
+  			</setHeader>  			  		
+  			<setHeader headerName="CamelHttpMethod">
+				<constant>GET</constant>
+			</setHeader>
+			<setHeader headerName="Accept">
+				<constant>*/*</constant>
+			</setHeader>	
+			<setHeader headerName="urlServicio">
+				<constant>na35.salesforce.com</constant>
+			</setHeader>
+			<to uri="direct:urlUsuario"/>
+        </route> 
+        
+        <route id="_route4">
+        	<from uri="direct:login"/> 
+        	<setHeader headerName="CamelVelocityResourceUri">
+				<simple>templates/crmLogin.vm</simple>
+			</setHeader>
+			<to uri="velocity:dummy?loaderCache=false">
+				<description>Get xml request from template velocity</description>
+			</to>	
+			<setHeader headerName="Content-Type">
+  				<constant>application/x-www-form-urlencoded</constant>
+  			</setHeader>
+  			<setHeader headerName="CamelHttpMethod">
+				<constant>POST</constant>
+			</setHeader>			
+			<setHeader headerName="CamelHttpUrl">
+				<constant>https://login.salesforce.com/services/oauth2/token</constant>
+			</setHeader>
+			<setHeader headerName="CamelHttpUri">
+				<constant>/services/oauth2/token</constant>
+			</setHeader>
+			<setHeader headerName="CamelServletContextPath">
+				<constant>/services/oauth2/token</constant>
+			</setHeader>			
+  			<to uri="https4://login.salesforce.com/services/oauth2/token?bridgeEndpoint=true"/>  			
+  			<unmarshal ref="jack" />
+        </route> 
+        
+        <route id="_route5">
+        	<from uri="direct:urlUsuario"/>        								
+			<setHeader headerName="CamelHttpUrl">
+				<constant>https://na35.salesforce.com/services/data/v38.0/query</constant>
+			</setHeader>
+			<setHeader headerName="CamelHttpUri">
+				<constant>/services/data/v38.0/query</constant>
+			</setHeader>
+			<setHeader headerName="CamelServletContextPath">
+				<constant>/services/data/v38.0/query</constant>
+			</setHeader>									
+			<setBody>
+  				<constant></constant>
+  			</setBody>		
+  			<recipientList>
+  				<simple>https4://${header.urlServicio}/services/data/v38.0/query/?q=SELECT+Id+FROM+Afiliado__c+WHERE+Num_documento__c=52545545&amp;bridgeEndpoint=true&amp;sslContextParametersRef=sslContextParameters</simple>
+  			</recipientList>	  			
+  			<unmarshal ref="jack" />
+        </route>
+        
+    	<route>
+  			<from uri="jetty:http://0.0.0.0:8086/myapp?matchOnUriPrefix=true"/>  		
+  			<setHeader headerName="CamelVelocityResourceUri">
+				<simple>templates/crmLogin.vm</simple>
+			</setHeader>
+			<to uri="velocity:dummy?loaderCache=false">
+				<description>Get xml request from template velocity</description>
+			</to>	
+  			<setHeader headerName="Content-Type">
+  				<constant>application/x-www-form-urlencoded</constant>
+  			</setHeader>
+  			<setHeader headerName="CamelHttpMethod">
+				<constant>POST</constant>
+			</setHeader>
+			<setHeader headerName="Host">
+				<constant>salesforce.com</constant>
+			</setHeader>
+			<setHeader headerName="CamelHttpUrl">
+				<constant>https://login.salesforce.com/services/oauth2/token</constant>
+			</setHeader>
+			<setHeader headerName="CamelHttpUri">
+				<constant>/services/oauth2/token</constant>
+			</setHeader>
+			<setHeader headerName="CamelServletContextPath">
+				<constant>/services/oauth2/token</constant>
+			</setHeader>
+  			<to uri="https4://login.salesforce.com/services/oauth2/token?bridgeEndpoint=true"/>  			
+  			<unmarshal ref="jack" />  			
+  			
+  			
+  			
+  			<removeHeaders pattern="CamelHttp*"/>
+  			<setHeader headerName="Authorization">
+  				<simple>${body.get('token_type')} ${body.get('access_token')}</simple>
+  			</setHeader>  			  		
+  			<setHeader headerName="CamelHttpMethod">
+				<constant>GET</constant>
+			</setHeader>
+			<setHeader headerName="Accept">
+				<constant>*/*</constant>
+			</setHeader>
+			
+								
+			<setHeader headerName="CamelHttpUrl">
+				<constant>https://na35.salesforce.com/services/data/v38.0/query</constant>
+			</setHeader>
+			<setHeader headerName="CamelHttpUri">
+				<constant>/services/data/v38.0/query</constant>
+			</setHeader>
+			<setHeader headerName="CamelServletContextPath">
+				<constant>/services/data/v38.0/query</constant>
+			</setHeader>
+			
+			<setHeader headerName="urlServicio">
+				<constant>na35.salesforce.com</constant>
+			</setHeader>
+				
+			<setBody>
+  				<constant></constant>
+  			</setBody>		
+  			<recipientList>
+  				<simple>https4://${header.urlServicio}/services/data/v38.0/query/?q=SELECT+Id+FROM+Afiliado__c+WHERE+Num_documento__c=52545545&amp;bridgeEndpoint=true&amp;sslContextParametersRef=sslContextParameters</simple>
+  			</recipientList>	  			
+  			<unmarshal ref="jack" />    
+  			
+  			
+  			
+  						  	
+  			<setHeader headerName="urlAfiliado">
+  				<simple>${body.get('records').get(0).get('attributes').get('url')}</simple>
+  			</setHeader>
+  			<setHeader headerName="CamelHttpUrl">
+				<simple>https://${header.urlServicio}/${header.urlAfiliado}</simple>
+			</setHeader>
+			<setHeader headerName="CamelHttpUri">
+				<simple>${header.urlAfiliado}</simple>
+			</setHeader>
+			<setHeader headerName="CamelServletContextPath">
+				<simple>${header.urlAfiliado}</simple>
+			</setHeader>  	
+			<setBody>
+  				<constant></constant>
+  			</setBody>	
+  			<recipientList>
+  				<simple>https4://${header.urlServicio}/${header.urlAfiliado}?bridgeEndpoint=true&amp;sslContextParametersRef=sslContextParameters</simple>
+  			</recipientList>	  			
+  			<unmarshal ref="jack" />   		
+  			<log message="------> RESPONSE ${body}"/>
+  			  			
+		</route>
+    </camelContext>
+</beans>

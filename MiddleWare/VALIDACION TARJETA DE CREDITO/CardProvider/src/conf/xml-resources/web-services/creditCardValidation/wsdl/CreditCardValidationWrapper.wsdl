@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://card.com.co/" xmlns:xsd1="http://card.com.co/CreditCardValidation" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="CreditCardValidation" targetNamespace="http://card.com.co/">
+<wsdl:import xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" namespace="http://card.com.co/" location="CreditCardValidation.wsdl"/>
+<wsdl:service xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="ValidateCreditCardService">
+<wsdl:port name="ValidateCreditCardPort" binding="tns:ValidateCreditCardBinding">
+<soap:address location="REPLACE_WITH_ACTUAL_URL"/>
+</wsdl:port>
+</wsdl:service>
+</definitions>

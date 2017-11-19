@@ -1,0 +1,15 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:son="http://sony.com.co/SonyQuoteService">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <son:SonyQuoteServiceProcessRequest>
+         <orderId>${headers.orderId}</orderId>  
+         #foreach($carrito in ${body})       
+        	<items>
+    	        <itemId>${carrito.producto.nombre}</itemId>
+	            <quantity>${carrito.itemCarrito.cantidad}</quantity>
+            	<price>${carrito.producto.precio}</price>
+         	</items>
+         #end
+      </son:SonyQuoteServiceProcessRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

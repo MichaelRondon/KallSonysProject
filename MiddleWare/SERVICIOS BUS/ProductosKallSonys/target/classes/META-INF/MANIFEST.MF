@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1511034231053
+Build-Jdk: 1.8.0_121
+Built-By: DELL
+Bundle-Description: Proxy Productos service Kallsonys
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0.html
+Bundle-ManifestVersion: 2
+Bundle-Name: Proxy Productos service Kallsonys [ProductosKallsonys]
+Bundle-SymbolicName: ProductosKallsonys
+Bundle-Version: 1.0.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: com.javeriana.model;version="1.0.0.SNAPSHOT",com.javeria
+ na.processors;uses:="org.apache.camel,org.apache.commons.logging,com.ja
+ veriana.model";version="1.0.0.SNAPSHOT",com.javeriana.service;uses:="ja
+ vax.jws,javax.ws.rs,com.javeriana.model,javax.ws.rs.core";version="1.0.
+ 0.SNAPSHOT"
+Import-Package: com.fasterxml.jackson.jaxrs.json;version="[2.6,3)",javax
+ .jws,javax.ws.rs;version="[2.0,3)",javax.ws.rs.core;version="[2.0,3)",o
+ rg.apache.camel;version="[2.17,3)",org.apache.commons.logging;version="
+ [1.2,2)"
+Tool: Bnd-1.50.0

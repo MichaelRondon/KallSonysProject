@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:camel="http://camel.apache.org/schema/spring"
+    xmlns:ctx="http://www.springframework.org/schema/context"
+    xmlns:cxf="http://camel.apache.org/schema/cxf"
+    xmlns:http-conf="http://cxf.apache.org/transports/http/configuration"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xmlns:osgi="http://www.springframework.org/schema/osgi"
+    xmlns:osgix="http://www.springframework.org/schema/osgi-compendium"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://camel.apache.org/schema/cxf 
+    http://camel.apache.org/schema/cxf/camel-cxf.xsd     
+    http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd        
+    http://camel.apache.org/schema/spring 
+    http://camel.apache.org/schema/spring/camel-spring.xsd        
+    http://www.springframework.org/schema/jee 
+    http://www.springframework.org/schema/jee/spring-jee.xsd        
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd        
+    http://www.springframework.org/schema/osgi-compendium 
+    http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium.xsd        
+    http://www.springframework.org/schema/osgi 
+    http://www.springframework.org/schema/osgi/spring-osgi.xsd        
+    http://cxf.apache.org/transports/http/configuration 
+    http://cxf.apache.org/schemas/configuration/http-conf.xsd">     
+       
+    <bean id="productosBean" class="com.javeriana.service.ProductosServiceIml" />
+    <bean id="myProcessor" class="com.javeriana.processors.ProcessorResponseGetInfo" />
+    <bean id="proveedores" class="com.javeriana.processors.ProvidersProcessor" destroy-method="destroy"/>    
+    <bean id="processAuth" class="com.javeriana.processors.CreateProcessProcessor" />
+    <bean id="responserProviders" class="com.javeriana.processors.ProvidersProcessorResponse" />    
+    <bean id="myStrategy" class="com.javeriana.aggregators.ProviderAgregator"/>
+	<!-- <bean id="rulesBeanResponse" class="com.service.RulesServiceResponse" /> -->          
+     
+    <cxf:rsServer id="rsServer" address="http://0.0.0.0:4042/api" loggingFeatureEnabled="false">
+    	<cxf:serviceBeans>
+     		<ref bean="productosBean" />
+  		</cxf:serviceBeans>
+  		<cxf:providers>
+     		<bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider" />
+  		</cxf:providers>
+    </cxf:rsServer>    
+       
+       
+    <camelContext id="_camelContext1" xmlns="http://camel.apache.org/schema/spring">   
+    	<dataFormats>
+  			<json id="jack" library="Jackson"/>
+  			<json id="orden" library="Jackson" unmarshalTypeName="com.javeriana.kallsonys.Orden"/>
+  			<json id="carrito" useList="true" library="Jackson" unmarshalTypeName="com.javeriana.kallsonys.Carrito"/>      			
+		</dataFormats>
+		      
+		<route id="_route1">
+	        <from uri="cxfrs:bean:rsServer?bindingStyle=Default"/>	
+	        <!-- <log message="Processing CXF route....http method ${headers}" /> --> 		
+    		<choice>
+      			<when>
+        			<simple>${header.operationName} == 'procesobonita'</simple>
+        			<bean ref="productosBean" method="procesobonita" />
+        			<log message="FECHA ::::: ${body.fechaOrden}"/>
+        			<log message="ORDEN ::::: ${body.orderId}"/>        			
+        			<setHeader headerName="fechaOrden">
+        				<simple>${body.fechaOrden}</simple>
+        			</setHeader>
+        			
+        			<setHeader headerName="idOrden">
+        				<simple>${body.orderId}</simple>
+        			</setHeader>        		    		
+        			<removeHeaders pattern="CamelHttp*"/>
+        			<setHeader headerName="Content-Type">
+        				<constant>application/x-www-form-urlencoded</constant>
+        			</setHeader>
+        			<setHeader headerName="CamelHttpMethod">
+						<constant>POST</constant>
+					</setHeader>
+					<setHeader headerName="Host">
+						<constant>localhost:9595</constant>
+					</setHeader>
+					<camel:setBody>
+                    	<camel:simple>username=walter.bates&amp;password=bpm&amp;redirect=false</camel:simple>
+                    </camel:setBody> 
+					<to uri="http4://localhost:9595/bonita/loginservice?bridgeEndpoint=false" />
+					
+					
+					<setHeader headerName="autenticacion">
+						<simple>${header.cookie}</simple>
+					</setHeader>								
+					<process ref="processAuth" />  
+				    <removeHeaders pattern="CamelHttp*"/>				  
+					<setHeader headerName="Content-Type">
+        				<constant>application/json</constant>
+        			</setHeader>
+        			<setHeader headerName="CamelHttpMethod">
+						<constant>POST</constant>
+					</setHeader>
+					<setHeader headerName="Host">
+						<constant>localhost:9595</constant>
+					</setHeader>
+					<marshal ref="jack" />
+					
+					<log message="BODY ::::: ${body}"/>
+        			<!-- <to uri="http4://localhost:8080/bonita/API/bpm/case?bridgeEndpoint=false" /> -->  	
+        			<to uri="http4://localhost:9595/bonita/API/bpm/process/6567068885008966562/instantiation?bridgeEndpoint=false" />				
+        			<to uri="mock:end"/>
+        			<!-- <bean ref="rulesBean" method="ipsPuedeAutMedicamento" />  -->
+      			</when>  
+      			<when>
+        			<simple>${header.operationName} == 'validarorden'</simple> 
+        			<bean ref="productosBean" method="validarorden" />
+        			<removeHeaders pattern="CamelHttp*"/>	
+        			<setHeader headerName="orderId">
+        				<simple>${body.orderId}</simple>
+        			</setHeader>
+        			<setHeader headerName="Content-Type">
+        				<constant>application/json</constant>
+        			</setHeader>
+        			<setHeader headerName="CamelHttpMethod">
+						<constant>GET</constant>
+					</setHeader>
+					<setHeader headerName="Host">
+						<constant>laptop-diego:9091</constant>
+					</setHeader>
+					<setBody>
+						<constant></constant>
+					</setBody>
+					<camel:recipientList>
+						<simple>http://25.13.10.89:9091/api/ordenes/${header.orderId}/total?bridgeEndpoint=true</simple>
+					</camel:recipientList>
+					<unmarshal ref="orden"/>
+					<removeHeaders pattern="CamelHttp*"/>
+					<setHeader headerName="order">
+        				<simple>${body}</simple>
+        			</setHeader>
+					<log message="ESTATUS CLIENTE::::: ${header.order.cliente.estatus}"/>
+					<log message="VALOR ORDEN::::: ${header.order.valorTotal}"/>
+					<setHeader headerName="SOAPAction">
+            	    	<constant>""</constant>
+        	    	</setHeader>   
+        	    	<setHeader headerName="CamelVelocityResourceUri" >
+	    	            <simple>templates/requestRules.vm</simple>
+    	        	</setHeader>
+	            	<to id="_to2" uri="velocity:dummy?loaderCache=false">
+	                	<description>Get xml request from template velocity</description>
+            		</to>
+            		<setHeader headerName="Content-Type" >
+	                	<constant>text/xml;charset=UTF-8</constant>
+            		</setHeader>
+            		<setHeader headerName="CamelHttpMethod" >
+	                	<constant>POST</constant>
+            		</setHeader>
+            		<setHeader headerName="Host">
+                		<constant>25.10.158.164:8080</constant>
+            		</setHeader>  
+            		<log message="BODY AFTER::::: ${body}"/>
+            		<to uri="http4://25.10.158.164:8080/openl-tablets-ws-5.19.6/datasource/KallsonysOrderValidation?wsdl&amp;bridgeEndpoint=true" />
+            		<convertBodyTo type="String"/>
+            		<log message="BODY BEFORE::::: ${body}"/>    	        
+    		        <setHeader headerName="responseRules">
+		                <xpath resultType="java.lang.String" trim="true">//*[local-name()='valorRespuesta']/text()</xpath>
+            		</setHeader>            		
+            		<removeHeaders pattern="CamelHttp*"/>
+            		<log message="RESPONSE RULE::::: ${header.responseRules}"/>
+            		<setHeader headerName="Content-Type">
+        				<constant>application/json</constant>
+        			</setHeader>
+            		<process ref="myProcessor" />
+					<to uri="mock:endProcess"/>
+				</when>  	
+				
+				<when>
+					<simple>${header.operationName} == 'actualizarorden'</simple>
+        			<bean ref="productosBean" method="actualizarorden" />
+        			<removeHeaders pattern="CamelHttp*"/>
+        			<setHeader headerName="Content-Type">
+        				<constant>application/json</constant>
+        			</setHeader>
+        			<setHeader headerName="CamelHttpMethod">
+						<constant>PUT</constant>
+					</setHeader>
+					<setHeader headerName="Host">
+						<constant>25.13.10.89:9091</constant>
+					</setHeader>
+					<log message="BODY BEFORE::::: ${body}"/>
+					<marshal ref="jack" />					
+					<log message="BODY ::::: ${body}"/>
+					<inOnly uri="vm:actualizarOrden" />					
+					<to uri="mock:endPut"/>				
+				</when>
+				
+				<when>
+        			<simple>${header.operationName} == 'seleccionarproveedor'</simple> 
+        			<bean ref="productosBean" method="seleccionarproveedor" />
+        			<removeHeaders pattern="CamelHttp*"/>	
+        			<setHeader headerName="orderId">
+        				<simple>${body.orderId}</simple>
+        			</setHeader>
+        			<setHeader headerName="Content-Type">
+        				<constant>application/json</constant>
+        			</setHeader>
+        			<setHeader headerName="CamelHttpMethod">
+						<constant>GET</constant>
+					</setHeader>
+					<setHeader headerName="Host">
+						<constant>25.13.10.89:9091</constant>
+					</setHeader>
+					<setBody>
+						<constant></constant>
+					</setBody>
+					<camel:recipientList>
+						<simple>http://25.13.10.89:9091/api/ordenes/${header.orderId}/detalle?bridgeEndpoint=true</simple>
+					</camel:recipientList>
+					<unmarshal ref="carrito"/>	
+					<camel:process ref="proveedores" />
+					<log message="HEADER:::::: ${header.proveedores}"/>	
+					<recipientList delimiter="," parallelProcessing="true" parallelAggregate="true" strategyRef="myStrategy">
+    					<header>proveedores</header>
+  					</recipientList>				
+					<log message="SELECTED::::::::::::::::::: ${header.manufacter} - ${header.responseManufacter}"/>  
+					<process ref="responserProviders"/>			
+					<to uri="mock:endProcess"/>
+				</when>  	
+    		</choice> 		
+        </route>   
+        
+        <route>
+        	<from uri="vm:actualizarOrden"/>
+        	<to uri="http://25.13.10.89:9091/api/ordenes?bridgeEndpoint=true"/>
+        	<to uri="mock:endAsync"/>
+        </route>
+        
+        
+        <route>
+        	<from uri="direct:sony"/>
+        	<setHeader headerName="manufacter">
+            	<constant>SONY</constant>
+        	</setHeader>   
+        	<setHeader headerName="CamelVelocityResourceUri" >
+	    		<simple>templates/requestSony.vm</simple>
+    	    </setHeader>
+	        <to id="_to3" uri="velocity:dummy?loaderCache=false">
+	        	<description>Get xml request from template velocity</description>
+          	</to>
+          	<setHeader headerName="SOAPAction">
+            	<constant>"urn:#orderQuoute"</constant>
+        	</setHeader>
+            <setHeader headerName="Content-Type" >
+	        	<constant>text/xml;charset=UTF-8</constant>
+            </setHeader>
+           	<setHeader headerName="CamelHttpMethod" >
+	        	<constant>POST</constant>
+            </setHeader>
+            <setHeader headerName="Host">
+            	<constant>laptop-davidcinho:7983</constant>
+            </setHeader>  
+            <to uri="http4://laptop-davidcinho:7983/SonyService/SonyQuoteService?wsdl&amp;bridgeEndpoint=true" />
+            <convertBodyTo type="String"/>
+            <log message="BODY BEFORE::::: ${body}"/>    	        
+    		<setHeader headerName="responseManufacter">
+		    	<xpath resultType="java.lang.String" trim="true">//supplierPrice/text()</xpath>
+           </setHeader>    
+           <log message="${header.manufacter} - ${header.responseManufacter}"/>       	
+           <to uri="mock:endSony"/>        	
+        </route>  
+        
+        <route>
+        	<from uri="direct:rapidservice"/>
+        	<setHeader headerName="manufacter">
+            	<constant>RAPIDSERVICE</constant>
+        	</setHeader>   
+        	<setHeader headerName="CamelVelocityResourceUri" >
+	    		<simple>templates/requestRapidService.vm</simple>
+    	    </setHeader>
+	        <to id="_to4" uri="velocity:dummy?loaderCache=false">
+	        	<description>Get xml request from template velocity</description>
+          	</to>
+          	<setHeader headerName="SOAPAction">
+            	<constant>""</constant>
+        	</setHeader>
+            <setHeader headerName="Content-Type" >
+	        	<constant>text/xml;charset=UTF-8</constant>
+            </setHeader>
+           	<setHeader headerName="CamelHttpMethod" >
+	        	<constant>POST</constant>
+            </setHeader>
+            <setHeader headerName="Host">
+            	<constant>laptop-davidcinho:7983</constant>
+            </setHeader>  
+            <to uri="http4://laptop-davidcinho:7983/RapidServiceWebService/RapidServiceService?wsdl&amp;bridgeEndpoint=true" />
+            <convertBodyTo type="String"/>
+            <log message="BODY BEFORE::::: ${body}"/>    	        
+    		<setHeader headerName="responseManufacter">
+		    	<xpath resultType="java.lang.String" trim="true">//supplierPrice/text()</xpath>
+           </setHeader>    
+           <log message="${header.manufacter} - ${header.responseManufacter}"/>       	
+
+        	<to uri="mock:endRapid"/>
+        </route>         
+		      		
+    </camelContext>
+</beans>
