@@ -27,7 +27,14 @@
                     return data;
                 }
             },
-            'update': { method:'PUT' }
+            'update': { method:'PUT' },
+            'rankingProductos': {
+                url: 'api/ordenes/rankingProductosFechas',
+                method: 'GET', 
+                isArray: true,
+                fechaInicio: null,
+                fechaFin: null
+            }
         });
     }
 })();

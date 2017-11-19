@@ -1,0 +1,75 @@
+<div>
+    <h2>Ranking productos</h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="form-group col-xs-12 col-sm-6">
+            <label class="control-label" for="field_fechaInicio">Fecha inicio</label>
+            <div class="input-group">
+                <input id="field_fechaInicio" type="text" class="form-control" name="fechaInicio"
+                       ng-model="vm.fechaInicio" 
+                       datetime-picker="yyyy/MM/dd" enable-time="false"
+                       is-open="vm.datePickerOpenStatus.fechaInicio" disabled
+                       />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default"
+                            ng-click="vm.openCalendar('fechaInicio')"><i
+                            class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-6">
+            <label class="control-label" for="field_fechaFin">Fecha fin</label>
+            <div class="input-group">
+                <input id="field_fechaFin" type="text" class="form-control" name="fechaFin"
+                       ng-model="vm.fechaFin" 
+                       datetime-picker="yyyy/MM/dd" enable-time="false"
+                       is-open="vm.datePickerOpenStatus.fechaFin" disabled
+                       />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default"
+                            ng-click="vm.openCalendar('fechaFin')"><i
+                            class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-6">
+            <button class="btn btn-primary" ng-click="vm.consultar()" style="margin-top:23px;">
+                <span class="glyphicon glyphicon-eye-open"></span>
+                <span>
+                    Buscar Clientes
+                </span>
+            </button>
+        </div>
+    </div>
+
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr ascending="vm.reverse" callback="vm.reset()">
+                    <th></th>
+                    <th><span >Código</span></th>
+                    <th><span>Nombre</span></th>
+                    <th><span>Descripcion</span></th>
+                    <th><span>Precio</span></th>
+                    <th><span>Facturado</span></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+                <tr ng-repeat="producto in vm.productos">
+                    <td>
+                        <a ui-sref="producto-detail({id:producto.product.id})">
+                            <img id="field_image_small" ng-src="{{vm.productImageSmallBaseUrl + producto.product.id}}"
+                                 alt="{{producto.product.nombre}}" style="width:150px;height:150px;"/>
+                        </a>
+                    </td>
+                    <td><a ui-sref="producto-detail({id:producto.product.id})" style="color: black;">{{producto.product.id}}</a></td>
+                    <td>{{producto.product.nombre}}</td>
+                    <td>{{producto.product.descripcion}}</td>
+                    <td>{{producto.product.precio | currency :'$' }}</td>
+                    <td>{{producto.facturado | currency :'$'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

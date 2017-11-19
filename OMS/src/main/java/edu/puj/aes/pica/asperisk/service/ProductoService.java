@@ -4,6 +4,8 @@ import edu.puj.aes.pica.asperisk.product.service.client.ProductServiceRestClient
 import edu.puj.aes.pica.asperisk.oms.utilities.dto.ProductoDTO;
 import edu.puj.aes.pica.asperisk.oms.utilities.mapper.ProductoDtoToJson;
 import edu.puj.aes.pica.asperisk.repository.ProductoRepository;
+import edu.puj.aes.pica.asperisk.service.dto.RankingProductoDTO;
+import java.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,10 @@ public class ProductoService {
 
     public ProductoService(ProductoRepository productoRepository) {
         this.productoRepository = productoRepository;
+    }
+    
+    public Page<RankingProductoDTO> rankingProductosMasVendidos(Pageable pageable, Instant fechaInicio, Instant fechaFin) {
+        return productServiceRestClient.rankingProductosMasVendidos(pageable, fechaInicio, fechaFin);
     }
 
     /**

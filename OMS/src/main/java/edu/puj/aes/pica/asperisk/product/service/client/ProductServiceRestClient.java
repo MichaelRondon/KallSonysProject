@@ -1,11 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.puj.aes.pica.asperisk.product.service.client;
 
 import edu.puj.aes.pica.asperisk.oms.utilities.model.Product;
+import edu.puj.aes.pica.asperisk.service.dto.RankingProductoDTO;
+import java.time.Instant;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -14,6 +11,8 @@ import org.springframework.data.domain.Pageable;
  * @author acost
  */
 public interface ProductServiceRestClient {
+    
+    Page<RankingProductoDTO> rankingProductosMasVendidos(Pageable pageable, Instant fechaInicio, Instant fechaFin);
 
     Product save(Product product);
 

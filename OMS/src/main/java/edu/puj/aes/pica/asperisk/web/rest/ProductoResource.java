@@ -5,6 +5,7 @@ import edu.puj.aes.pica.asperisk.service.ProductoService;
 import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.HeaderUtil;
 import edu.puj.aes.pica.asperisk.oms.utilities.rest.util.PaginationUtil;
 import edu.puj.aes.pica.asperisk.oms.utilities.dto.ProductoDTO;
+import edu.puj.aes.pica.asperisk.service.dto.RankingProductoDTO;
 import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Instant;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +40,19 @@ public class ProductoResource {
 
     public ProductoResource(ProductoService productoService) {
         this.productoService = productoService;
+    }
+
+    @GetMapping("/ordenes/rankingProductosFechas")
+    public ResponseEntity<List<RankingProductoDTO>> getRankingProductos(@ApiParam Pageable pageable,
+            @RequestParam(value = "fechaInicio", required = true) Instant fechaInicio,
+            @RequestParam(value = "fechaFin", required = true) Instant fechaFin) {
+        long initTime = System.currentTimeMillis();
+        log.debug("REST request to get /ordenes/rankingProductosFechas fechaInicio: {}. fechaFin: {}", fechaInicio, fechaFin);
+        Page<RankingProductoDTO> rankingProductos = productoService.rankingProductosMasVendidos(pageable, fechaInicio, fechaFin);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(rankingProductos, "/api/ordenes/rankingProductosFechas");
+        ResponseEntity<List<RankingProductoDTO>> response = new ResponseEntity<>(rankingProductos.getContent(), headers, HttpStatus.OK);
+        log.debug("Fin get /ordenes/rankingProductosFechas Tiempo: {}", (System.currentTimeMillis() - initTime));
+        return response;
     }
 
     /**
