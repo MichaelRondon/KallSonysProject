@@ -36,7 +36,7 @@
 //        loadAll();
         
         function consultar() {
-            if(vm.codigoProducto === null || vm.codigoProducto === ''){
+            if(!vm.codigoProducto || vm.codigoProducto == ''){
                 return;
             }
             Ordenes.query({

@@ -75,7 +75,7 @@
                     <td><a ui-sref="producto-detail({id:producto.id})" style="color: black;">{{producto.id}}</a></td>
                     <td>{{producto.nombre}}</td>
                     <td>{{producto.descripcion}}</td>
-                    <td>{{producto.precio}}</td>
+                    <td>{{producto.precio | currency :'$'}}</td>
                     <td data-translate="{{'omsApp.Estado.' + producto.estado}}">{{producto.estado}}</td>
                     <!--<td>{{producto.disponibilidad}}</td>-->
                     <!--<td>{{producto.fechaRevDisponibilidad| date:'medium'}}</td>-->
