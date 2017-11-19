@@ -97,6 +97,15 @@ namespace Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to api/enviarfactura.
+        /// </summary>
+        public static string ServicioColaFacturacion {
+            get {
+                return ResourceManager.GetString("ServicioColaFacturacion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to api/producto/historico/vendidos.
         /// </summary>
         public static string ServicioHistoricoProductos {
@@ -120,6 +129,33 @@ namespace Common.Resources {
         public static string ServicioProductos {
             get {
                 return ResourceManager.GetString("ServicioProductos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apreciado(a) &lt;b&gt;{0}&lt;/b&gt;&lt;br /&gt;Le informamos que su orden número {1} se encuentra en estado: &lt;b&gt;{2}&lt;/b&gt;{3}&lt;br /&gt;.
+        /// </summary>
+        public static string TemplateMailCambioEstado {
+            get {
+                return ResourceManager.GetString("TemplateMailCambioEstado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;br /&gt;Su orden será entregada por el proveedor &lt;b&gt;{0}&lt;/b&gt;&lt;br /&gt;.
+        /// </summary>
+        public static string TemplateProveedorMensajeria {
+            get {
+                return ResourceManager.GetString("TemplateProveedorMensajeria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Actualización orden {0}.
+        /// </summary>
+        public static string TemplateSubjectCambioEstado {
+            get {
+                return ResourceManager.GetString("TemplateSubjectCambioEstado", resourceCulture);
             }
         }
     }

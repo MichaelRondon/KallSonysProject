@@ -23,10 +23,14 @@ namespace OrdenesBC.Contratos
         IEnumerable<ItemProductoCarrito> DetalleOrden(int idOrden);
         QueryRankingClientes ConsultarRankingRangoFechas(DateTime fechaInicio, DateTime fechaFin);
         IEnumerable<Orden> ConsultarOrdenesFiltros(Parametros parametros);
-        ResponseOrdenes ActualizarOrden(Orden orden);
+        Task<ResponseOrdenes> ActualizarOrden(Orden orden);
         ResumenOrdenesMes OrdenesMes(int anio, int mes);
         IEnumerable<Orden> ConsultarOrdenesAbiertas();
         IEnumerable<Orden> ConsultarRankingFacturacionOrdenes(DateTime fechaInicio, DateTime fechaFin);
         Task<QueryOrden> Subtotal(string idCliente, IEnumerable<ProductoCarrito> productos);
+        QueryRankingClientes ConsultaRankingClientesProductos(Parametros parametros);
+        IEnumerable<OrdenTransito> ConsultarOrdenesEnTransito();
+        IEnumerable<Orden> ConsultarOrdenesCliente(string idCliente);
+        IEnumerable<ProductoRanking> ConsultarRankingFacturacionProductos(DateTime fechaInicio, DateTime fechaFin);
     }
 }

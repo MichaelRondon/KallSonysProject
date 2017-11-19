@@ -16,20 +16,22 @@ namespace Common.Util
 {
     public static class WebClientHelper
     {
-        private static HttpClient _client;
+        private static HttpClient _clientProductos;
+        private static HttpClient _clientBUS;
+        private static HttpClient _clientColaFactur;
 
         public static HttpClient Client
         {
             get
             {
-                if (_client == null)
+                if (_clientProductos == null)
                 {
-                     _client = new HttpClient();
-                    _client.BaseAddress = new Uri(ConfigurationManager.AppSettings["RutaBaseServicios"]);
-                    _client.DefaultRequestHeaders.Accept.Clear();
-                    _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    _clientProductos = new HttpClient();
+                    _clientProductos.BaseAddress = new Uri(ConfigurationManager.AppSettings["RutaBaseServicios"]);
+                    _clientProductos.DefaultRequestHeaders.Accept.Clear();
+                    _clientProductos.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 }
-                return _client;
+                return _clientProductos;
             }
         }
 
@@ -37,14 +39,29 @@ namespace Common.Util
         {
             get
             {
-                if (_client == null)
+                if (_clientBUS == null)
                 {
-                    _client = new HttpClient();
-                    _client.BaseAddress = new Uri(ConfigurationManager.AppSettings["RutaBaseBPMS"]);
-                    _client.DefaultRequestHeaders.Accept.Clear();
-                    _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    _clientBUS = new HttpClient();
+                    _clientBUS.BaseAddress = new Uri(ConfigurationManager.AppSettings["RutaBaseBPMS"]);
+                    _clientBUS.DefaultRequestHeaders.Accept.Clear();
+                    _clientBUS.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 }
-                return _client;
+                return _clientBUS;
+            }
+        }
+
+        public static HttpClient ClientColaFactur
+        {
+            get
+            {
+                if (_clientColaFactur == null)
+                {
+                    _clientColaFactur = new HttpClient();
+                    _clientColaFactur.BaseAddress = new Uri(ConfigurationManager.AppSettings["RutaBaseColaFactur"]);
+                    _clientColaFactur.DefaultRequestHeaders.Accept.Clear();
+                    _clientColaFactur.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                }
+                return _clientColaFactur;
             }
         }
 

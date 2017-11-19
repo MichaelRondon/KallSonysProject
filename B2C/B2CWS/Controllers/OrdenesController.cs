@@ -40,14 +40,9 @@ namespace B2CWS.Controllers
 
         [Route("api/ordenes/rankingClientes")]
         [ResponseType(typeof(QueryRankingClientes))]
-        public async Task<IHttpActionResult> GetRankingClientes(long idProducto = 0L, int page = 0, int items_per_page = 0, string sort = "", string sort_type = "", string custom = "")
+        public IHttpActionResult GetRankingClientes(long idProducto = 0L, int page = 0, int items_per_page = 0, string sort = "", string sort_type = "", string custom = "")
         {
-            QueryRankingClientes ranking = null;
-
-            if (true)
-            {
-                ranking = new QueryRankingClientes(); // Consultar ranking desde la BD
-            }
+            QueryRankingClientes ranking = DAC.ConsultaRankingClientesProductos(new Common.DTO.Parametros() { idProducto = idProducto });
 
             if (ranking == null)
             {
@@ -129,14 +124,14 @@ namespace B2CWS.Controllers
         [Route("api/ordenes")]
         [ResponseType(typeof(ResponseOrdenes))]
         [HttpPut]
-        public IHttpActionResult put(Orden request)
+        public async Task<IHttpActionResult> put(Orden request)
         {
             if (request == null)
             {
                 return BadRequest();
             }
 
-            ResponseOrdenes response = DAC.ActualizarOrden(request);
+            ResponseOrdenes response = await DAC.ActualizarOrden(request);
             
             return Ok(response);
         }
@@ -183,6 +178,57 @@ namespace B2CWS.Controllers
             fechaIniConsultar = DateTime.ParseExact(fechaInicio, "yyyy-MM-dd", CultureInfo.CurrentCulture);
             fechaFinConsultar = DateTime.ParseExact(fechaFin, "yyyy-MM-dd", CultureInfo.CurrentCulture);
             IEnumerable<Orden> ranking = DAC.ConsultarRankingFacturacionOrdenes(fechaIniConsultar, fechaFinConsultar);
+
+            if (ranking == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(ranking);
+        }
+
+        [Route("api/ordenes/transito")]
+        [ResponseType(typeof(IEnumerable<OrdenTransito>))]
+        [HttpGet]
+        public IHttpActionResult OrdenesEnTransito()
+        {
+            IEnumerable<OrdenTransito> abiertas = DAC.ConsultarOrdenesEnTransito();
+
+            if (abiertas == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(abiertas);
+            }
+        }
+
+        [Route("api/ordenes")]
+        [ResponseType(typeof(IEnumerable<Orden>))]
+        [HttpGet]
+        public IHttpActionResult ConsultarOrdenesCliente(string idCliente)
+        {
+            IEnumerable<Orden> ordenes = DAC.ConsultarOrdenesCliente(idCliente);
+
+            if (ordenes != null)
+            {
+                return Ok(ordenes);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [Route("api/ordenes/rankingProductosFechas")]
+        [ResponseType(typeof(IEnumerable<ProductoRanking>))]
+        public IHttpActionResult GetRankingProductosFechas(string fechaInicio, string fechaFin)
+        {
+            DateTime fechaIniConsultar, fechaFinConsultar;
+            fechaIniConsultar = DateTime.ParseExact(fechaInicio, "yyyy-MM-dd", CultureInfo.CurrentCulture);
+            fechaFinConsultar = DateTime.ParseExact(fechaFin, "yyyy-MM-dd", CultureInfo.CurrentCulture);
+            IEnumerable<ProductoRanking> ranking = DAC.ConsultarRankingFacturacionProductos(fechaIniConsultar, fechaFinConsultar);
 
             if (ranking == null)
             {

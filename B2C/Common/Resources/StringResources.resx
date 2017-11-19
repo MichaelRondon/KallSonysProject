@@ -129,6 +129,9 @@
   <data name="ServicioCategorias" xml:space="preserve">
     <value>api/categorias</value>
   </data>
+  <data name="ServicioColaFacturacion" xml:space="preserve">
+    <value>api/enviarfactura</value>
+  </data>
   <data name="ServicioHistoricoProductos" xml:space="preserve">
     <value>api/producto/historico/vendidos</value>
   </data>
@@ -137,5 +140,14 @@
   </data>
   <data name="ServicioProductos" xml:space="preserve">
     <value>api/producto</value>
+  </data>
+  <data name="TemplateMailCambioEstado" xml:space="preserve">
+    <value>Apreciado(a) &lt;b&gt;{0}&lt;/b&gt;&lt;br /&gt;Le informamos que su orden número {1} se encuentra en estado: &lt;b&gt;{2}&lt;/b&gt;{3}&lt;br /&gt;</value>
+  </data>
+  <data name="TemplateProveedorMensajeria" xml:space="preserve">
+    <value>&lt;br /&gt;Su orden será entregada por el proveedor &lt;b&gt;{0}&lt;/b&gt;&lt;br /&gt;</value>
+  </data>
+  <data name="TemplateSubjectCambioEstado" xml:space="preserve">
+    <value>Actualización orden {0}</value>
   </data>
 </root>

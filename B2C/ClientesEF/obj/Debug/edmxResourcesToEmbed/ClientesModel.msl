@@ -47,6 +47,9 @@
     <EntitySetMapping Name="ORDERS">
       <EntityTypeMapping TypeName="Model.ORDER">
         <MappingFragment StoreEntitySet="ORDERS">
+          <ScalarProperty Name="VENDOR" ColumnName="VENDOR" />
+          <ScalarProperty Name="LASTTRACKINGDATE" ColumnName="LASTTRACKINGDATE" />
+          <ScalarProperty Name="CARRIER" ColumnName="CARRIER" />
           <ScalarProperty Name="CUSTID" ColumnName="CUSTID" />
           <ScalarProperty Name="ORDID" ColumnName="ORDID" />
           <ScalarProperty Name="ORDERDATE" ColumnName="ORDERDATE" />

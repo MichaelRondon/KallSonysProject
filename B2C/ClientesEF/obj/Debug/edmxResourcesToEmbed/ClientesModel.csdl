@@ -57,6 +57,9 @@
     <Property Name="COMMENTS" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="CUSTOMER" Relationship="Self.ORDERS_FK" FromRole="ORDERS" ToRole="CUSTOMER" />
     <NavigationProperty Name="ITEMS" Relationship="Self.ITEMS_FK" FromRole="ORDERS" ToRole="ITEMS" />
+    <Property Name="CARRIER" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="LASTTRACKINGDATE" Type="DateTime" />
+    <Property Name="VENDOR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
   </EntityType>
   <Association Name="ORDERS_FK">
     <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="0..1" />

@@ -79,34 +79,34 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/18/2017 15:12:13</publishTime>
     </File>
     <File Include="bin/B2CWS.dll">
-      <publishTime>11/13/2017 18:51:28</publishTime>
+      <publishTime>11/18/2017 22:12:09</publishTime>
     </File>
     <File Include="bin/B2CWS.pdb">
-      <publishTime>11/13/2017 18:51:28</publishTime>
+      <publishTime>11/18/2017 22:12:09</publishTime>
     </File>
     <File Include="bin/ClientesBC.dll">
-      <publishTime>11/13/2017 18:51:24</publishTime>
+      <publishTime>11/18/2017 22:05:08</publishTime>
     </File>
     <File Include="bin/ClientesBC.pdb">
-      <publishTime>11/13/2017 18:51:24</publishTime>
+      <publishTime>11/18/2017 22:05:08</publishTime>
     </File>
     <File Include="bin/ClientesEF.dll">
-      <publishTime>11/13/2017 18:51:24</publishTime>
+      <publishTime>11/18/2017 21:49:47</publishTime>
     </File>
     <File Include="bin/ClientesEF.pdb">
-      <publishTime>11/13/2017 18:51:24</publishTime>
+      <publishTime>11/18/2017 21:49:47</publishTime>
     </File>
     <File Include="bin/ClientesEntities.dll">
-      <publishTime>11/13/2017 18:51:24</publishTime>
+      <publishTime>11/18/2017 21:49:47</publishTime>
     </File>
     <File Include="bin/ClientesEntities.pdb">
-      <publishTime>11/13/2017 18:51:24</publishTime>
+      <publishTime>11/18/2017 21:49:47</publishTime>
     </File>
     <File Include="bin/Common.dll">
-      <publishTime>11/13/2017 18:51:24</publishTime>
+      <publishTime>11/18/2017 22:05:08</publishTime>
     </File>
     <File Include="bin/Common.pdb">
-      <publishTime>11/13/2017 18:51:24</publishTime>
+      <publishTime>11/18/2017 22:05:08</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>11/03/2015 17:43:34</publishTime>
@@ -145,19 +145,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/24/2017 12:46:16</publishTime>
     </File>
     <File Include="bin/OrdenesBC.dll">
-      <publishTime>11/13/2017 18:51:24</publishTime>
+      <publishTime>11/18/2017 22:12:05</publishTime>
     </File>
     <File Include="bin/OrdenesBC.pdb">
-      <publishTime>11/13/2017 18:51:24</publishTime>
+      <publishTime>11/18/2017 22:12:05</publishTime>
     </File>
     <File Include="bin/OrdenesDAC.dll">
       <publishTime>10/27/2017 00:07:11</publishTime>
     </File>
     <File Include="bin/OrdenesEntities.dll">
-      <publishTime>11/13/2017 18:51:24</publishTime>
+      <publishTime>11/18/2017 21:51:05</publishTime>
     </File>
     <File Include="bin/OrdenesEntities.pdb">
-      <publishTime>11/13/2017 18:51:24</publishTime>
+      <publishTime>11/18/2017 21:51:05</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/18/2015 20:19:46</publishTime>
@@ -244,7 +244,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/18/2017 15:12:08</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>11/05/2017 19:00:14</publishTime>
+      <publishTime>11/13/2017 21:20:24</publishTime>
     </File>
     <File Include="scripts/ai.0.22.9-build00167.js">
       <publishTime>09/18/2017 15:12:14</publishTime>
@@ -253,7 +253,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/18/2017 15:12:13</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/13/2017 18:52:01</publishTime>
+      <publishTime>11/18/2017 22:15:44</publishTime>
     </File>
   </ItemGroup>
 </Project>

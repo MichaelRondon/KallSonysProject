@@ -25,6 +25,9 @@ namespace ClientesEF
         public Nullable<decimal> PRICE { get; set; }
         public string STATUS { get; set; }
         public string COMMENTS { get; set; }
+        public string CARRIER { get; set; }
+        public Nullable<System.DateTime> LASTTRACKINGDATE { get; set; }
+        public string VENDOR { get; set; }
     
         public virtual CUSTOMER CUSTOMER { get; set; }
         public virtual ICollection<ITEM> ITEMS { get; set; }

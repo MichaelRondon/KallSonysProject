@@ -263,6 +263,30 @@ namespace OrdenesBC.Implementaciones
             Orden ordenRespuesta = null;
             bool carritoPersistido = false;
 
+            // Tratar de eliminar los items actuales
+            try
+            {
+                using (var context = new ClientesEF.Entities())
+                {
+                    ordenActual = context.ORDERS.SingleOrDefault(p => p.CUSTID.Equals(idCliente) && p.STATUS.Equals(ESTADO_ORDEN_NUEVA));
+
+                    if (ordenActual != null)
+                    {
+                        foreach (var item in ordenActual.ITEMS)
+                        {
+                            context.Database.ExecuteSqlCommand(string.Format("DELETE FROM B2C.ITEMS WHERE ORDID = {0} AND PRODID = {1}", ordenActual.ORDID, item.PRODID));
+                        }
+                    }
+
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
             // Tratar de extraer una orden actual en estado "NUEVA"
             try
             {
@@ -281,12 +305,13 @@ namespace OrdenesBC.Implementaciones
                     // Verificar si la orden es nueva
                     if (context.Entry(ordenActual).State == System.Data.EntityState.Unchanged)
                     { // Orden existente
+                        // Se adicionan los productos que se recibieron desde el cliente
                         foreach (var productoCheckout in productos)
-                        { // Sumar los productos enviados a los actuales
+                        { // Actualizar los productos actuales con los enviados
                             if (ordenActual.ITEMS.Any(p => p.PRODID.Equals(productoCheckout.idProducto)))
                             {
                                 ITEM item = ordenActual.ITEMS.Single(p => p.PRODID.Equals(productoCheckout.idProducto));
-                                item.QUANTITY += productoCheckout.cantidad;
+                                item.QUANTITY = productoCheckout.cantidad;
                             }
                             else
                             {
@@ -314,7 +339,7 @@ namespace OrdenesBC.Implementaciones
                     carritoPersistido = true;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 carritoPersistido = false;
             }
@@ -478,6 +503,11 @@ namespace OrdenesBC.Implementaciones
                 }
             }
 
+            if (respuesta.exitoso == true && ordenActual != null)
+            {
+                await GenerarMailNotificacion(ordenActual, clienteActual);
+            }
+
             return respuesta;
         }
 
@@ -508,7 +538,9 @@ namespace OrdenesBC.Implementaciones
                         valorTotal = Convert.ToDouble(ordenActual.PRICE),
                         idOrden = idOrden,
                         fecha_orden = ordenActual.ORDERDATE.HasValue ? ordenActual.ORDERDATE.Value.ToString("yyyy-MM-dd") : null,
-                        estado = ordenActual.STATUS
+                        estado = ordenActual.STATUS,
+                        carrier = ordenActual.CARRIER,
+                        fabricante = ordenActual.VENDOR
                     };
 
                     ADDRESS address = ordenActual.CUSTOMER.ADDRESSes.FirstOrDefault();
@@ -713,6 +745,8 @@ namespace OrdenesBC.Implementaciones
                         valorTotal = Convert.ToDouble(reader.GetValue(2)),
                         fecha_orden = reader.GetDateTime(3).ToString("yyyy-MM-dd"),
                         estado = reader.GetValue(4).ToString(),
+                        carrier = reader.GetValue(5).ToString(),
+                        fabricante = reader.GetValue(6).ToString(),
                     });
                 }
             }
@@ -773,7 +807,7 @@ namespace OrdenesBC.Implementaciones
             return responseBPM;
         }
 
-        public ResponseOrdenes ActualizarOrden(Orden orden)
+        public async Task<ResponseOrdenes> ActualizarOrden(Orden orden)
         {
             ResponseOrdenes response = new ResponseOrdenes() {
                 estatus = "Ok",
@@ -782,15 +816,43 @@ namespace OrdenesBC.Implementaciones
             };
 
             ORDER ordenActual = null;
+            CUSTOMER clienteActual = null;
 
             try
             {
                 using (var context = new ClientesEF.Entities())
                 {
                     ordenActual = context.ORDERS.Single(p => p.ORDID.Equals(orden.idOrden));
+                    clienteActual = ordenActual.CUSTOMER;
 
-                    // Solamente se actualiza el estado de la orden
-                    ordenActual.STATUS = orden.estado;
+                    // Se actualiza el estado de la orden
+                    if (!string.IsNullOrEmpty(orden.estado))
+                    {
+                        ordenActual.STATUS = orden.estado; 
+                    }
+
+                    if (!string.IsNullOrEmpty(orden.carrier))
+                    {
+                        ordenActual.CARRIER = orden.carrier; 
+                    }
+
+                    if (!string.IsNullOrEmpty(orden.fabricante))
+                    {
+                        ordenActual.VENDOR = orden.fabricante; 
+                    }
+
+                    ordenActual.LASTTRACKINGDATE = DateTime.Now;
+
+                    if (ordenActual.STATUS.Equals(ESTADO_ORDEN_ENTREGADA))
+                    {
+                        var resultadoCola = await EnviarDatosCola(ordenActual);
+
+                        if (resultadoCola != null)
+                        {
+                            string res = Newtonsoft.Json.JsonConvert.SerializeObject(resultadoCola);
+                            ordenActual.COMMENTS = string.IsNullOrEmpty(ordenActual.COMMENTS) ? res : string.Concat(ordenActual.COMMENTS, "\r\n", res);
+                        }
+                    }
 
                     context.SaveChanges();
                 }
@@ -800,6 +862,11 @@ namespace OrdenesBC.Implementaciones
                 response.estatus = "Error";
                 response.exitoso = false;
                 response.mensaje = string.Format("Error al actualizar orden: {0}", ex.Message);
+            }
+
+            if (ordenActual != null)
+            {
+                await GenerarMailNotificacion(ordenActual, clienteActual);
             }
 
             return response;
@@ -1033,6 +1100,281 @@ namespace OrdenesBC.Implementaciones
             //} // fin if
 
             return queryRespuesta;
+        }
+
+        public QueryRankingClientes ConsultaRankingClientesProductos(Parametros parametros)
+        {
+            List<ClienteRanking> rankingConsulta = null;
+            QueryRankingClientes respuesta = null;
+
+            OracleConnection conex = null;
+            OracleDataReader reader = null;
+
+            conex = new OracleConnection(ConfigurationManager.ConnectionStrings["B2CConnection"].ConnectionString);
+
+            OracleCommand cmd = new OracleCommand()
+            {
+                CommandText = "B2C.PKG_ORDENES.ranking_x_producto",
+                CommandType = CommandType.StoredProcedure,
+                Connection = conex
+            };
+
+            OracleParameter paramIdProducto = new OracleParameter()
+            {
+                DbType = DbType.Int32,
+                Direction = ParameterDirection.Input,
+                ParameterName = "p_id_producto",
+                Value = parametros.idProducto
+            };
+
+            OracleParameter paramOutputCursor = new OracleParameter("IO_CURSOR", OracleDbType.RefCursor);
+            paramOutputCursor.Direction = ParameterDirection.Output;
+
+            cmd.Parameters.Add(paramIdProducto);
+            cmd.Parameters.Add(paramOutputCursor);
+
+            try
+            {
+                conex.Open();
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    if (rankingConsulta == null)
+                    {
+                        rankingConsulta = new List<ClienteRanking>();
+                    }
+
+                    rankingConsulta.Add(new ClienteRanking() {
+                        documento = reader.GetString(0),
+                        facturado = Convert.ToDecimal(reader.GetValue(1))
+                    });
+                }
+                respuesta = new QueryRankingClientes() { ranking = rankingConsulta };
+            }
+            catch (Exception)
+            {
+                respuesta = null;
+            }
+            finally
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+                if (conex != null)
+                {
+                    conex.Close();
+                }
+                reader = null;
+                conex = null;
+            }
+
+            return respuesta;
+        }
+
+        private async Task<int> GenerarMailNotificacion(ORDER ordenActual, CUSTOMER clienteActual)
+        {
+            string subject = StringResources.TemplateSubjectCambioEstado;
+            string body = StringResources.TemplateMailCambioEstado;
+            string carrier = StringResources.TemplateProveedorMensajeria;
+            int resultado = 0;
+
+
+            subject = string.Format(subject, ordenActual.ORDID);
+
+            if (!string.IsNullOrEmpty(ordenActual.CARRIER))
+            {
+                carrier = string.Format(carrier, ordenActual.CARRIER);
+            }
+            else
+            {
+                carrier = string.Empty;
+            }
+
+            body = string.Format(body, string.Format("{0} {1}", clienteActual.FNAME, clienteActual.LNAME), ordenActual.ORDID, ordenActual.STATUS, carrier);
+
+            try
+            {
+                await MailHelper.SendEmail(clienteActual.EMAIL, subject, body);
+            }
+            catch (Exception ex)
+            {
+                resultado = -1;
+                // throw;
+            }
+
+            return resultado;
+        }
+
+        public IEnumerable<OrdenTransito> ConsultarOrdenesEnTransito()
+        {
+            List<OrdenTransito> ordenes = null;
+
+            try
+            {
+                using (var context = new ClientesEF.Entities())
+                {
+                    var abiertas = context.ORDERS.Where(p => p.STATUS.Equals(ESTADO_ORDEN_EN_TRANSITO));
+
+                    if (abiertas.Any())
+                    {
+                        ordenes = new List<OrdenTransito>();
+                    }
+
+                    foreach (var item in abiertas)
+                    {
+                        ordenes.Add(new OrdenTransito() { carrier = item.CARRIER, idOrden = item.ORDID });
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                ordenes = null;
+            }
+
+            return ordenes; 
+        }
+
+        public IEnumerable<Orden> ConsultarOrdenesCliente(string idCliente)
+        {
+            List<Orden> ordenes = null;
+            Orden ordenActual = null;
+
+            try
+            {
+                using (var context = new ClientesEF.Entities())
+                {
+                    var ordenesConsulta = context.ORDERS.Where(p => p.CUSTID.Equals(idCliente)).OrderByDescending(q => q.ORDERDATE);
+
+                    foreach (var item in ordenesConsulta)
+                    {
+                        if (ordenes == null)
+                        {
+                            ordenes = new List<Orden>();
+                        }
+
+                        ordenActual = CreateOrden(item);
+
+                        ordenes.Add(ordenActual);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                ordenes = null;
+            }
+
+            return ordenes;
+        }
+
+        public IEnumerable<ProductoRanking> ConsultarRankingFacturacionProductos(DateTime fechaInicio, DateTime fechaFin)
+        {
+            List<ProductoRanking> productos = null;
+
+            OracleConnection conex = null;
+            OracleDataReader reader = null;
+
+            conex = new OracleConnection(ConfigurationManager.ConnectionStrings["B2CConnection"].ConnectionString);
+
+            OracleCommand cmd = new OracleCommand()
+            {
+                CommandText = "B2C.PKG_ORDENES.ranking_fact_productos",
+                CommandType = CommandType.StoredProcedure,
+                Connection = conex
+            };
+
+            OracleParameter paramFechaIni = new OracleParameter()
+            {
+                DbType = DbType.Date,
+                Direction = ParameterDirection.Input,
+                ParameterName = "p_fecha_ini",
+                Value = fechaInicio
+            };
+
+            OracleParameter paramFechaFin = new OracleParameter()
+            {
+                DbType = DbType.Date,
+                Direction = ParameterDirection.Input,
+                ParameterName = "p_fecha_fin",
+                Value = fechaFin
+            };
+
+            OracleParameter paramOutputCursor = new OracleParameter("IO_CURSOR", OracleDbType.RefCursor);
+            paramOutputCursor.Direction = ParameterDirection.Output;
+
+            cmd.Parameters.Add(paramFechaIni);
+            cmd.Parameters.Add(paramFechaFin);
+            cmd.Parameters.Add(paramOutputCursor);
+
+            try
+            {
+                conex.Open();
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    if (productos == null)
+                    {
+                        productos = new List<ProductoRanking>();
+                    }
+
+                    productos.Add(new ProductoRanking()
+                    {
+                        idProducto = Convert.ToInt32(reader.GetValue(0)),
+                        facturado = Convert.ToDecimal(reader.GetValue(1)),
+                    });
+                }
+            }
+            catch (Exception)
+            {
+                productos = null;
+            }
+            finally
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+                if (conex != null)
+                {
+                    conex.Close();
+                }
+                reader = null;
+                conex = null;
+            }
+
+            return productos;
+        }
+
+        private async Task<RespuestaColaFacturacion> EnviarDatosCola(ORDER ordenActual)
+        {
+            string path = StringResources.ServicioColaFacturacion;
+            DatosColaFacturacion dataColaFacturacion = new DatosColaFacturacion()
+            {
+                orderFinishedDay = ordenActual.LASTTRACKINGDATE.Value.Day,
+                orderFinishedMonth = ordenActual.LASTTRACKINGDATE.Value.Month,
+                orderFinishedYear = ordenActual.LASTTRACKINGDATE.Value.Year,
+                orderManufacter = ordenActual.VENDOR,
+                orderNumber = ordenActual.ORDID,
+                orderTotalValue = Convert.ToDouble(ordenActual.PRICE.Value)
+            };
+            RespuestaColaFacturacion responseColaFacturacion = null;
+
+            try
+            {
+                HttpResponseMessage response = await WebClientHelper.ClientColaFactur.PostAsJsonAsync(path, dataColaFacturacion);
+                if (response.IsSuccessStatusCode)
+                {
+                    responseColaFacturacion = await response.Content.ReadAsAsync<RespuestaColaFacturacion>();
+                }
+            }
+            catch (Exception)
+            {
+                responseColaFacturacion = null;
+            }
+
+            return responseColaFacturacion;
         }
     }
 }

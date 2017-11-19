@@ -29,6 +29,6 @@ namespace Common.DTO
         public int size { get; set; }
         public string e_mail { get; set; }
         public int idOrden { get; set; }
-        public int idProducto { get; set; }
+        public long idProducto { get; set; }
     }
 }

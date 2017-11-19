@@ -1,10 +1,10 @@
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\bin\Debug\WebAndLoadTestProject1.dll
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\bin\Debug\WebAndLoadTestProject1.pdb
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\obj\Debug\WebAndLoadTestProject1.csprojResolveAssemblyReference.cache
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\obj\Debug\WebAndLoadTestProject1.dll
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\obj\Debug\WebAndLoadTestProject1.pdb
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\bin\Debug\WebTests\ProductosCategoriaAudio.webtest
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\bin\Debug\WebTests\ProductosCategoriaTV.webtest
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\bin\Debug\WebTests\Logon.webtest
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\bin\Debug\WebTests\PasswdChangeRequest.webtest
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\bin\Debug\LoadTest1.loadtest
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\bin\Debug\WebAndLoadTestProject1.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\bin\Debug\WebAndLoadTestProject1.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\obj\Debug\WebAndLoadTestProject1.csprojResolveAssemblyReference.cache
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\obj\Debug\WebAndLoadTestProject1.dll
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\WebAndLoadTestProject1\obj\Debug\WebAndLoadTestProject1.pdb

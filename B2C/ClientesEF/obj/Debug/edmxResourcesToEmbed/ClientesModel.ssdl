@@ -58,6 +58,9 @@
     <Property Name="PRICE" Type="number" Precision="20" Scale="2" />
     <Property Name="STATUS" Type="varchar2" MaxLength="10" />
     <Property Name="COMMENTS" Type="varchar2" MaxLength="4000" />
+    <Property Name="CARRIER" Type="varchar2" MaxLength="100" />
+    <Property Name="LASTTRACKINGDATE" Type="date" />
+    <Property Name="VENDOR" Type="varchar2" MaxLength="100" />
   </EntityType>
   <EntityType Name="PASSWD_CHANGE_REQUEST">
     <Key>

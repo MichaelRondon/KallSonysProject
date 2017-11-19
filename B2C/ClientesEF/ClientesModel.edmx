@@ -63,6 +63,9 @@
           <Property Name="PRICE" Type="number" Precision="20" Scale="2" />
           <Property Name="STATUS" Type="varchar2" MaxLength="10" />
           <Property Name="COMMENTS" Type="varchar2" MaxLength="4000" />
+          <Property Name="CARRIER" Type="varchar2" MaxLength="100" />
+          <Property Name="LASTTRACKINGDATE" Type="date" />
+          <Property Name="VENDOR" Type="varchar2" MaxLength="100" />
         </EntityType>
         <EntityType Name="PASSWD_CHANGE_REQUEST">
           <Key>
@@ -228,6 +231,9 @@
           <Property Name="COMMENTS" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CUSTOMER" Relationship="Self.ORDERS_FK" FromRole="ORDERS" ToRole="CUSTOMER" />
           <NavigationProperty Name="ITEMS" Relationship="Self.ITEMS_FK" FromRole="ORDERS" ToRole="ITEMS" />
+          <Property Name="CARRIER" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LASTTRACKINGDATE" Type="DateTime" />
+          <Property Name="VENDOR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="ORDERS_FK">
           <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="0..1" />
@@ -356,6 +362,9 @@
           <EntitySetMapping Name="ORDERS">
             <EntityTypeMapping TypeName="Model.ORDER">
               <MappingFragment StoreEntitySet="ORDERS">
+                <ScalarProperty Name="VENDOR" ColumnName="VENDOR" />
+                <ScalarProperty Name="LASTTRACKINGDATE" ColumnName="LASTTRACKINGDATE" />
+                <ScalarProperty Name="CARRIER" ColumnName="CARRIER" />
                 <ScalarProperty Name="CUSTID" ColumnName="CUSTID" />
                 <ScalarProperty Name="ORDID" ColumnName="ORDID" />
                 <ScalarProperty Name="ORDERDATE" ColumnName="ORDERDATE" />

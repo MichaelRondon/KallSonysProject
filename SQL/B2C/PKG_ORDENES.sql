@@ -19,6 +19,17 @@ procedure resumen_ordenes_mes (
     IO_CURSOR OUT T_CUR_REF
 );
 
+procedure ranking_x_producto (
+    p_id_producto NUMBER,
+    IO_CURSOR OUT T_CUR_REF
+);
+
+procedure ranking_fact_productos (
+    p_fecha_ini DATE,
+    p_fecha_fin DATE,
+    IO_CURSOR OUT T_CUR_REF
+);
+
 end;
 
 
@@ -42,7 +53,7 @@ begin
     FROM
     "ORDERS"
     WHERE
-    "ORDERS"."ORDERDATE" BETWEEN (TRUNC(p_fecha_ini)) AND (TRUNC(p_fecha_fin) + 1)
+    "ORDERS"."ORDERDATE" BETWEEN p_fecha_ini AND p_fecha_fin
     AND "ORDERS"."STATUS" NOT IN ('NUEVA', 'RECHAZADA')
     GROUP BY ORDERS.CUSTID
     ORDER BY 2 DESC;
@@ -65,6 +76,8 @@ begin
     ,ORDERS.PRICE
     ,ORDERS.ORDERDATE
     ,ORDERS.STATUS
+    ,ORDERS.CARRIER
+    ,ORDERS.VENDOR
     FROM
     "ORDERS", "ITEMS"
     WHERE
@@ -76,7 +89,10 @@ begin
     ,ORDERS.ORDID
     ,ORDERS.PRICE
     ,ORDERS.ORDERDATE
-    ,ORDERS.STATUS;
+    ,ORDERS.STATUS
+    ,ORDERS.CARRIER
+    ,ORDERS.VENDOR
+    ;
 
     IO_CURSOR := RESPUESTA;
     
@@ -91,10 +107,10 @@ begin
     RESPUESTA T_CUR_REF;
 begin
     OPEN RESPUESTA FOR
-    SELECT 
+    SELECT
     NVL(SUM(NVL(ORDERS.PRICE, 0)), 0) AS PRICE
     ,COUNT(ORDERS.STATUS) AS CANTIDAD
-    FROM ORDERS 
+    FROM ORDERS
     WHERE
     TO_NUMBER(TO_CHAR(ORDERDATE, 'MM')) = p_mes
     AND TO_NUMBER(TO_CHAR(ORDERDATE, 'YYYY')) = p_anio
@@ -104,4 +120,54 @@ begin
 
     END resumen_ordenes_mes;
 
+    procedure ranking_x_producto (
+    p_id_producto NUMBER,
+    IO_CURSOR OUT T_CUR_REF
+    )
+    is
+    RESPUESTA T_CUR_REF;
+    begin
+    OPEN RESPUESTA FOR
+    SELECT  
+     ORDERS.CUSTID
+    ,SUM(ITEMS.PRICE * ITEMS.QUANTITY) AS SALES
+    FROM 
+    ORDERS, ITEMS
+    WHERE 
+    ORDERS.ORDID = ITEMS.ORDID
+    AND ORDERS.STATUS = 'ENTREGADA'
+    AND ITEMS.PRODID = p_id_producto
+    GROUP BY ORDERS.CUSTID
+    HAVING SUM(ITEMS.PRICE * ITEMS.QUANTITY) IS NOT NULL
+    ORDER BY 2 DESC;
+
+    IO_CURSOR := RESPUESTA;
+    
+    end ranking_x_producto;
+
+    procedure ranking_fact_productos (
+    p_fecha_ini DATE,
+    p_fecha_fin DATE,
+    IO_CURSOR OUT T_CUR_REF
+)
+    is
+    RESPUESTA T_CUR_REF;
+begin
+    OPEN RESPUESTA FOR
+    SELECT 
+    ITEMS.PRODID
+    ,SUM(ITEMS.PRICE * ITEMS.QUANTITY) AS SALES
+    FROM 
+    ORDERS, ITEMS
+    WHERE
+    ITEMS.ORDID = ORDERS.ORDID
+    AND STATUS = 'ENTREGADA'
+    AND ORDERS.ORDERDATE BETWEEN p_fecha_ini AND p_fecha_fin
+    GROUP BY ITEMS.PRODID
+    ORDER BY 2 DESC;
+
+    IO_CURSOR := RESPUESTA;
+    
+    end ranking_fact_productos;
+    
 END PKG_ORDENES;

@@ -10,5 +10,7 @@ namespace OrdenesEntities.Models
         public int idOrden { get; set; }
         public string fecha_orden { get; set; }
         public string estado { get; set; }
+        public string carrier { get; set; }
+        public string fabricante { get; set; }
     }
 }

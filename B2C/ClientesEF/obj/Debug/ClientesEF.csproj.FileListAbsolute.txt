@@ -5,4 +5,3 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesEF\bin\Debug\EntityFram
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesEF\bin\Debug\EntityFramework.xml
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesEF\obj\Debug\ClientesEF.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesEF\obj\Debug\ClientesEF.pdb
-C:\Users\diego\Source\Repos\KallSonysProject\B2C\ClientesEF\obj\Debug\ClientesEF.csprojResolveAssemblyReference.cache
