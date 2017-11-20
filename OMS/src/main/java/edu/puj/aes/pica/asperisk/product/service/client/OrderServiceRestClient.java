@@ -22,4 +22,6 @@ public interface OrderServiceRestClient {
     Object ordenesCerradas(Instant fecha);
     Page<Object> rankingOrdenesCerradas(Pageable pageable, Instant fechaInicio, Instant fechaFin);
     Page<Object> rankingClientes(Pageable pageable, Instant fechaInicio, Instant fechaFin);
+    Page<Object> findOrdenDetalle(Pageable pageable, Long idOrden);
+    Object findOrdenTotal(Long idOrden);
 }

@@ -16,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -75,8 +76,6 @@ public class OrdenesResource {
         log.debug("REST request to get /ordenes/cerradas fecha: {}", fecha);
         Object object = orderServiceRestClient.ordenesCerradas(fecha);
         ResponseEntity<Object> ordenesCerradas = ResponseUtil.wrapOrNotFound(Optional.ofNullable(object));
-        log.debug("ordenesCerradas.hasBody(): {}", ordenesCerradas.hasBody());
-        log.debug("ordenesCerradas.getBody(): {}", ordenesCerradas.getBody());
         log.debug("Fin get /ordenes/cerradas Tiempo: {}", (System.currentTimeMillis() - initTime));
         return ordenesCerradas;
     }
@@ -104,6 +103,27 @@ public class OrdenesResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(rankingOrdenesCerradas, "/api/ordenes/rankingClientes");
         ResponseEntity<List<Object>> response = new ResponseEntity<>(rankingOrdenesCerradas.getContent(), headers, HttpStatus.OK);
         log.debug("Fin get /ordenes/rankingClientesFechas Tiempo: {}", (System.currentTimeMillis() - initTime));
+        return response;
+    }
+
+    @GetMapping("/ordenes/total/{id}")
+    public ResponseEntity<Object> getTotalOrden(@PathVariable Long id) {
+        long initTime = System.currentTimeMillis();
+        log.debug("REST request to get /ordenes/total/id id: {}", id);
+        Object object = orderServiceRestClient.findOrdenTotal(id);
+        ResponseEntity<Object> orden = ResponseUtil.wrapOrNotFound(Optional.ofNullable(object));
+        log.debug("Fin get /ordenes/total/id Tiempo: {}", (System.currentTimeMillis() - initTime));
+        return orden;
+    }
+
+    @GetMapping("/ordenes/detalle/{id}")
+    public ResponseEntity<List<Object>> getDetalleOrden(@ApiParam Pageable pageable, @PathVariable Long id) {
+        long initTime = System.currentTimeMillis();
+        log.debug("REST request to get /ordenes/detalle/id id: {}", id);
+        Page<Object> findOrdenDetalle = orderServiceRestClient.findOrdenDetalle(pageable, id);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(findOrdenDetalle, "/api/ordenes/detalle");
+        ResponseEntity<List<Object>> response = new ResponseEntity<>(findOrdenDetalle.getContent(), headers, HttpStatus.OK);
+        log.debug("Fin get /ordenes/detalle/id Tiempo: {}", (System.currentTimeMillis() - initTime));
         return response;
     }
 }

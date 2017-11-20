@@ -1,0 +1,17 @@
+<div>
+    <h2>Ordenes</h2>
+    <jhi-alert></jhi-alert>
+    <div class="input-append">
+            <label class="control-label" for="field_codigo_orden">Código órden</label>
+            <input type="text" class="" name="nombre" id="field_codigo_orden"
+                   ng-model="vm.codigoOrden" required
+                   />
+            <button class="btn btn-primary" ui-sref="orden-detail({id:vm.codigoOrden})" >
+                <span class="glyphicon glyphicon-eye-open"></span>
+                <span>
+                    Buscar Orden
+                </span>
+            </button>
+    </div>
+    <br/>
+</div>

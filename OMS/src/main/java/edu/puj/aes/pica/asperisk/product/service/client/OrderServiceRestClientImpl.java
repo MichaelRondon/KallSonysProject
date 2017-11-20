@@ -11,8 +11,12 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +50,34 @@ public class OrderServiceRestClientImpl implements OrderServiceRestClient {
 
     @Autowired
     private ClientServiceRestClient clientServiceRestClient;
+
+    @Override
+    public Page<Object> findOrdenDetalle(Pageable pageable, Long idOrden) {
+
+        LOGGER.info("findOrdenDetalle pageable: {}, idOrden:{}", pageable, idOrden);
+        RestTemplate restTemplate = new RestTemplate();
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/detalle",
+                ORDERS_SERVICE_URL, idOrden));
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+        ResponseEntity<Object[]> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, Object[].class);
+        Object[] items = ProductUtilSingleton.getInstance().evalResponseAndGetBody(responseEntity, HttpStatus.OK);
+        PageImpl pageImpl = new PageImpl(Arrays.asList(items), pageable, items.length);
+        return pageImpl;
+    }
+
+    @Override
+    public Object findOrdenTotal(Long idOrden) {
+
+        LOGGER.info("findOrdenTotal idOrden:{}", idOrden);
+        RestTemplate restTemplate = new RestTemplate();
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/total",
+                ORDERS_SERVICE_URL, idOrden));
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+        ResponseEntity<Object> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, Object.class);
+        return responseEntity.getBody();
+    }
 
     @Override
     public Page<Object> rankingClientes(Pageable pageable, Long idProducto) {
