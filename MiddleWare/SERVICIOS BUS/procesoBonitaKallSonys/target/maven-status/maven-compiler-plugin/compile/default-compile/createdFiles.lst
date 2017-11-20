@@ -1,4 +1,5 @@
 com\javeriana\processors\CreateProcessProcessor.class
+com\javeriana\model\MensajeriaResponse.class
 com\javeriana\model\PeticionCasoBpm.class
 com\javeriana\kallsonys\Direccion.class
 com\javeriana\model\ProviderResponseService.class
@@ -17,7 +18,9 @@ com\javeriana\model\PeticionInfoUsuario.class
 com\javeriana\kallsonys\ItemCarrito.class
 com\javeriana\kallsonys\Carrito.class
 com\javeriana\kallsonys\Producto.class
+com\javeriana\model\MensajeriaRequest.class
 com\javeriana\model\StarProcessBonitaRequest.class
+com\javeriana\processors\CarriersProcessorResponse.class
 com\javeriana\service\ProductosService.class
 com\javeriana\service\ProductosServiceIml.class
 com\javeriana\model\TravelRequestInput.class

@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+		xmlns:kal="http://kallSonys.pica.com.co">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <kal:mensajeSalida>
+         <kal:resultado>Se recibieron las ${headers.cantidad} ordenes que serán procesadas</kal:resultado>
+      </kal:mensajeSalida>
+   </soapenv:Body>
+</soapenv:Envelope>

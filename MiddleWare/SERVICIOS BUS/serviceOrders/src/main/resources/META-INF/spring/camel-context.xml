@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configures the Camel Context -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:camel="http://camel.apache.org/schema/spring"
+    xmlns:ctx="http://www.springframework.org/schema/context"
+    xmlns:cxf="http://camel.apache.org/schema/cxf"
+    xmlns:http-conf="http://cxf.apache.org/transports/http/configuration"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xmlns:osgi="http://www.springframework.org/schema/osgi"
+    xmlns:osgix="http://www.springframework.org/schema/osgi-compendium"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="         http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd        http://www.springframework.org/schema/osgi-compendium http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium.xsd        http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd        http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd">
+    <!-- Configuracion de Properties 
+    <import resource="properties-beans.xml"/>
+    -->
+    
+    <bean class="org.apache.activemq.camel.component.ActiveMQComponent" id="activemq">
+        <property name="brokerURL" value="tcp://localhost:61616"/>
+        <property name="userName" value="admin"/>
+        <property name="password" value="admin"/>
+        <property name="usePooledConnection" value="false"/>
+    </bean>
+    
+    <!-- Logging conf -->
+    <bean class="org.slf4j.LoggerFactory" factory-method="getLogger" id="ordersLog">
+        <constructor-arg type="java.lang.String" value="co.com.pica.kallsonysOrderEndpoint"/>
+    </bean>
+    <!-- End logging -->
+    <!-- BookingService PROXY -->
+    <cxf:cxfEndpoint address="http://localhost:8182/OrdenesService"
+        id="ordenesDeEnvioService" serviceClass="co.com.pica.kallsonys.OrderEndpoint">
+        <cxf:properties>
+            <entry key="dataFormat" value="PAYLOAD"/>
+            <entry key="soap.no.validate.parts" value="true"/>
+            <entry key="receiveTimeout" value="1000000000"/>
+            <entry key="connectionTimeout" value="1000000000"/>
+            <entry key="setDefaultBus" value="true"/>
+            <entry key="loggingFeatureEnabled" value="true"/>
+        </cxf:properties>
+    </cxf:cxfEndpoint>
+    <camelContext id="CTX-ENVIO-ORDENES" trace="false"
+        xmlns="http://camel.apache.org/schema/spring"
+        xmlns:kal="http://kallSonys.pica.com.co" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+        <route id="_route1">
+            <from id="_from2" uri="direct:logs"/>
+            
+            <setHeader headerName="CamelFileName" id="_setHeader50">
+                <simple>${date:now:yyyyMMddHHmmssSSS}.txt</simple>
+            </setHeader>
+            <camel:recipientList id="_recipientList1">
+                <simple>file://C:/TallerOrdenes/ordenesEntrada</simple>
+            </camel:recipientList>
+        </route>
+        <route id="_route2">
+            <from id="_from3" uri="direct:dhl"/>
+            <marshal id="marshal1aa">
+                <jaxb contextPath="co.com.pica.kallsonys" prettyPrint="false"/>
+            </marshal>
+            <camel:inOnly uri="activemq:DHL" />            
+        </route>
+        <route id="_route3">
+            <from id="_from4" uri="direct:servientrega"/>
+            <marshal id="marshalsff1">
+                <jaxb contextPath="co.com.pica.kallsonys" prettyPrint="false"/>
+            </marshal>
+            <camel:inOnly uri="activemq:Servientrega"/>            
+        </route>
+        <route id="_route4">
+            <from id="_from5" uri="direct:deprisa"/>    
+            <marshal id="marshalsff1a">
+                <jaxb contextPath="co.com.pica.kallsonys" prettyPrint="false"/>
+            </marshal>
+            <camel:inOnly uri="activemq:Deprisa" />
+            
+        </route>
+        <route id="ROUTE-SERVICE" streamCache="true" trace="false">
+            <from id="_from1" uri="cxf:bean:ordenesDeEnvioService"/>
+            <from uri="file://C:/TallerOrdenes/ordenesXML/" id="_from2"/>
+            <wireTap id="_wireTap1" uri="direct:logs"/>
+            <unmarshal id="_unmarshal1">
+                <jaxb contextPath="co.com.pica.kallsonys" prettyPrint="false"/>
+            </unmarshal>
+            <setHeader headerName="cantidad" id="_setHeader1">
+                <simple>${body.ordenes.orden.size()}</simple>
+            </setHeader>
+            <split id="_split1">
+                <simple> ${body.ordenes.orden}</simple>
+                <choice id="countrySelection">
+                    <when id="DHL">
+                        <simple id="simple5">${body.pais} == 'CO'</simple>
+                        <to id="_to9880" uri="direct:dhl"/>
+                    </when>
+                    <when id="DEPRISA">
+                        <simple id="simple6">${body.pais} != 'CO' and ${body.proveedor} == 'SONY'</simple>
+                        <to id="_to909" uri="direct:deprisa"/>
+                    </when>
+                    <otherwise id="SERVIENTREGA">
+                        <to id="_to90" uri="direct:servientrega"/>
+                    </otherwise>
+                </choice>
+            </split>
+            <setHeader headerName="CamelVelocityResourceUri" id="_setHeader2">
+                <simple>templates/responseOrdenes.vm</simple>
+            </setHeader>
+            <to id="_to2" uri="velocity:dummy?loaderCache=false">
+                <description>Get xml request from template velocity</description>
+            </to>
+            <to id="_to4" uri="mock:endRoute"/>
+        </route>
+    </camelContext>
+</beans>

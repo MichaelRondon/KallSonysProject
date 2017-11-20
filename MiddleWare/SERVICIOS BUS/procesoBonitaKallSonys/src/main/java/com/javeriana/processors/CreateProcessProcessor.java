@@ -51,7 +51,7 @@ public class CreateProcessProcessor implements Processor{
 		tr.setOrderDate(fechaEnviar);
 		tr.setOrderId(Integer.toString((int) exchange.getIn().getHeader("idOrden")));
 		
-		bpm.setOrderRequestInput(tr);			
+		bpm.setOrderRequestInputInput(tr);			
 		
 		exchange.getIn().setBody(bpm);		
 	}

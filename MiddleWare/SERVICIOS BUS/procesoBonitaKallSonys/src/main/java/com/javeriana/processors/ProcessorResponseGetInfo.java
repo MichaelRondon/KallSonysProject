@@ -39,7 +39,8 @@ public class ProcessorResponseGetInfo implements Processor{
 				vr.setCountryOrder(orden.getCliente().getDirecciones().get(0).getPais());
 				vr.setIdClient(orden.getCliente().getDocumento());
 				vr.setEmailClient(orden.getCliente().getCorreo_e());
-				vr.setNameClient(orden.getCliente().getNombres()+" "+orden.getCliente().getApellidos());
+				vr.setNameClient(orden.getCliente().getNombres());
+				vr.setLastNameClient(orden.getCliente().getApellidos());
 				vr.setPhoneClient(orden.getCliente().getTelefono());
 				vr.setOrderValue(orden.getValorTotal());
 				vr.setStatusClient(orden.getCliente().getEstatus());

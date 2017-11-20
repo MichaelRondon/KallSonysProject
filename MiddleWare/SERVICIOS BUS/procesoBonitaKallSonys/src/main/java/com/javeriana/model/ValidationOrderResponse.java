@@ -13,6 +13,7 @@ public class ValidationOrderResponse {
 	private String statusClient;
 	private String idClient;
 	private String nameClient;
+	private String lastNameClient;
 	
 	
 	public String getStatusClient() {
@@ -80,9 +81,12 @@ public class ValidationOrderResponse {
 	}
 	public void setPhoneClient(String phoneClient) {
 		this.phoneClient = phoneClient;
-	}	
-	
-	
-	
+	}
+	public String getLastNameClient() {
+		return lastNameClient;
+	}
+	public void setLastNameClient(String lastNameClient) {
+		this.lastNameClient = lastNameClient;
+	}		
 
 }

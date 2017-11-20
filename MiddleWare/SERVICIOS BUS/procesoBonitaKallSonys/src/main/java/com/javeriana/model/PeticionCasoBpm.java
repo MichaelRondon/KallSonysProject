@@ -2,14 +2,14 @@ package com.javeriana.model;
 
 public class PeticionCasoBpm {
 	
-	private OrderRequestInput orderRequestInput;
+	private OrderRequestInput orderRequestInputInput;
 
-	public OrderRequestInput getOrderRequestInput() {
-		return orderRequestInput;
+	public OrderRequestInput getOrderRequestInputInput() {
+		return orderRequestInputInput;
 	}
 
-	public void setOrderRequestInput(OrderRequestInput orderRequestInput) {
-		this.orderRequestInput = orderRequestInput;
+	public void setOrderRequestInputInput(OrderRequestInput orderRequestInputInput) {
+		this.orderRequestInputInput = orderRequestInputInput;
 	}	
 	
 }

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configures the Camel Context -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:camel="http://camel.apache.org/schema/spring"
+    xmlns:ctx="http://www.springframework.org/schema/context"
+    xmlns:cxf="http://camel.apache.org/schema/cxf"
+    xmlns:http-conf="http://cxf.apache.org/transports/http/configuration"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xmlns:osgi="http://www.springframework.org/schema/osgi"
+    xmlns:osgix="http://www.springframework.org/schema/osgi-compendium"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="         http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd        http://www.springframework.org/schema/osgi-compendium http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium.xsd        http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd        http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd">
+    <!-- Configuracion de Properties 
+    <import resource="properties-beans.xml"/>
+    -->
+    
+    <bean class="org.apache.activemq.camel.component.ActiveMQComponent" id="activemq">
+        <property name="brokerURL" value="tcp://localhost:61616"/>
+        <property name="userName" value="admin"/>
+        <property name="password" value="admin"/>
+        <property name="usePooledConnection" value="false"/>
+    </bean>
+    
+    <!-- Logging conf -->
+    <bean class="org.slf4j.LoggerFactory" factory-method="getLogger" id="ordersLog">
+        <constructor-arg type="java.lang.String" value="co.com.pica.kallsonysOrderEndpoint"/>
+    </bean>
+    <!-- End logging -->
+  
+    <camelContext id="COLAS-DE-MENSAJERIA" trace="false" xmlns="http://camel.apache.org/schema/spring">
+        
+        <route id="_route2">
+            <from uri="activemq:DHL" />
+            <unmarshal id="a54d65a">
+                <jaxb contextPath="co.com.pica.kallsonys" prettyPrint="false"/>
+            </unmarshal>
+            <setHeader headerName="CamelFileName" id="_setHeader501">
+                <simple>${body.ordenId}/${date:now:yyyyMMddHHmmssSSS}.xml</simple>
+            </setHeader>
+            <marshal id="marshal1aa">
+                <jaxb contextPath="co.com.pica.kallsonys" prettyPrint="false"/>
+            </marshal>                        
+            <camel:recipientList id="_recipientList2">
+                <simple>file://C:/TallerOrdenes/DHL</simple>
+            </camel:recipientList>
+        </route>
+        <route id="_route3">
+            <from id="_from4" uri="activemq:Servientrega"/>
+            <unmarshal id="aaaa5555">
+                <jaxb contextPath="co.com.pica.kallsonys" prettyPrint="false"/>
+            </unmarshal>
+            <setHeader headerName="CamelFileName" id="_setHeader580">
+                <simple>${body.ordenId}_${date:now:yyyyMMddHHmmssSSS}.xml</simple>
+            </setHeader>
+            <marshal id="marshalsffss1">
+                <jaxb contextPath="co.com.pica.kallsonys" prettyPrint="false"/>
+            </marshal>                     
+            <camel:recipientList id="_recipientList3">
+                <simple>file://C:/TallerOrdenes/Servientrega</simple>
+            </camel:recipientList>
+        </route>
+        <route id="_route4">
+            <from id="_from5" uri="activemq:Deprisa"/>             
+            <unmarshal id="unnmarshalsff1">
+                <jaxb contextPath="co.com.pica.kallsonys" prettyPrint="false"/>
+            </unmarshal>         
+            <setHeader headerName="CamelFileName" id="_setHeader5890">
+                <simple>Deprisa_${body.ordenId}_${date:now:yyyyMMddHHmmssSSS}.txt</simple>
+            </setHeader>
+            <setBody id="_setBody1">
+                <simple>${body.ordenId};${body.nombreApellido};${body.direccion};${body.ciudad};${body.pais};${body.proveedor}</simple>
+            </setBody>
+            <camel:recipientList id="_recipientList4">
+                <simple>file://C:/TallerOrdenes/Deprisa</simple>
+            </camel:recipientList>
+        </route>
+        
+    </camelContext>
+</beans>

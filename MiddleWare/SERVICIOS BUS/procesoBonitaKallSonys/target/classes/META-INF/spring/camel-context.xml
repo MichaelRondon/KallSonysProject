@@ -29,9 +29,17 @@
     <bean id="myProcessor" class="com.javeriana.processors.ProcessorResponseGetInfo" />
     <bean id="proveedores" class="com.javeriana.processors.ProvidersProcessor" destroy-method="destroy"/>    
     <bean id="processAuth" class="com.javeriana.processors.CreateProcessProcessor" />
-    <bean id="responserProviders" class="com.javeriana.processors.ProvidersProcessorResponse" />    
+    <bean id="responserProviders" class="com.javeriana.processors.ProvidersProcessorResponse" />
+    <bean id="responserCarriers" class="com.javeriana.processors.CarriersProcessorResponse" />      
     <bean id="myStrategy" class="com.javeriana.aggregators.ProviderAgregator"/>
 	<!-- <bean id="rulesBeanResponse" class="com.service.RulesServiceResponse" /> -->          
+     
+    <bean class="org.apache.activemq.camel.component.ActiveMQComponent" id="activemq">
+        <property name="brokerURL" value="tcp://localhost:61616"/>
+        <property name="userName" value="admin"/>
+        <property name="password" value="admin"/>
+        <property name="usePooledConnection" value="false"/>
+    </bean> 
      
     <cxf:rsServer id="rsServer" address="http://0.0.0.0:4042/api" loggingFeatureEnabled="false">
     	<cxf:serviceBeans>
@@ -74,12 +82,12 @@
 						<constant>POST</constant>
 					</setHeader>
 					<setHeader headerName="Host">
-						<constant>localhost:9595</constant>
+						<constant>laptop-davidcinho:9595</constant>
 					</setHeader>
 					<camel:setBody>
                     	<camel:simple>username=walter.bates&amp;password=bpm&amp;redirect=false</camel:simple>
                     </camel:setBody> 
-					<to uri="http4://localhost:9595/bonita/loginservice?bridgeEndpoint=false" />
+					<to uri="http4://laptop-davidcinho:9595/bonita/loginservice?bridgeEndpoint=false" />
 					
 					
 					<setHeader headerName="autenticacion">
@@ -94,15 +102,14 @@
 						<constant>POST</constant>
 					</setHeader>
 					<setHeader headerName="Host">
-						<constant>localhost:9595</constant>
+						<constant>laptop-davidcinho:9595</constant>
 					</setHeader>
 					<marshal ref="jack" />
 					
 					<log message="BODY ::::: ${body}"/>
         			<!-- <to uri="http4://localhost:8080/bonita/API/bpm/case?bridgeEndpoint=false" /> -->  	
-        			<to uri="http4://localhost:9595/bonita/API/bpm/process/6567068885008966562/instantiation?bridgeEndpoint=false" />				
-        			<to uri="mock:end"/>
-        			<!-- <bean ref="rulesBean" method="ipsPuedeAutMedicamento" />  -->
+        			<to uri="http4://laptop-davidcinho:9595/bonita/API/bpm/process/8080497590594401289/instantiation?bridgeEndpoint=false" />				
+        			<to uri="mock:end"/>        			
       			</when>  
       			<when>
         			<simple>${header.operationName} == 'validarorden'</simple> 
@@ -124,7 +131,7 @@
 						<constant></constant>
 					</setBody>
 					<camel:recipientList>
-						<simple>http://25.13.10.89:9091/api/ordenes/${header.orderId}/total?bridgeEndpoint=true</simple>
+						<simple>http://laptop-diego:9091/api/ordenes/${header.orderId}/total?bridgeEndpoint=true</simple>
 					</camel:recipientList>
 					<unmarshal ref="orden"/>
 					<removeHeaders pattern="CamelHttp*"/>
@@ -149,10 +156,10 @@
 	                	<constant>POST</constant>
             		</setHeader>
             		<setHeader headerName="Host">
-                		<constant>25.10.158.164:8080</constant>
+                		<constant>laptop-marce:8080</constant>
             		</setHeader>  
             		<log message="BODY AFTER::::: ${body}"/>
-            		<to uri="http4://25.10.158.164:8080/openl-tablets-ws-5.19.6/datasource/KallsonysOrderValidation?wsdl&amp;bridgeEndpoint=true" />
+            		<to uri="http4://laptop-marce:8080/openl-tablets-ws-5.19.6/datasource/KallsonysOrderValidation?wsdl&amp;bridgeEndpoint=true" />
             		<convertBodyTo type="String"/>
             		<log message="BODY BEFORE::::: ${body}"/>    	        
     		        <setHeader headerName="responseRules">
@@ -168,6 +175,36 @@
 				</when>  	
 				
 				<when>
+					<simple>${header.operationName} == 'seleccionarmensajeria'</simple>
+					<bean ref="productosBean" method="seleccionarmensajeria" />
+                	<choice id="countrySelection">
+                    	<when id="DHL">
+                        	<simple id="simple5">${body.country} == 'COLOMBIA'</simple>
+                        	<setHeader headerName="carrier">
+								<constant>DHL</constant>
+							</setHeader>
+                        	<to id="_to9880" uri="vm:dhl"/>
+                    	</when>
+                    	<when id="DEPRISA">
+                        	<simple id="simple6">${body.country} != 'COLOMBIA' and ${body.vendor} == 'SONY'</simple>
+                        	<setHeader headerName="carrier">
+								<constant>DEPRISA</constant>
+							</setHeader>
+                   	    	<to id="_to909" uri="vm:deprisa"/>
+                  	 	</when>
+                  	  	<otherwise id="SERVIENTREGA">
+                  	  	   <setHeader headerName="carrier">
+								<constant>SERVIENTREGA</constant>
+						   </setHeader>
+                 	       <to id="_to90" uri="vm:servientrega"/>
+                 	   	</otherwise>
+               		</choice>	
+               		<log message="SELECTED::::::::::::::::::: ${header.carrier}"/>  
+					<process ref="responserCarriers"/>			
+					<to uri="mock:endProcess"/>				
+				</when>
+				
+				<when>
 					<simple>${header.operationName} == 'actualizarorden'</simple>
         			<bean ref="productosBean" method="actualizarorden" />
         			<removeHeaders pattern="CamelHttp*"/>
@@ -178,7 +215,7 @@
 						<constant>PUT</constant>
 					</setHeader>
 					<setHeader headerName="Host">
-						<constant>25.13.10.89:9091</constant>
+						<constant>laptop-diego:9091</constant>
 					</setHeader>
 					<log message="BODY BEFORE::::: ${body}"/>
 					<marshal ref="jack" />					
@@ -201,13 +238,13 @@
 						<constant>GET</constant>
 					</setHeader>
 					<setHeader headerName="Host">
-						<constant>25.13.10.89:9091</constant>
+						<constant>laptop-diego:9091</constant>
 					</setHeader>
 					<setBody>
 						<constant></constant>
 					</setBody>
 					<camel:recipientList>
-						<simple>http://25.13.10.89:9091/api/ordenes/${header.orderId}/detalle?bridgeEndpoint=true</simple>
+						<simple>http://laptop-diego:9091/api/ordenes/${header.orderId}/detalle?bridgeEndpoint=true</simple>
 					</camel:recipientList>
 					<unmarshal ref="carrito"/>	
 					<camel:process ref="proveedores" />
@@ -224,7 +261,7 @@
         
         <route>
         	<from uri="vm:actualizarOrden"/>
-        	<to uri="http://25.13.10.89:9091/api/ordenes?bridgeEndpoint=true"/>
+        	<to uri="http://laptop-diego:9091/api/ordenes?bridgeEndpoint=true"/>
         	<to uri="mock:endAsync"/>
         </route>
         
@@ -295,6 +332,21 @@
 
         	<to uri="mock:endRapid"/>
         </route>         
+        
+        
+        <route id="_route2">
+            <from id="_from3" uri="vm:dhl"/>
+            <camel:inOnly uri="activemq:DHL" />            
+        </route>
+        <route id="_route3">
+            <from id="_from4" uri="vm:servientrega"/>
+            <camel:inOnly uri="activemq:Servientrega"/>            
+        </route>
+        <route id="_route4">
+            <from id="_from5" uri="vm:deprisa"/>    
+            <camel:inOnly uri="activemq:Deprisa" />
+            
+        </route>
 		      		
     </camelContext>
 </beans>

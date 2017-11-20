@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.javeriana.model.MensajeriaRequest;
 import com.javeriana.model.StarProcessBonitaRequest;
 import com.javeriana.model.UpdateOrderRequest;
 import com.javeriana.model.ValidationOrderRequest;
@@ -42,5 +43,11 @@ public interface ProductosService {
 	@Consumes(MediaType.APPLICATION_JSON)	
 	@Produces(MediaType.APPLICATION_JSON)	
 	public UpdateOrderRequest actualizarorden(UpdateOrderRequest vor);
+	
+	@POST
+	@Path("/seleccionarmensajeria/")
+	@Consumes(MediaType.APPLICATION_JSON)	
+	@Produces(MediaType.APPLICATION_JSON)	
+	public MensajeriaRequest seleccionarmensajeria(MensajeriaRequest vor);
 	
 }
