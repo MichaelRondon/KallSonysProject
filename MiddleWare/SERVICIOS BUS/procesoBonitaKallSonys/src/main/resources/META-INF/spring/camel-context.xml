@@ -179,14 +179,14 @@
 					<bean ref="productosBean" method="seleccionarmensajeria" />
                 	<choice id="countrySelection">
                     	<when id="DHL">
-                        	<simple id="simple5">${body.country} == 'COLOMBIA'</simple>
+                        	<simple id="simple5">${body.country} != 'COLOMBIA'</simple>
                         	<setHeader headerName="carrier">
 								<constant>DHL</constant>
 							</setHeader>
                         	<to id="_to9880" uri="vm:dhl"/>
                     	</when>
                     	<when id="DEPRISA">
-                        	<simple id="simple6">${body.country} != 'COLOMBIA' and ${body.vendor} == 'SONY'</simple>
+                        	<simple id="simple6">${body.country} == 'COLOMBIA' and ${body.vendor} == 'SONY'</simple>
                         	<setHeader headerName="carrier">
 								<constant>DEPRISA</constant>
 							</setHeader>
