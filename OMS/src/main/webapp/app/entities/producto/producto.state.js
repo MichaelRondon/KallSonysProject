@@ -13,7 +13,7 @@
                     parent: 'entity',
                     url: '/producto',
                     data: {
-                        authorities: ['ROLE_USER', 'PRODUCTOS_CONSULTA'],
+                        authorities: ['ROLE_USER', 'PRODUCTOS_CONSULTA','PRODUCTOS_ADMON'],
                         pageTitle: 'omsApp.producto.home.title'
                     },
                     views: {
@@ -36,7 +36,7 @@
                     parent: 'producto',
                     url: '/producto/{id}',
                     data: {
-                        authorities: ['ROLE_USER'],
+                        authorities: ['ROLE_USER', 'PRODUCTOS_CONSULTA','PRODUCTOS_ADMON','CAMPANIAS','ORDENES_CONSULTA','ORDENES_ADMON','CLIENTES_CONSULTA','CLIENTES_ADMON'],
                         pageTitle: 'omsApp.producto.detail.title'
                     },
                     views: {
@@ -69,7 +69,7 @@
                     parent: 'producto-detail',
                     url: '/detail/edit',
                     data: {
-                        authorities: ['ROLE_USER']
+                        authorities: ['ROLE_USER','PRODUCTOS_ADMON']
                     },
                     onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                             $uibModal.open({
@@ -94,7 +94,7 @@
                     parent: 'producto',
                     url: '/new',
                     data: {
-                        authorities: ['ROLE_USER']
+                        authorities: ['ROLE_USER','PRODUCTOS_ADMON']
                     },
                     onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                             $uibModal.open({
@@ -129,7 +129,7 @@
                     parent: 'producto',
                     url: '/{id}/edit',
                     data: {
-                        authorities: ['ROLE_USER']
+                        authorities: ['ROLE_USER','PRODUCTOS_ADMON']
                     },
                     onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                             $uibModal.open({
@@ -154,7 +154,7 @@
                     parent: 'producto',
                     url: '/{id}/delete',
                     data: {
-                        authorities: ['ROLE_USER']
+                        authorities: ['ROLE_USER','PRODUCTOS_ADMON']
                     },
                     onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                             $uibModal.open({
@@ -178,7 +178,7 @@
                     parent: 'entity',
                     url: '/ranking-productos',
                     data: {
-                        authorities: ['ROLE_USER'],
+                        authorities: ['ROLE_USER', 'PRODUCTOS_CONSULTA','PRODUCTOS_ADMON'],
                         pageTitle: 'Reporte productos por facturacion'
                     },
                     views: {

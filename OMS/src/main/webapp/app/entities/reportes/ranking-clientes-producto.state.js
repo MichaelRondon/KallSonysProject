@@ -13,7 +13,7 @@
                     parent: 'entity',
                     url: '/ranking-clientes-producto',
                     data: {
-                        authorities: ['ROLE_USER'],
+                        authorities: ['ROLE_USER','ORDENES_CONSULTA','ORDENES_ADMON','CLIENTES_CONSULTA','CLIENTES_ADMON'],
                         pageTitle: 'Reporte clienes por producto'
                     },
                     views: {
@@ -55,7 +55,7 @@
                     parent: 'entity',
                     url: '/ordenes-producto',
                     data: {
-                        authorities: ['ROLE_USER'],
+                        authorities: ['ROLE_USER','ORDENES_CONSULTA','ORDENES_ADMON','PRODUCTOS_ADMON','PRODUCTOS_CONSULTA'],
                         pageTitle: 'Reporte ordenes por producto'
                     },
                     views: {
@@ -96,7 +96,7 @@
                     parent: 'entity',
                     url: '/ordenes-abiertas',
                     data: {
-                        authorities: ['ROLE_USER'],
+                        authorities: ['ROLE_USER','ORDENES_CONSULTA','ORDENES_ADMON'],
                         pageTitle: 'Reporte ordenes abiertas'
                     },
                     views: {
@@ -137,7 +137,7 @@
                     parent: 'entity',
                     url: '/ordenes-cerradas',
                     data: {
-                        authorities: ['ROLE_USER'],
+                        authorities: ['ROLE_USER','ORDENES_CONSULTA','ORDENES_ADMON'],
                         pageTitle: 'Reporte ordenes cerradas'
                     },
                     views: {
@@ -178,7 +178,7 @@
                     parent: 'entity',
                     url: '/ranking-ordenes-cerradas',
                     data: {
-                        authorities: ['ROLE_USER'],
+                        authorities: ['ROLE_USER','ORDENES_CONSULTA','ORDENES_ADMON'],
                         pageTitle: 'Reporte ordenes cerradas'
                     },
                     views: {
@@ -219,7 +219,7 @@
                     parent: 'entity',
                     url: '/ranking-clientes-fecha',
                     data: {
-                        authorities: ['ROLE_USER'],
+                        authorities: ['ROLE_USER','ORDENES_CONSULTA','ORDENES_ADMON','CLIENTES_CONSULTA','CLIENTES_ADMON'],
                         pageTitle: 'Reporte clientes por facturacion'
                     },
                     views: {
