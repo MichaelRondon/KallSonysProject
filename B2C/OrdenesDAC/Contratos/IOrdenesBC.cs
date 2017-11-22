@@ -32,5 +32,6 @@ namespace OrdenesBC.Contratos
         IEnumerable<OrdenTransito> ConsultarOrdenesEnTransito();
         IEnumerable<Orden> ConsultarOrdenesCliente(string idCliente);
         IEnumerable<ProductoRanking> ConsultarRankingFacturacionProductos(DateTime fechaInicio, DateTime fechaFin);
+        Task<QueryProductos> BuscarProductosScroll(Parametros parametros);
     }
 }

@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WebTest Name="Logon" Id="d30e6039-63a9-49f1-87d0-09316501f2a3" Owner="" Priority="2147483647" Enabled="True" CssProjectStructure="" CssIteration="" Timeout="0" WorkItemIds="" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010" Description="" CredentialUserName="" CredentialPassword="" PreAuthenticate="True" Proxy="default" StopOnError="False" RecordedResultFile="Logon.dde4a767-46f9-4426-bae7-964b60635606.rec.webtestresult" ResultsLocale="">
+  <Items>
+    <Request Method="GET" Guid="206e81ad-7105-4c53-8684-ad7b9dee543f" Version="1.1" Url="http://localhost/KallsonysMovil/index.html" ThinkTime="3" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <DependentRequests>
+        <Request Method="GET" Guid="8b615d52-cdad-47af-aa5e-9a8eac313b13" Version="1.1" Url="http://laptop-diego:9091/api/producto/campanias" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Accept" Value="application/json, text/plain, */*" />
+            <Header Name="Referer" Value="http://localhost/KallsonysMovil/index.html" />
+          </Headers>
+          <QueryStringParameters>
+            <QueryStringParameter Name="estado" Value="ACTIVO" RecordedValue="ACTIVO" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+            <QueryStringParameter Name="categoria" Value="PRINCIPAL" RecordedValue="PRINCIPAL" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+          </QueryStringParameters>
+        </Request>
+        <Request Method="GET" Guid="276921d3-b60c-4978-a70c-38b65f350472" Version="1.1" Url="http://localhost/KallsonysMovil/header.html" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Accept" Value="application/json, text/plain, */*" />
+            <Header Name="Referer" Value="http://localhost/KallsonysMovil/index.html" />
+          </Headers>
+        </Request>
+        <Request Method="GET" Guid="a09b3651-259e-4d11-8fac-69d583932577" Version="1.1" Url="http://localhost/KallsonysMovil/views/navegateUser.html" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Accept" Value="application/json, text/plain, */*" />
+            <Header Name="Referer" Value="http://localhost/KallsonysMovil/index.html" />
+          </Headers>
+        </Request>
+        <Request Method="GET" Guid="819357bd-7e82-4883-ac21-8707dafea6ff" Version="1.1" Url="http://localhost/KallsonysMovil/content.html" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Accept" Value="application/json, text/plain, */*" />
+            <Header Name="Referer" Value="http://localhost/KallsonysMovil/index.html" />
+          </Headers>
+        </Request>
+        <Request Method="GET" Guid="8af34ba7-4314-41c8-9e3b-2367b45880ac" Version="1.1" Url="http://localhost/KallsonysMovil/views/footer.html" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Accept" Value="application/json, text/plain, */*" />
+            <Header Name="Referer" Value="http://localhost/KallsonysMovil/index.html" />
+          </Headers>
+        </Request>
+      </DependentRequests>
+    </Request>
+    <Request Method="GET" Guid="669776fd-925b-4222-bc37-bdbe0fe1be79" Version="1.1" Url="http://localhost/KallsonysMovil/user.html" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Referer" Value="http://localhost/KallsonysMovil/index.html" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="7a633667-983c-4b2a-a74e-9d107e87d62b" Version="1.1" Url="http://laptop-diego:9091/api/producto/campanias" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Accept" Value="application/json, text/plain, */*" />
+        <Header Name="Referer" Value="http://localhost/KallsonysMovil/index.html" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="estado" Value="ACTIVO" RecordedValue="ACTIVO" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="categoria" Value="SECUNDARIA" RecordedValue="SECUNDARIA" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="d27b34b7-08fa-4ac4-a514-ca66cd6326ee" Version="1.1" Url="http://localhost/KallsonysMovil/css/bootstrap-3.3.7-dist/fonts/glyphicons-halflings-regular.eot" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Referer" Value="http://localhost/KallsonysMovil/index.html" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="" Value="" RecordedValue="" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="8a08d2e4-c764-463c-bbb3-cb5a7a77a9bd" Version="1.1" Url="http://localhost/KallsonysMovil/header.html" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Accept" Value="application/json, text/plain, */*" />
+        <Header Name="Referer" Value="http://localhost/KallsonysMovil/user.html" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="b035a2a3-8148-4ef9-805a-a3d76f47c3f1" Version="1.1" Url="http://localhost/KallsonysMovil/views/navegateUser.html" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Accept" Value="application/json, text/plain, */*" />
+        <Header Name="Referer" Value="http://localhost/KallsonysMovil/user.html" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="af82536f-b649-4200-9f4a-1c8d114997b2" Version="1.1" Url="http://localhost/KallsonysMovil/views/footer.html" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Accept" Value="application/json, text/plain, */*" />
+        <Header Name="Referer" Value="http://localhost/KallsonysMovil/user.html" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="6afc2862-1232-4d8c-8049-c239001e8d1a" Version="1.1" Url="http://localhost/KallsonysMovil/modules/authentication/views/login.html" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Accept" Value="application/json, text/plain, */*" />
+        <Header Name="Referer" Value="http://localhost/KallsonysMovil/user.html" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="5965ba51-b721-4bf6-85a4-25708d308655" Version="1.1" Url="http://localhost/KallsonysMovil/css/bootstrap-3.3.7-dist/fonts/glyphicons-halflings-regular.eot" ThinkTime="17" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Referer" Value="http://localhost/KallsonysMovil/user.html" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="" Value="" RecordedValue="" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="OPTIONS" Guid="2e35c0f8-f014-45ed-a56d-62d173b42a29" Version="1.1" Url="http://laptop-diego:9092/api/auth/logon" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="True">
+      <StringHttpBody ContentType="" InsertByteOrderMark="False">
+      </StringHttpBody>
+    </Request>
+    <Request Method="POST" Guid="d142d051-5a86-4355-818a-1b0647dbb76a" Version="1.1" Url="http://laptop-diego:9092/api/auth/logon" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Accept" Value="application/json, text/plain, */*" />
+        <Header Name="Referer" Value="http://localhost/KallsonysMovil/user.html" />
+      </Headers>
+      <StringHttpBody ContentType="application/json;charset=utf-8" InsertByteOrderMark="False">ewAiAGUAXwBtAGEAaQBsACIAOgAiAG0AYQByAGMAZQB2AGEAcQB1AGkAcgBvAEAAZwBtAGEAaQBsAC4AYwBvAG0AIgAsACIAcABhAHMAcwB3AGQAIgA6ACIAMQAyADMANAAiAH0A</StringHttpBody>
+    </Request>
+    <Request Method="GET" Guid="be35dcd2-8696-4a7e-a8a9-d2da76ea084e" Version="1.1" Url="http://laptop-diego:9092/api/clientes" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Accept" Value="application/json, text/plain, */*" />
+        <Header Name="Referer" Value="http://localhost/KallsonysMovil/user.html" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="e_mail" Value="marcevaquiro@gmail.com" RecordedValue="marcevaquiro@gmail.com" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+  </Items>
+  <ValidationRules>
+    <ValidationRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ValidateResponseUrl, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" DisplayName="Response URL" Description="Validates that the response URL after redirects are followed is the same as the recorded response URL.  QueryString parameters are ignored." Level="Low" ExectuionOrder="BeforeDependents" />
+    <ValidationRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ValidationRuleResponseTimeGoal, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" DisplayName="Response Time Goal" Description="Validates that the response time for the request is less than or equal to the response time goal as specified on the request.  Response time goals of zero will be ignored." Level="Low" ExectuionOrder="AfterDependents">
+      <RuleParameters>
+        <RuleParameter Name="Tolerance" Value="0" />
+      </RuleParameters>
+    </ValidationRule>
+  </ValidationRules>
+</WebTest>

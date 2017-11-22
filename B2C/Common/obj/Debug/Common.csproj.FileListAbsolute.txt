@@ -9,3 +9,4 @@ C:\Users\diego\Source\Repos\KallSonysProject\B2C\Common\obj\Debug\Common.Resourc
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\Common\obj\Debug\Common.csproj.GenerateResource.Cache
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\Common\obj\Debug\Common.dll
 C:\Users\diego\Source\Repos\KallSonysProject\B2C\Common\obj\Debug\Common.pdb
+C:\Users\diego\Source\Repos\KallSonysProject\B2C\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache

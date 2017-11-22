@@ -18,7 +18,7 @@ namespace B2CTests
         public void ConsultaClienteEmailTest()
         {
             IClientesBC clientesBC = new ClientesBC.Implementaciones.ClientesBC();
-            IEnumerable<Cliente> resultado = clientesBC.BuscarClientes(new Common.DTO.Parametros() { e_mail = "b2c.648@b2c.com" });
+            IEnumerable<Cliente> resultado = clientesBC.BuscarClientes(new Common.DTO.Parametros() { e_mail = "marcevaquiro@gmail.com" });
             Assert.IsTrue(resultado.Count() == 1);
         }
 
@@ -27,7 +27,7 @@ namespace B2CTests
         {
             IClientesBC clientesBC = new ClientesBC.Implementaciones.ClientesBC();
             Cliente resultado = clientesBC.ConsultarCliente("CC79797979");
-            Assert.IsTrue(resultado.correo_e.Equals("juanmamafra@mail.com"));
+            Assert.IsTrue(resultado.correo_e.Equals("dmsan.chezr@gmail.com"));
         }
 
         [TestMethod]
@@ -51,7 +51,7 @@ namespace B2CTests
         public void LogonTest()
         {
             IClientesBC clientesBC = new ClientesBC.Implementaciones.ClientesBC();
-            var resultado = clientesBC.ValidarCredencialesCliente("", "b2c.648@b2c.com", "123456");
+            var resultado = clientesBC.ValidarCredencialesCliente("", "marcevaquiro@gmail.com", "1234");
             Assert.IsTrue(resultado.result);
         }
 

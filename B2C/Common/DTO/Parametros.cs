@@ -30,5 +30,6 @@ namespace Common.DTO
         public string e_mail { get; set; }
         public int idOrden { get; set; }
         public long idProducto { get; set; }
+        public string scrollId { get; set; }
     }
 }

@@ -127,6 +127,44 @@ namespace B2CWS.Controllers
             return Ok(productos);
         }
 
+        [Route("api/producto/buscar/scroll")]
+        [ResponseType(typeof(QueryProductos))]
+        public async Task<IHttpActionResult> GetProductosScroll(string scrollId = "", int page = 0, int items_per_page = 0, string sort = "", string sort_type = "", long id = 0, string nombre = "", string descripcion = "", string categoria = "", string custom = "")
+        {
+            Parametros _params = new Parametros()
+            {
+                scrollId = scrollId,
+                page = page,
+                items_per_page = items_per_page,
+                sort = sort,
+                sort_type = sort_type,
+                id = id,
+                nombre = nombre,
+                descripcion = descripcion,
+                categoria = categoria,
+                custom = custom
+            };
+
+            QueryProductos productos = await OrdenesDAC.BuscarProductosScroll(_params);
+
+            if (productos == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                if (productos.productos != null)
+                {
+                    foreach (var prod in productos.productos)
+                    {
+                        prod.urlImage = Url.Route("DefaultApi", new { controller = "ImageThumb", id = prod.id });
+                    }
+                }
+            }
+
+            return Ok(productos);
+        }
+
         // Get
         [Route("api/producto/campanias")]
         [ResponseType(typeof(QueryCampanias))]

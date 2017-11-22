@@ -154,6 +154,10 @@ namespace Common.Util
             {
                 sb.Remove(0, 1);
             }
+            if (!string.IsNullOrEmpty(parametros.scrollId))
+            {
+                sb.Append(string.Format("&scrollId={0}", parametros.scrollId));
+            }
 
             return sb.ToString();
         }

@@ -79,6 +79,15 @@ namespace Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to api/producto/buscar/scroll.
+        /// </summary>
+        public static string ServicioBuscarProductosScroll {
+            get {
+                return ResourceManager.GetString("ServicioBuscarProductosScroll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to api/producto/campanias.
         /// </summary>
         public static string ServicioCampanias {

@@ -123,6 +123,9 @@
   <data name="ServicioBuscarProductos" xml:space="preserve">
     <value>api/producto/buscar</value>
   </data>
+  <data name="ServicioBuscarProductosScroll" xml:space="preserve">
+    <value>api/producto/buscar/scroll</value>
+  </data>
   <data name="ServicioCampanias" xml:space="preserve">
     <value>api/producto/campanias</value>
   </data>

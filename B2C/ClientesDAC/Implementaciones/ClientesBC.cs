@@ -97,7 +97,7 @@ namespace ClientesBC.Implementaciones
             {
                 using (var context = new ClientesEF.Entities())
                 {
-                    clienteActual = context.CUSTOMERs.FirstOrDefault(p => p.EMAIL.Equals(cliente.correo_e) || p.CUSTID.Equals(cliente.documento));
+                    clienteActual = context.CUSTOMERs.FirstOrDefault(p => p.EMAIL.Equals(cliente.correo_e, StringComparison.InvariantCultureIgnoreCase) || p.CUSTID.Equals(cliente.documento, StringComparison.InvariantCultureIgnoreCase));
                 }
             }
             catch (Exception ex)

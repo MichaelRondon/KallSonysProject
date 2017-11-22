@@ -595,7 +595,8 @@ namespace OrdenesBC.Implementaciones
                             id = Convert.ToInt64(item.PRODID),
                             nombre = item.PRODUCTNAME,
                             precio = Convert.ToDouble(item.PRICE),
-                            descripcion = item.CATEGORY
+                            descripcion = item.CATEGORY,
+                            urlImage = string.Format("api/ImageThumb/{0}", item.PRODID)
                         };
 
                         itemProductoOrden = new ProductoCarrito() {
@@ -972,7 +973,7 @@ namespace OrdenesBC.Implementaciones
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 ordenes = null;
             }
@@ -1014,9 +1015,11 @@ namespace OrdenesBC.Implementaciones
             Orden ordenActual = new Orden()
             {
                 estado = ordendb.STATUS,
-                fecha_orden = ordendb.ORDERDATE.Value.ToString("yyyy-MM-dd"),
+                fecha_orden = ordendb.ORDERDATE.HasValue ? ordendb.ORDERDATE.Value.ToString("yyyy-MM-dd") : null,
                 idOrden = ordendb.ORDID,
                 valorTotal = Convert.ToDouble(ordendb.PRICE.Value),
+                fabricante = ordendb.VENDOR,
+                carrier = ordendb.CARRIER,
                 cliente = new Cliente()
                 {
                     apellidos = ordendb.CUSTOMER.LNAME,
@@ -1183,7 +1186,10 @@ namespace OrdenesBC.Implementaciones
 
             subject = string.Format(subject, ordenActual.ORDID);
 
-            if (!string.IsNullOrEmpty(ordenActual.CARRIER))
+            if (!string.IsNullOrEmpty(ordenActual.CARRIER) 
+                && !(ordenActual.STATUS.Equals(ESTADO_ORDEN_CANCELADA) 
+                || ordenActual.STATUS.Equals(ESTADO_ORDEN_ENTREGADA)
+                || ordenActual.STATUS.Equals(ESTADO_ORDEN_RECHAZADA)))
             {
                 carrier = string.Format(carrier, ordenActual.CARRIER);
             }
@@ -1245,7 +1251,7 @@ namespace OrdenesBC.Implementaciones
             {
                 using (var context = new ClientesEF.Entities())
                 {
-                    var ordenesConsulta = context.ORDERS.Where(p => p.CUSTID.Equals(idCliente)).OrderByDescending(q => q.ORDERDATE);
+                    var ordenesConsulta = context.ORDERS.Where(p => p.CUSTID.Equals(idCliente) && !p.STATUS.Equals(ESTADO_ORDEN_NUEVA)).OrderByDescending(q => q.ORDERDATE);
 
                     foreach (var item in ordenesConsulta)
                     {
@@ -1375,6 +1381,22 @@ namespace OrdenesBC.Implementaciones
             }
 
             return responseColaFacturacion;
+        }
+
+        public async Task<QueryProductos> BuscarProductosScroll(Parametros parametros)
+        {
+            string parameters = WebClientHelper.ParametrosSearch(parametros);
+
+            string path = string.Format("{0}?{1}", StringResources.ServicioBuscarProductosScroll, parameters); // Path base de los productos
+
+            QueryProductos productos = null;
+            HttpResponseMessage response = await WebClientHelper.Client.GetAsync(path);
+            if (response.IsSuccessStatusCode)
+            {
+                productos = await response.Content.ReadAsAsync<QueryProductos>();
+            }
+
+            return productos;
         }
     }
 }

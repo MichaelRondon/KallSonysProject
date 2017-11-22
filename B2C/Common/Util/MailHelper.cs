@@ -20,7 +20,8 @@ namespace Common.Util
 
             using (var smtpClient = new SmtpClient())
             {
-                await smtpClient.SendMailAsync(message);
+                //await smtpClient.SendMailAsync(message);
+                Task.Run(() => smtpClient.Send(message));
             }
         }
 
