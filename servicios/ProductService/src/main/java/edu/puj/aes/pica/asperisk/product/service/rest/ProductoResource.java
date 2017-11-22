@@ -87,7 +87,7 @@ public class ProductoResource {
         long initTime = System.currentTimeMillis();
         LOGGER.info("Ingresando a get id");
         Product product = jpaSearchService.findOne(id);
-        elasticSearchService.cleanData(product);
+//        elasticSearchService.cleanData(product);
         LOGGER.info("Tiempo total GET /api/producto/id {}", (System.currentTimeMillis() - initTime));
         return ResponseEntity.ok(product);
     }

@@ -68,22 +68,22 @@ public class MyStringRandomGen {
         int randomInt = 0;
         Random randomGenerator = new Random();
         randomInt = randomGenerator.nextInt(CHAR_LIST.length());
-        if (randomInt - 1 == -1) {
+//        if (randomInt - 1 == -1) {
             return randomInt;
-        } else {
-            return randomInt - 1;
-        }
+//        } else {
+//            return randomInt - 1;
+//        }
     }
 
     public String getRamdomCategoria() {
         int randomInt = 0;
         Random randomGenerator = new Random();
         randomInt = randomGenerator.nextInt(CATEGORIAS.length);
-        if (randomInt - 1 == -1) {
+//        if (randomInt - 1 == -1) {
             return CATEGORIAS[randomInt];
-        } else {
-            return CATEGORIAS[randomInt - 1];
-        }
+//        } else {
+//            return CATEGORIAS[randomInt - 1];
+//    }
     }
 
     public String getSentence(int wordsQuantity) {

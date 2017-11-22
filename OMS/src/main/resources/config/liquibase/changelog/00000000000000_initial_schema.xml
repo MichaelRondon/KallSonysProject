@@ -161,5 +161,25 @@
                       tableName="jhi_authority"/>
         
     </changeSet>
+    
+    <changeSet id="00000000000003" author="jhipster">
+
+        <ext:loadData encoding="UTF-8"
+                      file="config/liquibase/users_authorities_asperisk.csv"
+                      separator=";"
+                      identityInsertEnabled="true"
+                      tableName="jhi_user_authority"/>
+        
+    </changeSet>
+    
+    <changeSet id="00000000000004" author="jhipster">
+
+        <ext:loadData encoding="UTF-8"
+                      file="config/liquibase/users_authorities_asperisk2.csv"
+                      separator=";"
+                      identityInsertEnabled="true"
+                      tableName="jhi_user_authority"/>
+        
+    </changeSet>
 
 </databaseChangeLog>

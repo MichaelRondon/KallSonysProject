@@ -90,7 +90,7 @@ public class UserResource {
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity createUser(@Valid @RequestBody ManagedUserVM managedUserVM) throws URISyntaxException {
-        log.debug("REST request to save User : {}", managedUserVM);
+        log.info("REST request to save User : {}", managedUserVM);
 
         if (managedUserVM.getId() != null) {
             return ResponseEntity.badRequest()
@@ -98,14 +98,17 @@ public class UserResource {
                 .body(null);
         // Lowercase the user login before comparing with database
         } else if (userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase()).isPresent()) {
+        log.info("CHECK1");
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "userexists", "Login already in use"))
                 .body(null);
         } else if (userRepository.findOneByEmail(managedUserVM.getEmail()).isPresent()) {
+        log.info("CHECK2");
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "emailexists", "Email already in use"))
                 .body(null);
         } else {
+        log.info("CHECK3");
             User newUser = userService.createUser(managedUserVM);
             mailService.sendCreationEmail(newUser);
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
@@ -150,8 +153,11 @@ public class UserResource {
     @GetMapping("/users")
     @Timed
     public ResponseEntity<List<UserDTO>> getAllUsers(@ApiParam Pageable pageable) {
+        log.info("REST request to /users : {}", pageable);
         final Page<UserDTO> page = userService.getAllManagedUsers(pageable);
+        log.info("REST request to page : {}", page);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");
+        log.info("REST request to headers : {}", headers);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
@@ -162,6 +168,7 @@ public class UserResource {
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
     public List<String> getAuthorities() {
+        log.info("REST request to /users/authorities ");
         return userService.getAuthorities();
     }
 

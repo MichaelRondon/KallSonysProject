@@ -13,7 +13,7 @@
                     parent: 'entity',
                     url: '/producto',
                     data: {
-                        authorities: ['ROLE_USER'],
+                        authorities: ['ROLE_USER', 'PRODUCTOS_CONSULTA'],
                         pageTitle: 'omsApp.producto.home.title'
                     },
                     views: {

@@ -44,15 +44,21 @@ public class UserJWTController {
     @Timed
     public ResponseEntity authorize(@Valid @RequestBody LoginVM loginVM, HttpServletResponse response) {
 
+            log.info("authenticate CHECK0");
         UsernamePasswordAuthenticationToken authenticationToken =
             new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getPassword());
 
         try {
+            log.info("authenticate CHECK1");
             Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
+            log.info("authenticate CHECK2");
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            log.info("authenticate CHECK3");
             boolean rememberMe = (loginVM.isRememberMe() == null) ? false : loginVM.isRememberMe();
             String jwt = tokenProvider.createToken(authentication, rememberMe);
+            log.info("authenticate CHECK4");
             response.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
+            log.info("authenticate CHECK5");
             return ResponseEntity.ok(new JWTToken(jwt));
         } catch (AuthenticationException ae) {
             log.trace("Authentication exception trace: {}", ae);

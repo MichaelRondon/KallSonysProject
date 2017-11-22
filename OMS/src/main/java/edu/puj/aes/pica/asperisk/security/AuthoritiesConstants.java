@@ -12,7 +12,21 @@ public final class AuthoritiesConstants {
     public static final String OTHER = "ROLE_OTHER";
 
     public static final String ANONYMOUS = "ROLE_ANONYMOUS";
-
+    
+    public static final String CAMPANIAS = "CAMPANIAS";
+    
+    public static final String CLIENTES_ADMON = "CLIENTES_ADMON";
+    
+    public static final String CLIENTES_CONSULTA = "CLIENTES_CONSULTA";
+    
+    public static final String ORDENES_ADMON = "ORDENES_ADMON";
+    
+    public static final String ORDENES_CONSULTA = "ORDENES_CONSULTA";
+    
+    public static final String PRODUCTOS_ADMON = "PRODUCTOS_ADMON";
+    
+    public static final String PRODUCTOS_CONSULTA = "PRODUCTOS_CONSULTA";
+    
     private AuthoritiesConstants() {
     }
 }
